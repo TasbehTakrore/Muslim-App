@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         title: 'Al Quran Community',
         locale: controller.language,
         theme: ThemeData(
-            textTheme: const TextTheme(
+            textTheme:  TextTheme(
                 headlineLarge: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -37,6 +37,12 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: AppColor.black),
+
+                headlineSmall: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: AppColor.black),
+
                 bodyLarge: TextStyle(
                     color: AppColor.grey,
                     fontWeight: FontWeight.bold,
