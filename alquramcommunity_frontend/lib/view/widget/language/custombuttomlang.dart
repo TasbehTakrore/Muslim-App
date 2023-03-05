@@ -11,9 +11,10 @@ class CustomButtonLang extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        //color: Colors.amber,
         padding: const EdgeInsets.symmetric(
-          horizontal: 50,
-        ),
+            //horizontal: 20,
+            ),
         width: double.infinity,
         child: EasyElevatedButton(
           margin: EdgeInsets.all(5),

@@ -20,10 +20,7 @@ class Home extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView(
                 children: [
-                  CustomAppBar(
-                      titleappbar: "Find Product",
-                      onPressedIcon: () {},
-                      onPressedSearch: () {}),
+                  CustomAppBar(onPressedIcon: () {}),
                   CustomCardHome(
                       title: "2".tr, body: "{واستعينوا بالصّبر والصّلاة}"),
                   // const ListCategoriesHome(),

@@ -3,15 +3,8 @@ import 'package:alquramcommunity_frontend/view/widget/logowidget.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final String titleappbar;
   final void Function()? onPressedIcon;
-  final void Function()? onPressedSearch;
-  const CustomAppBar(
-      {Key? key,
-      required this.titleappbar,
-      this.onPressedIcon,
-      this.onPressedSearch})
-      : super(key: key);
+  const CustomAppBar({Key? key, this.onPressedIcon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +21,21 @@ class CustomAppBar extends StatelessWidget {
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     Container(
                         padding: EdgeInsets.only(top: 5),
-                        child:
-                            const Text("12", style: TextStyle(fontSize: 18))),
+                        child: const Text("12",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold))),
                     const SizedBox(width: 10),
                     Container(
-                        margin: EdgeInsets.only(top: 6),
+                        margin: EdgeInsets.only(top: 10, left: 10),
                         child: Image.asset(AppImageAsset.diamond,
                             width: 28, height: 28))
                   ]),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     const Text("24580", style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 18),
                     Container(
-                        margin: EdgeInsets.only(left: 5),
+                        margin: EdgeInsets.only(left: 14),
                         child: Image.asset(AppImageAsset.coin,
                             width: 20, height: 20))
                   ])
