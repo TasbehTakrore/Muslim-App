@@ -26,16 +26,16 @@ class CustomAppBar extends StatelessWidget {
                                 fontSize: 18, fontWeight: FontWeight.bold))),
                     const SizedBox(width: 10),
                     Container(
-                        margin: EdgeInsets.only(top: 10, left: 10),
+                        margin: EdgeInsets.only(top: 10, left: 8, right: 8),
                         child: Image.asset(AppImageAsset.diamond,
                             width: 28, height: 28))
                   ]),
                   const SizedBox(height: 5),
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     const Text("24580", style: TextStyle(fontSize: 13)),
-                    const SizedBox(width: 18),
+                    const SizedBox(width: 8),
                     Container(
-                        margin: EdgeInsets.only(left: 14),
+                        margin: EdgeInsets.only(left: 11, right: 12),
                         child: Image.asset(AppImageAsset.coin,
                             width: 20, height: 20))
                   ])
