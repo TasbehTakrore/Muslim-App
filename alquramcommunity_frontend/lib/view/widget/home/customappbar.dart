@@ -9,24 +9,25 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       child: Row(children: [
-        const Expanded(flex: 2, child: logoWidget(logowidth: 70, sizeType: 2)),
+        const Expanded(flex: 1, child: logoWidget(logowidth: 70, sizeType: 2)),
         Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     Container(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: const Text("12",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold))),
                     const SizedBox(width: 10),
                     Container(
-                        margin: EdgeInsets.only(top: 10, left: 8, right: 8),
+                        margin:
+                            const EdgeInsets.only(top: 10, left: 8, right: 8),
                         child: Image.asset(AppImageAsset.diamond,
                             width: 28, height: 28))
                   ]),
@@ -35,7 +36,7 @@ class CustomAppBar extends StatelessWidget {
                     const Text("24580", style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 8),
                     Container(
-                        margin: EdgeInsets.only(left: 11, right: 12),
+                        margin: const EdgeInsets.only(left: 11, right: 12),
                         child: Image.asset(AppImageAsset.coin,
                             width: 20, height: 20))
                   ])

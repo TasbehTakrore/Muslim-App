@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/constant/color.dart';
 
 class CustomCardHome extends StatelessWidget {
   final String title;
@@ -17,22 +14,13 @@ class CustomCardHome extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xff2C8066),
-                  Color(0xff5FCFAE)
-                  //AppColor.primaryColor,
-                  // AppColor.secondaryColor,
-                ],
+                colors: [Color(0xff2C8066), Color(0xff5FCFAE)],
               )),
-
           alignment: Alignment.center,
           height: 150,
-          // decoration: BoxDecoration(
-          //     color: AppColor.primaryColor,
-          //     borderRadius: BorderRadius.circular(20)),
           child: ListTile(
             title: Text(title,
                 style: const TextStyle(color: Colors.white, fontSize: 20)),
@@ -40,17 +28,6 @@ class CustomCardHome extends StatelessWidget {
                 style: const TextStyle(color: Colors.white, fontSize: 30)),
           ),
         ),
-        // Positioned(
-        //   top: -60,
-        //   right: -60,
-        //   child: Container(
-        //     height: 160,
-        //     width: 160,
-        //     decoration: BoxDecoration(
-        //         color: AppColor.secondaryColor,
-        //         borderRadius: BorderRadius.circular(160)),
-        //   ),
-        //)
       ]),
     );
   }

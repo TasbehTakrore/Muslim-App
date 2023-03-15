@@ -61,6 +61,9 @@ dependencies:
   device_preview: ^0.7.5
   responsive_builder: ^0.4.2
   image_pickers: ^2.0.0+2
+  flutter_svg: ^0.23.0+1
+  percent_indicator: ^4.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +94,20 @@ flutter:
     - assets/images/icons8-fire.gif
     - assets/images/coin.png
     - assets/images/diamond.png
+    - assets/images/qiblah.svg
+    - assets/images/quranCategory.svg
+    - assets/images/rosaryh.svg
+    - assets/images/prayer2.svg
+    - assets/images/muslim2.svg
+    - assets/images/reading.svg
+    - assets/images/duaa.svg
+    - assets/images/question.svg
+
+    
+
+    
+    
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

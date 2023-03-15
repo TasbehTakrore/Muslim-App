@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alquramcommunity_frontend/view/screen/auth/homescreen.dart';
+
 import 'core/constant/color.dart';
 import 'core/localization/changelocal.dart';
 import 'core/services/services.dart';
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
                     color: AppColor.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 16))),
-        home: const Language(),
+        home: const HomeScreen(),
         routes: routes);
   }
 }
