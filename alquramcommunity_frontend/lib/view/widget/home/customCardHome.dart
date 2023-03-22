@@ -23,7 +23,7 @@ class CustomCardHome extends StatelessWidget {
           height: 150,
           child: ListTile(
             title: Text(title,
-                style: const TextStyle(color: Colors.white, fontSize: 20)),
+                style: const TextStyle(color: Colors.white, fontSize: 15)),
             subtitle: Text(body,
                 style: const TextStyle(color: Colors.white, fontSize: 30)),
           ),

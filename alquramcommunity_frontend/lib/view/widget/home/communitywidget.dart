@@ -55,7 +55,7 @@ class Community extends StatelessWidget {
                           alignment: AlignmentDirectional(0, 0),
                           child: const Icon(Icons.people_alt_sharp,
                               color: Colors.white, size: 20)),
-                      Text('مُجتمع الشّباب العربي'),
+                      Text('طالبات جامعة النجاح الوطنية'),
                     ],
                   ),
                 ),

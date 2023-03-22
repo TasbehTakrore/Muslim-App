@@ -12,4 +12,5 @@ class AppImageAsset {
   static const String reading = "$rootImages/reading.svg";
   static const String duaa = "$rootImages/duaa.svg";
   static const String question = "$rootImages/question.svg";
+  static const String numbFrame = "$rootImages/numbFrame.svg";
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:alquramcommunity_frontend/view/screen/auth/homescreen.dart';
+import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 
 import 'core/constant/color.dart';
 import 'core/localization/changelocal.dart';
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         title: 'Al Quran Community',
         locale: controller.language,
         theme: ThemeData(
+            //fontFamily: "CaiPlayfairDisplayro",
             textTheme: TextTheme(
                 headlineLarge: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -47,7 +48,14 @@ class MyApp extends StatelessWidget {
                     color: AppColor.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 16))),
-        home: const HomeScreen(),
+        home: controller.myServices.sharedPreferences.getBool("langSelected") ==
+                true
+            ? HomeScreen()
+            : Language(),
+
+        // myServices.sharedPreferences.
+
+        // Language(),
         routes: routes);
   }
 }

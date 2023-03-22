@@ -2,7 +2,7 @@ import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart'
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import '../../widget/home/custombottomappbarhome.dart';
+import '../widget/home/custombottomappbarhome.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

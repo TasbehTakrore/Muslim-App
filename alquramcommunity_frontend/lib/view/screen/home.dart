@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../widget/home/categoriesHome.dart';
-import '../../widget/home/customcardhome.dart';
-import '../../widget/home/customappbar.dart';
-import '../../widget/home/listcommunities.dart';
-import '../../widget/home/statisticscard.dart';
+import '../widget/home/categoriesHome.dart';
+import '../widget/home/customcardhome.dart';
+import '../widget/home/customappbar.dart';
+import '../widget/home/listcommunities.dart';
+import '../widget/home/statisticscard.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

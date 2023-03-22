@@ -1,8 +1,8 @@
-import 'package:alquramcommunity_frontend/view/screen/auth/homescreen.dart';
+import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
-import '../view/screen/auth/home.dart';
+import '../view/screen/home.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int currentPage);

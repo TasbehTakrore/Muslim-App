@@ -1,4 +1,7 @@
+import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
@@ -17,11 +20,16 @@ class logoWidget extends StatelessWidget {
         //color: Colors.red,
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           //padding: EdgeInsets.only(top: ),
-          Container(
-            padding: EdgeInsets.only(top: 5),
-            child: Image.asset(
-              AppImageAsset.quranLogo,
-              width: logowidth,
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoute.home);
+            },
+            child: Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: Image.asset(
+                AppImageAsset.quranLogo,
+                width: logowidth,
+              ),
             ),
           ),
           Container(

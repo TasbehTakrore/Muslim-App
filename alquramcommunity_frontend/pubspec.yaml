@@ -40,7 +40,7 @@ dependencies:
   # DateTime
   jiffy: ^5.0.0
   intl: ^0.17.0
-  http: ^0.13.4
+  http: ^0.13.5
   # Images
   cached_network_image: ^3.2.0 
   image_picker: ^0.7.2+1
@@ -49,7 +49,7 @@ dependencies:
   auto_animated: ^3.0.1
   # Local Data Cache
   sqflite: ^2.0.2
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.0.18
   path: ^1.8.0
   # Icon 
   # flutter_svg: ^1.0.3
@@ -63,6 +63,8 @@ dependencies:
   image_pickers: ^2.0.0+2
   flutter_svg: ^0.23.0+1
   percent_indicator: ^4.0.1
+  quran: ^1.2.2
+  animate_do: ^3.0.2
 
 
 dev_dependencies:
@@ -102,6 +104,10 @@ flutter:
     - assets/images/reading.svg
     - assets/images/duaa.svg
     - assets/images/question.svg
+    - assets/images/numbFrame.svg
+
+
+    
 
     
 
@@ -132,6 +138,19 @@ flutter:
         - asset: assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf
         - asset: assets/fonts/PlayfairDisplay/PlayfairDisplay-Bold.ttf
           weight: 700
+
+    - family: Quran
+      fonts:
+        - asset: assets/fonts/Quran/Hafs.ttf
+          weight: 700
+
+    - family: SurahTitle
+      fonts:
+        - asset: assets/fonts/Quran/QuranSurah1-mLKO5.ttf
+          weight: 700
+
+
+          #QuranSurah1-mLKO5.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
