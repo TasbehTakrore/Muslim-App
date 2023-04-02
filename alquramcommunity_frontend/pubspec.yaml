@@ -65,6 +65,10 @@ dependencies:
   percent_indicator: ^4.0.1
   quran: ^1.2.2
   animate_do: ^3.0.2
+  responsive_grid: ^2.2.0
+  google_fonts: ^3.0.1
+  arabic_numbers: ^1.0.0
+
 
 
 dev_dependencies:
@@ -105,13 +109,8 @@ flutter:
     - assets/images/duaa.svg
     - assets/images/question.svg
     - assets/images/numbFrame.svg
+    - assets/images/titleBorder.png
 
-
-    
-
-    
-
-    
     
 
 
