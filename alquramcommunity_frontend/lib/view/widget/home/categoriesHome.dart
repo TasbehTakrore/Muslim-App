@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/constant/color.dart';
 import '../../../data/datasource/static.dart';
+import '../../screen/surahs.dart';
 
 class ListCategoriesHome extends StatelessWidget {
   const ListCategoriesHome({super.key});
@@ -18,7 +19,19 @@ class ListCategoriesHome extends StatelessWidget {
         itemBuilder: (context, index) {
           return Column(children: [
             InkWell(
-              onTap: CategoryList[index].onPressed,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        content: Surahs());
+                  },
+                );
+              },
+              // CategoryList[index].onPressed,
               child: Container(
                   decoration: BoxDecoration(
                       color:

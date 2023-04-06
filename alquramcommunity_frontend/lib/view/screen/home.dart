@@ -18,7 +18,13 @@ class Home extends StatelessWidget {
         child: ListView(
           children: [
             CustomAppBar(onPressedIcon: () {}),
-            CustomCardHome(title: "2".tr, body: "{واستعينوا بالصّبر والصّلاة}"),
+            CustomCardHome(
+              heigh: 150,
+              title: "2".tr,
+              body: "{واستعينوا بالصّبر والصّلاة}",
+              fontSize1: 30,
+              fontSize2: 15,
+            ),
             const ListCategoriesHome(),
             const SizedBox(height: 10),
             const Text("مُجتمعات القُرآن"),

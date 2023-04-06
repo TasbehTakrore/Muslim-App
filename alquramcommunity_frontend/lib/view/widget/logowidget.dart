@@ -22,6 +22,7 @@ class logoWidget extends StatelessWidget {
           //padding: EdgeInsets.only(top: ),
           InkWell(
             onTap: () {
+              
               Get.toNamed(AppRoute.home);
             },
             child: Container(

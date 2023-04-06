@@ -35,10 +35,10 @@ class SurahTitleBorder extends StatelessWidget {
                         "ترتيبها ${ArabicNumbers().convert(quranController.surahNumb)}",
                         style: GoogleFonts.amiri(fontSize: 10))
                   ]))),
-      const SizedBox(height: 15),
+      const SizedBox(height: 8),
       quranController.surahNumb != 9 && quranController.surahNumb != 1
           ? Text("بِسْـــــمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
-              style: GoogleFonts.amiri(fontSize: 20))
+              style: GoogleFonts.amiri(fontSize: 18))
           : const SizedBox()
     ]);
   }

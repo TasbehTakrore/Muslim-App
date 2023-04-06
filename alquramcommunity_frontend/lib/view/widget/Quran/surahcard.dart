@@ -43,13 +43,13 @@ class SurahCard extends GetView<QuranPageController> {
             ),
           ]),
         ),
-        title: Text(surahName),
+        title: Text(surahName, style: const TextStyle(fontSize: 16)),
         trailing: Text(surahNumber,
-            style: const TextStyle(fontFamily: "SurahTitle", fontSize: 60)),
+            style: const TextStyle(fontFamily: "SurahTitle", fontSize: 50)),
         subtitle: Text("$placeOfRevelation - $verseCount Ayah",
-            style: const TextStyle(fontSize: 11)),
+            style: const TextStyle(fontSize: 10)),
         onTap: () {
-          controller.changePageIndex(startPage);
+          controller.changePageIndexAndSurahName(startPage);
           Get.toNamed(AppRoute.quran);
           //onTap;
         },

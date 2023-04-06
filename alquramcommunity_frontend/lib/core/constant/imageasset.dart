@@ -14,4 +14,5 @@ class AppImageAsset {
   static const String question = "$rootImages/question.svg";
   static const String numbFrame = "$rootImages/numbFrame.svg";
   static const String titleBorder = "$rootImages/titleBorder.png";
+  static const String surahHead = "$rootImages/surahHead.svg";
 }

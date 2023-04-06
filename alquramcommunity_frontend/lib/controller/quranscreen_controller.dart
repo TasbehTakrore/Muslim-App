@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -11,21 +12,41 @@ class QuranPageController extends GetxController {
   int? surahNumb;
   int? startVerse;
   int? endVerse;
-  List<InkWell> versesList = [];
   int? versesCount;
   String? surahName;
   int? pageJuzNumber;
+  List<Widget> versesList = [];
+  RxString lastPageAndName = "".obs;
+
   int? allVersescount;
 
-  // List<Wrap> versesList = [];
-
-  changePageIndex(int pageIndex) {
-    myServices.quranPage.setInt("pageIndex", pageIndex);
+  changePageIndexAndSurahName(int pageIndex) {
+    myServices.quranPage.setInt("lastPageIndex", pageIndex);
+    myServices.quranPage.setString(
+        "lastSurahName", getSurahName(getPageData(pageIndex + 1)[0]["surah"]));
   }
 
   // ignore: non_constant_identifier_names
   int getPageIndex() {
-    return myServices.quranPage.getInt("pageIndex")!;
+    return myServices.quranPage.getInt("lastPageIndex")!;
+  }
+
+  bool anyPageOpend() {
+    if (myServices.quranPage.getInt("lastPageIndex") == Null) return false;
+    return true;
+  }
+
+  RxString getLastOpenedEng() {
+    int? index;
+    if (anyPageOpend() == true) {
+      index = myServices.quranPage.getInt("lastPageIndex");
+      //update();
+      lastPageAndName =
+          "${myServices.quranPage.getString("lastSurahName")} - page ${index! + 1}"
+              .obs;
+      return lastPageAndName;
+    } else
+      return "".obs;
   }
 
   setSurahPageData(int pageNumb, int index) {
@@ -39,60 +60,43 @@ class QuranPageController extends GetxController {
     versesList.clear();
 
     for (var i = 0; i < versesCount!; i++) {
+      //versesList.add(
+      // Expanded(child: child)
+      //   getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
+      //     );
+
       versesList.addAll(
           getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
               .split(" ")
-              .map((e) => InkWell(
-                  onTap: () => () {},
-                  child: Container(
-                      padding: const EdgeInsets.only(left: 3, bottom: 5),
-                      child: Text(e, style: GoogleFonts.amiri(fontSize: 18)))))
-              .toList());
+              .map(
+                (D) => Text(D,
+                    style: TextStyle(
+                      color:
+                          D.replaceAll(RegExp('[^\u0621-\u064A ]'), '') == "لله"
+                              ? Colors.red
+                              : AppColor.black,
+                      fontFamily: "Quran",
+                      fontSize: 21,
+                      fontWeight: FontWeight.w500,
+                      //  GoogleFonts.amiri(
+                      //   fontSize: 20,
+                      //   //fontWeight: FontWeight.bold
+                      // )
+                    )),
+              ));
       versesList.add(InkWell(
-          onTap: () => () {},
-          child: Container(
-              padding: const EdgeInsets.only(left: 5, bottom: 5),
-              child: Text(
-                getVerseEndSymbol(startVerse! + i),
-                style: const TextStyle(fontSize: 20),
-              ))));
-
-// هايّ الصحّ كتقسمية آيات مش كلمات.
-      // words.add(Wrap(
-      //     direction: Axis.horizontal,
-      //     textDirection: TextDirection.rtl,
-      //     children:
-      //         "${getVerse(surahNumb!, startVerse! + i, verseEndSymbol: true)}"
-      //             .split(" ")
-      //             .map((e) => InkWell(
-      //                   onLongPress: () => Get.toNamed(AppRoute.home),
-      //                   child: Text(e),
-      //                   //style: TextStyle(fontFamily: "Quran", fontSize: 18),
-      //                 ))
-      //             .toList()));
-
-      // words.addAll("${getVerse(surahNumb!, startVerse! + i)}"
-      //     .split(" ")
-      //     .map((e) => Text(e))
-      //     .toList()); // list of words of verse
-      // versesList.add(new Wrap(
-      //   direction: Axis.horizontal,
-      //   children: words,
-      // ));
-      //print("${words.length}");
-
-      // versesList.add(new words.map((e) => Text(e)).toList()
-
-      //     //Text("${getVerse(surahNumb!, startVerse! + i)}")
-
-      //     );
+        onTap: () => () {},
+        child: Text(
+          key: UniqueKey(),
+          getVerseEndSymbol(startVerse! + i),
+          style: const TextStyle(
+              fontSize: 20,
+              color: Color.fromARGB(255, 41, 119, 97),
+              fontWeight: FontWeight.w600),
+        ),
+      ));
     }
   }
-
-  // versesList.add(new RichText(
-  //         text: TextSpan(children: [
-  //   TextSpan(text: "${getVerse(surahNumb!, startVerse! + i)}")
-  // ]))
 
   getVerses() {
     // for (var i = 0; i < 10; i++) {
