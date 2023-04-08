@@ -1,7 +1,9 @@
+import 'package:flutter/Material.dart';
+
 class CategoryModel {
   final String? title;
   final String? image;
-  void Function()? onPressed;
+  final Widget? onPressedWidget;
 
-  CategoryModel({this.title, this.image, this.onPressed});
+  CategoryModel({this.title, this.image, this.onPressedWidget});
 }

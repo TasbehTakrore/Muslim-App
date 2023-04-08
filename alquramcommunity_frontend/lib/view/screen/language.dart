@@ -1,8 +1,9 @@
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:alquramcommunity_frontend/core/localization/changelocal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../widget/language/custombuttomlang.dart';
+import '../widget/custombuttomlang.dart';
 import '../widget/logowidget.dart';
 
 class Language extends GetView<LocaleController> {
@@ -23,13 +24,15 @@ class Language extends GetView<LocaleController> {
               const SizedBox(height: 55),
               Text("1".tr, style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10),
-              CustomButtonLang(
+              CustomButton(
                   textbutton: "AR",
+                  color: AppColor.primaryColor,
                   onPressed: () {
                     controller.changeLang("ar");
                     Get.toNamed(AppRoute.login);
                   }),
-              CustomButtonLang(
+              CustomButton(
+                  color: AppColor.primaryColor,
                   textbutton: "EN",
                   onPressed: () {
                     controller.changeLang("en");

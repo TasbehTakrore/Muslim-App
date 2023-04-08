@@ -1,22 +1,14 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
-import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
-import 'package:alquramcommunity_frontend/core/constant/routes.dart';
-import 'package:alquramcommunity_frontend/view/screen/surahs.dart';
-import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart';
-import 'package:responsive_grid/responsive_grid.dart';
-
+import '../../core/constant/routes.dart';
 import '../../core/localization/changelocal.dart';
 import '../widget/Quran/quranpagecontent.dart';
-import '../widget/home/customappbar.dart';
 
 class QuranScreen extends GetView {
-  //final int pageIndex = 0;
 
-  QuranScreen({super.key});
+  const QuranScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +17,7 @@ class QuranScreen extends GetView {
     return WillPopScope(
         onWillPop: () async {
           print('Back button pressed!');
-          Get.back();
+          Get.toNamed(AppRoute.home);
           return false; // Return true to allow navigation, false to prevent it
         },
         child: Scaffold(

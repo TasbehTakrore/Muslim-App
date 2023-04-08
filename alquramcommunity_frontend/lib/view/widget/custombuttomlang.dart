@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constant/color.dart';
+import '../../core/constant/color.dart';
 import 'package:easy_actions/easy_actions.dart';
 
-class CustomButtonLang extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String textbutton;
   final void Function()? onPressed;
-  const CustomButtonLang({super.key, required this.textbutton, this.onPressed});
+  final Color color;
+  const CustomButton(
+      {super.key,
+      required this.textbutton,
+      this.onPressed,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class CustomButtonLang extends StatelessWidget {
           labelStyle: Theme.of(context).textTheme.bodyLarge,
           //height: ,
           labelColor: AppColor.grey,
-          color: AppColor.primaryColor,
+          color: color,
           onPressed: onPressed,
         ));
   }

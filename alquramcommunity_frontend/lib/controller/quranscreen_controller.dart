@@ -60,11 +60,6 @@ class QuranPageController extends GetxController {
     versesList.clear();
 
     for (var i = 0; i < versesCount!; i++) {
-      //versesList.add(
-      // Expanded(child: child)
-      //   getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
-      //     );
-
       versesList.addAll(
           getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
               .split(" ")
@@ -78,10 +73,6 @@ class QuranPageController extends GetxController {
                       fontFamily: "Quran",
                       fontSize: 21,
                       fontWeight: FontWeight.w500,
-                      //  GoogleFonts.amiri(
-                      //   fontSize: 20,
-                      //   //fontWeight: FontWeight.bold
-                      // )
                     )),
               ));
       versesList.add(InkWell(

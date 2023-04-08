@@ -1,4 +1,3 @@
-import 'package:alquramcommunity_frontend/view/widget/auth/custombottomauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtexttitleauth.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/routes.dart';
-import '../../widget/language/custombuttomlang.dart';
+import '../../widget/custombuttomlang.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -50,7 +49,8 @@ class Login extends StatelessWidget {
         ),
         Text("9".tr, textAlign: TextAlign.center),
         const SizedBox(height: 15),
-        CustomButtonLang(
+        CustomButton(
+          color: AppColor.primaryColor,
           textbutton: "10".tr,
           onPressed: () {
             Get.toNamed(AppRoute.home);

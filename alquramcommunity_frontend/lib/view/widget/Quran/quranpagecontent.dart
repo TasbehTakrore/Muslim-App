@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/view/widget/Quran/quranverses.dart';
 import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -32,17 +33,10 @@ class QuranPageContent extends StatelessWidget {
                               ? SurahTitleBorder()
                               : PageTitleBorder(),
                           const SizedBox(height: 15),
-                          Wrap(
-                              // page verses and page numb
-                              direction: Axis.horizontal,
-                              alignment: WrapAlignment.center,
-                              textDirection: TextDirection.rtl,
-                              spacing: 3,
-                              children: controller.versesList),
-                          index == getSurahCountByPage(indexP + 1) - 1
-                              ? Text(ArabicNumbers().convert(indexP + 1),
-                                  style: TextStyle(fontSize: 15))
-                              : SizedBox()
+                          QuranVerses(
+                            pageindex: indexP,
+                            surahindex: index,
+                          )
                         ]);
                       },
                       separatorBuilder: (context, index) =>

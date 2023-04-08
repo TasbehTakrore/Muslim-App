@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/constant/color.dart';
 import '../../../data/datasource/static.dart';
-import '../../screen/surahs.dart';
+import '../../screen/surahsdialog.dart';
 
 class ListCategoriesHome extends StatelessWidget {
   const ListCategoriesHome({super.key});
@@ -23,11 +23,8 @@ class ListCategoriesHome extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        content: Surahs());
+                    return CategoryList[index].onPressedWidget!;
+                    ;
                   },
                 );
               },

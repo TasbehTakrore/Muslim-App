@@ -69,6 +69,7 @@ dependencies:
   google_fonts: ^3.0.1
   arabic_numbers: ^1.0.0
   flutter_custom_dialog: ^1.2.0
+  dropdown_button2: ^2.0.0
 
 
 

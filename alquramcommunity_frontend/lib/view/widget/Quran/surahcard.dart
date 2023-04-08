@@ -50,6 +50,7 @@ class SurahCard extends GetView<QuranPageController> {
             style: const TextStyle(fontSize: 10)),
         onTap: () {
           controller.changePageIndexAndSurahName(startPage);
+          
           Get.toNamed(AppRoute.quran);
           //onTap;
         },
