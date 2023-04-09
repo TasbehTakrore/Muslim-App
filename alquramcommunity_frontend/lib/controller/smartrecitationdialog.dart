@@ -27,7 +27,7 @@ class SmartRecitationDialogController extends GetxController {
     service.recitation.setInt("startPage", startPageIndex);
     service.recitation.setInt("endPage", endPageIndex);
     recitationConroller.emptyLists();
-    print("++++++++++" + service.recitation.getInt("endPage").toString());
+    //print("++++++++++" + service.recitation.getInt("endPage").toString());
     Get.toNamed(AppRoute.recitation);
     // Perform business logic here
   }

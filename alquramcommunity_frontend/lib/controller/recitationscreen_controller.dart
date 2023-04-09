@@ -15,40 +15,44 @@ class RecitationScreenController extends GetxController {
   String? surahName;
   int? pageJuzNumber;
   int? allVersescount;
-  int? pageIndex = 0;
-  int verseIndex = 0;
   int index = 0;
+  int s = -1;
+  MyServices service = Get.put(MyServices());
+  int pageWidgetindex = 0;
+
   int previousVerseCount = 0;
 
   List<RxDouble>? pageOpacity = [];
-  // List<List<RxDouble>>? opacity = [];
-// 0.02.obs;
+  List<List<RxDouble>> savepageOpacity = [];
 
   emptyLists() {
     pageOpacity!.clear();
-    verseIndex = 0;
-    index = 0;
+    savepageOpacity!.clear();
     previousVerseCount = 0;
-    //opacity!.clear();
-    // pageOpacity = List.filled(100, 0.02.obs);
+    index = 0;
+    s = 0;
+    pageWidgetindex = 0;
+    // s = 0;
+    // pageOpacity!.clear();
+    // versesList.clear();
+    // index = 0;
+    // previousVerseCount = 0;
   }
 
-  setPageIndex(index) {
-    pageIndex = index;
-    //verseIndex = 0;
+  setPageIndex(int i) {
+    pageWidgetindex = i;
+    index = 0;
+    previousVerseCount = 0;
   }
 
   changeOpacity() {
-    //print(opacity);
-    print("**");
-    print(pageIndex);
-    print(index);
-    pageOpacity![0].value = 1.0;
-    index = index + 1;
-    print(pageOpacity);
+    previousVerseCount = 0;
+    if (index < savepageOpacity[pageWidgetindex].length) {
+      savepageOpacity[pageWidgetindex][index].value = 1.0;
+      index = index + 1;
+    }
+    print("change: $savepageOpacity");
   }
-
-  MyServices service = Get.put(MyServices());
 
   int getTotalPageCount() {
     return service.recitation.getInt("endPage")! -
@@ -60,27 +64,41 @@ class RecitationScreenController extends GetxController {
     return service.recitation.getInt("startPage")!;
   }
 
-  setSurahPageData(int pageNumb, int index) {
-    surahNumb = getPageData(pageNumb)[index]["surah"];
+  setSurahPageData(int pageNumb, int partindex, int pageWidgetIndex) {
+    if (partindex == 0) {
+      previousVerseCount = 0;
+    } else {
+      previousVerseCount += versesCount!;
+      print(
+          "else ###################################################### $previousVerseCount");
+    }
+    print("pageNumb: $pageNumb !!");
+    surahNumb = getPageData(pageNumb)[partindex]["surah"];
     allVersescount = getVerseCount(surahNumb!);
-    startVerse = getPageData(pageNumb)[index]["start"];
-    endVerse = getPageData(pageNumb)[index]["end"];
+    startVerse = getPageData(pageNumb)[partindex]["start"];
+    endVerse = getPageData(pageNumb)[partindex]["end"];
     versesCount = endVerse! - startVerse! + 1;
     surahName = getSurahNameArabic(surahNumb!);
     pageJuzNumber = getJuzNumber(surahNumb!, startVerse!);
+
     versesList.clear();
-    ////
-    //pageOpacity!.add(0.02.obs);
+    pageOpacity!.clear();
+
+    print("pre:   ===  $savepageOpacity + $pageWidgetIndex");
+    savepageOpacity.add([]);
+
     for (var i = 0; i < versesCount!; i++) {
-      pageOpacity!.add(0.02.obs);
-      //verseIndex ++;
-      //print(pageOpacity![i]);
+      print(" $savepageOpacity + $pageWidgetIndex");
+      savepageOpacity[pageWidgetIndex].add(0.02.obs);
+
       versesList.addAll(
           getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
               .split(" ")
               .map((D) => Obx(
                     () => Opacity(
-                        opacity: pageOpacity![previousVerseCount].value,
+                        opacity: savepageOpacity[pageWidgetIndex]
+                                [i + previousVerseCount]
+                            .value,
                         child: Text(D,
                             style: TextStyle(
                                 color: D.replaceAll(
@@ -92,7 +110,6 @@ class RecitationScreenController extends GetxController {
                                 fontSize: 21,
                                 fontWeight: FontWeight.w500))),
                   )));
-      previousVerseCount++;
       versesList.add(InkWell(
         onTap: () => () {},
         child: Text(
@@ -105,9 +122,7 @@ class RecitationScreenController extends GetxController {
         ),
       ));
     }
-    //previousVerseCount += versesCount! - 1;
 
-    // opacity!.add(pageOpacity!);
-    print(pageOpacity);
+    print("===> save $savepageOpacity + ${savepageOpacity.length}");
   }
 }

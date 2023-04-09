@@ -75,6 +75,7 @@ class RecitationScreen extends GetView {
                       itemCount: recitationController.getTotalPageCount(),
                       itemBuilder: (context, indexP) {
                         return RecitationPageContent(
+                            indx: indexP,
                             indexP: indexP +
                                 recitationController.getStartPage() -
                                 1);
