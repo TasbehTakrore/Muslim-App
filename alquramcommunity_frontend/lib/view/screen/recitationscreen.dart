@@ -2,6 +2,8 @@ import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../controller/recitationscreen_controller.dart';
 import '../../core/constant/routes.dart';
 import '../../core/localization/changelocal.dart';
@@ -27,7 +29,7 @@ class RecitationScreen extends GetView {
               children: <Widget>[
                 Positioned(
                   bottom: 10.0,
-                  right: 200.0,
+                  right: 120.0,
                   child: FloatingActionButton(
                     heroTag: "next",
                     onPressed: () {
@@ -37,21 +39,22 @@ class RecitationScreen extends GetView {
                     child: Icon(Icons.done),
                   ),
                 ),
-                Positioned(
-                  bottom: 10.0,
-                  right: 100.0,
-                  child: FloatingActionButton(
-                    backgroundColor: Color.fromARGB(255, 248, 206, 149),
-                    onPressed: () {},
-                    heroTag: "hint",
-                    child: Icon(Icons.lightbulb_outline),
+                Obx(
+                  () => Positioned(
+                    bottom: 10.0,
+                    left: 150.0,
+                    child: FloatingActionButton(
+                      backgroundColor: recitationController.hintColor.value,
+                      onPressed: () {
+                        recitationController.showsHint(context);
+                      },
+                      heroTag: "hint",
+                      child: Icon(Icons.lightbulb_outline),
+                    ),
                   ),
-                ),
+                )
               ],
             ),
-
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.centerDocked,
             backgroundColor: AppColor.grey,
             body: ListView(children: [
               Container(

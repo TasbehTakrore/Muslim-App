@@ -1,7 +1,10 @@
 import 'package:alquramcommunity_frontend/core/services/services.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:quran/quran.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../core/constant/color.dart';
 
@@ -19,24 +22,24 @@ class RecitationScreenController extends GetxController {
   int s = -1;
   MyServices service = Get.put(MyServices());
   int pageWidgetindex = 0;
-
+  List<List<String>> beginningVerses = [];
+  List<String>? verseWords;
   int previousVerseCount = 0;
-
-  List<RxDouble>? pageOpacity = [];
   List<List<RxDouble>> savepageOpacity = [];
+  RxString hint = " ".obs;
+  Rx<Color> hintColor = Color.fromARGB(255, 248, 208, 153).obs;
+  List<List<Rx<Color>>> verseColor = [];
+
+  bool firstHint = true;
 
   emptyLists() {
-    pageOpacity!.clear();
-    savepageOpacity!.clear();
+    savepageOpacity.clear();
+    beginningVerses.clear();
+    verseColor.clear();
     previousVerseCount = 0;
     index = 0;
     s = 0;
     pageWidgetindex = 0;
-    // s = 0;
-    // pageOpacity!.clear();
-    // versesList.clear();
-    // index = 0;
-    // previousVerseCount = 0;
   }
 
   setPageIndex(int i) {
@@ -50,8 +53,10 @@ class RecitationScreenController extends GetxController {
     if (index < savepageOpacity[pageWidgetindex].length) {
       savepageOpacity[pageWidgetindex][index].value = 1.0;
       index = index + 1;
+      hintColor.value = Color.fromARGB(255, 248, 208, 153);
+      firstHint = true;
     }
-    print("change: $savepageOpacity");
+    print("index: $index");
   }
 
   int getTotalPageCount() {
@@ -82,34 +87,42 @@ class RecitationScreenController extends GetxController {
     pageJuzNumber = getJuzNumber(surahNumb!, startVerse!);
 
     versesList.clear();
-    pageOpacity!.clear();
 
     print("pre:   ===  $savepageOpacity + $pageWidgetIndex");
     savepageOpacity.add([]);
-
+    beginningVerses.add([]);
+    verseColor.add([]);
     for (var i = 0; i < versesCount!; i++) {
       print(" $savepageOpacity + $pageWidgetIndex");
-      savepageOpacity[pageWidgetIndex].add(0.02.obs);
+      // savepageOpacity[pageWidgetIndex].add(0.03.obs);
 
-      versesList.addAll(
-          getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
-              .split(" ")
-              .map((D) => Obx(
-                    () => Opacity(
-                        opacity: savepageOpacity[pageWidgetIndex]
-                                [i + previousVerseCount]
-                            .value,
-                        child: Text(D,
-                            style: TextStyle(
-                                color: D.replaceAll(
-                                            RegExp('[^\u0621-\u064A ]'), '') ==
-                                        "لله"
-                                    ? Colors.red
-                                    : AppColor.black,
-                                fontFamily: "Quran",
-                                fontSize: 21,
-                                fontWeight: FontWeight.w500))),
-                  )));
+      verseWords = getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
+          .split(" ");
+
+      for (int R = 0; R < verseWords!.length; R++) {
+        if (R == 0) beginningVerses[pageWidgetIndex].add(verseWords![0]);
+        print(beginningVerses);
+        savepageOpacity[pageWidgetIndex].add(0.03.obs);
+        verseColor[pageWidgetIndex].add(Color.fromARGB(255, 0, 0, 0).obs);
+        String D = verseWords![R];
+        versesList.add(
+          Obx(() => Opacity(
+                opacity: savepageOpacity[pageWidgetIndex]
+                        [i + previousVerseCount]
+                    .value,
+                child: Text(
+                  D,
+                  style: TextStyle(
+                    color: verseColor[pageWidgetIndex][i + previousVerseCount]
+                        .value,
+                    fontFamily: "Quran",
+                    fontSize: 21,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              )),
+        );
+      }
       versesList.add(InkWell(
         onTap: () => () {},
         child: Text(
@@ -124,5 +137,44 @@ class RecitationScreenController extends GetxController {
     }
 
     print("===> save $savepageOpacity + ${savepageOpacity.length}");
+  }
+
+  showsHint(BuildContext context) {
+    print(beginningVerses);
+    if (index >= (beginningVerses[pageWidgetindex].length)) return;
+    if (firstHint) {
+      firstHint = false;
+      hint = beginningVerses[pageWidgetindex][index].obs;
+      hintColor.value = Colors.red;
+      //print(beginningVerses[pageWidgetindex].length);
+      return showTopSnackBar(
+        padding: const EdgeInsets.all(90),
+        animationDuration: const Duration(milliseconds: 1000),
+        displayDuration: const Duration(microseconds: 100),
+        Overlay.of(context),
+        Obx(
+          () => CustomSnackBar.info(
+            textStyle: const TextStyle(
+              fontFamily: "Quran",
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: Colors.white,
+            ),
+            message: "... ${hint.value} ...",
+            backgroundColor: Color.fromARGB(255, 248, 208, 153),
+            icon: const Icon(
+              Icons.light_mode_outlined,
+              color: Colors.white,
+              size: 35,
+            ),
+          ),
+        ),
+      );
+    } else {
+      verseColor[pageWidgetindex][index].value = Colors.red;
+      print("not first...........");
+      changeOpacity();
+      firstHint = true;
+    }
   }
 }

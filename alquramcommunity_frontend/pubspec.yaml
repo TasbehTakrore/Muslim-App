@@ -70,6 +70,7 @@ dependencies:
   arabic_numbers: ^1.0.0
   flutter_custom_dialog: ^1.2.0
   dropdown_button2: ^2.0.0
+  top_snackbar_flutter: ^3.0.0+1
 
 
 
