@@ -37,7 +37,8 @@ class RecitationPageContent extends StatelessWidget {
                       ? SurahTitleBorder()
                       : PageTitleBorder(),
                   const SizedBox(height: 15),
-                  QuranRecitation(surahindex: index, pageindex: indexP)
+                  QuranRecitation(surahindex: index, pageindex: indexP),
+
                 ]);
               },
               separatorBuilder: (context, index) => const SizedBox(height: 2))),

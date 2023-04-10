@@ -4,5 +4,8 @@ class AppRoute {
   static const String surahs = "/surahs";
   static const String quran = "/quran";
   static const String recitation = "/recitation";
-  
+  static const String thikr = "/thikr";
+  static const String thikrdetails = "/thikrdetails";
+  static const String signup = "/signUp";
+  static const String forgetPassword = "/forgetPassword";
 }

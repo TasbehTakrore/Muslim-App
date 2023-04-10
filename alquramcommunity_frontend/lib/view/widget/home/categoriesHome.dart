@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../controller/homescreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../data/datasource/static.dart';
 import '../../screen/surahsdialog.dart';
@@ -10,6 +11,8 @@ class ListCategoriesHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return SizedBox(
       height: 100,
       child: ListView.separated(

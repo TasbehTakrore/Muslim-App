@@ -14,7 +14,7 @@ class CustomBottonAppBarHome extends StatelessWidget {
             shape: const CircularNotchedRectangle(),
             child: Row(children: [
               ...List.generate(
-                  controller.listPage.length,
+                  5,
                   ((index) => index == 2
                       ? const Spacer()
                       : CustomButtonAppBar(

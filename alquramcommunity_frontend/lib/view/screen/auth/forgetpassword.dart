@@ -1,9 +1,12 @@
-import 'package:alquramcommunity_frontend/controller/auth/login_controller.dart';
+import 'package:alquramcommunity_frontend/controller/auth/fogetpassword_controller.dart';
+import 'package:alquramcommunity_frontend/controller/auth/signup_controller.dart';
+import 'package:alquramcommunity_frontend/view/widget/auth/bottomsheet.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/custombottomauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtexttitleauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/logoauth.dart';
+import 'package:alquramcommunity_frontend/view/widget/auth/profileimg.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/textsignup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,12 +14,13 @@ import '../../../core/constant/color.dart';
 import '../../../core/constant/routes.dart';
 import '../../widget/custombuttomlang.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class ForgetPassword extends StatelessWidget {
+  const ForgetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    LoginControllerImp controller = Get.put(LoginControllerImp());
+    ForgetPasswordControllerImp controller =
+        Get.put(ForgetPasswordControllerImp());
     return Scaffold(
         //  backgroundColor: AppColor.grey_sec,
 
@@ -28,17 +32,18 @@ class Login extends StatelessWidget {
       ),*/
 
         body: Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
       child: ListView(children: [
-        const SizedBox(height: 65),
+        const SizedBox(height: 25),
+
         CustomTextTitleAuth(
-          text: "4".tr,
+          text: "9".tr,
         ),
-        const SizedBox(height: 10),
-        CustomTextBodyAuth(text: "3".tr),
+
         const SizedBox(height: 25),
         const LogoAuth(),
         const SizedBox(height: 15),
+
         //email
         CustomTextFormAuth(
           labelText: "5".tr,
@@ -47,37 +52,16 @@ class Login extends StatelessWidget {
           mycontroller: controller.email,
           //my controller
         ),
-        //password
-        CustomTextFormAuth(
-          labelText: "6".tr,
-          hinttext: "8".tr,
-          iconData: Icons.lock_outline,
-          mycontroller: controller.password,
-          //my controller
-        ),
 
-        //forget password
-        InkWell(
-          onTap: () {
-            controller.ToForgetPassword();
-          },
-          child: Text("9".tr, textAlign: TextAlign.center),
-        ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CustomButton(
-          textbutton: "10".tr,
+          textbutton: "22".tr,
           onPressed: () {
             Get.toNamed(AppRoute.home);
           },
           color: AppColor.primaryColor,
         ),
         const SizedBox(height: 20),
-        CustomTextSignUpIn(
-            text: "11".tr,
-            text_signup: "12".tr,
-            onTap: () {
-              controller.ToSignUp();
-            }),
       ]),
     ));
   }

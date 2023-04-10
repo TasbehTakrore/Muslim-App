@@ -4,6 +4,6 @@ class CategoryModel {
   final String? title;
   final String? image;
   final Widget? onPressedWidget;
-
-  CategoryModel({this.title, this.image, this.onPressedWidget});
+  final void Function()? press;
+  CategoryModel({this.title, this.image, this.onPressedWidget, this.press});
 }
