@@ -13,35 +13,35 @@ class RecitationPageContent extends StatelessWidget {
   final int indexP;
   final int indx;
 
-  const RecitationPageContent({super.key, required this.indexP, required this.indx});
+  const RecitationPageContent(
+      {super.key, required this.indexP, required this.indx});
 
   @override
   Widget build(BuildContext context) {
     RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
     QuranPageController quranController = Get.put(QuranPageController());
-    return Container(
-      padding: const EdgeInsets.all(14),
-      width: 370,
-      child: Center(
-          child: ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: getSurahCountByPage(indexP + 1),
-              itemBuilder: (context, index) {
-                // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
-                recitationController.setSurahPageData(indexP + 1, index, indx);
-                quranController.setSurahPageData(indexP + 1, index);
-                return Column(children: [
-                  const SizedBox(height: 2),
-                  recitationController.startVerse == 1
-                      ? SurahTitleBorder()
-                      : PageTitleBorder(),
-                  const SizedBox(height: 15),
-                  QuranRecitation(surahindex: index, pageindex: indexP),
 
-                ]);
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 2))),
+    return Container(
+      padding: const EdgeInsets.only(right: 14, left: 14),
+      width: 370,
+      child: ListView.separated(
+          //physics: const NeverScrollableScrollPhysics(),
+          itemCount: getSurahCountByPage(indexP + 1),
+          itemBuilder: (context, index) {
+            // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
+            recitationController.setSurahPageData(indexP + 1, index, indx);
+            quranController.setSurahPageData(indexP + 1, index);
+            return Column(children: [
+              const SizedBox(height: 30),
+              recitationController.startVerse == 1
+                  ? SurahTitleBorder()
+                  : PageTitleBorder(),
+              const SizedBox(height: 15),
+              QuranRecitation(surahindex: index, pageindex: indexP),
+            ]);
+          },
+          separatorBuilder: (context, index) => const SizedBox(height: 2)),
     );
   }
 }

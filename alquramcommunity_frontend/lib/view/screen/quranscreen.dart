@@ -7,7 +7,6 @@ import '../../core/localization/changelocal.dart';
 import '../widget/Quran/quranpagecontent.dart';
 
 class QuranScreen extends GetView {
-
   const QuranScreen({super.key});
 
   @override
@@ -22,28 +21,25 @@ class QuranScreen extends GetView {
         },
         child: Scaffold(
             backgroundColor: const Color.fromARGB(255, 255, 249, 240),
-            body: ListView(children: [
-              Container(
-                  padding: const EdgeInsets.all(5),
-                  width: double.infinity,
-                  height: 900,
-                  child: PageView.builder(
-                      onPageChanged: (index) {
-                        quranController.changePageIndexAndSurahName(index);
-                      },
-                      controller: PageController(
-                          initialPage: quranController.getPageIndex()),
-                      reverse: localeController.myServices.sharedPreferences
-                                  .getString("lang") ==
-                              "en"
-                          ? true
-                          : false,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: totalPagesCount,
-                      itemBuilder: (context, indexP) {
-                        return QuranPageContent(indexP: indexP);
-                      }))
-            ])));
+            body: PageView.builder(
+                onPageChanged: (index) {
+                  quranController.changePageIndexAndSurahName(index);
+                },
+                controller:
+                    PageController(initialPage: quranController.getPageIndex()),
+                reverse: localeController.myServices.sharedPreferences
+                            .getString("lang") ==
+                        "en"
+                    ? true
+                    : false,
+                scrollDirection: Axis.horizontal,
+                itemCount: totalPagesCount,
+                itemBuilder: (context, indexP) {
+                  return QuranPageContent(indexP: indexP);
+                }))
+        //]
+        //)
+        );
   }
 }
 

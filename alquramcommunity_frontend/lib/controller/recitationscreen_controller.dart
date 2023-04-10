@@ -6,6 +6,8 @@ import 'package:quran/quran.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../core/localization/changelocal.dart';
+
 class RecitationScreenController extends GetxController {
   //late int totalPageCount;
   RxList<Widget> versesList = <Widget>[].obs;
@@ -28,6 +30,14 @@ class RecitationScreenController extends GetxController {
   List<List<Rx<Color>>> verseColor = [];
 
   bool firstHint = true;
+  final LocaleController localeController = Get.put(LocaleController());
+
+  EnglishLang() {
+    return localeController.myServices.sharedPreferences.getString("lang") ==
+            "en"
+        ? true
+        : false;
+  }
 
   emptyLists() {
     savepageOpacity.clear();
@@ -36,6 +46,8 @@ class RecitationScreenController extends GetxController {
     previousVerseCount = 0;
     index = 0;
     pageWidgetindex = 0;
+    hintColor = AppColor.thickYellow.obs;
+    firstHint = true;
   }
 
   setPageIndex(int i) {

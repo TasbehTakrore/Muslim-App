@@ -17,31 +17,28 @@ class QuranPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(QuranPageController());
     return GetBuilder<QuranPageController>(
-        builder: (controller) => Container(
-              padding: const EdgeInsets.all(14),
-              width: 370,
-              child: Center(
-                  child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: getSurahCountByPage(indexP + 1),
-                      itemBuilder: (context, index) {
-                        // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
-                        controller.setSurahPageData(indexP + 1, index);
-                        return Column(children: [
-                          const SizedBox(height: 2),
-                          controller.startVerse == 1
-                              ? SurahTitleBorder()
-                              : PageTitleBorder(),
-                          const SizedBox(height: 15),
-                          QuranVerses(
-                            pageindex: indexP,
-                            surahindex: index,
-                          )
-                        ]);
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 2))),
-            ));
+      builder: (controller) => Container(
+          padding: const EdgeInsets.only(left: 14, right: 14),
+          child: ListView.separated(
+              //physics: NeverScrollableScrollPhysics(),
+              itemCount: getSurahCountByPage(indexP + 1),
+              itemBuilder: (context, index) {
+                // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
+                controller.setSurahPageData(indexP + 1, index);
+                return Column(mainAxisSize: MainAxisSize.min, children: [
+                  const SizedBox(height: 20),
+                  controller.startVerse == 1
+                      ? SurahTitleBorder()
+                      : PageTitleBorder(),
+                  const SizedBox(height: 15),
+                  QuranVerses(
+                    pageindex: indexP,
+                    surahindex: index,
+                  )
+                ]);
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 2))),
+    );
   }
 }
 

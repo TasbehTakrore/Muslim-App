@@ -18,6 +18,7 @@ class QuranVerses extends StatelessWidget {
 
     return GetBuilder<QuranPageController>(
         builder: (controller) => Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Wrap(
                     // page verses and page numb
