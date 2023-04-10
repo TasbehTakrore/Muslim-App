@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart';
 
+import '../core/localization/changelocal.dart';
 import '../core/services/services.dart';
 
 class QuranPageController extends GetxController {
@@ -24,6 +25,15 @@ class QuranPageController extends GetxController {
     myServices.quranPage.setInt("lastPageIndex", pageIndex);
     myServices.quranPage.setString(
         "lastSurahName", getSurahName(getPageData(pageIndex + 1)[0]["surah"]));
+  }
+
+  final LocaleController localeController = Get.put(LocaleController());
+
+  bool englishLang() {
+    return localeController.myServices.sharedPreferences.getString("lang") ==
+            "en"
+        ? true
+        : false;
   }
 
   // ignore: non_constant_identifier_names

@@ -35,7 +35,7 @@ class RecitationScreen extends GetView {
                 controller: PageController(
                     //initialPage: quranController.getPageIndex()
                     ),
-                reverse: recitationController.EnglishLang() ? true : false,
+                reverse: recitationController.englishLang() ? true : false,
                 scrollDirection: Axis.horizontal,
                 itemCount: recitationController.getTotalPageCount(),
                 itemBuilder: (context, indexP) {

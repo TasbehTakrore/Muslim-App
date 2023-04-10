@@ -3,7 +3,6 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import '../../core/constant/routes.dart';
-import '../../core/localization/changelocal.dart';
 import '../widget/Quran/quranpagecontent.dart';
 
 class QuranScreen extends GetView {
@@ -11,15 +10,16 @@ class QuranScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final LocaleController localeController = Get.put(LocaleController());
     final QuranPageController quranController = Get.put(QuranPageController());
     return WillPopScope(
         onWillPop: () async {
-          print('Back button pressed!');
+          // print('Back button pressed!');
           Get.toNamed(AppRoute.home);
           return false; // Return true to allow navigation, false to prevent it
         },
         child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.settings), onPressed: () {}),
             backgroundColor: const Color.fromARGB(255, 255, 249, 240),
             body: PageView.builder(
                 onPageChanged: (index) {
@@ -27,19 +27,12 @@ class QuranScreen extends GetView {
                 },
                 controller:
                     PageController(initialPage: quranController.getPageIndex()),
-                reverse: localeController.myServices.sharedPreferences
-                            .getString("lang") ==
-                        "en"
-                    ? true
-                    : false,
+                reverse: quranController.englishLang() ? true : false,
                 scrollDirection: Axis.horizontal,
                 itemCount: totalPagesCount,
                 itemBuilder: (context, indexP) {
                   return QuranPageContent(indexP: indexP);
-                }))
-        //]
-        //)
-        );
+                })));
   }
 }
 

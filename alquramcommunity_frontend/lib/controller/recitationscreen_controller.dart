@@ -32,7 +32,7 @@ class RecitationScreenController extends GetxController {
   bool firstHint = true;
   final LocaleController localeController = Get.put(LocaleController());
 
-  EnglishLang() {
+ bool englishLang() {
     return localeController.myServices.sharedPreferences.getString("lang") ==
             "en"
         ? true
