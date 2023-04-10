@@ -32,7 +32,7 @@ class QuranPageController extends GetxController {
   }
 
   bool anyPageOpend() {
-    if (myServices.quranPage.getInt("lastPageIndex") == Null) return false;
+    if (myServices.quranPage.getInt("lastPageIndex") == null) return false;
     return true;
   }
 
@@ -40,6 +40,7 @@ class QuranPageController extends GetxController {
     int? index;
     if (anyPageOpend() == true) {
       index = myServices.quranPage.getInt("lastPageIndex");
+      print(myServices.quranPage.getInt("lastPageIndex"));
       //update();
       lastPageAndName =
           "${myServices.quranPage.getString("lastSurahName")} - page ${index! + 1}"

@@ -14,14 +14,13 @@ class SurahsDialog extends StatelessWidget {
 
     return GetBuilder<QuranPageController>(
       builder: (controller) {
-        final lastOpenedEng = controller.getLastOpenedEng();
+        // final lastOpenedEng = controller.getLastOpenedEng();
         return AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+                borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
               width: 500,
-              //height: 900,
+              height: 500,
               child: ListView(
                 children: [
                   // CustomAppBar(onPressedIcon: () {}),
@@ -29,7 +28,7 @@ class SurahsDialog extends StatelessWidget {
                       ? CustomCardHome(
                           heigh: 90,
                           title: "Continue from the last reading..",
-                          body: lastOpenedEng.value,
+                          body: controller.getLastOpenedEng().value,
                           fontSize1: 13,
                           fontSize2: 18,
                           onTap: () {
