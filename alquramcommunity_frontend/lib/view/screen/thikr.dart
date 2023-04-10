@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
+import 'package:alquramcommunity_frontend/view/widget/logowidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/homescreen_controller.dart';
@@ -16,48 +17,49 @@ class Thikr extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThikrScreenController controller =
-        Get.put(ThikrScreenControllerImp());
-
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
 
-    return GetBuilder<ThikrScreenController>(
-        builder: (controller) => Scaffold(
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: AppColor.primaryColor,
-                onPressed: () {
-                  Get.toNamed(AppRoute.home);
-                },
-                child: const Icon(Icons.home)),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            bottomNavigationBar: const CustomBottonAppBarHome(),
-            body: ListView(children: [
-              const SizedBox(height: 10),
-              LogoAuth(),
-              const SizedBox(height: 10),
-              Container(
-                  //width: double.infinity,
-                  height: 800,
-                  padding: const EdgeInsets.only(top: 10),
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                  ),
-                  child: Column(
-                    children: const [
-                      Text("{أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "MADDINA")),
-                      SizedBox(height: 10),
-                      ThikrHomeCard2(),
-                    ],
-                  ))
-            ])));
+    return
+        //Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //     backgroundColor: AppColor.primaryColor,
+        //     onPressed: () {
+        //       homeScreenControllerImp.changePage(4);
+        //       Get.offAllNamed(AppRoute.home);
+        //     },
+        //     child: const Icon(Icons.home)),
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.centerDocked,
+        //bottomNavigationBar: const CustomBottonAppBarHome(),
+        //body:
+        ListView(children: [
+      const SizedBox(height: 10),
+      //LogoAuth(),
+      CustomAppBar(onPressedIcon: () {}),
+      const SizedBox(height: 10),
+      Container(
+          //width: double.infinity,
+          height: 800,
+          padding: const EdgeInsets.only(top: 10),
+          margin: EdgeInsets.symmetric(horizontal: 15),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          ),
+          child: Column(
+            children: const [
+              Text("{أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ}",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "MADDINA")),
+              SizedBox(height: 10),
+              ThikrHomeCard2(),
+            ],
+          ))
+    ])
+        //)
+        ;
   }
 }

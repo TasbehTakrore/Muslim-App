@@ -3,6 +3,7 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
+import '../view/screen/thikr.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int currentPage);
@@ -25,6 +26,7 @@ class HomeScreenControllerImp extends HomeScreenController {
       child: Center(child: Text("Notifications")),
     ),
     const Home(),
+    const Thikr(),
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];

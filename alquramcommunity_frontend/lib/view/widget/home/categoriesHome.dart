@@ -11,8 +11,6 @@ class ListCategoriesHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SizedBox(
       height: 100,
       child: ListView.separated(
@@ -22,15 +20,13 @@ class ListCategoriesHome extends StatelessWidget {
         itemBuilder: (context, index) {
           return Column(children: [
             InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CategoryList[index].onPressedWidget!;
-                    ;
-                  },
-                );
-              },
+              onTap: index > 2
+                  ? CategoryList[index].onPressed
+                  : () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CategoryList[index].onPressedWidgetDialog!;
+                      }),
               // CategoryList[index].onPressed,
               child: Container(
                   decoration: BoxDecoration(

@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -7,35 +8,48 @@ import '../../view/widget/recitation/smartrecitationdialog.dart';
 import '../../view/screen/surahsdialog.dart';
 import '../model/front_models/categorymodel.dart';
 
+HomeScreenControllerImp homeScreenController =
+    Get.put(HomeScreenControllerImp());
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
       title: "Smart trainer",
       image: AppImageAsset.question,
-      onPressedWidget: Text("Test")),
+      onPressedWidgetDialog: Text("Test")),
   CategoryModel(
       title: "Smart recitation",
       image: AppImageAsset.quranCategory,
-      onPressedWidget: SmartRecitationDialog()),
+      onPressedWidgetDialog: SmartRecitationDialog()),
   CategoryModel(
       title: "Quran",
       image: AppImageAsset.reading,
-      onPressedWidget: const SurahsDialog()),
+      onPressedWidgetDialog: const SurahsDialog()),
   CategoryModel(
     title: "Qibla",
     image: AppImageAsset.qibla,
-    onPressedWidget: Text("Test"),
+    onPressedWidgetDialog: Text("Test"),
   ),
   CategoryModel(
       title: "Tasbeeh",
       image: AppImageAsset.rosary,
-      onPressedWidget: Text("Test")),
+      onPressedWidgetDialog: Text("Test")),
   CategoryModel(
       title: "Prayer",
       image: AppImageAsset.prayer,
-      onPressedWidget: Text("Test")),
+      onPressedWidgetDialog: Text("")
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return CategoryList[index].onPressedWidget!;
+      //     ;
+      //   },
+      // );
+      ),
   CategoryModel(
-      title: "Dhikr", image: AppImageAsset.duaa, onPressedWidget: Thikr())
+    title: "Dhikr",
+    image: AppImageAsset.duaa,
+    onPressed: () => homeScreenController.changePage(5),
+  )
 ];
 
 List<CategoryModel> ThikrCategoryList = [
