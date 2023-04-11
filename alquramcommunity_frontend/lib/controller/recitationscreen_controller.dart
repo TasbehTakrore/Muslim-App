@@ -32,7 +32,7 @@ class RecitationScreenController extends GetxController {
   bool firstHint = true;
   final LocaleController localeController = Get.put(LocaleController());
 
- bool englishLang() {
+  bool englishLang() {
     return localeController.myServices.sharedPreferences.getString("lang") ==
             "en"
         ? true
@@ -101,7 +101,7 @@ class RecitationScreenController extends GetxController {
           .split(" ");
       for (int R = 0; R < verseWords!.length; R++) {
         if (R == 0) beginningVerses[pageWidgetIndex].add(verseWords![0]);
-        savepageOpacity[pageWidgetIndex].add(0.03.obs);
+        savepageOpacity[pageWidgetIndex].add(0.02.obs);
         verseColor[pageWidgetIndex].add(Colors.black.obs);
         String D = verseWords![R];
         versesList.add(
