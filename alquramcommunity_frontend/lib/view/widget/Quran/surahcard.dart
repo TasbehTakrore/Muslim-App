@@ -2,6 +2,7 @@ import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../../controller/surahs_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
@@ -25,6 +26,7 @@ class SurahCard extends GetView<QuranPageController> {
 
   @override
   Widget build(BuildContext context) {
+    SurahsController surahsController = Get.put(SurahsController());
     return Container(
       decoration: BoxDecoration(
           color: AppColor.light2Yellow,
@@ -44,13 +46,15 @@ class SurahCard extends GetView<QuranPageController> {
           ]),
         ),
         title: Text(surahName, style: const TextStyle(fontSize: 16)),
-        trailing: Text(surahNumber,
-            style: const TextStyle(fontFamily: "SurahTitle", fontSize: 50)),
+        trailing: Text(
+            surahsController.suramNumberToSVG[int.parse(surahNumber) - 1],
+            style: int.parse(surahNumber) - 1 < 59
+                ? const TextStyle(fontFamily: "SurahTitle", fontSize: 50)
+                : const TextStyle(fontFamily: "SurahTitle2", fontSize: 50)),
         subtitle: Text("$placeOfRevelation - $verseCount Ayah",
             style: const TextStyle(fontSize: 10)),
         onTap: () {
           controller.changePageIndexAndSurahName(startPage);
-          
           Get.toNamed(AppRoute.quran);
           //onTap;
         },

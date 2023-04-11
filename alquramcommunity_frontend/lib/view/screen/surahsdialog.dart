@@ -19,8 +19,8 @@ class SurahsDialog extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
-              width: 500,
-              height: 500,
+              width: 600,
+              height: 650,
               child: ListView(
                 children: [
                   // CustomAppBar(onPressedIcon: () {}),

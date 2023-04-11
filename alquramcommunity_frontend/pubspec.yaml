@@ -152,9 +152,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Quran/QuranSurah1-mLKO5.ttf
           weight: 700
+    - family: SurahTitle2
+      fonts:
+        - asset: assets/fonts/Quran/QuranSurah2-7Bov4.ttf
+          weight: 700
 
-
-          #QuranSurah1-mLKO5.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
