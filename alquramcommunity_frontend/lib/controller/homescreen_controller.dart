@@ -39,6 +39,7 @@ class HomeScreenControllerImp extends HomeScreenController {
 
   @override
   changePage(int index) {
+    currentPage = index;
     content = listPage[index].obs;
     update();
   }
