@@ -29,7 +29,7 @@ class SignUp extends StatelessWidget {
           userEmail: controller.email.text,
           userAge: int.parse(controller.age.text),
           userPassword: controller.password.text);
-      print("a");
+      print(signUpUser);
     }
 
     return Scaffold(
