@@ -1,64 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/thikrCatgController.dart';
+import '../../core/constant/color.dart';
 import '../../data/model/front_models/thikrmodel.dart';
+import '../widget/thikr/ThikrDataCard.dart';
+import '../widget/thikr/ThikrCardBottom.dart';
 
-class ThikrDetails extends StatelessWidget {
+class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   const ThikrDetails({super.key});
-
   @override
   Widget build(BuildContext context) {
-    dynamic argumentData = Get.arguments;
-    ThikrCatgController thikrCatgController = Get.put(ThikrCatgController());
-    //List<Thikr> sections = [];
-
+   
+    ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
+    thikrCatgController.onInit();
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-            child: Text("Ayah"),
-            onPressed: () {
-              print(thikrCatgController
-                  .myData.value.thikr![0].tEXT![0].aRABICTEXT);
-            }),
+      appBar: AppBar(
+        title: const Text("  Muslim Remembrance"),
+        shape: ShapeBorder.lerp(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.0),
+          ),null,0,
+        ),
+        backgroundColor: AppColor.primaryColor,
       ),
-
-      //     FutureBuilder(
-      //   future: thikrCatgController.getAthkar(),
-      //   builder: (context, data) {
-      //     if (data.hasError) {
-      //       return Center(child: Text("${data.error}"));
-      //     } else if (data.hasData) {
-      //       var section = data.data;
-      //       print("===> ${section["Thikr"][0]}");
-      //       return ListView.builder(
-      //           itemCount: section.length == 0 ? 0 : section.length,
-      //           itemBuilder: (context, index) {
-      //             return Card(
-      //               elevation: 5,
-      //               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      //               child: Container(
-      //                 child: Row(
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   children: [
-      //                     // Container(
-      //                     //   width:50,
-      //                     //   height:50,
-      //                     //   child:
-      //                     // //Text(section.),
-
-      //                     // ),
-      //                   ],
-      //                 ),
-      //               ),
-      //             );
-      //           });
-      //     } else {
-      //       return Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     }
-      //   },
-      // )
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+            future:  thikrCatgController.loadJSON(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if(snapshot.hasError) {
+                return Center(child: Text("${snapshot.error}"));
+              }
+              else if (snapshot.hasData) {
+                var section = snapshot.data;
+                thikrCatgController.my();
+                final data = List<Thikr>.from(section["Thikr"].map((x) => Thikr.fromJson(x)));
+                return ListView.builder(
+                    itemCount: section.length == 0 ? 0 : section.length,
+                    itemBuilder: (context, index) {
+                      if (data != null ) {
+                        return Container (
+                        margin: EdgeInsets.symmetric(horizontal: 20,vertical:20),
+                        height: 600,
+                        child:  ListView.builder(
+                          itemCount: data[thikrCatgController.selectedThikr].tEXT!.length ,
+                          itemBuilder: (BuildContext context,  i){
+                            thikrCatgController.countersList[index][i]=data[thikrCatgController.selectedThikr].tEXT![i].rEPEAT!.obs ;
+                            return ThikrDataCardArabic(arabicText:data[thikrCatgController.selectedThikr].tEXT![i].aRABICTEXT.toString(),Catg: index,subCatg: i,);
+                          } ),
+                      );
+                      }
+                    });
+              }
+              else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+          ),
+        ],
+      )
     );
+  
+      
   }
 }

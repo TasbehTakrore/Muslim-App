@@ -2,6 +2,8 @@ import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/constant/imageasset.dart';
+
 class ProfileImg extends StatelessWidget {
   final void Function()? onTap;
   const ProfileImg({super.key, required this.onTap});
