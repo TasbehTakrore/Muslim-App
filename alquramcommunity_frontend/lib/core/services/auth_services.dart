@@ -51,34 +51,33 @@ class AuthServices {
   }
 
 //Sign in
-void signInUser({
+  void signInUser({
     required BuildContext context,
     required String userEmail,
     required String userPassword,
-  })async{
-    try{
-      http.Response res= await http.post(
-      Uri.parse('$uri/users/logIn'),
-      body:jsonEncode({
-        'userEmail':userEmail,
-        'userPassword':userPassword,
-      }),
-      headers: <String,String>{
-      'Content-Type':'application/json; charset=UTF-8',
-      },
+  }) async {
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/users/logIn'),
+        body: jsonEncode({
+          'userEmail': userEmail,
+          'userPassword': userPassword,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
       print(res.body);
-    if (res.statusCode == 200) {
-      print('login in success');
-      
-      Get.toNamed(AppRoute.home);
-    } else {
-      print('login failed with status code ${res.statusCode}');
-    }
-  } catch (error) {
-    print('login failed with error $error');
-  }
+      if (res.statusCode == 200) {
+        print('login in success');
 
+        Get.toNamed(AppRoute.home);
+      } else {
+        print('login failed with status code ${res.statusCode}');
+      }
+    } catch (error) {
+      print('login failed with error $error');
+    }
   }
 }
 

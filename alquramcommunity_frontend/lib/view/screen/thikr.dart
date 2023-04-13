@@ -33,14 +33,16 @@ class Thikr extends StatelessWidget {
         //     FloatingActionButtonLocation.centerDocked,
         //bottomNavigationBar: const CustomBottonAppBarHome(),
         //body:
-        ListView(children: [
-      const SizedBox(height: 10),
+        ListView(
+          
+          children: [
+      // const SizedBox(height: 10),
       //LogoAuth(),
-      CustomAppBar(onPressedIcon: () {}),
+      // CustomAppBar(onPressedIcon: () {}),
       const SizedBox(height: 10),
       Container(
           //width: double.infinity,
-          height: 800,
+          //height: 800,
           padding: const EdgeInsets.only(top: 10),
           margin: EdgeInsets.symmetric(horizontal: 15),
           decoration: const BoxDecoration(
