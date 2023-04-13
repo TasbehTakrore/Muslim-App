@@ -13,6 +13,8 @@ class RecitationScreen extends GetView {
   Widget build(BuildContext context) {
     final RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
+//final PageController _pageController = PageController();
+// final PageController _pageController = PageController();
 
     return WillPopScope(
         onWillPop: () async {
@@ -27,16 +29,26 @@ class RecitationScreen extends GetView {
                   recitationController.setPageIndex(index);
                   // quranController.changePageIndexAndSurahName(index);
                 },
-                controller: PageController(
-                    //initialPage: quranController.getPageIndex()
-                    ),
+                controller: recitationController.pageController,
                 reverse: recitationController.englishLang() ? true : false,
                 scrollDirection: Axis.horizontal,
                 itemCount: recitationController.getTotalPageCount(),
                 itemBuilder: (context, indexP) {
-                  return RecitationPageContent(
-                      indx: indexP,
-                      indexP: indexP + recitationController.getStartPage() - 1);
+                  return
+                      // Column(children: [
+                      //   Text("$indexP"),
+                      //   ElevatedButton(
+                      //     child: Text("test"),
+                      //     onPressed: () {
+                      //       recitationController.goToNextPage();
+                      //     },
+                      //   )
+                      // ]);
+                      RecitationPageContent(
+                          context: context,
+                          indx: indexP,
+                          indexP:
+                              indexP + recitationController.getStartPage() - 1);
                 })));
   }
 }
