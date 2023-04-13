@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../constant/routes.dart';
 //String uri='http://192.168.1.7:5000';
 
+
 String uri = 'http://192.168.1.8:5000';
 
 class AuthServices {
@@ -79,3 +80,4 @@ class AuthServices {
     }
   }
 }
+
