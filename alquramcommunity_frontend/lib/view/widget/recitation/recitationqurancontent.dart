@@ -12,9 +12,13 @@ import 'quranforrecitation.dart';
 class RecitationPageContent extends StatelessWidget {
   final int indexP;
   final int indx;
+  final BuildContext context;
 
   const RecitationPageContent(
-      {super.key, required this.indexP, required this.indx});
+      {super.key,
+      required this.indexP,
+      required this.indx,
+      required this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class RecitationPageContent extends StatelessWidget {
           itemCount: getSurahCountByPage(indexP + 1),
           itemBuilder: (context, index) {
             // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
-            recitationController.setSurahPageData(indexP + 1, index, indx);
+            recitationController.setSurahPageData(indexP + 1, index, indx, context);
             quranController.setSurahPageData(indexP + 1, index);
             return Column(children: [
               const SizedBox(height: 30),

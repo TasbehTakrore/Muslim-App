@@ -1,13 +1,8 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import 'package:quran/quran.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../controller/recitationscreen_controller.dart';
 import '../../core/constant/routes.dart';
-import '../../core/localization/changelocal.dart';
-import '../widget/Quran/quranpagecontent.dart';
 import '../widget/recitation/floatingbuttonsgroup.dart';
 import '../widget/recitation/recitationqurancontent.dart';
 
@@ -18,6 +13,8 @@ class RecitationScreen extends GetView {
   Widget build(BuildContext context) {
     final RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
+//final PageController _pageController = PageController();
+// final PageController _pageController = PageController();
 
     return WillPopScope(
         onWillPop: () async {
@@ -32,16 +29,26 @@ class RecitationScreen extends GetView {
                   recitationController.setPageIndex(index);
                   // quranController.changePageIndexAndSurahName(index);
                 },
-                controller: PageController(
-                    //initialPage: quranController.getPageIndex()
-                    ),
+                controller: recitationController.pageController,
                 reverse: recitationController.englishLang() ? true : false,
                 scrollDirection: Axis.horizontal,
                 itemCount: recitationController.getTotalPageCount(),
                 itemBuilder: (context, indexP) {
-                  return RecitationPageContent(
-                      indx: indexP,
-                      indexP: indexP + recitationController.getStartPage() - 1);
+                  return
+                      // Column(children: [
+                      //   Text("$indexP"),
+                      //   ElevatedButton(
+                      //     child: Text("test"),
+                      //     onPressed: () {
+                      //       recitationController.goToNextPage();
+                      //     },
+                      //   )
+                      // ]);
+                      RecitationPageContent(
+                          context: context,
+                          indx: indexP,
+                          indexP:
+                              indexP + recitationController.getStartPage() - 1);
                 })));
   }
 }

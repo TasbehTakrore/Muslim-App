@@ -59,7 +59,7 @@ class SmartRecitationDialog extends StatelessWidget {
                   Text("Hint each 5sec"),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               CustomButton(

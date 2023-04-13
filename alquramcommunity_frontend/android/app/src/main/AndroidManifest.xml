@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tasbehtest">
    <application
-        android:label="tasbehtest"
+        android:label="Al-Quran Community"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
