@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                     fontSize: 16))),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? HomeScreen()
+            ? Login()
             : Language(),
 
         // myServices.sharedPreferences.

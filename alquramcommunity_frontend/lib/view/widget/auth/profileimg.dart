@@ -1,6 +1,8 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/constant/imageasset.dart';
+
 class ProfileImg extends StatelessWidget {
   final void Function()? onTap;
   const ProfileImg({super.key, required this.onTap});
@@ -12,7 +14,7 @@ class ProfileImg extends StatelessWidget {
          children:  [
           const CircleAvatar(
             radius: 80,
-            backgroundImage: AssetImage("assets/images/profileimg.png"),
+            backgroundImage: AssetImage(AppImageAsset.quranLogo),
           ),
           Positioned(
             bottom:20,

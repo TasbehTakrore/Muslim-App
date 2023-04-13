@@ -15,4 +15,15 @@ class AppImageAsset {
   static const String numbFrame = "$rootImages/numbFrame.svg";
   static const String titleBorder = "$rootImages/titleBorder.png";
   static const String surahHead = "$rootImages/surahHead.svg";
+
+  //thikr catg imgs
+  static const String morning= "$rootImages/morning.png";
+  static const String evening = "$rootImages/evening.png";
+  static const String sleep = "$rootImages/sleep.png";
+  static const String wakeup = "$rootImages/wakeup.png";
+  static const String wudu = "$rootImages/wudhu.png";
+  static const String praying = "$rootImages/praying.png";
+  static const String athan = "$rootImages/athan.png";
+  static const String dua = "$rootImages/duaa.png";
+
 }

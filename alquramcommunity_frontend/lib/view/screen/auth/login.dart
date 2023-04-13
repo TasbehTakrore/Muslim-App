@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/auth/login_controller.dart';
+import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/custombottomauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.dart';
@@ -17,6 +18,13 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoginControllerImp controller = Get.put(LoginControllerImp());
+    void signInUser(){
+        authservices.signInUser(
+        context: context,
+        userEmail: controller.email.text,
+        userPassword: controller.password.text);
+        
+    }
     return Scaffold(
         //  backgroundColor: AppColor.grey_sec,
 
@@ -67,7 +75,7 @@ class Login extends StatelessWidget {
         CustomButton(
           textbutton: "10".tr,
           onPressed: () {
-            Get.toNamed(AppRoute.home);
+            signInUser();
           },
           color: AppColor.primaryColor,
         ),

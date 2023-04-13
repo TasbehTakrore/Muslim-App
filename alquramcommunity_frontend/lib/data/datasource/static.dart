@@ -52,32 +52,46 @@ List<CategoryModel> CategoryList = [
   )
 ];
 
+//athkar main category models 
 List<CategoryModel> ThikrCategoryList = [
   CategoryModel(
-    title: "أذْكارُ الصباح والمساء",
-    image: AppImageAsset.quranLogo,
-    //     onPressed: () {
-    //       Get.toNamed(AppRoute.surahs);
-    // }
+    //morning
+    title: "23".tr,
+    image: AppImageAsset.morning,
   ),
   CategoryModel(
-    title: "أذْكارُ الاستيقاظ",
-    image: AppImageAsset.quranLogo,
+    //evening
+    title: "24".tr,
+    image: AppImageAsset.evening,
   ),
   CategoryModel(
-    title: "أذْكارُ الصّلاة",
-    image: AppImageAsset.quranLogo,
+    //walking up
+    title: "25".tr,
+    image: AppImageAsset.wakeup,
   ),
   CategoryModel(
-    title: "أَذْكار الوضوء",
-    image: AppImageAsset.quranLogo,
+    //sleeping
+    title: "26".tr,
+    image: AppImageAsset.sleep,
   ),
   CategoryModel(
-    title: "أَذْكار مُتَفرِّقة",
-    image: AppImageAsset.quranLogo,
+    //Athan
+    title: "27".tr,
+    image: AppImageAsset.athan,
   ),
   CategoryModel(
-    title: "أذْكارُ النّوم",
-    image: AppImageAsset.quranLogo,
+    //wudu
+    title: "28".tr,
+    image: AppImageAsset.wudu,
+  ),
+  CategoryModel(
+    //pray
+    title: "29".tr,
+    image: AppImageAsset.praying,
+  ),
+  CategoryModel(
+    //other
+    title: "30".tr,
+    image: AppImageAsset.dua,
   ),
 ];
