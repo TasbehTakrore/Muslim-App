@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -14,10 +15,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: AppColor.grey,
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ListView(
           children: [
-            CustomAppBar(onPressedIcon: () {}),
+            // CustomAppBar(onPressedIcon: () {}),
             CustomCardHome(
               heigh: 150,
               title: "2".tr,

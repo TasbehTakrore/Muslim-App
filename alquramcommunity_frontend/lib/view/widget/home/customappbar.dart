@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/view/widget/logowidget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      color: AppColor.grey,
+      margin: const EdgeInsets.only(top: 2),
       child: Row(children: [
         const Expanded(flex: 1, child: logoWidget(logowidth: 70, sizeType: 2)),
         Expanded(
@@ -23,7 +25,9 @@ class CustomAppBar extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 5),
                         child: const Text("12",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))),
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold))),
                     const SizedBox(width: 10),
                     Container(
                         margin:
@@ -33,7 +37,10 @@ class CustomAppBar extends StatelessWidget {
                   ]),
                   const SizedBox(height: 5),
                   Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    const Text("24580", style: TextStyle(fontSize: 13)),
+                    const Text(
+                      "24580",
+                      style: TextStyle(fontSize: 13, color: Colors.black),
+                    ),
                     const SizedBox(width: 8),
                     Container(
                         margin: const EdgeInsets.only(left: 11, right: 12),

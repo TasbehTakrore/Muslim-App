@@ -22,11 +22,10 @@ class logoWidget extends StatelessWidget {
           //padding: EdgeInsets.only(top: ),
           InkWell(
             onTap: () {
-              
               Get.toNamed(AppRoute.home);
             },
             child: Container(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(top: 2),
               child: Image.asset(
                 AppImageAsset.quranLogo,
                 width: logowidth,

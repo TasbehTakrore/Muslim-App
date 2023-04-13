@@ -30,6 +30,10 @@ class MyApp extends StatelessWidget {
         title: 'Al Quran Community',
         locale: controller.language,
         theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              toolbarHeight: 80,
+              //height: 80.0,
+            ),
             //fontFamily: "CaiPlayfairDisplayro",
             textTheme: TextTheme(
                 headlineLarge: TextStyle(
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
                     fontSize: 16))),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? Login()
+            ? HomeScreen()
             : Language(),
 
         // myServices.sharedPreferences.
