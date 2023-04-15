@@ -61,6 +61,7 @@ class QuranPageController extends GetxController {
   }
 
   setSurahPageData(int pageNumb, int index) {
+    
     surahNumb = getPageData(pageNumb)[index]["surah"];
     allVersescount = getVerseCount(surahNumb!);
     startVerse = getPageData(pageNumb)[index]["start"];

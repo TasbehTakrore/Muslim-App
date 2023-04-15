@@ -4,8 +4,10 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import '../../core/constant/routes.dart';
 import '../../view/screen/thikr.dart';
+import '../../view/widget/recitation/listsurahcardrecitation.dart';
 import '../../view/widget/recitation/smartrecitationdialog.dart';
 import '../../view/screen/surahsdialog.dart';
+import '../../view/widget/recitation/surahdialogrecitation.dart';
 import '../model/front_models/categorymodel.dart';
 
 HomeScreenControllerImp homeScreenController =
@@ -19,7 +21,7 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
       title: "Smart recitation",
       image: AppImageAsset.quranCategory,
-      onPressedWidgetDialog: SmartRecitationDialog()),
+      onPressedWidgetDialog: SurahsDialogRecitation()),
   CategoryModel(
       title: "Quran",
       image: AppImageAsset.reading,
@@ -52,7 +54,7 @@ List<CategoryModel> CategoryList = [
   )
 ];
 
-//athkar main category models 
+//athkar main category models
 List<CategoryModel> ThikrCategoryList = [
   CategoryModel(
     //morning

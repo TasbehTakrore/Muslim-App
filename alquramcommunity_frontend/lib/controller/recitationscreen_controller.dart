@@ -1,19 +1,18 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
-import 'package:alquramcommunity_frontend/core/services/services.dart';
+import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../core/localization/changelocal.dart';
+import '../core/services/services.dart';
 import '../data/model/front_models/verseInformation.dart';
 
 class RecitationScreenController extends GetxController {
-  final PageController pageController = Get.put(PageController());
-
-  //late int totalPageCount;
+  MyServices myServices = Get.put(MyServices());
   RxList<Widget> versesList = <Widget>[].obs;
   int? surahNumb;
   int? startVerse;
@@ -41,18 +40,29 @@ class RecitationScreenController extends GetxController {
   List<VerseInformation> hintsList = [];
   int hintsCount = 0;
   int mistakesCount = 0;
-
+  int? pageWidgetIndexSave;
+  int? partIndex;
+  int? surahCountSave;
   bool next = false;
   BuildContext? context;
-  // RecitationScreenController.withoutContext();
+  bool? setBlack = true;
+  Rx<IconData> nextReloadIcon = Icons.done.obs;
+  List<List<int>> listOfversesID = [];
+  List<List<int>> listOfSurahsID = [];
 
-  // RecitationScreenController(BuildContext this.context);
+  get nextReload => nextReloadIcon;
+  changePageIndex(int pageIndex) {
+    service.recitation.setInt("startIndexRecit", pageIndex);
+    emptyLists();
+    createLists();
+  }
 
-  bool englishLang() {
-    return localeController.myServices.sharedPreferences.getString("lang") ==
-            "en"
-        ? true
-        : false;
+  setNextIcon() {
+    nextReloadIcon.value = Icons.done;
+  }
+
+  setReloadIcon() {
+    nextReloadIcon.value = Icons.replay_outlined;
   }
 
   emptyLists() {
@@ -61,138 +71,169 @@ class RecitationScreenController extends GetxController {
     savepageOpacity.clear();
     beginningVerses.clear();
     verseColor.clear();
+    listOfversesID.clear();
+    listOfSurahsID.clear();
     previousVerseCount = 0;
     index = 0;
-    pageWidgetindex = 0;
+    pageWidgetindex = getPageIndex();
     hintColor = AppColor.thickYellow.obs;
     firstHint = true;
     allVersesInformation.clear();
     mistakesList.clear();
     hintsList.clear();
-    totalPageCount = 0;
-    indexP = 0;
+    totalPageCount = 604;
+    setNextIcon();
+    //indexP = 0;
+  }
+
+  createLists() {
+    savepageOpacity.addAll(List.generate(604, (_) => []));
+    beginningVerses.addAll(List.generate(604, (_) => []));
+    verseColor.addAll(List.generate(604, (_) => []));
+    listOfversesID.addAll(List.generate(604, (_) => []));
+    listOfSurahsID.addAll(List.generate(604, (_) => []));
+  }
+
+  bool englishLang() {
+    return localeController.myServices.sharedPreferences.getString("lang") ==
+            "en"
+        ? true
+        : false;
+  }
+
+  // ignore: non_constant_identifier_names
+  int getPageIndex() {
+    return myServices.quranPage.getInt("startIndexRecit")! - 1;
   }
 
   setPageIndex(int i) {
     pageWidgetindex = i;
     index = 0;
     previousVerseCount = 0;
+    setNextIcon();
   }
 
   changeOpacity() {
     previousVerseCount = 0;
+
+    //print(" ${savepageOpacity[pageWidgetindex].length} + $index");
     if (index < savepageOpacity[pageWidgetindex].length) {
       savepageOpacity[pageWidgetindex][index].value = 1.0;
+      if (setBlack == true)
+        verseColor[pageWidgetindex][index].value = Colors.black;
       index = index + 1;
+      if (index == savepageOpacity[pageWidgetindex].length) setReloadIcon();
+      setBlack = true;
+      for (int i = index; i < savepageOpacity[pageWidgetindex].length; i++) {
+        verseColor[pageWidgetindex][i].value =
+            Color.fromARGB(255, 242, 242, 242);
+        //savepageOpacity[pageWidgetindex][i].value = 0.02;
+      }
+
       hintColor.value = AppColor.thickYellow;
       firstHint = true;
-      print("inside: ${savepageOpacity[pageWidgetindex].length}");
-      print(savepageOpacity);
-      // } else {
+      //print("inside: ${savepageOpacity[pageWidgetindex]}");
+      //print(verseColor[pageWidgetindex]);
+      //print(savepageOpacity);
+    } else if (index == savepageOpacity[pageWidgetindex].length) {
+      //print("nooow");
+      reStartPage();
     }
-    if (index == savepageOpacity[pageWidgetindex].length) {
-      next = true;
-      goToNextPage();
+    // print(totalPageCount);
+  }
+
+  reStartPage() {
+    previousVerseCount = 0;
+
+    int index = 0;
+    while (index < savepageOpacity[pageWidgetindex].length) {
+      savepageOpacity[pageWidgetindex][index].value = 0.2;
+      verseColor[pageWidgetindex][index].value = Colors.black;
+      index = index + 1;
+      //print(savepageOpacity[pageWidgetindex]);
+      //print("${savepageOpacity[pageWidgetindex]}");
     }
-    print(totalPageCount);
+    setPageIndex(pageWidgetindex);
   }
 
   goToNextPage() {
-    if (pageWidgetindex + 1 == totalPageCount) {
-      return showDialog(
-          context: context!,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              //backgroundColor: Colors.white.withOpacity(0.1),
-              contentPadding: EdgeInsets.all(0),
-              iconPadding: EdgeInsets.all(0),
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              content: Container(
-                  height: 400,
-                  width: 300,
-                  child: ListView(
-                    children: [
-                      Positioned(
-                        top: 0.01,
-                        child: Container(
-                          color: AppColor.primaryColor,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              "Pages:${getStartPage()} - ${getEndPage()}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
+    //print(" hiiiiiii $pageWidgetindex  + $totalPageCount");
+    // if (pageWidgetindex + 1 == totalPageCount) {
+    return showDialog(
+        context: context!,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //backgroundColor: Colors.white.withOpacity(0.1),
+            contentPadding: EdgeInsets.all(0),
+            iconPadding: EdgeInsets.all(0),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            content: Container(
+                height: 400,
+                width: 300,
+                child: ListView(
+                  children: [
+                    Positioned(
+                      top: 0.01,
+                      child: Container(
+                        color: AppColor.primaryColor,
+                        height: 50,
+                        child: const Center(
+                          child: Text(
+                            "  bjdskalm",
+                            //  "Pages:${getStartPage()} - ${getEndPage()}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
-                      Text("Total hints: $hintsCount",
-                          style: TextStyle(fontSize: 20),
-                          textAlign: TextAlign.center),
-                      // Positioned(
-                      //   top: 0,
-                      //   child: Container(
-                      //     width: 500,
-                      //     height: 300,
-                      //     child: ListView.builder(
-                      //         physics: NeverScrollableScrollPhysics(),
-                      //         itemCount: hintsCount,
-                      //         itemBuilder: ((context, index) => Text(
-                      //             "${hintsList[index].surahName}: Verse ${hintsList[index].verseId}}"))),
-                      //   ),
-                      // ),
-                      const Divider(
-                        height: 10,
-                      ),
-                      Text("Total mistakes: $mistakesCount",
-                          style: TextStyle(fontSize: 20),
-                          textAlign: TextAlign.center),
-                    ],
-                  )),
-            );
-          });
-    }
-    // next = false;
-
-    // else if (pageWidgetindex + 1 < totalPageCount) {
-    //   //else {
-    //   pageController.nextPage(
-    //       duration: const Duration(milliseconds: 800), curve: Curves.easeIn);
-    // }
-    //   // print("${pageWidgetindex + 1} ********** $totalPageCount");
-    // }
+                    ),
+                    Text("Total hints: $hintsCount",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center),
+                    // Positioned(
+                    //   top: 0,
+                    //   child: Container(
+                    //     width: 500,
+                    //     height: 300,
+                    //     child: ListView.builder(
+                    //         physics: NeverScrollableScrollPhysics(),
+                    //         itemCount: hintsCount,
+                    //         itemBuilder: ((context, index) => Text(
+                    //             "${hintsList[index].surahName}: Verse ${hintsList[index].verseId}}"))),
+                    //   ),
+                    // ),
+                    const Divider(
+                      height: 10,
+                    ),
+                    Text("Total mistakes: $mistakesCount",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center),
+                  ],
+                )),
+          );
+        });
+    //}
   }
 
-  int getTotalPageCount() {
-    totalPageCount = service.recitation.getInt("endPage")! -
-        service.recitation.getInt("startPage")! +
-        1;
-    print("The totel: $totalPageCount");
-    return totalPageCount;
-  }
-
-  int getStartPage() {
-    return service.recitation.getInt("startPage")!;
-  }
-
-  int getEndPage() {
-    return service.recitation.getInt("endPage")!;
-  }
-
-  setSurahPageData(int pageNumb, int partindex, int pageWidgetIndex, contex) {
+  setSurahPageData(int pageNumb, int partindex, int pageWidgetIndex,
+      BuildContext contex, int surahCount) {
     if (partindex == 0) {
       previousVerseCount = 0;
     } else {
       previousVerseCount += versesCount!;
     }
+
+    surahCountSave = surahCount;
     context = contex;
     indexP = pageNumb;
+    partIndex = partindex;
+    pageWidgetIndexSave = pageWidgetIndex;
     surahNumb = getPageData(pageNumb)[partindex]["surah"];
     allVersescount = getVerseCount(surahNumb!);
     startVerse = getPageData(pageNumb)[partindex]["start"];
@@ -200,24 +241,27 @@ class RecitationScreenController extends GetxController {
     versesCount = endVerse! - startVerse! + 1;
     surahName = getSurahNameArabic(surahNumb!);
     pageJuzNumber = getJuzNumber(surahNumb!, startVerse!);
-    print("start: $startVerse + end: $endVerse");
+    //print("start: $startVerse + end: $endVerse");
     versesList.clear();
-
-    savepageOpacity.add([]);
-    beginningVerses.add([]);
-    verseColor.add([]);
-    allVersesInformation.add([]);
+    listOfversesID[pageWidgetIndex].clear();
+    listOfSurahsID[pageWidgetIndex].clear();
+    VerseInformation VInfo;
 
     for (var i = 0; i < versesCount!; i++) {
       verseWords = getVerse(surahNumb!, startVerse! + i).split(" ");
-      savepageOpacity[pageWidgetIndex].add(0.02.obs);
+      savepageOpacity[pageWidgetIndex].add(0.2.obs);
       verseColor[pageWidgetIndex].add(Colors.black.obs);
-      allVersesInformation[pageWidgetIndex].add(VerseInformation(
-          verseId: startVerse! + i, surahID: surahNumb, surahName: surahName));
+      //
+
+      listOfversesID[pageWidgetIndex].add(startVerse! + i);
+      listOfSurahsID[pageWidgetIndex].add(surahNumb!);
+      print(listOfversesID[pageWidgetIndex]);
+      print(listOfSurahsID[pageWidgetIndex]);
+//
       for (int R = 0; R < verseWords!.length; R++) {
         if (R == 0) beginningVerses[pageWidgetIndex].add(verseWords![0]);
         String D = verseWords![R];
-
+        Rx<Color> N = verseColor[pageWidgetIndex][i + previousVerseCount];
         versesList.add(
           Obx(() => Opacity(
                 opacity: savepageOpacity[pageWidgetIndex]
@@ -226,8 +270,7 @@ class RecitationScreenController extends GetxController {
                 child: Text(
                   D,
                   style: TextStyle(
-                    color: verseColor[pageWidgetIndex][i + previousVerseCount]
-                        .value,
+                    color: N.value,
                     fontFamily: "Quran",
                     fontSize: 21,
                     fontWeight: FontWeight.w500,
@@ -249,20 +292,20 @@ class RecitationScreenController extends GetxController {
       ));
     }
 ////////
-    print("===> save ${allVersesInformation}");
+    //print("===> save ${allVersesInformation[pageWidgetIndex][0].verseId}");
   }
 
   showsHint(BuildContext context) {
-    print("seee=>");
-    print(beginningVerses[pageWidgetindex].length);
-    print(index);
+    print("seee=> $index");
+    //print(beginningVerses[pageWidgetindex].length);
+    //print(index);
     if (index >= (beginningVerses[pageWidgetindex].length)) return;
-    if (firstHint) {
+    if (firstHint == true) {
       hintsCount++;
       firstHint = false;
       hint = beginningVerses[pageWidgetindex][index].obs;
       hintColor.value = Colors.red;
-      hintsList.add(allVersesInformation[pageWidgetindex][index]);
+      // dddhintsList.add(allVersesInformation[pageWidgetindex][index]);
       return showTopSnackBar(
           padding: const EdgeInsets.all(90),
           animationDuration: const Duration(milliseconds: 1000),
@@ -284,10 +327,11 @@ class RecitationScreenController extends GetxController {
               ))));
     } else {
       hintsCount--;
-      hintsList.remove(allVersesInformation[pageWidgetindex][index]);
+      //hintsList.remove(allVersesInformation[pageWidgetindex][index]);
       mistakesCount++;
+      setBlack = false;
       verseColor[pageWidgetindex][index].value = Colors.red;
-      mistakesList.add(allVersesInformation[pageWidgetindex][index]);
+      // ggggmistakesList.add(allVersesInformation[pageWidgetindex][index]);
       changeOpacity();
       firstHint = true;
       //if (index == savepageOpacity[pageWidgetindex].length) goToNextPage();

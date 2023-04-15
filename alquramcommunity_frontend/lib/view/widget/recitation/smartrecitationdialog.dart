@@ -21,7 +21,7 @@ class SmartRecitationDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text("Choose Pages"),

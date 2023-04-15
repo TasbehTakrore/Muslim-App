@@ -12,35 +12,70 @@ class ResitationFloatingButtonsGroup extends StatelessWidget {
     RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
 
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          bottom: 10.0,
-          right: 120.0,
-          child: FloatingActionButton(
-            heroTag: "next",
-            onPressed: () {
-              recitationController.changeOpacity();
-            },
-            backgroundColor: AppColor.primaryColor,
-            child: const Icon(Icons.done),
-          ),
-        ),
-        Obx(
-          () => Positioned(
-            bottom: 10.0,
-            left: 120.0,
-            child: FloatingActionButton(
-              backgroundColor: recitationController.hintColor.value,
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        // color: Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            FloatingActionButton(
+              heroTag: "end",
               onPressed: () {
-                recitationController.showsHint(context);
+                recitationController.goToNextPage();
               },
-              heroTag: "hint",
-              child: const Icon(Icons.lightbulb_outline),
+              backgroundColor: AppColor.secondaryColor,
+              child: const Icon(Icons.exit_to_app_rounded),
             ),
-          ),
-        )
-      ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  child: FloatingActionButton(
+                    heroTag: "next",
+                    onPressed: () {
+                      recitationController.changeOpacity();
+                    },
+                    backgroundColor: AppColor.primaryColor,
+                    child: Obx(()=> Icon(
+                      recitationController.nextReload.value,
+                    ))
+                  ),
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Obx(
+                  () => Container(
+                    width: 70,
+                    height: 70,
+                    child: FloatingActionButton(
+                      backgroundColor: recitationController.hintColor.value,
+                      onPressed: () {
+                        recitationController.showsHint(context);
+                      },
+                      heroTag: "hint",
+                      child: const Icon(Icons.lightbulb_outline),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            FloatingActionButton(
+              heroTag: "auto",
+              onPressed: () {
+                recitationController.changeOpacity();
+              },
+              backgroundColor: AppColor.secondaryColor,
+              child: const Icon(Icons.auto_mode_rounded),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
