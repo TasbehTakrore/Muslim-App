@@ -9,8 +9,6 @@ abstract class ThikrCatgController extends GetxController {
   Future<String> _loadJSON();
   Future<dynamic> loadJSON();
   initialData();
-  //bool isFinish(int currentCount);
-  //showAthkar(String s);
   decrementRepeat(int listIndex, int itemIndex);
 
   }
@@ -30,7 +28,7 @@ class ThikrCatgControllerImp extends ThikrCatgController{
     final jsonResponse = jsonDecode(json);
     return jsonResponse;
   }
-   var myData = Athkar().obs;
+  var myData = Athkar().obs;
   @override
   initialData() {
    argumentData = Get.arguments;
@@ -40,11 +38,11 @@ class ThikrCatgControllerImp extends ThikrCatgController{
    print(selectedThikr);
   }
 void my(){
-    for (int i = 0; i < myData.value.thikr!.length; i++) {
+    for (int i = 0; i <  (myData.value.thikr?.length ?? 0); i++) {
        
-      Thikr subList =  myData.value.thikr![i];
+      Thikr? subList =  myData.value.thikr?[i];
       List<RxInt> subCounters = [];
-      for (int j = 0; j < subList.tEXT!.length; j++) {
+      for (int j = 0; j < subList!.tEXT!.length; j++) {
         subCounters.add(RxInt(0));
       }
       countersList.add(subCounters);
@@ -57,7 +55,7 @@ void my(){
      myData.value = Athkar.fromJson(value);
      print(myData);
     });
-  
+    my();
     super.onInit();
   }
 
