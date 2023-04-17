@@ -8,9 +8,13 @@ connectDB ();
 app.use(express.json())
 const userRouter  = require('./moduels/user/user.route');
 app.use('/users/',userRouter);
+const mistakeRouter = require('./moduels/mistake.route');
+app.use('/mistake/',mistakeRouter);
+
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })
+
 /*
 app.post('/addUser',(req,res)=>{
     Connection.execute(`INSERT into users (user_name,user_email,gender,user_age,user_pass) 
