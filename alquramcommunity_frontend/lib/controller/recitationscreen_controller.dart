@@ -1,12 +1,14 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
+import 'package:alquramcommunity_frontend/core/services/mistake_services.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
+import '../core/constant/urls.dart';
 import '../core/localization/changelocal.dart';
 import '../core/services/services.dart';
+import '../data/model/backend_to_front_models/mistake_model.dart';
 import '../data/model/front_models/verseInformation.dart';
 
 class RecitationScreenController extends GetxController {
@@ -47,6 +49,11 @@ class RecitationScreenController extends GetxController {
   Rx<IconData> nextReloadIcon = Icons.done.obs;
   List<List<int>> listOfversesID = [];
   List<List<int>> listOfSurahsID = [];
+  List<Map<String, dynamic>> mistakeModelList = [];
+  String userEmail = 'tasbeh.takrore@gmail.com';
+//
+
+//
 
   get nextReload => nextReloadIcon;
   changePageIndex(int pageIndex) {
@@ -71,6 +78,7 @@ class RecitationScreenController extends GetxController {
     verseColor.clear();
     listOfversesID.clear();
     listOfSurahsID.clear();
+    mistakeModelList.clear();
     previousVerseCount = 0;
     index = 0;
     pageWidgetindex = getPageIndex();
@@ -155,6 +163,8 @@ class RecitationScreenController extends GetxController {
   }
 
   goToNextPage() {
+    MistakeServices.mistakeLogging(mistakeModelList);
+    mistakeModelList.clear();
     //print(" hiiiiiii $pageWidgetindex  + $totalPageCount");
     // if (pageWidgetindex + 1 == totalPageCount) {
     return showDialog(
@@ -299,6 +309,14 @@ class RecitationScreenController extends GetxController {
     //print(index);
     if (index >= (beginningVerses[pageWidgetindex].length)) return;
     if (firstHint == true) {
+      mistakeModelList.add(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 50,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+      print("mis: ${mistakeModelList[0]}");
       hintsCount++;
       firstHint = false;
       hint = beginningVerses[pageWidgetindex][index].obs;
@@ -326,6 +344,21 @@ class RecitationScreenController extends GetxController {
     } else {
       hintsCount--;
       //hintsList.remove(allVersesInformation[pageWidgetindex][index]);
+      mistakeModelList.remove(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 50,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+      mistakeModelList.add(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 1,
+              weight: 100,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+
       mistakesCount++;
       setBlack = false;
       verseColor[pageWidgetindex][index].value = Colors.red;

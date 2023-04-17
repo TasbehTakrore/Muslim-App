@@ -44,13 +44,4 @@ class RegisterModel {
 String toJson()=> json.encode(toMap());
 factory RegisterModel.fromJson(String source) => RegisterModel.fromMap(json.decode(source));
 
-
-
-   
-     
- 
-
-  
-
-   
 }
