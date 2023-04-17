@@ -1,8 +1,6 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
