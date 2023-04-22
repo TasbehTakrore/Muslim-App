@@ -16,7 +16,9 @@ class RecitationScreen extends GetView {
         Get.put(RecitationScreenController());
     return WillPopScope(
         onWillPop: () async {
+          recitationController.cancleTimer();
           Get.toNamed(AppRoute.home);
+
           return false;
         },
         child: Scaffold(
@@ -27,6 +29,7 @@ class RecitationScreen extends GetView {
                   //recitationController.emptyLists();
                   //recitationController.createLists();
                   recitationController.setPageIndex(index);
+                  recitationController.cancleTimer();
 
                   // recitationController.setSurahPageData(index + 1, 0, index,
                   //   context, getSurahCountByPage(index + 1));

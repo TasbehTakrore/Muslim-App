@@ -72,7 +72,7 @@ dependencies:
   dropdown_button2: ^2.0.0
   top_snackbar_flutter: ^3.0.0+1
   vertical_card_pager: ^1.5.0
-
+  circular_countdown_timer: ^0.2.3
 
 
 dev_dependencies:
