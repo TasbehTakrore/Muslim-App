@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/services/mistake_services.dart';
 import 'package:flutter/Material.dart';
@@ -26,6 +28,7 @@ class RecitationScreenController extends GetxController {
   MyServices service = Get.put(MyServices());
   int pageWidgetindex = 0;
   List<List<String>> beginningVerses = [];
+  List<List<String>> secondeWordOfVerses = [];
   List<String>? verseWords;
   int previousVerseCount = 0;
   List<List<RxDouble>> savepageOpacity = [];
@@ -48,9 +51,13 @@ class RecitationScreenController extends GetxController {
   bool? setBlack = true;
   Rx<IconData> nextReloadIcon = Icons.done.obs;
   List<List<int>> listOfversesID = [];
+  List<List<int>> NumberWordsOfVerse = [];
   List<List<int>> listOfSurahsID = [];
   List<Map<String, dynamic>> mistakeModelList = [];
   String userEmail = 'tasbeh.takrore@gmail.com';
+  bool secondHint = false;
+  Timer? timer;
+  bool nextForAutoState = false;
 //
 
 //
@@ -75,6 +82,7 @@ class RecitationScreenController extends GetxController {
     hintsCount = 0;
     savepageOpacity.clear();
     beginningVerses.clear();
+    secondeWordOfVerses.clear();
     verseColor.clear();
     listOfversesID.clear();
     listOfSurahsID.clear();
@@ -85,6 +93,8 @@ class RecitationScreenController extends GetxController {
     hintColor = AppColor.thickYellow.obs;
     firstHint = true;
     allVersesInformation.clear();
+    NumberWordsOfVerse.clear();
+
     mistakesList.clear();
     hintsList.clear();
     totalPageCount = 604;
@@ -92,12 +102,20 @@ class RecitationScreenController extends GetxController {
     //indexP = 0;
   }
 
+  cancleTimer() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+  }
+
   createLists() {
     savepageOpacity.addAll(List.generate(604, (_) => []));
     beginningVerses.addAll(List.generate(604, (_) => []));
+    secondeWordOfVerses.addAll(List.generate(604, (_) => []));
     verseColor.addAll(List.generate(604, (_) => []));
     listOfversesID.addAll(List.generate(604, (_) => []));
     listOfSurahsID.addAll(List.generate(604, (_) => []));
+    NumberWordsOfVerse.addAll(List.generate(604, (_) => []));
   }
 
   bool englishLang() {
@@ -117,12 +135,13 @@ class RecitationScreenController extends GetxController {
     index = 0;
     previousVerseCount = 0;
     setNextIcon();
+    firstHint = true;
+    secondHint = false;
+    hintColor.value = AppColor.thickYellow;
   }
 
-  changeOpacity() {
+  changeOpacity(bool fromAutoTimer) {
     previousVerseCount = 0;
-
-    //print(" ${savepageOpacity[pageWidgetindex].length} + $index");
     if (index < savepageOpacity[pageWidgetindex].length) {
       savepageOpacity[pageWidgetindex][index].value = 1.0;
       if (setBlack == true)
@@ -138,14 +157,14 @@ class RecitationScreenController extends GetxController {
 
       hintColor.value = AppColor.thickYellow;
       firstHint = true;
-      //print("inside: ${savepageOpacity[pageWidgetindex]}");
-      //print(verseColor[pageWidgetindex]);
-      //print(savepageOpacity);
     } else if (index == savepageOpacity[pageWidgetindex].length) {
-      //print("nooow");
       reStartPage();
     }
-    // print(totalPageCount);
+    if (fromAutoTimer == true) {
+      nextForAutoState = false;
+    } else {
+      nextForAutoState = true;
+    }
   }
 
   reStartPage() {
@@ -153,11 +172,9 @@ class RecitationScreenController extends GetxController {
 
     int index = 0;
     while (index < savepageOpacity[pageWidgetindex].length) {
-      savepageOpacity[pageWidgetindex][index].value = 0.2;
+      savepageOpacity[pageWidgetindex][index].value = 0.04;
       verseColor[pageWidgetindex][index].value = Colors.black;
       index = index + 1;
-      //print(savepageOpacity[pageWidgetindex]);
-      //print("${savepageOpacity[pageWidgetindex]}");
     }
     setPageIndex(pageWidgetindex);
   }
@@ -165,8 +182,6 @@ class RecitationScreenController extends GetxController {
   goToNextPage() {
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
-    //print(" hiiiiiii $pageWidgetindex  + $totalPageCount");
-    // if (pageWidgetindex + 1 == totalPageCount) {
     return showDialog(
         context: context!,
         builder: (BuildContext context) {
@@ -249,25 +264,34 @@ class RecitationScreenController extends GetxController {
     versesCount = endVerse! - startVerse! + 1;
     surahName = getSurahNameArabic(surahNumb!);
     pageJuzNumber = getJuzNumber(surahNumb!, startVerse!);
-    //print("start: $startVerse + end: $endVerse");
     versesList.clear();
-    listOfversesID[pageWidgetIndex].clear();
-    listOfSurahsID[pageWidgetIndex].clear();
+    // listOfversesID[pageWidgetIndex].clear();
+
+    // listOfSurahsID[pageWidgetIndex].clear();
     VerseInformation VInfo;
 
     for (var i = 0; i < versesCount!; i++) {
       verseWords = getVerse(surahNumb!, startVerse! + i).split(" ");
       savepageOpacity[pageWidgetIndex].add(0.2.obs);
       verseColor[pageWidgetIndex].add(Colors.black.obs);
+      NumberWordsOfVerse[pageWidgetIndex].add(verseWords!.length);
+
       //
 
       listOfversesID[pageWidgetIndex].add(startVerse! + i);
       listOfSurahsID[pageWidgetIndex].add(surahNumb!);
-      print(listOfversesID[pageWidgetIndex]);
-      print(listOfSurahsID[pageWidgetIndex]);
+
 //
       for (int R = 0; R < verseWords!.length; R++) {
-        if (R == 0) beginningVerses[pageWidgetIndex].add(verseWords![0]);
+        if (R == 0) {
+          beginningVerses[pageWidgetIndex].add(verseWords![0]);
+          if (R + 1 == verseWords!.length) {
+            // no other word.. so add null in second list
+            secondeWordOfVerses[pageWidgetIndex].add("");
+          }
+        } else if (R == 1) {
+          secondeWordOfVerses[pageWidgetIndex].add(verseWords![1]);
+        }
         String D = verseWords![R];
         Rx<Color> N = verseColor[pageWidgetIndex][i + previousVerseCount];
         versesList.add(
@@ -300,15 +324,11 @@ class RecitationScreenController extends GetxController {
       ));
     }
 ////////
-    //print("===> save ${allVersesInformation[pageWidgetIndex][0].verseId}");
   }
 
   showsHint(BuildContext context) {
-    print("seee=> $index");
-    //print(beginningVerses[pageWidgetindex].length);
-    //print(index);
     if (index >= (beginningVerses[pageWidgetindex].length)) return;
-    if (firstHint == true) {
+    if (firstHint == true && secondHint == false) {
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
@@ -316,12 +336,39 @@ class RecitationScreenController extends GetxController {
               surahId: listOfSurahsID[pageWidgetindex][index],
               ayahId: listOfversesID[pageWidgetindex][index])
           .toJson());
-      print("mis: ${mistakeModelList[0]}");
       hintsCount++;
       firstHint = false;
+      if (NumberWordsOfVerse[pageWidgetindex][index] > 3) {
+        secondHint = true;
+      } else {
+        hintColor.value = Colors.red;
+      }
       hint = beginningVerses[pageWidgetindex][index].obs;
-      hintColor.value = Colors.red;
       // dddhintsList.add(allVersesInformation[pageWidgetindex][index]);
+      return showTopSnackBar(
+          padding: const EdgeInsets.all(90),
+          animationDuration: const Duration(milliseconds: 1000),
+          displayDuration: const Duration(microseconds: 100),
+          Overlay.of(context),
+          Obx(() => CustomSnackBar.info(
+              textDirection: TextDirection.rtl,
+              textStyle: const TextStyle(
+                fontFamily: "Quran",
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+                color: Colors.white,
+              ),
+              message: " ${hint.value}",
+              backgroundColor: AppColor.thickYellow,
+              icon: const Icon(
+                Icons.light_mode_outlined,
+                color: Colors.white,
+                size: 35,
+              ))));
+    } else if (secondHint == true) {
+      hintColor.value = Colors.red;
+      secondHint = false;
+      hint = secondeWordOfVerses[pageWidgetindex][index].obs;
       return showTopSnackBar(
           padding: const EdgeInsets.all(90),
           animationDuration: const Duration(milliseconds: 1000),
@@ -334,7 +381,7 @@ class RecitationScreenController extends GetxController {
                 fontSize: 20,
                 color: Colors.white,
               ),
-              message: "... ${hint.value} ...",
+              message: "${hint.value}",
               backgroundColor: AppColor.thickYellow,
               icon: const Icon(
                 Icons.light_mode_outlined,
@@ -343,7 +390,6 @@ class RecitationScreenController extends GetxController {
               ))));
     } else {
       hintsCount--;
-      //hintsList.remove(allVersesInformation[pageWidgetindex][index]);
       mistakeModelList.remove(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
@@ -363,9 +409,53 @@ class RecitationScreenController extends GetxController {
       setBlack = false;
       verseColor[pageWidgetindex][index].value = Colors.red;
       // ggggmistakesList.add(allVersesInformation[pageWidgetindex][index]);
-      changeOpacity();
+      changeOpacity(false);
       firstHint = true;
       //if (index == savepageOpacity[pageWidgetindex].length) goToNextPage();
     }
+  }
+
+  void autoState() {
+    int seconds = 0;
+    int indexTime = NumberWordsOfVerse[pageWidgetindex][index]; // here index =0
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      print("الوقت  $seconds , المطلوب: $indexTime");
+
+      if (seconds == indexTime + 1) {
+        verseColor[pageWidgetindex][index].value = Colors.red;
+        setBlack = false;
+        mistakeModelList.add(MistakeModel(
+                userEmail: userEmail,
+                mistakeType: 1,
+                weight: 100,
+                surahId: listOfSurahsID[pageWidgetindex][index],
+                ayahId: listOfversesID[pageWidgetindex][index])
+            .toJson());
+
+        mistakesCount++;
+        changeOpacity(true);
+        if (index < NumberWordsOfVerse[pageWidgetindex].length) {
+          print("Inside");
+          indexTime += NumberWordsOfVerse[pageWidgetindex][index];
+        } else {
+          timer.cancel();
+        }
+        print("indexTime $indexTime");
+        //index++;
+      } else if (nextForAutoState == true) {
+        print("nextForAutoState $nextForAutoState");
+        nextForAutoState = false;
+        print("2nextForAutoState $nextForAutoState");
+        seconds = indexTime; // jump in the time
+        if (index < NumberWordsOfVerse[pageWidgetindex].length) {
+          indexTime += NumberWordsOfVerse[pageWidgetindex][index];
+        } else {
+          timer.cancel();
+        }
+      } else {
+        seconds++;
+      }
+      //if (second > 100) ;
+    });
   }
 }
