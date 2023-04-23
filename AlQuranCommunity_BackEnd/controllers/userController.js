@@ -14,7 +14,7 @@ const getAllUsers=async(req,res)=>{
 const signUp = async(req,res)=>{
     try{
         //from postman or front end 
-        //print("tas");
+
         const {userName,userEmail,userAge,userPassword,userGender }=req.body;
     
         //insert into users() values()
@@ -23,10 +23,13 @@ const signUp = async(req,res)=>{
         
         res.json({message:'success',user});
     }catch(error){
+//        let msg = error.errors[0].message;
+ //       res.json({msg});
         //let msg = error.errors[0].message;
         //res.json({msg});
         console.log(" erooor!!\n \n"+error);
         //print(" erooor!!\n \n");
+
     }
 
  
@@ -57,16 +60,30 @@ const logIn = async (req,res)=>{
         }
     });
     if(!user){
+        res.status(400)
+
+        res.json({message:'invalid-data email'});
         res.json({message:'invalid-data'});
+
     }
     else{
         const matchPass =await bcrypt.compare(userPassword,user.userPassword)
         if(matchPass){
-        const token = jwt.sign({id:user.id},'QuranLogIn@123');
-        res.json({message:'success',token});
+       // const token = jwt.sign({id:user.id},'QuranLogIn@123');
+        res.status(200)
+        console.log(matchPass)
+
+        res.json({message:'success',user});
         }
         else
-        res.json({message:'invalid-data'});
+        res.status(400)
+        console.log(matchPass)
+        res.json({message:'invalid-data pass'},);
+    //    const token = jwt.sign({id:user.id},'QuranLogIn@123');
+      //  res.json({message:'success',token});
+    //    }
+    //    else
+    //    res.json({message:'invalid-data'});
 
     }
 }

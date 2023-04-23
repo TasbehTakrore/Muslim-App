@@ -2,6 +2,8 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
+import '../view/screen/pray.dart';
+import '../view/screen/qibla.dart';
 import '../view/screen/thikr.dart';
 
 abstract class HomeScreenController extends GetxController {
@@ -26,7 +28,9 @@ class HomeScreenControllerImp extends HomeScreenController {
       child: Center(child: Text("Notifications")),
     ),
     const Home(),
+    PrayScreen(),
     const Thikr(),
+    const QiblaScreen(),
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];

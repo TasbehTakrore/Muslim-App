@@ -8,4 +8,8 @@ class AppRoute {
   static const String thikrdetails = "/thikrdetails";
   static const String signup = "/signUp";
   static const String forgetPassword = "/forgetPassword";
+  static const String pray = "/pray";
+    static const String qibla = "/qibla";
+
+
 }
