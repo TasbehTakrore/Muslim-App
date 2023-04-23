@@ -1,17 +1,18 @@
 import 'dart:async';
-
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/services/mistake_services.dart';
+import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import '../core/constant/urls.dart';
 import '../core/localization/changelocal.dart';
 import '../core/services/services.dart';
 import '../data/model/backend_to_front_models/mistake_model.dart';
 import '../data/model/front_models/verseInformation.dart';
+
+import '../view/widget/recitation/statisticsrecitationcontent.dart';
 
 class RecitationScreenController extends GetxController {
   MyServices myServices = Get.put(MyServices());
@@ -179,69 +180,14 @@ class RecitationScreenController extends GetxController {
     setPageIndex(pageWidgetindex);
   }
 
-  goToNextPage() {
+  statisticsAndEnd() {
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
     return showDialog(
         context: context!,
         builder: (BuildContext context) {
-          return AlertDialog(
-            //backgroundColor: Colors.white.withOpacity(0.1),
-            contentPadding: EdgeInsets.all(0),
-            iconPadding: EdgeInsets.all(0),
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            content: Container(
-                height: 400,
-                width: 300,
-                child: ListView(
-                  children: [
-                    Positioned(
-                      top: 0.01,
-                      child: Container(
-                        color: AppColor.primaryColor,
-                        height: 50,
-                        child: const Center(
-                          child: Text(
-                            "  bjdskalm",
-                            //  "Pages:${getStartPage()} - ${getEndPage()}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text("Total hints: $hintsCount",
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.center),
-                    // Positioned(
-                    //   top: 0,
-                    //   child: Container(
-                    //     width: 500,
-                    //     height: 300,
-                    //     child: ListView.builder(
-                    //         physics: NeverScrollableScrollPhysics(),
-                    //         itemCount: hintsCount,
-                    //         itemBuilder: ((context, index) => Text(
-                    //             "${hintsList[index].surahName}: Verse ${hintsList[index].verseId}}"))),
-                    //   ),
-                    // ),
-                    const Divider(
-                      height: 10,
-                    ),
-                    Text("Total mistakes: $mistakesCount",
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.center),
-                  ],
-                )),
-          );
+          return statisticsRecitationContent();
         });
-    //}
   }
 
   setSurahPageData(int pageNumb, int partindex, int pageWidgetIndex,
@@ -421,7 +367,7 @@ class RecitationScreenController extends GetxController {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       print("الوقت  $seconds , المطلوب: $indexTime");
 
-      if (seconds == indexTime + 1) {
+      if (seconds == indexTime + 2) {
         verseColor[pageWidgetindex][index].value = Colors.red;
         setBlack = false;
         mistakeModelList.add(MistakeModel(

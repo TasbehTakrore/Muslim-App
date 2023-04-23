@@ -10,31 +10,39 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeScreenControllerImp());
-    return GetBuilder<HomeScreenControllerImp>(
-        builder: (controller) => Scaffold(
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: AppColor.primaryColor,
-                onPressed: () {
-                  controller.changePage(4);
-                },
-                child: const Icon(Icons.home)),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            appBar: AppBar(
-                shadowColor: AppColor.grey,
-                automaticallyImplyLeading: false,
-                //primary: true,
-                elevation: 0.0,
-                backgroundColor: AppColor.grey,
-                title: CustomAppBar(onPressedIcon: () {})
-                //titleTextStyle: TextStyle(text),
-                ),
-            bottomNavigationBar: const CustomBottonAppBarHome(),
-            backgroundColor: AppColor.grey,
-            body: controller.content.value
-            //controller.listPage.elementAt(controller.currentPage)
+    HomeScreenControllerImp homeScreenControllerImp =
+        Get.put(HomeScreenControllerImp());
+    return WillPopScope(
+        onWillPop: () async {
+          homeScreenControllerImp.changePage(4);
+          Get.back();
 
-            ));
+          return false;
+        },
+        child: GetBuilder<HomeScreenControllerImp>(
+            builder: (controller) => Scaffold(
+                floatingActionButton: FloatingActionButton(
+                    backgroundColor: AppColor.primaryColor,
+                    onPressed: () {
+                      controller.changePage(4);
+                    },
+                    child: const Icon(Icons.home)),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerDocked,
+                appBar: AppBar(
+                    shadowColor: AppColor.grey,
+                    automaticallyImplyLeading: false,
+                    //primary: true,
+                    elevation: 0.0,
+                    backgroundColor: AppColor.grey,
+                    title: CustomAppBar(onPressedIcon: () {})
+                    //titleTextStyle: TextStyle(text),
+                    ),
+                bottomNavigationBar: const CustomBottonAppBarHome(),
+                backgroundColor: AppColor.grey,
+                body: controller.content.value
+                //controller.listPage.elementAt(controller.currentPage)
+
+                )));
   }
 }

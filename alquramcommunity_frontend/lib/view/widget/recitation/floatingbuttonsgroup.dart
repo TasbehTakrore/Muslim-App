@@ -26,7 +26,7 @@ class ResitationFloatingButtonsGroup extends StatelessWidget {
             FloatingActionButton(
               heroTag: "end",
               onPressed: () {
-                recitationController.goToNextPage();
+                recitationController.statisticsAndEnd();
               },
               backgroundColor: AppColor.secondaryColor,
               child: const Icon(Icons.exit_to_app_rounded),

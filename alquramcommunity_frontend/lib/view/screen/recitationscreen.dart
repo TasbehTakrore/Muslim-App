@@ -17,7 +17,7 @@ class RecitationScreen extends GetView {
     return WillPopScope(
         onWillPop: () async {
           recitationController.cancleTimer();
-          Get.toNamed(AppRoute.home);
+          Get.offAllNamed(AppRoute.home);
 
           return false;
         },

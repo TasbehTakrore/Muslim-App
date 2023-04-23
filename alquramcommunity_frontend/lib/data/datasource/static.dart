@@ -8,6 +8,7 @@ import '../../view/widget/recitation/listsurahcardrecitation.dart';
 import '../../view/widget/recitation/smartrecitationdialog.dart';
 import '../../view/screen/surahsdialog.dart';
 import '../../view/widget/recitation/surahdialogrecitation.dart';
+import '../../view/widget/trainer/trainerdialog.dart';
 import '../model/front_models/categorymodel.dart';
 
 HomeScreenControllerImp homeScreenController =
@@ -17,11 +18,11 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
       title: "Smart trainer",
       image: AppImageAsset.question,
-      onPressedWidgetDialog: Text("Test")),
+      onPressedWidgetDialog: const TrainerDialog()),
   CategoryModel(
       title: "Smart recitation",
       image: AppImageAsset.quranCategory,
-      onPressedWidgetDialog: SurahsDialogRecitation()),
+      onPressedWidgetDialog: const SurahsDialogRecitation()),
   CategoryModel(
       title: "Quran",
       image: AppImageAsset.reading,

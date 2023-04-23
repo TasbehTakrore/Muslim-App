@@ -14,7 +14,7 @@ class QuranScreen extends GetView {
     return WillPopScope(
         onWillPop: () async {
           // print('Back button pressed!');
-          Get.toNamed(AppRoute.home);
+          Get.offAllNamed(AppRoute.home);
           return false; // Return true to allow navigation, false to prevent it
         },
         child: Scaffold(
