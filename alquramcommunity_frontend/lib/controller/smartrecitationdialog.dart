@@ -1,13 +1,14 @@
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 
 import '../core/services/services.dart';
 import 'recitationscreen_controller.dart';
 
 class SmartRecitationDialogController extends GetxController {
   var isSubmitted = false.obs;
-  final _rangeValues = RangeValues(1, 604).obs;
+  final _rangeValues = const RangeValues(1, 604).obs;
   final RxBool _isChecked = false.obs;
   MyServices service = Get.put(MyServices());
 
@@ -24,9 +25,11 @@ class SmartRecitationDialogController extends GetxController {
 
   void submitForm() {
     isSubmitted.value = true;
-    service.recitation.setInt("startPage", startPageIndex);
-    service.recitation.setInt("endPage", endPageIndex);
+    service.recitation.setInt("startIndexRecit", startPageIndex);
+
+    service.recitation.setInt("endPage", 604);
     recitationConroller.emptyLists();
+    recitationConroller.createLists();
     //print("++++++++++" + service.recitation.getInt("endPage").toString());
     Get.toNamed(AppRoute.recitation);
     // Perform business logic here

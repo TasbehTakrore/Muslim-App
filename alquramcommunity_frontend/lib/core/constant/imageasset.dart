@@ -26,4 +26,6 @@ class AppImageAsset {
   static const String athan = "$rootImages/athan.png";
   static const String dua = "$rootImages/duaa.png";
 
+  static const String dashboard = "$rootImages/dashboard.png";
+  
 }

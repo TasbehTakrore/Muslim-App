@@ -1,4 +1,3 @@
-import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +12,7 @@ abstract class HomeScreenController extends GetxController {
 
 class HomeScreenControllerImp extends HomeScreenController {
   int currentPage = 4;
+  Rx<Widget> content = Home().obs;
 
   List<Widget> listPage = [
     Container(
@@ -44,6 +44,7 @@ class HomeScreenControllerImp extends HomeScreenController {
   @override
   changePage(int index) {
     currentPage = index;
+    content = listPage[index].obs;
     update();
   }
 }

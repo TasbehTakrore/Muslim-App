@@ -21,7 +21,7 @@ class SmartRecitationDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text("Choose Pages"),
@@ -59,7 +59,7 @@ class SmartRecitationDialog extends StatelessWidget {
                   Text("Hint each 5sec"),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               CustomButton(

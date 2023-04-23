@@ -13,6 +13,8 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   Widget build(BuildContext context) {
     ThikrCatgControllerImp thikrCatgController =
         Get.put(ThikrCatgControllerImp());
+        /*
+
 
         thikrCatgController.onInit() ;
     return Scaffold(
@@ -21,6 +23,26 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
           children: [
             SizedBox(height:10),
             CustomAppBar(onPressedIcon: () {}),
+=======
+    thikrCatgController.onInit();
+    return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 200, // تعيين الارتفاع المرغوب
+
+          title: const Text("  Muslim Remembrance"),
+          shape: ShapeBorder.lerp(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+            null,
+            0,
+          ),
+          backgroundColor: AppColor.primaryColor,
+        ),
+        body: Column(
+          children: [
+
+*/
             Expanded(
               child: FutureBuilder(
                 future: thikrCatgController.loadJSON(),
@@ -28,8 +50,11 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                   if (snapshot.hasError) {
                     return Center(child: Text("${snapshot.error}"));
                   } else if (snapshot.hasData) {
+                  
                     print('data');
                     var section = snapshot.data;
+
+
                     final data = List<Thikr>.from(
                         section["Thikr"].map((x) => Thikr.fromJson(x)));
                     return ListView.builder(
@@ -40,6 +65,8 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 20),
                               height: 600,
+                              /*
+< ayahBranch
                               child: GetBuilder(
                                 builder: (context) {
                                   return ListView.builder(
@@ -113,6 +140,32 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                 
   */              
                 
+=======
+                              child: ListView.builder(
+                                  itemCount:
+                                      data[thikrCatgController.selectedThikr]
+                                          .tEXT!
+                                          .length,
+                                  itemBuilder: (BuildContext context, i) {
+                                    thikrCatgController.countersList[index][i] =
+                                        data[thikrCatgController.selectedThikr]
+                                            .tEXT![i]
+                                            .rEPEAT!
+                                            .obs;
+                                    return ThikrDataCardArabic(
+                                      arabicText: data[
+                                              thikrCatgController.selectedThikr]
+                                          .tEXT![i]
+                                          .aRABICTEXT
+                                          .toString(),
+                                      Catg: index,
+                                      subCatg: i,
+                                    );
+                                  }),
+                            );
+                          }
+                        });
+*/
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),

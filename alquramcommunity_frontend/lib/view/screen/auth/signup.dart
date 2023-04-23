@@ -1,11 +1,7 @@
 import 'package:alquramcommunity_frontend/controller/auth/signup_controller.dart';
 import 'package:alquramcommunity_frontend/core/services/auth_services.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/bottomsheet.dart';
-import 'package:alquramcommunity_frontend/view/widget/auth/custombottomauth.dart';
-import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.dart';
-import 'package:alquramcommunity_frontend/view/widget/auth/customtexttitleauth.dart';
-import 'package:alquramcommunity_frontend/view/widget/auth/logoauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/profileimg.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/textsignup.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +25,7 @@ class SignUp extends StatelessWidget {
           userEmail: controller.email.text,
           userAge: int.parse(controller.age.text),
           userPassword: controller.password.text);
-      print("a");
+      print(signUpUser);
     }
 
     return Scaffold(
