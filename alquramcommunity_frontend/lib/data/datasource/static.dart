@@ -27,7 +27,7 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
     title: "Qibla",
     image: AppImageAsset.qibla,
-    onPressedWidgetDialog: Text("Test"),
+      onPressed: () => homeScreenController.changePage(7),
   ),
   CategoryModel(
       title: "Tasbeeh",
@@ -36,7 +36,7 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
       title: "Prayer",
       image: AppImageAsset.prayer,
-      onPressedWidgetDialog: Text("")
+      onPressed: () => homeScreenController.changePage(5),
       // showDialog(
       //   context: context,
       //   builder: (BuildContext context) {
@@ -48,7 +48,7 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
     title: "Dhikr",
     image: AppImageAsset.duaa,
-    onPressed: () => homeScreenController.changePage(5),
+    onPressed: () => homeScreenController.changePage(6),
   )
 ];
 

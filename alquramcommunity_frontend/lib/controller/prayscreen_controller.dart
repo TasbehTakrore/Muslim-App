@@ -94,6 +94,7 @@ class PrayScreenControllerImp extends PrayScreenController{
       print('Error getting current position: $e');
     }
   }
+
   //get praying time  function
   @override
   Future<void> PrayTimes() async {

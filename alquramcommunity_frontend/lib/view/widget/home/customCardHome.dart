@@ -7,6 +7,7 @@ class CustomCardHome extends StatelessWidget {
   final double fontSize1;
   final double fontSize2;
   final double heigh;
+  
 
   CustomCardHome(
       {Key? key,

@@ -48,5 +48,29 @@ class ThikrsBottomWidget extends StatelessWidget {
           ),
         );
 
+/*
+      bottom: 0,
+      left: MediaQuery.of(context).size.width / 4,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.width / 5,
+        alignment: Alignment.bottomCenter,
+        decoration: const BoxDecoration(
+          //color:AppColor.thickYellow,
+          borderRadius: BorderRadius.all(
+            Radius.circular(50),
+          ),
+        ),
+child: Padding(
+  padding: EdgeInsets.all(0),
+  child: Obx(() => CustomButton(
+    color: AppColor.black,
+    onPressed: () {
+      thikrCatgController.decrementRepeat(Catg, subCatg);
+    },
+    textbutton: '${thikrCatgController.countersList[Catg][subCatg].value}',
+  )),
+),      ),
+    );*/
   }
 }

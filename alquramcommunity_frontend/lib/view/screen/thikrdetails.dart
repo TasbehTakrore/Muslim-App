@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../controller/thikrCatgController.dart';
 import '../../core/constant/color.dart';
 import '../../data/model/front_models/thikrmodel.dart';
+import '../widget/home/customappbar.dart';
 import '../widget/thikr/ThikrDataCard.dart';
 import '../widget/thikr/ThikrCardBottom.dart';
 
@@ -12,23 +13,14 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   Widget build(BuildContext context) {
     ThikrCatgControllerImp thikrCatgController =
         Get.put(ThikrCatgControllerImp());
-    
-    return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 200, // تعيين الارتفاع المرغوب
 
-          title: const Text("  Muslim Remembrance"),
-          shape: ShapeBorder.lerp(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40.0),
-            ),
-            null,
-            0,
-          ),
-          backgroundColor: AppColor.primaryColor,
-        ),
+        thikrCatgController.onInit() ;
+    return Scaffold(
+        
         body: Column(
           children: [
+            SizedBox(height:10),
+            CustomAppBar(onPressedIcon: () {}),
             Expanded(
               child: FutureBuilder(
                 future: thikrCatgController.loadJSON(),
@@ -76,6 +68,51 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                             );
                           }
                         });
+/*
+  return GetBuilder<ThikrCatgControllerImp>(  
+    init: ThikrCatgControllerImp(),           
+  builder: (thikrCatgController) {
+  return ListView.builder(
+    itemCount: section.length == 0 ? 0 : section.length,
+    itemBuilder: (context, index) {
+      if (data != null) {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: 600,
+          child: ListView.builder(
+            itemCount: data[thikrCatgController.selectedThikr].tEXT!.length,
+            itemBuilder: (BuildContext context, i) {
+                final repeatCount = data[thikrCatgController.selectedThikr].tEXT![i].rEPEAT!.obs;
+
+               thikrCatgController.countersList[thikrCatgController.selectedThikr][i] = repeatCount;
+
+              return GetBuilder<ThikrCatgControllerImp>(
+                builder:(thikrCatgController){
+                return ThikrDataCardArabic(
+                arabicText: data[thikrCatgController.selectedThikr].tEXT![i].aRABICTEXT.toString(),
+                Catg: index,
+                subCatg: i,
+              );
+                }
+              );
+
+
+            },
+          ),
+        );
+      } else {
+        return Container();
+      }
+    },
+  );
+  }
+  );
+
+
+                
+                
+  */              
+                
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),

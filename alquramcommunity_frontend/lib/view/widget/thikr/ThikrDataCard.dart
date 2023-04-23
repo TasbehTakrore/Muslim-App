@@ -50,7 +50,6 @@ class ThikrDataCardArabic extends StatelessWidget {
                                  )
                               ) ,
                             const SizedBox(height:20),
-                         //   ThikrBottomWidget(4,3),
                           ],
                         )),
                   )
