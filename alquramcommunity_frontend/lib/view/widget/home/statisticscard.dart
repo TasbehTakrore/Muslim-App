@@ -17,7 +17,7 @@ class StatisticsCard extends StatelessWidget {
           ),
       height: 500,
       width: double.infinity,
-      margin: EdgeInsets.only(top: 40),
+      margin: EdgeInsets.only(top: 30),
     );
   }
 }

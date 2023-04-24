@@ -1,6 +1,7 @@
 import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/Material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../widget/home/customappbar.dart';
 import '../widget/home/custombottomappbarhome.dart';
@@ -10,6 +11,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
     return WillPopScope(

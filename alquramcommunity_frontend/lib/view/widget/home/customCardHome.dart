@@ -1,3 +1,5 @@
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
+import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:flutter/material.dart';
 
 class CustomCardHome extends StatelessWidget {
@@ -7,7 +9,6 @@ class CustomCardHome extends StatelessWidget {
   final double fontSize1;
   final double fontSize2;
   final double heigh;
-  
 
   CustomCardHome(
       {Key? key,
@@ -28,11 +29,16 @@ class CustomCardHome extends StatelessWidget {
         child: Stack(children: [
           Container(
             decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage(AppImageAsset.mosque),
+                  fit: BoxFit.cover,
+                  opacity: 0.2,
+                ),
                 borderRadius: BorderRadius.circular(20),
                 gradient: const LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
-                  colors: [Color(0xff2C8066), Color(0xff5FCFAE)],
+                  colors: [Color(0xff266f52), Color(0xff266f52)],
                 )),
             alignment: Alignment.center,
             height: heigh,

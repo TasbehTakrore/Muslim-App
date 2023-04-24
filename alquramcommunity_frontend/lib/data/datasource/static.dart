@@ -16,11 +16,11 @@ HomeScreenControllerImp homeScreenController =
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
-      title: "Smart trainer",
+      title: "Trainer",
       image: AppImageAsset.question,
       onPressedWidgetDialog: const TrainerDialog()),
   CategoryModel(
-      title: "Smart recitation",
+      title: "Recitation",
       image: AppImageAsset.quranCategory,
       onPressedWidgetDialog: const SurahsDialogRecitation()),
   CategoryModel(
@@ -30,24 +30,24 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
     title: "Qibla",
     image: AppImageAsset.qibla,
-      onPressed: () => homeScreenController.changePage(7),
+    onPressed: () => homeScreenController.changePage(7),
   ),
   CategoryModel(
       title: "Tasbeeh",
       image: AppImageAsset.rosary,
       onPressedWidgetDialog: Text("Test")),
   CategoryModel(
-      title: "Prayer",
-      image: AppImageAsset.prayer,
-      onPressed: () => homeScreenController.changePage(5),
-      // showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) {
-      //     return CategoryList[index].onPressedWidget!;
-      //     ;
-      //   },
-      // );
-      ),
+    title: "Prayer",
+    image: AppImageAsset.prayer,
+    onPressed: () => homeScreenController.changePage(5),
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return CategoryList[index].onPressedWidget!;
+    //     ;
+    //   },
+    // );
+  ),
   CategoryModel(
     title: "Dhikr",
     image: AppImageAsset.duaa,

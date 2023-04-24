@@ -1,4 +1,5 @@
 import 'package:flutter/Material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
@@ -11,6 +12,27 @@ abstract class HomeScreenController extends GetxController {
 }
 
 class HomeScreenControllerImp extends HomeScreenController {
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // }
+
+  void reSystemChrome() {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+  }
+
+// @override
+// void onInit() {
+//   super.onInit();
+//   ever<String>(Get.routing.current, (String currentRoute) {
+//     if (currentRoute == '/homeScreen') {
+//       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+//     }
+//   });
+// }
+
   int currentPage = 4;
   Rx<Widget> content = Home().obs;
 

@@ -68,10 +68,7 @@ dependencies:
   responsive_grid: ^2.2.0
   google_fonts: ^3.0.1
   arabic_numbers: ^1.0.0
-  flutter_custom_dialog: ^1.2.0
-  dropdown_button2: ^2.0.0
   top_snackbar_flutter: ^3.0.0+1
-  vertical_card_pager: ^1.5.0
 
   
   geolocator: ^9.0.2
@@ -125,8 +122,9 @@ flutter:
     - assets/images/surahHead.svg
     - assets/images/titleBorder.png
     - assets/images/dashboard.png
+    - assets/images/2840.jpg
+    - assets/images/mosqueLine.png
     - assets/
-
     
 
 
