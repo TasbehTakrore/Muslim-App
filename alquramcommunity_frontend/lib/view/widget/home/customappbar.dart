@@ -13,7 +13,7 @@ class CustomAppBar extends StatelessWidget {
       color: AppColor.grey,
       margin: const EdgeInsets.only(top: 2),
       child: Row(children: [
-        const Expanded(flex: 1, child: logoWidget(logowidth: 70, sizeType: 2)),
+        const Expanded(flex: 2, child: logoWidget(logowidth: 70, sizeType: 2)),
         Expanded(
             flex: 1,
             child: Container(

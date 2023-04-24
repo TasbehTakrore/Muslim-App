@@ -30,8 +30,9 @@ class ListCategoriesHome extends StatelessWidget {
               // CategoryList[index].onPressed,
               child: Container(
                   decoration: BoxDecoration(
-                      color:
-                          index < 2 ? AppColor.lightPibk : AppColor.lightYellow,
+                      color: index < 2
+                          ? AppColor.secondaryColor
+                          : AppColor.lightYellow,
                       borderRadius: BorderRadius.circular(15)),
                   width: 65,
                   height: 65,
@@ -41,7 +42,7 @@ class ListCategoriesHome extends StatelessWidget {
             const SizedBox(height: 4),
             Text("${CategoryList[index].title}",
                 style: TextStyle(
-                    fontSize: index < 2 ? 9.5 : 11.5,
+                    fontSize: index < 2 ? 11.5 : 11.5,
                     fontWeight:
                         index < 2 ? FontWeight.bold : FontWeight.normal))
           ]);

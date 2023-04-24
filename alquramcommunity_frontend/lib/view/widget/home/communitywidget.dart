@@ -32,7 +32,7 @@ class Community extends StatelessWidget {
                 width: double.infinity,
                 height: 100,
                 decoration: const BoxDecoration(
-                  color: AppColor.lightgreen,
+                  color: AppColor.secondaryColor,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(0),
                       bottomRight: Radius.circular(0),
@@ -50,12 +50,15 @@ class Community extends StatelessWidget {
                           width: 36,
                           height: 36,
                           decoration: BoxDecoration(
-                              color: Color(0x98FFFFFF),
+                              color: Color.fromARGB(156, 255, 255, 255),
                               borderRadius: BorderRadius.circular(12)),
                           alignment: AlignmentDirectional(0, 0),
                           child: const Icon(Icons.people_alt_sharp,
                               color: Colors.white, size: 20)),
-                      Text('طالبات جامعة النجاح الوطنية'),
+                      Text(
+                        'An-Najah Students',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),

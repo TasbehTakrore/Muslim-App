@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
           children: [
             // CustomAppBar(onPressedIcon: () {}),
             CustomCardHome(
-              heigh: 150,
+              heigh: 170,
               title: "2".tr,
               body: "{واستعينوا بالصّبر والصّلاة}",
               fontSize1: 15,
@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
             ),
             const ListCategoriesHome(),
             const SizedBox(height: 10),
-            const Text("مُجتمعات القُرآن"),
+            const Text("Al-Quran Communities"),
             const ListCommunities(),
             const StatisticsCard(),
           ],

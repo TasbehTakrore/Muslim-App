@@ -1,5 +1,6 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/Material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import '../../controller/recitationscreen_controller.dart';
@@ -12,6 +13,8 @@ class RecitationScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     final RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
     return WillPopScope(

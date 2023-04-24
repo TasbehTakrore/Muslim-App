@@ -1,5 +1,6 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
 import 'package:flutter/Material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import '../../core/constant/routes.dart';
@@ -10,6 +11,8 @@ class QuranScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     final QuranPageController quranController = Get.put(QuranPageController());
     return WillPopScope(
         onWillPop: () async {
