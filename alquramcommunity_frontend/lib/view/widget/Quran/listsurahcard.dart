@@ -2,7 +2,6 @@ import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:alquramcommunity_frontend/view/widget/Quran/surahcard.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/Material.dart';
-import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 
 class ListSurahCard extends StatelessWidget {
@@ -11,7 +10,7 @@ class ListSurahCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 500,
+        height: MediaQuery.of(context).size.height / 2.1,
         child: ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemCount: 114,

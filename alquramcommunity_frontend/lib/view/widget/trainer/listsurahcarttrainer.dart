@@ -8,8 +8,9 @@ class ListSurahCardTrainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 500,
+    return Container(
+        //color: Colors.red,
+        height: MediaQuery.of(context).size.height / 1.9,
         child: ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemCount: 114,

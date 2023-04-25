@@ -1,14 +1,11 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-import 'package:alquramcommunity_frontend/view/widget/trainer/pagecardtrainer.dart';
-import 'package:animate_do/animate_do.dart';
+import 'package:alquramcommunity_frontend/view/widget/trainer/juzcontentdialog.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-
 import '../../../controller/trainerdialog_controller.dart';
-import '../recitation/listsurahcardrecitation.dart';
-import 'juzcardtrainer.dart';
-import 'listsurahcarttrainer.dart';
+import 'pagescontentdialog.dart';
+import 'surahcontentdialog.dart';
 
 class TrainerDialog extends StatelessWidget {
   const TrainerDialog({super.key});
@@ -22,8 +19,8 @@ class TrainerDialog extends StatelessWidget {
         return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 1.5,
+            content: SizedBox(
+              height: MediaQuery.of(context).size.height / 1.49,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -31,7 +28,7 @@ class TrainerDialog extends StatelessWidget {
                 children: [
                   Container(
                       //padding: EdgeInsets.only(bottom: 10),
-                      margin: EdgeInsets.only(bottom: 20),
+                      margin: const EdgeInsets.only(bottom: 20),
                       //color: Colors.amber,
                       alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width / 1.5,
@@ -78,61 +75,10 @@ class TrainerDialog extends StatelessWidget {
                             controller.changeIndex(v);
                           })),
                   controller.getIndex() == 1
-                      ? Container(
-                          //color: Color.fromARGB(255, 181, 20, 20),
-                          height: MediaQuery.of(context).size.height / 1.75,
-                          width: MediaQuery.of(context).size.width,
-                          child: GridView.builder(
-                            itemCount: 30,
-                            itemBuilder: (BuildContext context, int index) {
-                              return FadeInDown(
-                                  duration: const Duration(milliseconds: 300),
-                                  child: JuzCardTrainer(
-                                    surahNumber: index + 1,
-                                  ));
-                            },
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                            ),
-                          ))
+                      ? const JuzContentDialog()
                       : controller.getIndex() == 2
-                          ? Container(
-                              // color: Color.fromARGB(255, 235, 244, 54),
-                              //height: 600,
-                              height: MediaQuery.of(context).size.height / 1.75,
-                              child: SizedBox(
-                                width: 600,
-                                child: ListView(
-                                  children: const [
-                                    Text("Surahs of the Qur'an",
-                                        style: TextStyle(fontFamily: "Cairo")),
-                                    SizedBox(height: 6),
-                                    ListSurahCardTrainer()
-                                  ],
-                                ),
-                              ))
-                          : Container(
-                              //color: Color.fromARGB(255, 153, 161, 0),
-                              height: MediaQuery.of(context).size.height / 1.75,
-                              width: MediaQuery.of(context).size.width,
-                              child: GridView.builder(
-                                itemCount: 604,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return PageCardTrainer(
-                                    surahNumber: index + 1,
-                                  );
-                                },
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 6,
-                                  crossAxisSpacing: 10.0,
-                                  mainAxisSpacing: 10.0,
-                                ),
-                              ),
-                            )
+                          ? const SurahsContentDialog()
+                          : const PagesContentDialog(),
                 ],
               ),
             ));

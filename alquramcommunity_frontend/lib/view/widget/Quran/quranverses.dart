@@ -18,14 +18,16 @@ class QuranVerses extends StatelessWidget {
 
     return GetBuilder<QuranPageController>(
         builder: (controller) => Column(
-              mainAxisSize: MainAxisSize.min,
+              //mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Wrap(
                     // page verses and page numb
                     direction: Axis.horizontal,
                     alignment: WrapAlignment.center,
                     textDirection: TextDirection.rtl,
-                    spacing: 3,
+                    spacing: 1.5,
+                    runSpacing: 4,
                     children: controller.versesList),
                 surahindex == getSurahCountByPage(pageindex + 1) - 1
                     ? Text(ArabicNumbers().convert(pageindex + 1),

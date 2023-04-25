@@ -35,10 +35,11 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
       title: "Tasbeeh",
       image: AppImageAsset.rosary,
-      onPressedWidgetDialog: Text("Test")),
+      onPressedWidgetDialog: const TrainerDialog()),
   CategoryModel(
     title: "Prayer",
     image: AppImageAsset.prayer,
+    onPressedWidgetDialog: const TrainerDialog(),
     onPressed: () => homeScreenController.changePage(5),
     // showDialog(
     //   context: context,

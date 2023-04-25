@@ -12,4 +12,7 @@ class AppColor {
   static const Color thickYellow = Color(0xffFCCB5C);
   static const Color lightgreen = Color.fromARGB(255, 196, 233, 221);
   static const Color lightPibk = Color.fromARGB(255, 196, 233, 221);
+
+
+  
 }
