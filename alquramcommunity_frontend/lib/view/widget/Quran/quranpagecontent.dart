@@ -18,14 +18,16 @@ class QuranPageContent extends StatelessWidget {
     Get.put(QuranPageController());
     return GetBuilder<QuranPageController>(
       builder: (controller) => Container(
-          padding: const EdgeInsets.only(left: 14, right: 14),
-          child: ListView.separated(
-              //physics: NeverScrollableScrollPhysics(),
-              itemCount: getSurahCountByPage(indexP + 1),
-              itemBuilder: (context, index) {
-                // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
-                controller.setSurahPageData(indexP + 1, index);
-                return Column(mainAxisSize: MainAxisSize.min, children: [
+        //color: Colors.amber,
+
+        child: ListView.separated(
+            itemCount: getSurahCountByPage(indexP + 1),
+            itemBuilder: (context, index) {
+              // تخزين البيانات الخاصّة بالسورة الواحدة من سور الصّفحة
+              controller.setSurahPageData(indexP + 1, index);
+              return Container(
+                padding: const EdgeInsets.only(right: 14, left: 14),
+                child: Column(children: [
                   const SizedBox(height: 20),
                   controller.startVerse == 1
                       ? SurahTitleBorder()
@@ -34,10 +36,12 @@ class QuranPageContent extends StatelessWidget {
                   QuranVerses(
                     pageindex: indexP,
                     surahindex: index,
-                  )
-                ]);
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 2))),
+                  ),
+                ]),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 2)),
+      ),
     );
   }
 }

@@ -154,8 +154,8 @@ flutter:
 
     - family: Quran
       fonts:
-        - asset: assets/fonts/Quran/Hafs.ttf
-          weight: 700
+        - asset: assets/fonts/Quran/UthmanicHafs_V20.ttf
+          weight: 900
 
     - family: SurahTitle
       fonts:
