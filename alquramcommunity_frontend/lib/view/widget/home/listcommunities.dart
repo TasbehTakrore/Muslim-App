@@ -14,10 +14,10 @@ class ListCommunities extends StatelessWidget {
         height: 205,
         child: ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(width: 2),
-            itemCount: 2, ////
+            itemCount: 3, ////
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              if (index < 1) {
+              if (index < 2) {
                 return const Community();
               } else {
                 return const JoinCommunity();

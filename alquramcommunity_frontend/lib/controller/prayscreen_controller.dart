@@ -1,27 +1,28 @@
 import 'dart:async';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
-
 import '../core/constant/color.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 
  abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
-  RxString formativeCurrentDate = ''.obs;
   RxString city = ''.obs;
   RxString formativeHijriDate = ''.obs;
   RxString formattedRemainingTime=''.obs;
   late PrayerTimes prayerTimesInstance;
+  late PrayerTimes prayerTimesInstanceNxt;
   Rx<Prayer> nextPrayer = (Prayer.none).obs;
   Rx<int> currentPrayer = (0).obs;
   Rx<int> prayCounter=(0).obs;
   Rx<int> missedCounter=(0).obs;
+  Rx<int> remain=(0).obs;
   Rx<double> _prayCounter=(0.0).obs;
   List<RxBool> trackPraying = List.generate(6, (_) => false.obs);
   List<Rx<Color>> itemColors =List.generate(6, (_) => Colors.white.obs);
@@ -43,86 +44,136 @@ import '../core/constant/color.dart';
 ));
 }
 class PrayScreenControllerImp extends PrayScreenController{
-  Timer? _timer;
+  late AudioPlayer audioPlayer;
+  RxString formativeCurrentDate = ''.obs;
   bool isFirstTime = true;
-  final hijriCalendar = HijriCalendar.fromDate(DateTime.now());
   late Duration remainingTime ;
   DateTime nextPrayerTime=DateTime.now();
   StreamSubscription? _subscription;
+  
   @override
   void onInit() {
     super.onInit();
-    formativeCurrentDate.value=DateFormat('EEEE, d MMMM y').format(DateTime.now());
-    formativeHijriDate.value = hijriCalendar.toFormat('dd MMMM yyyy');
-    PrayTimes();
-    getNextPrayer();
-    getCurrentLocation() ;
-    //getNextPrayer();
+        audioPlayer = AudioPlayer();
     if(formattedRemainingTime=='00:00:00'){
           getNextPrayer();
     }
-    _timer = Timer.periodic(
-      const Duration(days: 1),
-      (_) => updatePrayerTimes(),
-    );
   }
   @override
   void onClose() {
     super.onClose();
+        audioPlayer.dispose();
     _subscription?.cancel();
-    _timer?.cancel();
   }
+  RxBool inUse = false.obs ;
+  RxBool denied =false.obs;
   //location permission
- 
+  Future<void> checkLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    inUse.value = false ;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) { 
+      Geolocator.openLocationSettings();
+      return ;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied ||permission == LocationPermission.deniedForever) {
+       denied.value=true;
+       LocatioDialog();
+      return;
+      }
+denied.value=false;
+return;
+   
+  }
+  } 
+
+  void LocatioDialog(){
+     AwesomeDialog(
+        context: Get.context!,
+        dialogType: DialogType.error,
+        title: ' Location Permission Required ',
+        desc: 'Please allow location access to get prayer times.',
+        btnOkText: 'Grant Permission',
+        btnOkColor:AppColor.primaryColor,
+        btnCancelText: 'Cancel',
+        btnOkOnPress: () async {
+          await Geolocator.openAppSettings();
+          await checkLocationPermission();
+        },
+        btnCancelOnPress: () => Get.back(),
+      ).show();
+  }
+
   //get current location function :
   @override
- Future<void> getCurrentLocation() async {
+  Future<void> getCurrentLocation() async {
     try {
-      // Get the user's current location
       final currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
       location.value = currentPosition;
-      print('Current position: ${currentPosition.latitude}, ${currentPosition.longitude}');
-      //city name 
+      print('Current position cont: ${currentPosition.latitude}, ${currentPosition.longitude}');
       List<Placemark> placemarks = await placemarkFromCoordinates(
       currentPosition.latitude, currentPosition.longitude);
       Placemark placemark = placemarks[0];
       city.value="${placemark.locality!} ${placemark.street}";
+      print(city.value);
       await PrayTimes();
     } catch (e) {
       print('Error getting current position: $e');
     }
   }
 
+
+  void updateDate(){
+    final hijriCalendar = HijriCalendar.fromDate(DateTime.now());
+    formativeCurrentDate.value=DateFormat('EEEE, d MMMM y').format(DateTime.now());
+    formativeHijriDate.value = hijriCalendar.toFormat('dd MMMM yyyy');
+}
+  
   //get praying time  function
   @override
   Future<void> PrayTimes() async {
     try {
-      // Get the current location
       final currentPosition = location.value;
       if (currentPosition == null) {
         return;
       }
-      //use the prayer_times package
+      updateDate();
       final coordinates = Coordinates(
         currentPosition.latitude,
         currentPosition.longitude,
       );
       final params = CalculationMethod.umm_al_qura.getParameters();
-      
       final date= DateTime.now();
       final dateComponents = DateComponents(
         date.year,
         date.month,
         date.day,
       );
-      //day.value = DateFormat('EEEE').format(date); // EEEE formats the day name
+      final dateNxt= DateTime.now().add(Duration(days:1));
+      final dateComponentsNxt = DateComponents(
+        dateNxt.year,
+        dateNxt.month,
+        dateNxt.day,
+      );
       prayerTimesInstance = PrayerTimes(
         coordinates,
         dateComponents,
         params,
       );
+      currentPrayer.value=prayerTimesInstance.currentPrayer().index-1;
+
+      prayerTimesInstanceNxt = PrayerTimes(
+        coordinates,
+        dateComponentsNxt,
+        params,
+      );
+      getNextPrayer();
       prayerTimesmap.update((val){
         val!['Fajr'] = DateFormat.jm().format(prayerTimesInstance.fajr);
         val['Sunrise'] = DateFormat.jm().format(prayerTimesInstance.sunrise);
@@ -131,10 +182,11 @@ class PrayScreenControllerImp extends PrayScreenController{
         val['Maghrib'] = DateFormat.jm().format(prayerTimesInstance.maghrib);
         val['Isha'] = DateFormat.jm().format(prayerTimesInstance.isha);
       });
-
     } catch (e) {
+      print(e);
     }
   }
+
   @override
   Future<void> updatePrayerTimes() async {
     await PrayTimes();
@@ -147,26 +199,30 @@ class PrayScreenControllerImp extends PrayScreenController{
   }
   @override
   Future<void> getNextPrayer()   async { 
-      currentPrayer.value=prayerTimesInstance.currentPrayer().index-1;
-      nextPrayerTime = prayerTimesInstance.timeForPrayer(prayerTimesInstance.nextPrayer())! ;
+    bool nxt =false;
+    try {
+      if(prayerTimesInstance.nextPrayer().name=='none'){
+        nextPrayer.value= Prayer.fajr;  
+        nextPrayerTime = prayerTimesInstanceNxt.fajr;
+        nxt=true;
+      }
+      
+      else{
+        nextPrayer.value=prayerTimesInstance.nextPrayer();
+        nextPrayerTime = prayerTimesInstance.timeForPrayer(prayerTimesInstance.nextPrayer())! ;
+      }
        _subscription = Stream.periodic(Duration(seconds: 1), (i) => i)
       .listen((_) async {
-      Duration remainingTime = nextPrayerTime.difference(DateTime.now());
+      Duration remainingTime =  nextPrayerTime.difference(DateTime.now());
       formattedRemainingTime.value = formatDuration(remainingTime) ;
-       if(formattedRemainingTime=='00:00:00'){
+      if(formattedRemainingTime=='00:00:00'){
       await PrayTimes();
       await getNextPrayer();
     }
+      updateDate();
       });
-      try {
-      if(prayerTimesInstance.nextPrayer().name=='none')
-      {
-         nextPrayer.value= prayerTimesInstance.currentPrayer();
-      }
-      else{
-        nextPrayer.value=prayerTimesInstance.nextPrayer();
-      }
-    } catch (e) {
+     
+     }catch (e) {
     }
   }
    @override
@@ -187,27 +243,60 @@ class PrayScreenControllerImp extends PrayScreenController{
 
   @override
   Future<void> CompletedPray() async{
-    bool alreadyAdded = false;
-    for(int i=0;i<5;i++) 
+    _prayCounter.value=0.0;
+    prayCounter.value=0;
+    missedCounter.value=0;
+    remain.value =0;
+    for(int i=0;i<=5;i++) 
     {
-      if(i<currentPrayer.value && i!=1){
+      if(i==1) continue;
+      if(i<=currentPrayer.value ){
       if(trackPraying[i].value==true) prayCounter.value++;
       else{
-        missedCounter.value--;
+        missedCounter.value++;
       }
+      }
+      else {
+      remain.value++;
+
       }
     }
     _prayCounter.value= (prayCounter.value/5*100) ;
     update();
   }
-
-
    void toggleAlarm(int index) {
     if(index==1){return;}
     isAlarmOn[index].value = !isAlarmOn[index].value;
     update();
   }
+  
+  
+  final latitude = (0.0).obs;
+  final longitude = (0.0).obs;
+  final qiblaDirection = 0.0.obs;
+
+double calculateQiblaDirection(double latitude, double longitude) {
+  getCurrentLocation();
+  final direction = location.value;
+   final coordinatesq = Coordinates(
+        direction.latitude,
+        direction.longitude,
+      );
+  final qiblaDirection = Qibla(coordinatesq);
+  return qiblaDirection.direction;
+}
+
+
+
+  
+  
+  
+  
+  
   }
+
+  //alarm setting 
+
 
  
 

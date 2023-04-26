@@ -1,7 +1,11 @@
 import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
+import 'package:alquramcommunity_frontend/controller/prayscreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import '../../controller/qiblascreen_controller.dart';
 import '../../core/constant/routes.dart';
 import '../../view/screen/thikr.dart';
 import '../../view/widget/recitation/listsurahcardrecitation.dart';
@@ -13,6 +17,10 @@ import '../model/front_models/categorymodel.dart';
 
 HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
+PrayScreenControllerImp prayScreenController =
+    Get.put(PrayScreenControllerImp());
+QiblaScreenControllerImp qiblaController =
+    Get.put(QiblaScreenControllerImp());
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
@@ -30,27 +38,29 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
     title: "Qibla",
     image: AppImageAsset.qibla,
-    onPressed: () => homeScreenController.changePage(7),
+    onPressed: () async
+     { 
+      qiblaController.QiblaDialog();
+      }
+      
   ),
   CategoryModel(
-    title: "Tasbeeh",
-    image: AppImageAsset.rosary,
-    onPressed: () => Get.toNamed(AppRoute.tasbeeh),
-    onPressedWidgetDialog: const TrainerDialog(),
-  ),
-  CategoryModel(
-    title: "Prayer",
-    image: AppImageAsset.prayer,
-    onPressedWidgetDialog: const TrainerDialog(),
-    onPressed: () => homeScreenController.changePage(5),
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return CategoryList[index].onPressedWidget!;
-    //     ;
-    //   },
-    // );
-  ),
+      title: "Tasbeeh",
+      image: AppImageAsset.rosary,
+        onPressedWidgetDialog: const  TrainerDialog(),
+      ),
+ CategoryModel(
+  title: "Prayer",
+  image: AppImageAsset.prayer,
+  onPressed: () async {
+    await prayScreenController.checkLocationPermission();
+    if (prayScreenController.denied.value==false) {
+         await prayScreenController.getCurrentLocation();  
+         homeScreenController.changePage(5);
+    } 
+  },
+),
+
   CategoryModel(
     title: "Dhikr",
     image: AppImageAsset.duaa,
@@ -101,3 +111,5 @@ List<CategoryModel> ThikrCategoryList = [
     image: AppImageAsset.dua,
   ),
 ];
+
+

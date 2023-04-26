@@ -20,7 +20,7 @@ class SurahsDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
               width: 600,
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: 650,
               child: ListView(
                 children: [
                   // CustomAppBar(onPressedIcon: () {}),

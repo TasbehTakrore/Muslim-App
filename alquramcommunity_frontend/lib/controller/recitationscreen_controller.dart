@@ -297,7 +297,7 @@ class RecitationScreenController extends GetxController {
           displayDuration: const Duration(microseconds: 100),
           Overlay.of(context),
           Obx(() => CustomSnackBar.info(
-              textDirection: TextDirection.rtl,
+            //  textDirection: TextDirection.rtl,
               textStyle: const TextStyle(
                 fontFamily: "Quran",
                 fontWeight: FontWeight.w600,

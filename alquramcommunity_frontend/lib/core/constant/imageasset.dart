@@ -17,7 +17,6 @@ class AppImageAsset {
   static const String surahHead = "$rootImages/surahHead.svg";
   static const String mosque = "$rootImages/2840.jpg";
   static const String mosqueLine = "$rootImages/mosqueLine.png";
-  static const String user = "$rootImages/user.png";
 
   //thikr catg imgs
   static const String morning = "$rootImages/morning.png";
@@ -30,4 +29,6 @@ class AppImageAsset {
   static const String dua = "$rootImages/duaa.png";
 
   static const String dashboard = "$rootImages/dashboard.png";
+    static const String profile = "$rootImages/profile.svg.png";
+
 }

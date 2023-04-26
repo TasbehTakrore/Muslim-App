@@ -12,7 +12,7 @@ class JoinCommunity extends StatelessWidget {
         child: Container(
           width: 230,
           decoration: BoxDecoration(
-            color: AppColor.lightYellow,
+            color: AppColor.primaryColor,
             boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
@@ -31,6 +31,9 @@ class JoinCommunity extends StatelessWidget {
                     width: 230,
                     height: 181,
                     padding: EdgeInsets.all(23),
+                    decoration: BoxDecoration(
+                        color: Color(0x98FFFFFF),
+                        borderRadius: BorderRadius.circular(12)),
                     alignment: AlignmentDirectional(0, 0),
                     child: Column(children: const [
                       Icon(Icons.add, color: Colors.white, size: 80),

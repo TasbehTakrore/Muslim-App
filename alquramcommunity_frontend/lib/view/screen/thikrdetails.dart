@@ -54,14 +54,14 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
           //     //titleTextStyle: TextStyle(text),
           //     ),
           body: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(AppImageAsset.mosque),
                   fit: BoxFit.cover,
                   opacity: 0.2,
                 ),
                 // borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [Color(0xff266f52), Color(0xff266f52)],

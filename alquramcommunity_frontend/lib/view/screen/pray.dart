@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/prayscreen_controller.dart';
+import '../../core/constant/imageasset.dart';
 import '../../core/constant/routes.dart';
 import '../widget/home/customcardhome.dart';
 import '../widget/prayingtimes/completedPray_dialog.dart';
-import '../widget/prayingtimes/location_dialog.dart';
 import '../widget/prayingtimes/prayingtopCard.dart';
 import '../widget/prayingtimes/prayslist.dart';
 
@@ -22,7 +22,22 @@ class PrayScreen extends StatelessWidget {
       },
       child: Scaffold(
         body: Container(
-          margin: EdgeInsetsDirectional.symmetric(horizontal: 10),
+          decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AppImageAsset.mosque),
+                  fit: BoxFit.cover,
+                  opacity: 0.2,
+                ),
+                // borderRadius: BorderRadius.circular(20),
+                gradient:  LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Color.fromARGB(34, 38, 111, 82), Color.fromARGB(48, 38, 111, 82)],
+                )),
+          margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+          width: double.infinity,
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.bottom,
           child: SingleChildScrollView(  // wrap Column widget in SingleChildScrollView
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -36,16 +51,9 @@ class PrayScreen extends StatelessWidget {
                   fontSize2: 20,
                   nextPray:prayController.nextPrayer.value.name.toUpperCase(),
                   city_name:prayController.city.value,
-                   remainingTime: prayController.formattedRemainingTime.value,
+                  remainingTime: prayController.formattedRemainingTime.value,
                 )),
-                  GestureDetector(
-                    onTap: () {
-                   Get.dialog(PrayerProgressDialog());
-                    },
-                    child: Card(
-                      child: Text("My progress"),
-                    ),
-                  ),              
+                SizedBox(height:10),
                 Obx(() {
                   final prayerTimes = prayController.prayerTimesmap.value;
                   if (prayerTimes == null) {
