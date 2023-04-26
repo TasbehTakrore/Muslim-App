@@ -7,6 +7,7 @@ import '../view/screen/pray.dart';
 import '../view/screen/qibla.dart';
 import '../view/screen/thikr.dart';
 import '../view/screen/tasbeh.dart';
+import '../view/widget/notifications/notification.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int currentPage);
@@ -47,7 +48,7 @@ class HomeScreenControllerImp extends HomeScreenController {
       child: Center(child: Text("Lists")),
     ),
     Container(
-      child: Center(child: Text("Notifications")),
+      child: Center(child: Text("")),
     ),
     const Home(),
     PrayScreen(),
