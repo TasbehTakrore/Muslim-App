@@ -33,9 +33,11 @@ List<CategoryModel> CategoryList = [
     onPressed: () => homeScreenController.changePage(7),
   ),
   CategoryModel(
-      title: "Tasbeeh",
-      image: AppImageAsset.rosary,
-      onPressedWidgetDialog: const TrainerDialog()),
+    title: "Tasbeeh",
+    image: AppImageAsset.rosary,
+    onPressed: () => Get.toNamed(AppRoute.tasbeeh),
+    onPressedWidgetDialog: const TrainerDialog(),
+  ),
   CategoryModel(
     title: "Prayer",
     image: AppImageAsset.prayer,

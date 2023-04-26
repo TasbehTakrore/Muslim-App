@@ -43,7 +43,7 @@ class QuranPageController extends GetxController {
   }
 
   changeFontColorToWhite() {
-    QuranConstant.fontColor.value = Color.fromARGB(255, 119, 114, 114);
+    QuranConstant.fontColor.value = Color.fromARGB(255, 255, 255, 255);
   }
 
   changeFontColorToBlack() {
