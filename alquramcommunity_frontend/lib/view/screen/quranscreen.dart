@@ -17,7 +17,7 @@ class QuranScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    //final  quranController = Get.put(QuranPageController());
+    // Get.put(QuranPageController());
 
     return GetBuilder<QuranPageController>(builder: (controller) {
       return WillPopScope(

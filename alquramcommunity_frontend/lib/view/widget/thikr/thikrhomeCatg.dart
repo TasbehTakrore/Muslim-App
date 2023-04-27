@@ -32,6 +32,7 @@ class ThikrHomeCard2 extends StatelessWidget {
                     Get.toNamed(AppRoute.thikrdetails, arguments: ['$i']);
                   },
                   child: Container(
+                    
                     margin: const EdgeInsets.only(
                         top: 2, left: 10, right: 10, bottom: 2),
                     height: 90,
