@@ -11,8 +11,6 @@ import 'view/screen/pray.dart';
 import 'view/screen/qibla.dart';
 import 'view/screen/quranscreen.dart';
 import 'view/screen/thikrdetails.dart';
-import 'view/screen/tasbeh.dart';
-import 'view/widget/community/specificcommunity.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.login: (context) => const Login(),
@@ -24,8 +22,8 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.thikrdetails: (context) => const ThikrDetails(),
   AppRoute.signup: (context) => const SignUp(),
   AppRoute.forgetPassword: (context) => const ForgetPassword(),
-  AppRoute.pray: (context) => PrayScreen(),
-  AppRoute.qibla: (context) => QiblaScreen(),
-  AppRoute.specificCommunity: (context) => SpecificCommunity(),
-  AppRoute.tasbeeh: (context) => TasbeehScreen(),
+  AppRoute.pray: (context) =>  PrayScreen(),
+  AppRoute.qibla: (context) =>  QiblaScreen(),
+
+
 };

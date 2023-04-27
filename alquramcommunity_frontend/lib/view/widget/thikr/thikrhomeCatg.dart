@@ -14,7 +14,7 @@ class ThikrHomeCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      childAspectRatio: 0.9,
+      childAspectRatio: 1,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -37,18 +37,16 @@ class ThikrHomeCard2 extends StatelessWidget {
                   margin: const EdgeInsets.only(top:2,left:10,right:10,bottom:2),
                   height: 90,
                   width:90,
-
                   child: Image.asset("${ThikrCategoryList[i].image}"),
                 ),
               ),
               Container(
-
-                padding:EdgeInsets.only(top :i==2 ? 2: 12),
+                padding:EdgeInsets.only(top :i==2 ? 2: 13),
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   "${ThikrCategoryList[i].title}",
                   style:TextStyle(color: AppColor.black,fontWeight: FontWeight.bold,
-                  fontSize: i<5 ?16 : 16,
+                  fontSize: i<5 ?14 : 14,
                   fontFamily: "Cairo")
                 )
 

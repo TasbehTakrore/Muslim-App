@@ -1,102 +1,41 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
-import 'package:alquramcommunity_frontend/core/constant/color.dart';
-import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
-import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
-import '../widget/Quran/editquranthemedialog.dart';
 import '../widget/Quran/quranpagecontent.dart';
 
-class QuranScreen extends StatelessWidget {
+class QuranScreen extends GetView {
   const QuranScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    //final  quranController = Get.put(QuranPageController());
-
-    return GetBuilder<QuranPageController>(builder: (controller) {
-      return WillPopScope(
-          onWillPop: () async {
-            Get.offAllNamed(AppRoute.home);
-            return false;
-          },
-          child: Scaffold(
+    final QuranPageController quranController = Get.put(QuranPageController());
+    return WillPopScope(
+        onWillPop: () async {
+          // print('Back button pressed!');
+          Get.offAllNamed(AppRoute.home);
+          return false; // Return true to allow navigation, false to prevent it
+        },
+        child: Scaffold(
             floatingActionButton: FloatingActionButton(
-                backgroundColor: AppColor.primaryColor,
-                child: const Icon(Icons.color_lens_outlined),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext b) {
-                        return EditQuranThemeDialog();
-                      });
-                }),
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-            backgroundColor: QuranConstant.backgroundColor.value,
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomSlidingSegmentedControl<int>(
-                    fixedWidth: MediaQuery.of(context).size.width / 2.05,
-                    height: 39,
-                    initialValue: controller.getIndex(),
-                    children: {
-                      1: Text('Page\'',
-                          style: TextStyle(
-                              color: controller.getIndex() != 1
-                                  ? AppColor.black
-                                  : Colors.white)),
-                      2: Text('Detailes',
-                          style: TextStyle(
-                              color: controller.getIndex() != 2
-                                  ? AppColor.black
-                                  : Colors.white)),
-                    },
-                    decoration: BoxDecoration(
-                      color: QuranConstant.backgroundColor.value,
-                    ),
-                    thumbDecoration: BoxDecoration(
-                      color: AppColor.secondaryColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    duration: const Duration(milliseconds: 300),
-                    onValueChanged: (v) {
-                      controller.changeIndex(v);
-                    }),
-                controller.getIndex() == 1
-                    ? SizedBox(
-                        width: 500,
-                        height: MediaQuery.of(context).size.height - 80,
-                        child: PageView.builder(
-                            onPageChanged: (index) {
-                              controller.changePageIndexAndSurahName(index);
-                            },
-                            controller: PageController(
-                                initialPage: controller.getPageIndex()),
-                            reverse: controller.englishLang() ? true : false,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: totalPagesCount,
-                            itemBuilder: (context, indexP) {
-                              return Container(
-                                  padding: indexP == 0 || indexP == 1
-                                      ? const EdgeInsets.only(top: 150)
-                                      : const EdgeInsets.only(top: 0),
-                                  child: QuranPageContent(indexP: indexP));
-                            }),
-                      )
-                    : Container(
-                        height: 500,
-                        color: Color.fromARGB(255, 244, 67, 54),
-                      )
-              ],
-            ),
-          ));
-    });
+                child: Icon(Icons.settings), onPressed: () {}),
+            backgroundColor: const Color.fromARGB(255, 255, 249, 240),
+            body: PageView.builder(
+                onPageChanged: (index) {
+                  quranController.changePageIndexAndSurahName(index);
+                },
+                controller:
+                    PageController(initialPage: quranController.getPageIndex()),
+                reverse: quranController.englishLang() ? true : false,
+                scrollDirection: Axis.horizontal,
+                itemCount: totalPagesCount,
+                itemBuilder: (context, indexP) {
+                  return QuranPageContent(indexP: indexP);
+                })));
   }
 }
 

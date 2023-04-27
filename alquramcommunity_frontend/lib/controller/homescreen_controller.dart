@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
 import '../view/screen/pray.dart';
+import '../view/screen/profile.dart';
 import '../view/screen/qibla.dart';
 import '../view/screen/thikr.dart';
-import '../view/screen/tasbeh.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int currentPage);
@@ -20,7 +20,8 @@ class HomeScreenControllerImp extends HomeScreenController {
   // }
 
   void reSystemChrome() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
   }
 
 // @override
@@ -38,7 +39,7 @@ class HomeScreenControllerImp extends HomeScreenController {
 
   List<Widget> listPage = [
     Container(
-      child: Center(child: Text("Profile")),
+      child: ProfileScreen(),
     ),
     Container(
       child: Center(child: Text("\uFD3E" + "1" + "\uFD3F")),
@@ -53,7 +54,6 @@ class HomeScreenControllerImp extends HomeScreenController {
     PrayScreen(),
     const Thikr(),
     const QiblaScreen(),
-    TasbeehScreen()
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];

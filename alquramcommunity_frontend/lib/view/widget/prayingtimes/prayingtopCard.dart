@@ -1,4 +1,4 @@
-import 'package:alquramcommunity_frontend/view/widget/prayingtimes/location_dialog.dart';
+import 'package:alquramcommunity_frontend/view/widget/prayingtimes/completedPray_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
@@ -37,17 +37,17 @@ class PrayCardHome extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.only(bottom: 5),
         child: Stack(children: [
           Container(
               decoration: BoxDecoration(
-                  image: DecorationImage(
+                  image:const DecorationImage(
                     image: AssetImage(AppImageAsset.mosque),
                     fit: BoxFit.cover,
                     opacity: 0.2,
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: const LinearGradient(
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [Color(0xff266f52), Color(0xff266f52)],
@@ -78,24 +78,36 @@ class PrayCardHome extends StatelessWidget {
                       style:
                           const TextStyle(color: Colors.yellow, fontSize: 15)),
                   Row(
-                    children: [
-                      const SizedBox(width: 3),
-                      const Icon(
-                        Icons.location_on_outlined,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      GestureDetector(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                    children:  [
+                       const SizedBox(width: 3),
+                      GestureDetector (
+                        child: const Icon(
+                          Icons.location_on_outlined,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                         onTap: () {
-                          LocationPermissionDialog(onAllow: () {
-                            prayController.getCurrentLocation();
-                          });
-                          print("f");
+                          
                         },
-                        child: Text(city_name,
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontSize1)),
                       ),
+                      Expanded(
+                        child: Text(city_name,style:
+                            const TextStyle(color: Colors.white, fontSize: 12)),
+                      ),
+                        GestureDetector(     
+                    onTap: () {
+                    prayController.CompletedPray();
+                    
+                   Get.dialog(PrayerProgressDialog());
+                    },
+                      child: Card(
+                        child: Icon(Icons.timelapse)
+                        
+                      ),
+                  ),
+                     
                     ],
                   )
                 ],

@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../controller/quranscreen_controller.dart';
 import '../../../core/constant/imageasset.dart';
-import '../../../core/constant/quranconst.dart';
 
 class SurahTitleBorder extends StatelessWidget {
   SurahTitleBorder({super.key});
@@ -29,17 +28,12 @@ class SurahTitleBorder extends StatelessWidget {
                   children: [
                     Text(
                         "آياتها ${ArabicNumbers().convert(quranController.allVersescount)}",
-                        style: GoogleFonts.amiri(
-                            fontSize: 10,
-                            color: QuranConstant.fontColor.value)),
+                        style: GoogleFonts.amiri(fontSize: 10)),
                     Text("سورة ${quranController.surahName!}",
-                        style: GoogleFonts.amiri(
-                            fontSize: 25,
-                            color: QuranConstant.fontColor.value)),
+                        style: GoogleFonts.amiri(fontSize: 25)),
                     Text(
                         "ترتيبها ${ArabicNumbers().convert(quranController.surahNumb)}",
-                        style: GoogleFonts.amiri(
-                            fontSize: 10, color: QuranConstant.fontColor.value))
+                        style: GoogleFonts.amiri(fontSize: 10))
                   ]))),
       const SizedBox(height: 8),
       quranController.surahNumb != 9 && quranController.surahNumb != 1
