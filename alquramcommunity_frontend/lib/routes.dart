@@ -4,7 +4,9 @@ import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:alquramcommunity_frontend/view/screen/recitationscreen.dart';
 import 'package:alquramcommunity_frontend/view/screen/surahsdialog.dart';
+import 'package:alquramcommunity_frontend/view/screen/tasbeh.dart';
 import 'package:alquramcommunity_frontend/view/screen/thikr.dart';
+import 'package:alquramcommunity_frontend/view/widget/community/specificcommunity.dart';
 import 'package:flutter/material.dart';
 import 'view/screen/auth/forgetpassword.dart';
 import 'view/screen/pray.dart';
@@ -22,8 +24,8 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.thikrdetails: (context) => const ThikrDetails(),
   AppRoute.signup: (context) => const SignUp(),
   AppRoute.forgetPassword: (context) => const ForgetPassword(),
-  AppRoute.pray: (context) =>  PrayScreen(),
-  AppRoute.qibla: (context) =>  QiblaScreen(),
-
-
+  AppRoute.pray: (context) => PrayScreen(),
+  AppRoute.qibla: (context) => QiblaScreen(),
+  AppRoute.tasbeeh: (context) => TasbeehScreen(),
+  AppRoute.SpecificCommunity: (context) => SpecificCommunity(),
 };

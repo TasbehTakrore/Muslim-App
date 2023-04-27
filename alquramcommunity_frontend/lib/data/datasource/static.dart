@@ -19,8 +19,7 @@ HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
 PrayScreenControllerImp prayScreenController =
     Get.put(PrayScreenControllerImp());
-QiblaScreenControllerImp qiblaController =
-    Get.put(QiblaScreenControllerImp());
+QiblaScreenControllerImp qiblaController = Get.put(QiblaScreenControllerImp());
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
@@ -36,31 +35,28 @@ List<CategoryModel> CategoryList = [
       image: AppImageAsset.reading,
       onPressedWidgetDialog: const SurahsDialog()),
   CategoryModel(
-    title: "Qibla",
-    image: AppImageAsset.qibla,
-    onPressed: () async
-     { 
-      qiblaController.QiblaDialog();
-      }
-      
+      title: "Qibla",
+      image: AppImageAsset.qibla,
+      onPressed: () async {
+        qiblaController.QiblaDialog();
+      }),
+  CategoryModel(
+    title: "Tasbeeh",
+    image: AppImageAsset.rosary,
+    onPressed: () => Get.toNamed(AppRoute.tasbeeh),
+    onPressedWidgetDialog: const TrainerDialog(),
   ),
   CategoryModel(
-      title: "Tasbeeh",
-      image: AppImageAsset.rosary,
-        onPressedWidgetDialog: const  TrainerDialog(),
-      ),
- CategoryModel(
-  title: "Prayer",
-  image: AppImageAsset.prayer,
-  onPressed: () async {
-    await prayScreenController.checkLocationPermission();
-    if (prayScreenController.denied.value==false) {
-         await prayScreenController.getCurrentLocation();  
-         homeScreenController.changePage(5);
-    } 
-  },
-),
-
+    title: "Prayer",
+    image: AppImageAsset.prayer,
+    onPressed: () async {
+      await prayScreenController.checkLocationPermission();
+      if (prayScreenController.denied.value == false) {
+        await prayScreenController.getCurrentLocation();
+        homeScreenController.changePage(5);
+      }
+    },
+  ),
   CategoryModel(
     title: "Dhikr",
     image: AppImageAsset.duaa,
@@ -111,5 +107,3 @@ List<CategoryModel> ThikrCategoryList = [
     image: AppImageAsset.dua,
   ),
 ];
-
-

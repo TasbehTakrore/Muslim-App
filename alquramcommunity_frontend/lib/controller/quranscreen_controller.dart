@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
+import 'package:alquramcommunity_frontend/core/constant/quranconst.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -18,11 +19,40 @@ class QuranPageController extends GetxController {
   int? pageJuzNumber;
   List<Widget> versesList = [];
   RxString lastPageAndName = "".obs;
-
+  int? pageindex;
   int? allVersescount;
+  int index = 1;
+
+  changeIndex(int i) {
+    index = i;
+    update();
+  }
+
+  getIndex() {
+    return index;
+  }
+
+  changeBackground(int index) {
+    QuranConstant.backgroundColor.value = QuranConstant.backgroundColors[index];
+    update();
+  }
+
+  changeFontSize(double v) {
+    QuranConstant.fontsize.value = v.round().toDouble();
+    update();
+  }
+
+  changeFontColorToWhite() {
+    QuranConstant.fontColor.value = Color.fromARGB(255, 255, 255, 255);
+  }
+
+  changeFontColorToBlack() {
+    QuranConstant.fontColor.value = Colors.black;
+  }
 
   changePageIndexAndSurahName(int pageIndex) {
     myServices.quranPage.setInt("lastPageIndex", pageIndex);
+    pageindex = pageIndex;
     myServices.quranPage.setString(
         "lastSurahName", getSurahName(getPageData(pageIndex + 1)[0]["surah"]));
   }
@@ -61,7 +91,6 @@ class QuranPageController extends GetxController {
   }
 
   setSurahPageData(int pageNumb, int index) {
-    
     surahNumb = getPageData(pageNumb)[index]["surah"];
     allVersescount = getVerseCount(surahNumb!);
     startVerse = getPageData(pageNumb)[index]["start"];
@@ -81,10 +110,9 @@ class QuranPageController extends GetxController {
                       color:
                           D.replaceAll(RegExp('[^\u0621-\u064A ]'), '') == "لله"
                               ? Colors.red
-                              : AppColor.black,
+                              : QuranConstant.fontColor.value,
                       fontFamily: "Quran",
-                      fontSize: 21,
-                      fontWeight: FontWeight.w500,
+                      fontSize: QuranConstant.fontsize.value,
                     )),
               ));
       versesList.add(InkWell(
@@ -95,7 +123,7 @@ class QuranPageController extends GetxController {
           style: const TextStyle(
               fontSize: 20,
               color: Color.fromARGB(255, 41, 119, 97),
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w700),
         ),
       ));
     }
