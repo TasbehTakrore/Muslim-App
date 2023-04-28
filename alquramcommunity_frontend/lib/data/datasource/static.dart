@@ -19,7 +19,6 @@ HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
 PrayScreenControllerImp prayScreenController =
     Get.put(PrayScreenControllerImp());
-QiblaScreenControllerImp qiblaController = Get.put(QiblaScreenControllerImp());
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
@@ -38,7 +37,7 @@ List<CategoryModel> CategoryList = [
       title: "Qibla",
       image: AppImageAsset.qibla,
       onPressed: () async {
-        qiblaController.QiblaDialog();
+       Get.toNamed(AppRoute.qibla);
       }),
   CategoryModel(
     title: "Tasbeeh",

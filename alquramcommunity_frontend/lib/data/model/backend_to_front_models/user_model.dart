@@ -9,6 +9,7 @@ class RegisterModel {
     final int userAge;
     final String userPassword;
     //String userGender;
+    final String token ;
 
     RegisterModel({
         required this.id,
@@ -16,6 +17,7 @@ class RegisterModel {
         required this.userEmail,
         required this.userAge,
         required this.userPassword,
+        required this.token,
         //required this.userGender,
     });
 
@@ -26,6 +28,7 @@ class RegisterModel {
       'userEmail': userEmail,
       'userAge': userAge,
       'userPassword': userPassword,
+      'token':token
     
     };
   }
@@ -35,8 +38,9 @@ class RegisterModel {
       id: map['id'] ?? '',
       userName: map['userName'] ?? '',
       userEmail: map['userEmail'] ?? '',
-      userAge: map['userAge'] ?? '',
+      userAge: map['userAge'] ?? 0,
       userPassword: map['userPassword'] ?? '',
+      token: map['token'] ?? '',
 
     );
   }

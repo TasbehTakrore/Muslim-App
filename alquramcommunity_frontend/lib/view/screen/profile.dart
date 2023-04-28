@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
+import '../../core/services/services.dart';
+import '../../provider/userprovider.dart';
 import '../widget/home/statisticscard.dart';
 import '../widget/profile/editprofiledialog.dart';
 import '../widget/profile/profilecard.dart';
@@ -11,7 +14,10 @@ import '../widget/profile/profiletop.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
+     MyServices myServices = Get.put(MyServices());
+    final user =Provider.of<UserProvider>(context).user;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -71,9 +77,10 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             SizedBox(height: 50),
                             Text(
-                              "Ayah Shraim",
+                              myServices.sharedPreferences.getString("user_name").toString(),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
+                                  fontWeight: FontWeight.bold, fontSize: 20,
+                                  color: AppColor.primaryColor),
                             ),
                             SizedBox(height: 5),
                             Text("(22 year),Palestine",

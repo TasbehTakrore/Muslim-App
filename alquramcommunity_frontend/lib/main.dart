@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
+import 'package:provider/provider.dart';
 
 import 'core/constant/color.dart';
 import 'core/localization/changelocal.dart';
 import 'core/services/services.dart';
+import 'provider/userprovider.dart';
 import 'view/screen/auth/login.dart';
+import 'view/screen/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'core/localization/translation.dart';
@@ -15,7 +18,9 @@ import 'view/screen/language.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
-  runApp(const MyApp());
+  runApp(MultiProvider(providers:[
+    ChangeNotifierProvider(create: (contex)=>UserProvider())
+  ], child:const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -54,7 +59,7 @@ class MyApp extends StatelessWidget {
                     fontSize: 16))),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? HomeScreen()
+            ? SignUp()
             : Language(),
 
         // myServices.sharedPreferences.
