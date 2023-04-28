@@ -7,12 +7,30 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER,
   });
 
  
-const connectDB = async()=>{
+  const connectDB = async() => {
+    try {
+      await sequelize.sync({ force: true });
+      console.log('Database synced successfully!');
+    } catch (error) {
+      console.error('Error syncing database: ', error);
+    }
+  };
+  
 
-    return await sequelize.sync({alter:true});
+
+  
+// const connectDB = async()=>{
+
+//     return await sequelize.sync({alter:true});
+
+// }
 
 
-}
+
+
+
+
+
 /*
 db.connect((err)=>{
     if(err){

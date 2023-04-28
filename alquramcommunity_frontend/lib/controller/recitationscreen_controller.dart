@@ -26,7 +26,7 @@ class RecitationScreenController extends GetxController {
   int? allVersescount;
   int index = 0;
   int indexP = 0;
-  MyServices service = Get.put(MyServices());
+  //MyServices service = Get.put(MyServices());
   int pageWidgetindex = 0;
   List<List<String>> beginningVerses = [];
   List<List<String>> secondeWordOfVerses = [];
@@ -78,7 +78,7 @@ class RecitationScreenController extends GetxController {
 
   get nextReload => nextReloadIcon;
   changePageIndex(int pageIndex) {
-    service.recitation.setInt("startIndexRecit", pageIndex);
+    myServices.recitation.setInt("startIndexRecit", pageIndex);
     emptyLists();
     createLists();
   }
@@ -305,7 +305,7 @@ class RecitationScreenController extends GetxController {
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
-              weight: 50,
+              weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
               ayahId: listOfversesID[pageWidgetindex][index])
           .toJson());
@@ -339,6 +339,14 @@ class RecitationScreenController extends GetxController {
                 size: 35,
               ))));
     } else if (secondHint == true) {
+      mistakeModelList.add(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 25,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+
       hintColor.value = Colors.red;
       secondHint = false;
       hint = secondeWordOfVerses[pageWidgetindex][index].obs;
@@ -367,6 +375,13 @@ class RecitationScreenController extends GetxController {
               userEmail: userEmail,
               mistakeType: 0,
               weight: 50,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+      mistakeModelList.remove(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
               ayahId: listOfversesID[pageWidgetindex][index])
           .toJson());
