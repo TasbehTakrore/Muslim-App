@@ -29,7 +29,7 @@ class ResitationFloatingButtonsGroup extends StatelessWidget {
                 child: LinearPercentIndicator(
                   percent: recitationController.percent!.value,
                   width: MediaQuery.of(context).size.width / 1.5,
-                  lineHeight: 16,
+                  lineHeight: 10,
                   animation: false,
                   progressColor: recitationController.percent!.value < 0.5
                       ? Color.fromARGB(193, 252, 204, 92)
