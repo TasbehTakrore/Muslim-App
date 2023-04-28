@@ -15,17 +15,17 @@ class ProfileImg extends StatelessWidget {
         children: [
           const CircleAvatar(
             radius: 80,
-            backgroundImage: AssetImage(AppImageAsset.quranLogo),
+            backgroundImage: AssetImage(AppImageAsset.profile),
           ),
           Positioned(
-              bottom: 20,
-              right: 20,
+              bottom: 10,
+              right: 15,
               child: InkWell(
                 onTap: onTap,
                 child: const Icon(
                   Icons.camera_alt,
-                  color: AppColor.primaryColor,
-                  size: 25,
+                  color: AppColor.secondaryColor,
+                  size: 30,
                 ),
               ))
         ],

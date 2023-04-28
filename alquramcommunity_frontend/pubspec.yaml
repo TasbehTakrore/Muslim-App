@@ -82,6 +82,8 @@ dependencies:
   awesome_dialog: ^3.0.2
   audioplayers: ^4.0.1
   firebase_messaging: ^14.4.1
+  flutter_qiblah: ^2.1.0
+  provider: ^5.0.0
 
 
 dev_dependencies:

@@ -95,7 +95,6 @@ class SignUp extends StatelessWidget {
           onPressed: () {
             signUpUser();
             print("aa");
-            Get.toNamed(AppRoute.home);
           },
           color: AppColor.primaryColor,
         ),

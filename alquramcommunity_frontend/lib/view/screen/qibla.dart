@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -15,22 +16,45 @@ class QiblaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final QiblaScreenControllerImp qiblaController = Get.put(QiblaScreenControllerImp());
-    qiblaController. getCurrentLocation();
-
-    return LayoutBuilder(
-      builder:(context,constraints){
-      final height=constraints.maxHeight;
-      final width=constraints.maxWidth;
-
-      return WillPopScope(
+    final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
+    return WillPopScope(
         onWillPop: () async {
           Get.toNamed(AppRoute.home);
           return false;
         },
         child: Scaffold(
           backgroundColor: Colors.white70,
-          body: Column(
+          body: FutureBuilder(
+            future:_deviceSupport ,
+            builder: (_,AsyncSnapshot<bool?> snapshot){
+              if(snapshot.connectionState==ConnectionState.waiting){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if(snapshot.hasError){
+                return Center(
+                  child: Text("Error : ${snapshot.error.toString()}"),
+                );
+              }
+              if(snapshot.hasData){
+                return QiblahCompass();
+              }
+              else {
+                return const Center(
+                  child: Text("your device doesn't support")
+                );
+              }
+
+
+            }
+          )
+     
+          
+          
+          
+         /* 
+          Column(
             children: [
               const SizedBox(height:30),
               const Center(
@@ -45,14 +69,17 @@ class QiblaScreen extends StatelessWidget {
                   
                   alignment: Alignment.center,
                   children: [
-                    SvgPicture.asset("assets/images/compass.svg",height: width,width:width),
-                    Obx(()=>Transform.rotate(
-                      angle: qiblaController.qiblaDirection.value* pi,
-                      child:   SvgPicture.asset("assets/images/needle.svg",height: width,width:width),
-
-                    )
-                    )
-                    
+                   Obx(()=>
+                    Transform.rotate(
+                      angle: (qiblaController.qiblaDirection.value * (pi / 180) * -1),
+                      child: SvgPicture.asset("assets/images/compass.svg",height: width,width:width),
+                     ),),
+                    Obx(()=> 
+                    Transform.rotate(
+                     angle: (qiblaController.qiblaDirection.value * (pi / 180) * -1),
+                     alignment: Alignment.center,
+                     child:SvgPicture.asset("assets/images/needle.svg",height: width,width:width),
+                     ),)
                     
               
                   ],
@@ -65,12 +92,11 @@ class QiblaScreen extends StatelessWidget {
               
             ],
           ),
+           
+           
+           */
               ),
             );
-      }
-    );
-        
-      
-    
+ 
   }
 }
