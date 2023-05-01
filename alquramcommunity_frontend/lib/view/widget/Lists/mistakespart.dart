@@ -22,7 +22,6 @@ class MistakesPart extends StatelessWidget {
             if (snapshot.hasError) {
               return Center(child: Text("${snapshot.error}"));
             } else if (snapshot.hasData) {
-              controller.createVisibilityList(snapshot.data.length);
               //print(snapshot.data[0].ayahID);
               return SizedBox(
                 width: MediaQuery.of(context).size.height,

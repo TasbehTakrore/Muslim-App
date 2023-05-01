@@ -55,7 +55,7 @@ class RecitationScreenController extends GetxController {
   List<List<int>> NumberWordsOfVerse = [];
   List<List<int>> listOfSurahsID = [];
   List<Map<String, dynamic>> mistakeModelList = [];
-  String userEmail = 'tasbeh.takrore@gmail.com';
+  String? userEmail;
   bool secondHint = false;
   Timer? timer;
   bool nextForAutoState = false;
@@ -136,6 +136,7 @@ class RecitationScreenController extends GetxController {
   }
 
   bool englishLang() {
+    userEmail = myServices.sharedPreferences.getString("user_email");
     return localeController.myServices.sharedPreferences.getString("lang") ==
             "en"
         ? true

@@ -14,10 +14,9 @@ import '../widget/profile/profiletop.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
-     MyServices myServices = Get.put(MyServices());
-    final user =Provider.of<UserProvider>(context).user;
+    MyServices myServices = Get.put(MyServices());
+    final user = Provider.of<UserProvider>(context).user;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -39,12 +38,24 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           Container(
-            height: 170,
             decoration: const BoxDecoration(
-                color: AppColor.primaryColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(60),
-                    bottomRight: Radius.circular(60))),
+              image: DecorationImage(
+                image: NetworkImage(
+                    'https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg'),
+                alignment: Alignment.bottomCenter,
+                fit: BoxFit.cover,
+                opacity: 0.2,
+              ),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(60),
+                  bottomRight: Radius.circular(60)),
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Color(0xff266f52), Color(0xff266f52)],
+              ),
+            ),
+            height: 170,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -68,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
             child: Stack(
               children: [
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
                     child: Container(
                         height: 200,
                         width: width,
@@ -77,9 +88,12 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             SizedBox(height: 50),
                             Text(
-                              myServices.sharedPreferences.getString("user_name").toString(),
+                              myServices.sharedPreferences
+                                  .getString("user_name")
+                                  .toString(),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                   color: AppColor.primaryColor),
                             ),
                             SizedBox(height: 5),

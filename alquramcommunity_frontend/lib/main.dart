@@ -18,9 +18,9 @@ import 'view/screen/language.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
-  runApp(MultiProvider(providers:[
-    ChangeNotifierProvider(create: (contex)=>UserProvider())
-  ], child:const MyApp()));
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (contex) => UserProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                     fontSize: 16))),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? SignUp()
+            ? HomeScreen()
             : Language(),
 
         // myServices.sharedPreferences.

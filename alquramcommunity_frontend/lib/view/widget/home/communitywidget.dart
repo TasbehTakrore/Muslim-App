@@ -30,14 +30,21 @@ class Community extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: double.infinity,
                   height: 100,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://i.pinimg.com/564x/1a/3e/87/1a3e87c62a840fff35a1747cf611f656.jpg'),
+                      alignment: Alignment.topLeft,
+                      fit: BoxFit.cover,
+                      opacity: 0.06,
+                    ),
                     color: AppColor.secondaryColor,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0),

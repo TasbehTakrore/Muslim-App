@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart';
 
 import '../core/localization/changelocal.dart';
+import '../core/services/mistake_services.dart';
 import '../core/services/services.dart';
+import '../data/model/backend_to_front_models/mistake_model.dart';
 
 class QuranPageController extends GetxController {
   MyServices myServices = Get.put(MyServices());
@@ -22,6 +24,22 @@ class QuranPageController extends GetxController {
   int? pageindex;
   int? allVersescount;
   int index = 1;
+  List<MistakeModel> mistakesList = [];
+  String? userEmail;
+
+  @override
+  void onInit() {
+    userEmail = myServices.sharedPreferences.getString("user_email");
+    // TODO: implement onInit
+    print(mistakesList);
+    super.onInit();
+  }
+
+  getMistakes() async {
+    mistakesList.clear();
+    mistakesList = await MistakeServices.getMistakes(userEmail!);
+    print(mistakesList);
+  }
 
   changeIndex(int i) {
     index = i;
@@ -113,6 +131,11 @@ class QuranPageController extends GetxController {
                               : QuranConstant.fontColor.value,
                       fontFamily: "Quran",
                       fontSize: QuranConstant.fontsize.value,
+                      backgroundColor: mistakesList.any((element) =>
+                              element.surahId == surahNumb &&
+                              element.ayahId == startVerse! + i)
+                          ? AppColor.lightYellow
+                          : Color.fromARGB(0, 255, 255, 255),
                     )),
               ));
       versesList.add(InkWell(

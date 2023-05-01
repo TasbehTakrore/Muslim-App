@@ -9,7 +9,7 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: AppColor.lightYellow
+          borderRadius: BorderRadius.circular(20), color: AppColor.grey
           // gradient: const LinearGradient(
           //   begin: Alignment.topRight,
           //   end: Alignment.bottomLeft,
@@ -18,10 +18,9 @@ class ProfileCard extends StatelessWidget {
           ),
       height: 500,
       width: double.infinity,
-      alignment:Alignment.bottomLeft ,
+      alignment: Alignment.bottomLeft,
       margin: EdgeInsets.only(top: 30),
-      child:
-      ProfileFriends(),
+      child: ProfileFriends(),
     );
   }
 }
