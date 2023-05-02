@@ -1,7 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
 import '../../../core/constant/color.dart';
 import 'pagecardtrainer.dart';
 
@@ -10,9 +10,9 @@ class PagesContentDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
 
-    return GetBuilder<TrainerDialogController>(builder: (controller) {
+    return GetBuilder<TrainerScreenController>(builder: (controller) {
       return SizedBox(
         //color: Color.fromARGB(255, 153, 161, 0),
         height: MediaQuery.of(context).size.height / 1.75,

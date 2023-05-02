@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../controller/recitationscreen_controller.dart';
 import '../../../controller/surahs_controller.dart';
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
 
 // ignore: must_be_immutable
-class PageCardTrainer extends GetView<TrainerDialogController> {
+class PageCardTrainer extends GetView<TrainerScreenController> {
   final int surahNumber;
 
   PageCardTrainer({
@@ -21,8 +21,7 @@ class PageCardTrainer extends GetView<TrainerDialogController> {
 
   @override
   Widget build(BuildContext context) {
-    TrainerDialogController trainerDialogController =
-        Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
     SurahsController surahsController = Get.put(SurahsController());
 
     return Container(
@@ -51,7 +50,7 @@ class PageCardTrainer extends GetView<TrainerDialogController> {
           ]),
         ),
         onTap: () {
-          controller.changePageIndex(surahNumber);
+          //controller.changePageIndex(surahNumber);
           print(surahNumber);
           //Get.toNamed(AppRoute.recitation);
           //onTap;

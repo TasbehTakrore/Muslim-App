@@ -36,6 +36,7 @@ class QuranScreen extends StatelessWidget {
                 FloatingActionButton(
                     heroTag: "recitation",
                     backgroundColor: Color.fromARGB(0, 0, 0, 0),
+                    //hoverColor: AppColor.light2Yellow,
                     elevation: 0,
                     child: SvgPicture.asset(
                       AppImageAsset.quranCategory,
