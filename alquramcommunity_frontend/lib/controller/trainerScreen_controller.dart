@@ -1,58 +1,509 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import 'package:quran/quran.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
+import 'package:alquramcommunity_frontend/controller/speechRecognition_controller.dart';
+import 'package:arabic_tools/arabic_tools.dart';
+import 'package:flutter/Material.dart';
+import 'package:get/get.dart';
+import 'package:quran/juz_data.dart';
+import 'package:quran/quran.dart';
+import 'package:quran/quran_text.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'dart:convert';
+import '../core/constant/color.dart';
 import '../core/services/services.dart';
 
 class TrainerScreenController extends GetxController {
+  //
   RxString ayahTest = "بسم الله".obs;
-
-  MyServices service = Get.put(MyServices());
-
   int juzNumber = 0;
   int surahNumb = 0;
   int index = 1;
   int verseCount = 0;
   List<String> ayahList = [];
-  void changeIndex(int v) {
-    index = v;
-    update();
+  List<String> ayahListStandard = [];
+  List<String> Words = [];
+  List<String> WordsStand = [];
+  int randVerseIndex = 0;
+  List<Widget> wordsWidgetList = [];
+  int testTypeIndex = 0;
+  String specificPreviousAyah = "";
+  String firstWord = "";
+  String endWord = "";
+  String displayInBar = "";
+  String endPartWord = "";
+  String firstPartWord = "";
+  String specificPreviousAyahStand = "";
+  String specificNextAyahStand = "";
+  String specificNextAyah = "";
+  List pageData = [];
+  List<int> verseIndex = [];
+  String remainingWords = "";
+  String specificAyah = "";
+  String specificAyahStand = "";
+  var random = Random();
+  Rx<int> counter = 0.obs;
+  bool juzFlag = false;
+  int pageNumber = 0;
+
+  // var min = 1;
+  // var max = 100;
+  // var randomNumber = min + random.nextInt(max - min);
+  int? rand;
+  int getRandom(int min, int max) {
+    rand = min + random.nextInt(max - min);
+    print(rand);
+    return rand!;
+    // min =0
   }
 
-  int getIndex() {
-    return index;
+  letsSurahTest(int surahIndex) {
+    wordsWidgetList.clear();
+    counter.value = 0;
+    surahNumb = surahIndex;
+    print(surahNumb);
+    verseCount = getVerseCount(surahNumb);
+    prepareTestDataForSurah();
+    testType();
+    //testWithhideTheFirstWord();
   }
 
-  changeJuzIndex(int juzIndex) {
+  letsJuzTest(int juzIndex) {
     juzNumber = juzIndex;
     print(juzNumber);
     prepareTestDataForJuz();
-
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
-  prepareTestDataForJuz() {
-    print("prepareTestDataForJuz");
+  letsPageTest(int pageIndex) {
+    pageNumber = pageIndex;
+    print(pageIndex);
+    prepareTestDataForPage();
+    //service.recitation.setInt("surahTrainerIndex", pageIndex);
+  }
+
+  void testType() {
+    testTypeIndex = getRandom(0, 6);
+    if (testTypeIndex == 0) {
+      testWithhideTheFirstWord();
+      startListening(conteXt!);
+    } else if (testTypeIndex == 1) {
+      testWithhideTheEndWord();
+
+      startListening(conteXt!);
+    } else if (testTypeIndex == 2) {
+      testWithhideThePartFirstWord();
+
+      startListening(conteXt!);
+    } else if (testTypeIndex == 3) {
+      testWithhideThePartEndWord();
+
+      startListening(conteXt!);
+    } else if (testTypeIndex == 4) {
+      testWithPreviousAyah();
+
+      startListening(conteXt!);
+    } else if (testTypeIndex == 5) {
+      testWithNextAyah();
+      startListening(conteXt!);
+    }
   }
 
   prepareTestDataForSurah() {
+    juzFlag = false;
+
     ayahList.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
     verseCount = getVerseCount(surahNumb);
     print("verseCount $verseCount");
     for (int i = 0; i < verseCount; i++) {
-      ayahList.add(getVerse(surahNumb, i + 1, verseEndSymbol: true));
+      ayahList.add(getVerse(surahNumb, i + 1, verseEndSymbol: false));
+      ayahListStandard
+          .add(getVerseStandard(surahNumb, i + 1, verseEndSymbol: false));
     }
     print(ayahList);
-    print(searchWords(["سَوَآءٌ"]));
+    // print(searchWords(["سَوَآءٌ"]));
   }
 
-  changeSurahIndex(int surahIndex) {
-    surahNumb = surahIndex;
-    print(surahNumb);
-    prepareTestDataForSurah();
-    print(quranJuzList[5]['start']);
+  prepareTestDataForPage() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
 
-    //service.recitation.setInt("surahTrainerIndex", pageIndex);
+    ayahList.addAll(getVersesTextByPage(pageNumber));
+    ayahListStandard.addAll(getVersesTextByPageStanderd(pageNumber));
+    pageData = getPageData(pageNumber);
+
+    pageData.forEach((element) {
+      for (int s = element['start']; s <= element['end']; s++) {
+        verseIndex.add(s);
+        print(s);
+      }
+    });
+
+    verseCount = ayahList.length;
+    testType();
+    // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  prepareTestDataForJuz() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+    print(quranJuzList[juzNumber - 1]);
+    for (int i = quranJuzList[juzNumber - 1]['start']!;
+        i <= quranJuzList[juzNumber - 1]['end']!;
+        i++) {
+      ayahList.addAll(getVersesTextByPage(i));
+      ayahListStandard.addAll(getVersesTextByPageStanderd(i));
+      pageData = getPageData(i);
+
+      pageData.forEach((element) {
+        for (int s = element['start']; s <= element['end']; s++) {
+          verseIndex.add(s);
+          print(s);
+        }
+      });
+    }
+    verseCount = ayahList.length;
+    testType();
+    // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  testWithhideTheFirstWord() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(0, verseCount);
+    specificAyah = ayahList[randVerseIndex];
+    specificAyahStand = ayahListStandard[randVerseIndex];
+
+    Words = specificAyah.split(' ');
+    WordsStand = specificAyahStand.split(' ');
+    firstWord = WordsStand[0];
+    displayInBar = Words[0];
+    remainingWords = "...... ${Words.sublist(1).join(' ')}";
+    //ayahTest.value = "...... " + remainingWords;
+    setReferenceText(firstWord);
+
+    wordsWidgetList.addAll(remainingWords.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+  testWithhideTheEndWord() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(0, verseCount);
+    specificAyah = ayahList[randVerseIndex];
+    specificAyahStand = ayahListStandard[randVerseIndex];
+
+    Words = specificAyah.split(' ');
+    WordsStand = specificAyahStand.split(' ');
+    endWord = WordsStand[Words.length - 1];
+    displayInBar = Words[Words.length - 1];
+    remainingWords = "${Words.sublist(0, Words.length - 1).join(' ')} .....";
+    //ayahTest.value = "...... " + remainingWords;
+    print("endWord: $endWord");
+    setReferenceText(endWord);
+
+    wordsWidgetList.addAll(remainingWords.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+  void falseAnswer() {
+    testType();
+  }
+
+  void trueAnswer() {
+    testType();
+    print("true Answer ++++++++++++++++++++++");
+  }
+
+  // prepareTestDataForJuz() {
+  //   print("prepareTestDataForJuz");
+  // }
+
+// work here
+  testWithhideThePartEndWord() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(0, verseCount);
+    specificAyah = ayahList[randVerseIndex];
+    specificAyahStand = ayahListStandard[randVerseIndex];
+
+    Words = specificAyah.split(' ');
+    WordsStand = specificAyahStand.split(' ');
+    endPartWord =
+        WordsStand.sublist((Words.length ~/ 2), Words.length).join(' ');
+    displayInBar = Words.sublist((Words.length ~/ 2), Words.length).join(' ');
+    remainingWords =
+        "${Words.sublist(0, Words.length ~/ 2).join(' ')} ..................";
+    //ayahTest.value = "...... " + remainingWords;
+    print("endPartWord: $endPartWord");
+    setReferenceText(endPartWord);
+
+    wordsWidgetList.addAll(remainingWords.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+  testWithhideThePartFirstWord() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(0, verseCount);
+    specificAyah = ayahList[randVerseIndex];
+    specificAyahStand = ayahListStandard[randVerseIndex];
+
+    Words = specificAyah.split(' ');
+    WordsStand = specificAyahStand.split(' ');
+    firstPartWord = WordsStand.sublist(0, (Words.length ~/ 2)).join(' ');
+    displayInBar = Words.sublist(0, (Words.length ~/ 2)).join(' ');
+    remainingWords =
+        " .................. ${Words.sublist(Words.length ~/ 2, Words.length).join(' ')}";
+    //ayahTest.value = "...... " + remainingWords;
+    print("firstPartWord: $firstPartWord");
+    setReferenceText(firstPartWord);
+
+    wordsWidgetList.addAll(remainingWords.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+  testWithPreviousAyah() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(1, verseCount);
+    specificAyah = ayahList[randVerseIndex];
+    specificPreviousAyahStand = ayahListStandard[randVerseIndex - 1];
+    specificPreviousAyah = ayahList[randVerseIndex - 1];
+    displayInBar = specificPreviousAyah;
+    print("specificPreviousAyahStand: $specificPreviousAyahStand");
+    setReferenceText(specificPreviousAyahStand);
+    wordsWidgetList.add(const Text(
+      "...............",
+      style: TextStyle(
+          fontFamily: "Quran",
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex - 1] : randVerseIndex),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+    wordsWidgetList.addAll(specificAyah.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+  testWithNextAyah() {
+    wordsWidgetList.clear();
+    counter.value++;
+    randVerseIndex = getRandom(0, verseCount - 1);
+    specificAyah = ayahList[randVerseIndex];
+    specificNextAyahStand = ayahListStandard[randVerseIndex + 1];
+    specificNextAyah = ayahList[randVerseIndex + 1];
+    displayInBar = specificNextAyah;
+    print("specificNextAyahStand: $specificNextAyahStand");
+    setReferenceText(specificNextAyahStand);
+
+    wordsWidgetList.addAll(specificAyah.split(' ').map((D) => Text(
+          D,
+          style: TextStyle(fontFamily: "Quran", fontSize: 22),
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+        )));
+    print("verseIndex********************* $verseIndex");
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(
+          juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+    wordsWidgetList.add(Text(
+      "...............",
+      style: const TextStyle(
+          fontFamily: "Quran",
+          fontSize: 20,
+          color: Colors.black,
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+    wordsWidgetList.add(Text(
+      getVerseEndSymbol(juzFlag == true
+          ? verseIndex[randVerseIndex + 1]
+          : randVerseIndex + 2),
+      style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 41, 119, 97),
+          fontWeight: FontWeight.w700),
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.center,
+    ));
+    print(wordsWidgetList);
+    //hideTheFirstWord();
+  }
+
+//   Future<void> Test() async {
+//     print("start");
+
+//     for (int i = 0; i < 6235; i++) {
+//       quranText[i]['content'] = mainQuran[i]['content'];
+//       //print(quranText[i]);
+//     }
+//     final directory = await Directory.systemTemp.createTemp('my_temp_dir');
+//     final filePath = '${directory.path}/example.txt';
+//     final file = File(filePath);
+//     await file.writeAsString('Hello, world!');
+//     print(await file.readAsString());
+
+// // Open the file
+//     Process.run('open', [filePath]);
+
+// //  final file = File('example.txt');
+// //   file.writeAsString('Hello, world!');
+
+//     //    stdout.encoding = Encoding.getByName('utf-8')!;
+//     // stdout.lineMode = LineMode.terminal;
+//     // stdout.terminalColumns = 200;
+//     // final filename = 'myFile.txt';
+//     // final myText = 'Hello, World!';
+
+//     // final file = File(filename);
+//     // file.writeAsString(myText);
+//     // File('myList.text').writeAsString(quranText.join('\n'));
+
+//     print('List printed to file successfully!');
+//     print("end");
+//   }
+
+  void showFirstWord(BuildContext context) {
+    return showTopSnackBar(
+        padding:
+            const EdgeInsets.only(top: 50, bottom: 20, right: 15, left: 15),
+        animationDuration: const Duration(milliseconds: 1000),
+        displayDuration: const Duration(microseconds: 100),
+        Overlay.of(context),
+        CustomSnackBar.info(
+            //textDirection: TextDirection.rtl,
+            textStyle: const TextStyle(
+              fontFamily: "Quran",
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              color: Colors.white,
+            ),
+            message: " ${displayInBar}",
+            backgroundColor: AppColor.thickYellow,
+            icon: const Icon(
+              Icons.light_mode_outlined,
+              color: Colors.white,
+              size: 35,
+            )));
   }
 
   final _rangeValues = const RangeValues(1, 604).obs;
@@ -63,36 +514,154 @@ class TrainerScreenController extends GetxController {
   int get startPageIndex => rangeValues.start.round();
   int get endPageIndex => rangeValues.end.round();
 
+  void changeIndex(int v) {
+    index = v;
+    update();
+  }
+
+  int getIndex() {
+    return index;
+  }
+
   final List<Map<String, int>> quranJuzList = [
-    {"start": 1, "end": 20},
-    {"start": 21, "end": 40},
-    {"start": 41, "end": 60},
-    {"start": 61, "end": 80},
-    {"start": 81, "end": 100},
-    {"start": 101, "end": 120},
-    {"start": 121, "end": 140},
-    {"start": 141, "end": 160},
-    {"start": 161, "end": 180},
-    {"start": 181, "end": 200},
-    {"start": 201, "end": 220},
-    {"start": 221, "end": 240},
-    {"start": 241, "end": 260},
-    {"start": 261, "end": 280},
-    {"start": 281, "end": 300},
-    {"start": 301, "end": 320},
-    {"start": 321, "end": 340},
-    {"start": 341, "end": 360},
-    {"start": 361, "end": 380},
-    {"start": 381, "end": 400},
-    {"start": 401, "end": 420},
-    {"start": 421, "end": 440},
-    {"start": 441, "end": 460},
-    {"start": 461, "end": 480},
-    {"start": 481, "end": 500},
-    {"start": 501, "end": 520},
-    {"start": 521, "end": 540},
-    {"start": 541, "end": 560},
-    {"start": 561, "end": 580},
-    {"start": 581, "end": 600},
+    {"start": 1, "end": 21},
+    {"start": 22, "end": 41},
+    {"start": 42, "end": 61},
+    {"start": 62, "end": 81},
+    {"start": 82, "end": 101},
+    {"start": 102, "end": 121},
+    {"start": 122, "end": 141},
+    {"start": 142, "end": 161},
+    {"start": 162, "end": 181},
+    {"start": 182, "end": 201},
+    {"start": 202, "end": 221},
+    {"start": 222, "end": 241},
+    {"start": 242, "end": 261},
+    {"start": 262, "end": 281},
+    {"start": 282, "end": 301},
+    {"start": 302, "end": 321},
+    {"start": 322, "end": 341},
+    {"start": 342, "end": 361},
+    {"start": 362, "end": 381},
+    {"start": 382, "end": 401},
+    {"start": 402, "end": 421},
+    {"start": 422, "end": 441},
+    {"start": 442, "end": 461},
+    {"start": 462, "end": 481},
+    {"start": 482, "end": 501},
+    {"start": 502, "end": 521},
+    {"start": 522, "end": 541},
+    {"start": 542, "end": 561},
+    {"start": 562, "end": 581},
+    {"start": 582, "end": 604},
   ];
+
+  late SpeechToText _speech;
+  RxBool _isAvailable = false.obs;
+  RxBool _isListening = false.obs;
+  RxString text = "".obs;
+  String _referenceText = "";
+  Rx<IconData> micIcon = Icons.mic_off.obs;
+  BuildContext? conteXt;
+  void setOpenMiceIcon() {
+    micIcon.value = Icons.mic_none;
+    print("Inside");
+  }
+
+  void setCloseMiceIcon() {
+    micIcon.value = Icons.mic_off;
+    print("Close");
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _speech = SpeechToText();
+    initSpeechRecognition();
+  }
+
+  void setReferenceText(String textt) {
+    text.value = "";
+    _referenceText = textt.replaceAll('إ', 'ا');
+    _referenceText = _referenceText.replaceAll('آ', 'ا');
+    _referenceText = _referenceText.replaceAll('أ', 'ا');
+    _referenceText = _referenceText.replaceAll('ة', 'ه');
+    print(" _referenceText ${_referenceText}");
+  }
+
+  void initSpeechRecognition() async {
+    _isAvailable.value = await _speech.initialize();
+    _speech.errorListener = (SpeechRecognitionError error) {
+      setCloseMiceIcon();
+      print("sss");
+      print("Error555: ${error.errorMsg}");
+    };
+    _speech.statusListener = (String status) {
+      if (status == "listening") {
+        _isListening.value = true;
+      } else if (status == "notListening") {
+        _isListening.value = false;
+        setCloseMiceIcon();
+      }
+    };
+  }
+
+//var selectedLocale = Locale('ar', 'AE');
+  bool matchFlag = false;
+  void startListening(BuildContext context) {
+    setOpenMiceIcon();
+
+    matchFlag = false;
+    conteXt = context;
+    text.value = "";
+
+    if (_isAvailable.value && !_isListening.value) {
+      _speech.listen(
+        localeId: 'ar',
+        partialResults: true, // تمكين النتائج الجزئية
+        listenFor: const Duration(seconds: 50), // تحديد مدة الاستماع
+
+        onResult: (result) {
+          text.value = result.recognizedWords;
+          print(text.value);
+          setOpenMiceIcon();
+
+          if (text.value == _referenceText) {
+            print("Match found!");
+
+            correctDialog();
+            trueAnswer();
+            matchFlag = true;
+          } else {
+            if (_isListening.value == false) {
+              print("nooo");
+              setCloseMiceIcon();
+              matchFlag = false;
+            }
+          }
+        },
+      );
+    }
+  }
+
+  correctDialog() {
+    showDialog(
+        context: conteXt!,
+        builder: (context) {
+          return Icon(
+            Icons.check_circle,
+            size: 200,
+            color: Color.fromARGB(255, 62, 171, 66),
+          );
+        });
+    setCloseMiceIcon();
+  }
+
+  void stopListening() {
+    if (_isListening.value) {
+      _speech.stop();
+      _isListening.value = false;
+      text.value = "";
+    }
+  }
 }

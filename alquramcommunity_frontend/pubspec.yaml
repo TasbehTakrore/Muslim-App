@@ -69,6 +69,8 @@ dependencies:
   google_fonts: ^3.0.1
   arabic_numbers: ^1.0.0
   top_snackbar_flutter: ^3.0.0+1
+  dartarabic: ^0.1.2
+  arabic_tools: ^0.0.4
 
   speech_to_text: ^6.1.1
 
@@ -77,6 +79,7 @@ dependencies:
   hijri: ^3.0.0
   geocoding: ^2.1.0
   flutter_tts: ^3.6.3
+  confetti: ^0.7.0
 
 
   circular_countdown_timer: ^0.2.3

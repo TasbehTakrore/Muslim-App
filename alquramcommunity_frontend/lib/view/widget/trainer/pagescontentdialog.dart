@@ -65,7 +65,7 @@ class PagesContentDialog extends StatelessWidget {
                 itemCount: 604,
                 itemBuilder: (BuildContext context, int index) {
                   return PageCardTrainer(
-                    surahNumber: index + 1,
+                    pageNumb: index + 1,
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

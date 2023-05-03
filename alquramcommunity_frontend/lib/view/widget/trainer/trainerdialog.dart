@@ -16,11 +16,12 @@ class TrainerDialog extends StatelessWidget {
 
     return GetBuilder<TrainerScreenController>(
       builder: (controller) {
+        controller.conteXt = context;
         return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 1.49,
+              height: MediaQuery.of(context).size.height / 1.45,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,

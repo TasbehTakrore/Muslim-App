@@ -50,7 +50,7 @@ class JuzCardTrainer extends GetView<TrainerScreenController> {
               ]),
             ),
             onTap: () {
-              controller.changeJuzIndex(juzNumber);
+              controller.letsJuzTest(juzNumber);
               Get.toNamed(AppRoute.trainer);
               //onTap;
             },

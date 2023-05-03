@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../controller/trainerScreen_controller.dart';
 import '../../core/constant/routes.dart';
 import '../widget/recitation/floatingbuttonsgroup.dart';
 import '../widget/recitation/recitationqurancontent.dart';
+import '../widget/trainer/floatingbottontrainer.dart';
 
 class TrainerMainScreen extends GetView {
   const TrainerMainScreen({super.key});
@@ -17,8 +19,6 @@ class TrainerMainScreen extends GetView {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    final SpeechRecognitionController speechRecognitionController =
-        Get.put(SpeechRecognitionController());
     TrainerScreenController trainerScreenController =
         Get.put(TrainerScreenController());
 
@@ -29,24 +29,79 @@ class TrainerMainScreen extends GetView {
           return false;
         },
         child: Scaffold(
-          floatingActionButton: const ResitationFloatingButtonsGroup(),
+          floatingActionButton: const TrainerFloatingButtonsGroup(),
           backgroundColor: AppColor.grey,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Obx(() => Text(": ${trainerScreenController.ayahTest.value}")),
-                ElevatedButton(
-                  onPressed: speechRecognitionController.startListening,
-                  child: Text("Start Listening"),
-                ),
-                SizedBox(height: 20),
-                Obx(() => Text(
-                    "You said: ${speechRecognitionController.text.value}")),
-                SizedBox(height: 20),
-              ],
-            ),
-          ),
+          body: Container(
+              padding: EdgeInsets.all(15),
+              alignment: Alignment.center,
+              child: Obx(() => Column(
+                    // ConfettiWidget(
+                    //   confettiController: null,
+                    // ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${trainerScreenController.counter.value}",
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                          fontSize: 50,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Wrap(
+                        spacing: 1.5,
+                        runSpacing: 4,
+                        direction: Axis.horizontal,
+                        textDirection: TextDirection.rtl,
+                        alignment: WrapAlignment.start,
+                        children: trainerScreenController.wordsWidgetList,
+                      ),
+                      SizedBox(height: 30),
+                      // Text(
+                      //   "${trainerScreenController.ayahTest.value}",
+                      //   textDirection: TextDirection.rtl,
+                      //   style: TextStyle(
+                      //     fontSize: 20,
+                      //     fontFamily: "Quran",
+                      //   ),
+                      //   textAlign: TextAlign.center,
+                      // ),
+                      SizedBox(height: 25),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Obx(() => IconButton(
+                              onPressed: () {
+                                trainerScreenController.setOpenMiceIcon();
+                                trainerScreenController.startListening(context);
+
+                                print(trainerScreenController.matchFlag);
+                                //speechRecognitionController.setCloseMiceIcon();
+                              },
+                              icon: Icon(
+                                trainerScreenController.micIcon.value,
+                                color: Colors.green,
+                                size: 35,
+                              ))),
+                          IconButton(
+                              onPressed: () {
+                                //trainerScreenController.Test();
+                                trainerScreenController.showFirstWord(context);
+                                //speechRecognitionController.startListening();
+                                //speechRecognitionController.setCloseMiceIcon();
+                              },
+                              icon: Icon(
+                                Icons.remove_red_eye_outlined,
+                                color: Colors.blue,
+                                size: 35,
+                              ))
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Text("${trainerScreenController.text.value}"),
+                      SizedBox(height: 20),
+                    ],
+                  ))),
         ));
   }
 }

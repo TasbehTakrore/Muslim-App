@@ -12,11 +12,11 @@ import '../../../core/constant/routes.dart';
 
 // ignore: must_be_immutable
 class PageCardTrainer extends GetView<TrainerScreenController> {
-  final int surahNumber;
+  final int pageNumb;
 
   PageCardTrainer({
     super.key,
-    required this.surahNumber,
+    required this.pageNumb,
   });
 
   @override
@@ -26,7 +26,7 @@ class PageCardTrainer extends GetView<TrainerScreenController> {
 
     return Container(
       decoration: BoxDecoration(
-          color: (surahNumber - 2) % 3 != 0
+          color: (pageNumb - 2) % 3 != 0
               ? AppColor.lightYellow
               : AppColor.light2Yellow,
           borderRadius: BorderRadius.circular(20)),
@@ -34,10 +34,10 @@ class PageCardTrainer extends GetView<TrainerScreenController> {
         child: Container(
           height: 50,
           child: Stack(alignment: Alignment.center, children: [
-            Text(surahNumber.toString(),
+            Text(pageNumb.toString(),
                 style: TextStyle(
                   fontSize: 18,
-                  color: (surahNumber - 2) % 3 == 0
+                  color: (pageNumb - 2) % 3 == 0
                       ? Colors.black
                       : AppColor.primaryColor,
                   fontFamily: "quran",
@@ -50,8 +50,10 @@ class PageCardTrainer extends GetView<TrainerScreenController> {
           ]),
         ),
         onTap: () {
-          //controller.changePageIndex(surahNumber);
-          print(surahNumber);
+          controller.letsPageTest(pageNumb);
+          Get.toNamed(AppRoute.trainer);
+
+          print(pageNumb);
           //Get.toNamed(AppRoute.recitation);
           //onTap;
         },

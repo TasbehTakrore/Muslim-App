@@ -39,13 +39,13 @@ class ProfileScreen extends StatelessWidget {
           ),
           Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                    'https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg'),
-                alignment: Alignment.bottomCenter,
-                fit: BoxFit.cover,
-                opacity: 0.2,
-              ),
+              // image: DecorationImage(
+              //   image: NetworkImage(
+              //       'https://img.freepik.com/free-vector/flat-arabic-pattern-background_79603-1826.jpg'),
+              //   alignment: Alignment.bottomCenter,
+              //   fit: BoxFit.cover,
+              //   opacity: 0.2,
+              // ),
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60)),
