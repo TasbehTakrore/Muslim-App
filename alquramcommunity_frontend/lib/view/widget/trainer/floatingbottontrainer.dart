@@ -21,11 +21,17 @@ class TrainerFloatingButtonsGroup extends StatelessWidget {
       //color: Colors.red,
       child: Row(
         // mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 95,
+          SizedBox(width: 20),
+          FloatingActionButton(
+            heroTag: "end",
+            onPressed: () {
+              trainerScreenController.statisticsAndEnd();
+            },
+            backgroundColor: AppColor.primaryColor,
+            child: const Icon(Icons.exit_to_app_rounded),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -46,10 +52,10 @@ class TrainerFloatingButtonsGroup extends StatelessWidget {
                     backgroundColor: Colors.green,
                     onPressed: () {
                       trainerScreenController.text.value = "";
-                      trainerScreenController.falseAnswer();
+                      trainerScreenController.trueAnswer();
                     }),
               ),
-              SizedBox(width: 15),
+              SizedBox(width: 8),
               FloatingActionButton(
                   heroTag: "false",
                   child: Icon(
@@ -59,7 +65,7 @@ class TrainerFloatingButtonsGroup extends StatelessWidget {
                   backgroundColor: Colors.red,
                   onPressed: () {
                     trainerScreenController.text.value = "";
-                    trainerScreenController.trueAnswer();
+                    trainerScreenController.falseAnswer();
                   }),
             ],
           ),

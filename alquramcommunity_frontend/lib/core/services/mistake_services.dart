@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 import 'package:alquramcommunity_frontend/core/constant/errorhandling.dart';
+import 'package:get/get.dart';
 
 import '../../data/model/backend_to_front_models/mistake_model.dart';
 import '../constant/urls.dart';
 import 'package:http/http.dart' as http;
 
-class MistakeServices {
+class MistakeServices extends GetxService {
   static void mistakeLogging(List<Map<String, dynamic>> mistakeList) async {
     try {
-      print("inside mistake log $mistakeList");
+      print(
+          "inside mistake log ########################################################### $mistakeList");
       http.Response res = await http.post(
         Uri.parse(MyURL.addAllMistakeURL),
         body: jsonEncode(mistakeList),

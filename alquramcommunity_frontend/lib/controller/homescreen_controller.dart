@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
 import '../view/screen/lists.dart';
+import '../view/screen/palnScreen.dart';
 import '../view/screen/pray.dart';
 import '../view/screen/profile.dart';
 import '../view/screen/qibla.dart';
@@ -44,7 +45,7 @@ class HomeScreenControllerImp extends HomeScreenController {
       child: Center(child: ProfileScreen()),
     ),
     Container(
-      child: Center(child: Text("\uFD3E" + "1" + "\uFD3F")),
+      child: PalnScreen(),
     ),
     Container(
       child: Center(child: ListsScreen()),
@@ -56,7 +57,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     PrayScreen(),
     const Thikr(),
     const QiblaScreen(),
-    TasbeehScreen()
+    TasbeehScreen(),
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];

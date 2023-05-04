@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
 
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
+        
     return WillPopScope(
         onWillPop: () async {
           homeScreenControllerImp.changePage(4);
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                     //primary: true,
                     elevation: 0.0,
                     backgroundColor: AppColor.grey,
-                    title: CustomAppBar(onPressedIcon: () {})
+                    title:CustomAppBar(onPressedIcon: () {})
                     //titleTextStyle: TextStyle(text),
                     ),
                 bottomNavigationBar: const CustomBottonAppBarHome(),

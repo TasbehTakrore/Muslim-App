@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/routes.dart';
 
-class statisticsRecitationContent extends StatelessWidget {
-  const statisticsRecitationContent({super.key});
+class statisticsTrainerContent extends StatelessWidget {
+  const statisticsTrainerContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: EdgeInsets.all(0),
         color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.4),
         child: Center(
           child: Wrap(

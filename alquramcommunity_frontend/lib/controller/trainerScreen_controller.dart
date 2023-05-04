@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
@@ -17,7 +18,13 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 import '../core/constant/color.dart';
+import '../core/services/coins_services.dart';
+import '../core/services/mistake_services.dart';
 import '../core/services/services.dart';
+import '../data/model/backend_to_front_models/mistake_model.dart';
+import '../view/widget/recitation/statisticsrecitationcontent.dart';
+import '../view/widget/trainer/statistictrainercontent.dart';
+import 'auth/appbar_controller.dart';
 
 class TrainerScreenController extends GetxController {
   //
@@ -44,6 +51,9 @@ class TrainerScreenController extends GetxController {
   String specificNextAyah = "";
   List pageData = [];
   List<int> verseIndex = [];
+  List<int> surahIndex = [];
+  int surahIDToSave = 0;
+  int ayahIDToSave = 0;
   String remainingWords = "";
   String specificAyah = "";
   String specificAyahStand = "";
@@ -51,6 +61,18 @@ class TrainerScreenController extends GetxController {
   Rx<int> counter = 0.obs;
   bool juzFlag = false;
   int pageNumber = 0;
+  List<Map<String, dynamic>> mistakeModelList = [];
+  String? userEmail;
+  MyServices myServices = Get.put(MyServices());
+  APPBarController appBarController = Get.put(APPBarController());
+
+  @override
+  void onInit() {
+    super.onInit();
+    userEmail = myServices.sharedPreferences.getString("user_email");
+    _speech = SpeechToText();
+    initSpeechRecognition();
+  }
 
   // var min = 1;
   // var max = 100;
@@ -64,6 +86,7 @@ class TrainerScreenController extends GetxController {
   }
 
   letsSurahTest(int surahIndex) {
+    mistakeModelList.clear();
     wordsWidgetList.clear();
     counter.value = 0;
     surahNumb = surahIndex;
@@ -75,6 +98,7 @@ class TrainerScreenController extends GetxController {
   }
 
   letsJuzTest(int juzIndex) {
+    mistakeModelList.clear();
     juzNumber = juzIndex;
     print(juzNumber);
     prepareTestDataForJuz();
@@ -82,36 +106,40 @@ class TrainerScreenController extends GetxController {
   }
 
   letsPageTest(int pageIndex) {
+    mistakeModelList.clear();
     pageNumber = pageIndex;
     print(pageIndex);
     prepareTestDataForPage();
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
+  int type = 0;
   void testType() {
     testTypeIndex = getRandom(0, 6);
     if (testTypeIndex == 0) {
       testWithhideTheFirstWord();
       startListening(conteXt!);
+      type = 0;
     } else if (testTypeIndex == 1) {
       testWithhideTheEndWord();
-
       startListening(conteXt!);
+      type = 1;
     } else if (testTypeIndex == 2) {
       testWithhideThePartFirstWord();
-
       startListening(conteXt!);
+      type = 2;
     } else if (testTypeIndex == 3) {
       testWithhideThePartEndWord();
-
       startListening(conteXt!);
+      type = 3;
     } else if (testTypeIndex == 4) {
       testWithPreviousAyah();
-
       startListening(conteXt!);
+      type = 4;
     } else if (testTypeIndex == 5) {
       testWithNextAyah();
       startListening(conteXt!);
+      type = 5;
     }
   }
 
@@ -136,6 +164,7 @@ class TrainerScreenController extends GetxController {
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
+    surahIndex.clear();
     wordsWidgetList.clear();
     ayahListStandard.clear();
 
@@ -146,6 +175,7 @@ class TrainerScreenController extends GetxController {
     pageData.forEach((element) {
       for (int s = element['start']; s <= element['end']; s++) {
         verseIndex.add(s);
+        surahIndex.add(element['surah']);
         print(s);
       }
     });
@@ -159,19 +189,23 @@ class TrainerScreenController extends GetxController {
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
+    surahIndex.clear();
     wordsWidgetList.clear();
     ayahListStandard.clear();
     print(quranJuzList[juzNumber - 1]);
     for (int i = quranJuzList[juzNumber - 1]['start']!;
         i <= quranJuzList[juzNumber - 1]['end']!;
         i++) {
+      print("Page%%%: $i");
+      pageData = getPageData(i);
+      print("pageData: $pageData");
       ayahList.addAll(getVersesTextByPage(i));
       ayahListStandard.addAll(getVersesTextByPageStanderd(i));
-      pageData = getPageData(i);
 
       pageData.forEach((element) {
         for (int s = element['start']; s <= element['end']; s++) {
           verseIndex.add(s);
+          surahIndex.add(element['surah']);
           print(s);
         }
       });
@@ -254,13 +288,46 @@ class TrainerScreenController extends GetxController {
     //hideTheFirstWord();
   }
 
+  setSurahIDAndAyahID() {
+    surahIDToSave = juzFlag == true ? surahIndex[randVerseIndex] : surahNumb;
+    ayahIDToSave =
+        juzFlag == true ? verseIndex[randVerseIndex] : randVerseIndex + 1;
+
+    if (type == 4) ayahIDToSave--;
+    if (type == 5) ayahIDToSave++;
+  }
+
   void falseAnswer() {
+    setSurahIDAndAyahID();
+    print("false...");
+    mistakeModelList.add(MistakeModel(
+            userEmail: userEmail,
+            mistakeType: 0,
+            weight: 10,
+            surahId: surahIDToSave,
+            ayahId: ayahIDToSave)
+        .toJson());
+    print(mistakeModelList);
+    testType();
+    print("false Answer ++++++++++%%%%%%%%%%%%++++++++++++");
+
     testType();
   }
 
   void trueAnswer() {
+    setSurahIDAndAyahID();
+    appBarController.addCoins();
+    print("after match inside true answer");
+    mistakeModelList.add(MistakeModel(
+            userEmail: userEmail,
+            mistakeType: 0,
+            weight: -10,
+            surahId: surahIDToSave,
+            ayahId: ayahIDToSave)
+        .toJson());
+    print(mistakeModelList);
     testType();
-    print("true Answer ++++++++++++++++++++++");
+    print("true Answer ++++++++++**++++++++++++");
   }
 
   // prepareTestDataForJuz() {
@@ -573,12 +640,11 @@ class TrainerScreenController extends GetxController {
     print("Close");
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    _speech = SpeechToText();
-    initSpeechRecognition();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+
+  // }
 
   void setReferenceText(String textt) {
     text.value = "";
@@ -663,5 +729,17 @@ class TrainerScreenController extends GetxController {
       _isListening.value = false;
       text.value = "";
     }
+  }
+
+  statisticsAndEnd() {
+    MistakeServices.mistakeLogging(mistakeModelList);
+    mistakeModelList.clear();
+    CoinsServices.addCoins(appBarController.coinsCount.value);
+    return showDialog(
+        context: conteXt!,
+        builder: (BuildContext context) {
+          return statisticsTrainerContent();
+        });
+    //  Get.toNamed(AppRoute.home);
   }
 }

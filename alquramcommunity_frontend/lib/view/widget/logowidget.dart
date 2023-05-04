@@ -17,6 +17,7 @@ class logoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
           //padding: EdgeInsets.only(left: 6, right: 6),
@@ -48,7 +49,7 @@ class logoWidget extends StatelessWidget {
                       //width: 50,
                       height: 20,
                       //color: Colors.blue,
-                      padding: EdgeInsets.only(left: 60, top: 0),
+                      padding: EdgeInsets.only(left: 20, top: 0),
                       //alignment: Alignment.topLeft,
                       child: Text(
                         "Community",

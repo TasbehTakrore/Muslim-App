@@ -8,6 +8,8 @@ import '../../controller/recitationscreen_controller.dart';
 import '../../controller/speechRecognition_controller.dart';
 import '../../controller/trainerScreen_controller.dart';
 import '../../core/constant/routes.dart';
+import '../widget/home/customappbar.dart';
+import '../widget/logowidget.dart';
 import '../widget/recitation/floatingbuttonsgroup.dart';
 import '../widget/recitation/recitationqurancontent.dart';
 import '../widget/trainer/floatingbottontrainer.dart';
@@ -35,11 +37,14 @@ class TrainerMainScreen extends GetView {
               padding: EdgeInsets.all(15),
               alignment: Alignment.center,
               child: Obx(() => Column(
+                    //logoWidget(),
                     // ConfettiWidget(
                     //   confettiController: null,
                     // ),
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      CustomAppBar(onPressedIcon: () {}),
+
                       Text(
                         "${trainerScreenController.counter.value}",
                         textDirection: TextDirection.rtl,

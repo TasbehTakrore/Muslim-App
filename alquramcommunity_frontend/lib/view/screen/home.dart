@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: AppColor.grey,
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
           children: [
             // CustomAppBar(onPressedIcon: () {}),
