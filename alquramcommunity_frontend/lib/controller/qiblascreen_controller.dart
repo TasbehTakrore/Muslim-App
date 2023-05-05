@@ -201,4 +201,3 @@ class QiblahCompassWidget extends StatelessWidget {
 
 
 
-
