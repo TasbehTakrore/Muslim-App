@@ -11,55 +11,55 @@ import '../core/constant/color.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-
- abstract class PrayScreenController extends GetxController {
+abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
   RxString city = ''.obs;
   RxString formativeHijriDate = ''.obs;
-  RxString formattedRemainingTime=''.obs;
+  RxString formattedRemainingTime = ''.obs;
   late PrayerTimes prayerTimesInstance;
   late PrayerTimes prayerTimesInstanceNxt;
   Rx<Prayer> nextPrayer = (Prayer.none).obs;
   Rx<int> currentPrayer = (0).obs;
-  Rx<int> prayCounter=(0).obs;
-  Rx<int> missedCounter=(0).obs;
-  Rx<int> remain=(0).obs;
-  Rx<double> _prayCounter=(0.0).obs;
+  Rx<int> prayCounter = (0).obs;
+  Rx<int> missedCounter = (0).obs;
+  Rx<int> remain = (0).obs;
+  Rx<double> _prayCounter = (0.0).obs;
   List<RxBool> trackPraying = List.generate(6, (_) => false.obs);
-  List<Rx<Color>> itemColors =List.generate(6, (_) => Colors.white.obs);
-   List<RxBool> isAlarmOn = List.generate(6, (_) => false.obs);
+  List<Rx<Color>> itemColors = List.generate(6, (_) => Colors.white.obs);
+  List<RxBool> isAlarmOn = List.generate(6, (_) => false.obs);
   Future<void> getCurrentLocation();
   Future<void> PrayTimes();
   Future<void> updatePrayerTimes();
   Future<void> getNextPrayer();
-  Future<void> TrackPray(int index,bool?val);
+  Future<void> TrackPray(int index, bool? val);
   Future<void> CompletedPray();
-    final location = Rx<Position>(Position(
-      latitude: 0.0,
-      longitude: 0.0,
-      altitude: 0.0,
-      accuracy: 0.0,
-      speed: 0.0,
-      speedAccuracy: 0.0, heading: 0.0,
-      timestamp: DateTime.fromMillisecondsSinceEpoch(0),
-));
+  final location = Rx<Position>(Position(
+    latitude: 0.0,
+    longitude: 0.0,
+    altitude: 0.0,
+    accuracy: 0.0,
+    speed: 0.0,
+    speedAccuracy: 0.0,
+    heading: 0.0,
+    timestamp: DateTime.fromMillisecondsSinceEpoch(0),
+  ));
 }
-class PrayScreenControllerImp extends PrayScreenController{
+
+class PrayScreenControllerImp extends PrayScreenController {
   late AudioPlayer audioPlayer;
   RxString formativeCurrentDate = ''.obs;
   bool isFirstTime = true;
-  late Duration remainingTime ;
-  DateTime nextPrayerTime=DateTime.now();
+  late Duration remainingTime;
+  DateTime nextPrayerTime = DateTime.now();
   StreamSubscription? _subscription;
-  
 
 
   @override
   void onInit() {
     super.onInit();
-        audioPlayer = AudioPlayer();
-    if(formattedRemainingTime=='00:00:00'){
-          getNextPrayer();
+    audioPlayer = AudioPlayer();
+    if (formattedRemainingTime == '00:00:00') {
+      getNextPrayer();
     }
     
    /* FirebaseMessaging.instance.getToken().then((value){
@@ -68,53 +68,55 @@ class PrayScreenControllerImp extends PrayScreenController{
 
 );*/
   }
+
   @override
   void onClose() {
     super.onClose();
-        audioPlayer.dispose();
+    audioPlayer.dispose();
     _subscription?.cancel();
   }
-  RxBool inUse = false.obs ;
-  RxBool denied =false.obs;
+
+  RxBool inUse = false.obs;
+  RxBool denied = false.obs;
   //location permission
   Future<void> checkLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
-    inUse.value = false ;
+    inUse.value = false;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) { 
+    if (!serviceEnabled) {
       Geolocator.openLocationSettings();
-      return ;
+      return;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied ||permission == LocationPermission.deniedForever) {
-       denied.value=true;
-       LocatioDialog();
-      return;
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        denied.value = true;
+        LocatioDialog();
+        return;
       }
-denied.value=false;
-return;
-   
+      denied.value = false;
+      return;
+    }
   }
-  } 
 
-  void LocatioDialog(){
-     AwesomeDialog(
-        context: Get.context!,
-        dialogType: DialogType.error,
-        title: ' Location Permission Required ',
-        desc: 'Please allow location access to get prayer times.',
-        btnOkText: 'Grant Permission',
-        btnOkColor:AppColor.primaryColor,
-        btnCancelText: 'Cancel',
-        btnOkOnPress: () async {
-          await Geolocator.openAppSettings();
-          await checkLocationPermission();
-        },
-        btnCancelOnPress: () => Get.back(),
-      ).show();
+  void LocatioDialog() {
+    AwesomeDialog(
+      context: Get.context!,
+      dialogType: DialogType.error,
+      title: ' Location Permission Required ',
+      desc: 'Please allow location access to get prayer times.',
+      btnOkText: 'Grant Permission',
+      btnOkColor: AppColor.primaryColor,
+      btnCancelText: 'Cancel',
+      btnOkOnPress: () async {
+        await Geolocator.openAppSettings();
+        await checkLocationPermission();
+      },
+      btnCancelOnPress: () => Get.back(),
+    ).show();
   }
 
   //get current location function :
@@ -125,11 +127,12 @@ return;
         desiredAccuracy: LocationAccuracy.high,
       );
       location.value = currentPosition;
-      print('Current position cont: ${currentPosition.latitude}, ${currentPosition.longitude}');
+      print(
+          'Current position cont: ${currentPosition.latitude}, ${currentPosition.longitude}');
       List<Placemark> placemarks = await placemarkFromCoordinates(
-      currentPosition.latitude, currentPosition.longitude);
+          currentPosition.latitude, currentPosition.longitude);
       Placemark placemark = placemarks[0];
-      city.value="${placemark.locality!} ${placemark.street}";
+      city.value = "${placemark.locality!} ${placemark.street}";
       print(city.value);
       await PrayTimes();
     } catch (e) {
@@ -137,13 +140,13 @@ return;
     }
   }
 
-
-  void updateDate(){
+  void updateDate() {
     final hijriCalendar = HijriCalendar.fromDate(DateTime.now());
-    formativeCurrentDate.value=DateFormat('EEEE, d MMMM y').format(DateTime.now());
+    formativeCurrentDate.value =
+        DateFormat('EEEE, d MMMM y').format(DateTime.now());
     formativeHijriDate.value = hijriCalendar.toFormat('dd MMMM yyyy');
-}
-  
+  }
+
   //get praying time  function
   @override
   Future<void> PrayTimes() async {
@@ -158,13 +161,13 @@ return;
         currentPosition.longitude,
       );
       final params = CalculationMethod.umm_al_qura.getParameters();
-      final date= DateTime.now();
+      final date = DateTime.now();
       final dateComponents = DateComponents(
         date.year,
         date.month,
         date.day,
       );
-      final dateNxt= DateTime.now().add(Duration(days:1));
+      final dateNxt = DateTime.now().add(Duration(days: 1));
       final dateComponentsNxt = DateComponents(
         dateNxt.year,
         dateNxt.month,
@@ -175,7 +178,7 @@ return;
         dateComponents,
         params,
       );
-      currentPrayer.value=prayerTimesInstance.currentPrayer().index-1;
+      currentPrayer.value = prayerTimesInstance.currentPrayer().index - 1;
 
       prayerTimesInstanceNxt = PrayerTimes(
         coordinates,
@@ -183,7 +186,7 @@ return;
         params,
       );
       getNextPrayer();
-      prayerTimesmap.update((val){
+      prayerTimesmap.update((val) {
         val!['Fajr'] = DateFormat.jm().format(prayerTimesInstance.fajr);
         val['Sunrise'] = DateFormat.jm().format(prayerTimesInstance.sunrise);
         val['Dhuhr'] = DateFormat.jm().format(prayerTimesInstance.dhuhr);
@@ -200,84 +203,87 @@ return;
   Future<void> updatePrayerTimes() async {
     await PrayTimes();
   }
+
   String formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
+
   @override
-  Future<void> getNextPrayer()   async { 
-    bool nxt =false;
+  Future<int> getNextPrayer() async {
+    bool nxt = false;
     try {
-      if(prayerTimesInstance.nextPrayer().name=='none'){
-        nextPrayer.value= Prayer.fajr;  
+      if (prayerTimesInstance.nextPrayer().name == 'none') {
+        nextPrayer.value = Prayer.fajr;
         nextPrayerTime = prayerTimesInstanceNxt.fajr;
-        nxt=true;
+        nxt = true;
+      } else {
+        nextPrayer.value = prayerTimesInstance.nextPrayer();
+        nextPrayerTime = prayerTimesInstance
+            .timeForPrayer(prayerTimesInstance.nextPrayer())!;
       }
-      
-      else{
-        nextPrayer.value=prayerTimesInstance.nextPrayer();
-        nextPrayerTime = prayerTimesInstance.timeForPrayer(prayerTimesInstance.nextPrayer())! ;
-      }
-       _subscription = Stream.periodic(Duration(seconds: 1), (i) => i)
-      .listen((_) async {
-      Duration remainingTime =  nextPrayerTime.difference(DateTime.now());
-      formattedRemainingTime.value = formatDuration(remainingTime) ;
-      if(formattedRemainingTime=='00:00:00'){
-      await PrayTimes();
-      await getNextPrayer();
-    }
-      updateDate();
+      _subscription =
+          Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
+        Duration remainingTime = nextPrayerTime.difference(DateTime.now());
+        formattedRemainingTime.value = formatDuration(remainingTime);
+        if (formattedRemainingTime == '00:00:00') {
+          await PrayTimes();
+          await getNextPrayer();
+        }
+        updateDate();
       });
-     
-     }catch (e) {
-    }
-  }
-   @override
-  Future<void> TrackPray(index,val) async {
-       for (int i = 0; i < trackPraying.length; i++) {
-        if(index>currentPrayer.value||index==1){
-          trackPraying[index].value==false;
-        }
-        else{
-          trackPraying[index].value=val!;
-        }
-        if(val!=null){
-           itemColors[index].value =val ? AppColor.black : Color.fromARGB(255, 80, 78, 78);
-        }
-       }
-       update();
+    } catch (e) {}
+    return 0;
   }
 
   @override
-  Future<void> CompletedPray() async{
-    _prayCounter.value=0.0;
-    prayCounter.value=0;
-    missedCounter.value=0;
-    remain.value =0;
-    for(int i=0;i<=5;i++) 
-    {
-      if(i==1) continue;
-      if(i<=currentPrayer.value ){
-      if(trackPraying[i].value==true) prayCounter.value++;
-      else{
-        missedCounter.value++;
+  Future<void> TrackPray(index, val) async {
+    for (int i = 0; i < trackPraying.length; i++) {
+      if (index > currentPrayer.value || index == 1) {
+        trackPraying[index].value == false;
+      } else {
+        trackPraying[index].value = val!;
       }
-      }
-      else {
-      remain.value++;
-
+      if (val != null) {
+        itemColors[index].value =
+            val ? AppColor.black : Color.fromARGB(255, 80, 78, 78);
       }
     }
-    _prayCounter.value= (prayCounter.value/5*100) ;
     update();
   }
-   void toggleAlarm(int index) {
-    if(index==1){return;}
+
+  @override
+  Future<void> CompletedPray() async {
+    _prayCounter.value = 0.0;
+    prayCounter.value = 0;
+    missedCounter.value = 0;
+    remain.value = 0;
+    for (int i = 0; i <= 5; i++) {
+      if (i == 1) continue;
+      if (i <= currentPrayer.value) {
+        if (trackPraying[i].value == true)
+          prayCounter.value++;
+        else {
+          missedCounter.value++;
+        }
+      } else {
+        remain.value++;
+      }
+    }
+    _prayCounter.value = (prayCounter.value / 5 * 100);
+    update();
+  }
+
+  void toggleAlarm(int index) {
+    if (index == 1) {
+      return;
+    }
     isAlarmOn[index].value = !isAlarmOn[index].value;
     update();
   }
+
   final latitude = (0.0).obs;
   final longitude = (0.0).obs;
   final qiblaDirection = 0.0.obs;
@@ -293,9 +299,8 @@ double calculateQiblaDirection(double latitude, double longitude) {
   return qiblaDirection.direction;
 }
 
-
-
   }
+}
 
 
 

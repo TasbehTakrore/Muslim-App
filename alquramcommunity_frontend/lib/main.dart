@@ -27,7 +27,7 @@ void main() async {
   
   await initialServices();
   runApp(const MyApp());
-  
+
 }
 /* runApp(MultiProvider(providers:[
     ChangeNotifierProvider(create: (contex)=>UserProvider())

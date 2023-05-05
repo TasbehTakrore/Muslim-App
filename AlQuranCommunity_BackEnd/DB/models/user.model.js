@@ -49,6 +49,10 @@ const userModel = sequelize.define('User', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
+    userCoins: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+  },
     userGender: {
         type: DataTypes.STRING(6),
         allowNull: false,

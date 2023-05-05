@@ -30,14 +30,21 @@ class Community extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: double.infinity,
                   height: 100,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
+                    // image: DecorationImage(
+                    //   image: NetworkImage(
+                    //       'https://i.pinimg.com/564x/1a/3e/87/1a3e87c62a840fff35a1747cf611f656.jpg'),
+                    //   alignment: Alignment.topLeft,
+                    //   fit: BoxFit.cover,
+                    //   opacity: 0.06,
+                    // ),
                     color: AppColor.secondaryColor,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0),
@@ -89,10 +96,10 @@ class Community extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                child: Image.network(
-                                  'https://images.unsplash.com/photo-1610737241336-371badac3b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                                  fit: BoxFit.fitWidth,
-                                ),
+                                // child: Image.network(
+                                //   'https://images.unsplash.com/photo-1610737241336-371badac3b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+                                //   fit: BoxFit.fitWidth,
+                                // ),
                               ),
                             ),
                             Align(
@@ -103,9 +110,9 @@ class Community extends StatelessWidget {
                                 clipBehavior: Clip.antiAlias,
                                 decoration:
                                     BoxDecoration(shape: BoxShape.circle),
-                                child: Image.network(
-                                    'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                                    fit: BoxFit.fitWidth),
+                                //   child: Image.network(
+                                //       'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+                                //       fit: BoxFit.fitWidth),
                               ),
                             ),
                           ],

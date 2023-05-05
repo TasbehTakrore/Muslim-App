@@ -13,7 +13,7 @@ class AddNewTasbeeh extends StatelessWidget {
   AddNewTasbeeh({super.key});
   @override
   Widget build(BuildContext context) {
-    TasbeehScreenController controller = Get.put(TasbeehScreenController());
+    TasbeehController controller = Get.put(TasbeehController());
     CustomDropdownController customDropdownController =
         Get.put(CustomDropdownController());
 

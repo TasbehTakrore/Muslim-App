@@ -11,8 +11,10 @@ class MyServices extends GetxService {
     quranPage = await SharedPreferences.getInstance();
     //sharedPreferences.remove("langSelected");
     return this;
+    
   }
 }
+
 
 initialServices() async {
   await Get.putAsync(() => MyServices().init());

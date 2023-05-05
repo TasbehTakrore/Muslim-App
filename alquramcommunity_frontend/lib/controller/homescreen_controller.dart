@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/home.dart';
+import '../view/screen/lists.dart';
+import '../view/screen/palnScreen.dart';
 import '../view/screen/pray.dart';
 import '../view/screen/profile.dart';
 import '../view/screen/qibla.dart';
@@ -44,10 +46,10 @@ class HomeScreenControllerImp extends HomeScreenController {
     child: ProfileScreen()),
 
     Container(
-      child: Center(child: Text("\uFD3E" + "1" + "\uFD3F")),
+      child: PalnScreen(),
     ),
     Container(
-      child: Center(child: Text("Lists")),
+      child: Center(child: ListsScreen()),
     ),
     Container(
       child: Center(child: Text("")),
@@ -56,13 +58,14 @@ class HomeScreenControllerImp extends HomeScreenController {
     PrayScreen(),
     const Thikr(),
     const QiblaScreen(),
-    MyApp()
+    MyApp(),
+
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];
   List<IconData> iconsbuttonAppBar = [
     Icons.person,
-    Icons.polyline,
+    Icons.playlist_add_check_rounded,
     Icons.list_alt,
     Icons.notifications
   ];
@@ -72,5 +75,6 @@ class HomeScreenControllerImp extends HomeScreenController {
     currentPage = index;
     content = listPage[index].obs;
     update();
+    print("change page");
   }
 }

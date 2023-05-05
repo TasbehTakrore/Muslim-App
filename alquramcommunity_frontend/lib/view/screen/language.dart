@@ -16,10 +16,15 @@ class Language extends GetView<LocaleController> {
           padding: const EdgeInsets.all(15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const logoWidget(
-                logowidth: 120.0,
-                sizeType: 1,
+              Container(
+                alignment: Alignment.center,
+                color: Colors.red,
+                child: logoWidget(
+                  logowidth: 120.0,
+                  sizeType: 1,
+                ),
               ),
               const SizedBox(height: 55),
               Text("1".tr, style: Theme.of(context).textTheme.headlineMedium),

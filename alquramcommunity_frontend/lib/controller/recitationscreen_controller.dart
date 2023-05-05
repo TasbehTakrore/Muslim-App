@@ -26,7 +26,7 @@ class RecitationScreenController extends GetxController {
   int? allVersescount;
   int index = 0;
   int indexP = 0;
-  MyServices service = Get.put(MyServices());
+  //MyServices service = Get.put(MyServices());
   int pageWidgetindex = 0;
   List<List<String>> beginningVerses = [];
   List<List<String>> secondeWordOfVerses = [];
@@ -55,27 +55,43 @@ class RecitationScreenController extends GetxController {
   List<List<int>> NumberWordsOfVerse = [];
   List<List<int>> listOfSurahsID = [];
   List<Map<String, dynamic>> mistakeModelList = [];
-  String userEmail = 'tasbeh.takrore@gmail.com';
+  String? userEmail;
   bool secondHint = false;
   Timer? timer;
   bool nextForAutoState = false;
-//
+  int seconds = 0;
+  int indexTime = 0;
+  Rx<bool> visibleBar = false.obs;
+  Rx<double>? percent = 0.0.obs;
 
 //
+
+  bool hintEnableFlage = true;
+
+  showBar() {
+    visibleBar.value = true;
+  }
+
+  hiddenBar() {
+    visibleBar.value = false;
+  }
 
   get nextReload => nextReloadIcon;
   changePageIndex(int pageIndex) {
-    service.recitation.setInt("startIndexRecit", pageIndex);
+    myServices.recitation.setInt("startIndexRecit", pageIndex);
     emptyLists();
     createLists();
   }
 
   setNextIcon() {
     nextReloadIcon.value = Icons.done;
+    //hintEnableFlage = true;
   }
 
   setReloadIcon() {
     nextReloadIcon.value = Icons.replay_outlined;
+    // hintEnableFlage = false;
+    //hintColor.value = Colors.grey;
   }
 
   emptyLists() {
@@ -120,6 +136,7 @@ class RecitationScreenController extends GetxController {
   }
 
   bool englishLang() {
+    userEmail = myServices.sharedPreferences.getString("user_email");
     return localeController.myServices.sharedPreferences.getString("lang") ==
             "en"
         ? true
@@ -132,6 +149,8 @@ class RecitationScreenController extends GetxController {
   }
 
   setPageIndex(int i) {
+    print("set page index");
+    hiddenBar();
     pageWidgetindex = i;
     index = 0;
     previousVerseCount = 0;
@@ -142,6 +161,8 @@ class RecitationScreenController extends GetxController {
   }
 
   changeOpacity(bool fromAutoTimer) {
+    print(
+        "index: $index + savepageOpacity[pageWidgetindex]: ${savepageOpacity[pageWidgetindex]}");
     previousVerseCount = 0;
     if (index < savepageOpacity[pageWidgetindex].length) {
       savepageOpacity[pageWidgetindex][index].value = 1.0;
@@ -193,11 +214,12 @@ class RecitationScreenController extends GetxController {
   setSurahPageData(int pageNumb, int partindex, int pageWidgetIndex,
       BuildContext contex, int surahCount) {
     if (partindex == 0) {
+      savepageOpacity[pageWidgetIndex].clear();
       previousVerseCount = 0;
     } else {
       previousVerseCount += versesCount!;
     }
-
+    print("tttttttttttttttttttttttttt + $pageNumb");
     surahCountSave = surahCount;
     context = contex;
     indexP = pageNumb;
@@ -211,9 +233,12 @@ class RecitationScreenController extends GetxController {
     surahName = getSurahNameArabic(surahNumb!);
     pageJuzNumber = getJuzNumber(surahNumb!, startVerse!);
     versesList.clear();
+    //NumberWordsOfVerse[pageWidgetIndex].clear();
     // listOfversesID[pageWidgetIndex].clear();
-
+    //savepageOpacity[pageWidgetIndex].clear();
     // listOfSurahsID[pageWidgetIndex].clear();
+    //savepageOpacity[pageWidgetIndex].add(0.2.obs);
+
     VerseInformation VInfo;
 
     for (var i = 0; i < versesCount!; i++) {
@@ -223,7 +248,6 @@ class RecitationScreenController extends GetxController {
       NumberWordsOfVerse[pageWidgetIndex].add(verseWords!.length);
 
       //
-
       listOfversesID[pageWidgetIndex].add(startVerse! + i);
       listOfSurahsID[pageWidgetIndex].add(surahNumb!);
 
@@ -240,6 +264,8 @@ class RecitationScreenController extends GetxController {
         }
         String D = verseWords![R];
         Rx<Color> N = verseColor[pageWidgetIndex][i + previousVerseCount];
+
+        print("$pageWidgetIndex  + $i  +  $previousVerseCount  ");
         versesList.add(
           Obx(() => Opacity(
                 opacity: savepageOpacity[pageWidgetIndex]
@@ -269,6 +295,8 @@ class RecitationScreenController extends GetxController {
         ),
       ));
     }
+    print("versesList: $versesList");
+
 ////////
   }
 
@@ -278,7 +306,7 @@ class RecitationScreenController extends GetxController {
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
-              weight: 50,
+              weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
               ayahId: listOfversesID[pageWidgetindex][index])
           .toJson());
@@ -312,6 +340,14 @@ class RecitationScreenController extends GetxController {
                 size: 35,
               ))));
     } else if (secondHint == true) {
+      mistakeModelList.add(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 25,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
+
       hintColor.value = Colors.red;
       secondHint = false;
       hint = secondeWordOfVerses[pageWidgetindex][index].obs;
@@ -343,6 +379,13 @@ class RecitationScreenController extends GetxController {
               surahId: listOfSurahsID[pageWidgetindex][index],
               ayahId: listOfversesID[pageWidgetindex][index])
           .toJson());
+      mistakeModelList.remove(MistakeModel(
+              userEmail: userEmail,
+              mistakeType: 0,
+              weight: 25,
+              surahId: listOfSurahsID[pageWidgetindex][index],
+              ayahId: listOfversesID[pageWidgetindex][index])
+          .toJson());
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 1,
@@ -362,10 +405,13 @@ class RecitationScreenController extends GetxController {
   }
 
   void autoState() {
-    int seconds = 0;
-    int indexTime = NumberWordsOfVerse[pageWidgetindex][index]; // here index =0
+    int prevSeconds = 0;
+    int prevIndexTime = 0;
+    seconds = 0;
+    indexTime = 0;
+    indexTime = NumberWordsOfVerse[pageWidgetindex][index]; // here index =0
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      print("الوقت  $seconds , المطلوب: $indexTime");
+      print("الوقت  $seconds , المطلوب: ${indexTime + 2}");
 
       if (seconds == indexTime + 2) {
         verseColor[pageWidgetindex][index].value = Colors.red;
@@ -380,26 +426,42 @@ class RecitationScreenController extends GetxController {
 
         mistakesCount++;
         changeOpacity(true);
+        prevSeconds = seconds;
+        prevIndexTime = seconds;
         if (index < NumberWordsOfVerse[pageWidgetindex].length) {
-          print("Inside");
+          print(
+              "Inside s:${NumberWordsOfVerse[pageWidgetindex]} index: $index");
           indexTime += NumberWordsOfVerse[pageWidgetindex][index];
         } else {
+          hiddenBar();
           timer.cancel();
+          setReloadIcon();
+          return;
         }
         print("indexTime $indexTime");
         //index++;
       } else if (nextForAutoState == true) {
         print("nextForAutoState $nextForAutoState");
         nextForAutoState = false;
-        print("2nextForAutoState $nextForAutoState");
         seconds = indexTime; // jump in the time
+        print("seconds after $seconds");
+        prevSeconds = seconds;
+        prevIndexTime = indexTime;
         if (index < NumberWordsOfVerse[pageWidgetindex].length) {
+          print("hiii");
+          print(NumberWordsOfVerse[pageWidgetindex].length);
+          print(index);
           indexTime += NumberWordsOfVerse[pageWidgetindex][index];
         } else {
+          hiddenBar();
           timer.cancel();
+          setReloadIcon();
+          return;
         }
       } else {
         seconds++;
+        percent!.value =
+            (seconds - prevSeconds) / (indexTime + 2 - prevIndexTime);
       }
       //if (second > 100) ;
     });

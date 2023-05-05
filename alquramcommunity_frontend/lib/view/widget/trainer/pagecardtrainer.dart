@@ -5,29 +5,28 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../controller/recitationscreen_controller.dart';
 import '../../../controller/surahs_controller.dart';
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
 
 // ignore: must_be_immutable
-class PageCardTrainer extends GetView<TrainerDialogController> {
-  final int surahNumber;
+class PageCardTrainer extends GetView<TrainerScreenController> {
+  final int pageNumb;
 
   PageCardTrainer({
     super.key,
-    required this.surahNumber,
+    required this.pageNumb,
   });
 
   @override
   Widget build(BuildContext context) {
-    TrainerDialogController trainerDialogController =
-        Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
     SurahsController surahsController = Get.put(SurahsController());
 
     return Container(
       decoration: BoxDecoration(
-          color: (surahNumber - 2) % 3 != 0
+          color: (pageNumb - 2) % 3 != 0
               ? AppColor.lightYellow
               : AppColor.light2Yellow,
           borderRadius: BorderRadius.circular(20)),
@@ -35,10 +34,10 @@ class PageCardTrainer extends GetView<TrainerDialogController> {
         child: Container(
           height: 50,
           child: Stack(alignment: Alignment.center, children: [
-            Text(surahNumber.toString(),
+            Text(pageNumb.toString(),
                 style: TextStyle(
                   fontSize: 18,
-                  color: (surahNumber - 2) % 3 == 0
+                  color: (pageNumb - 2) % 3 == 0
                       ? Colors.black
                       : AppColor.primaryColor,
                   fontFamily: "quran",
@@ -51,8 +50,10 @@ class PageCardTrainer extends GetView<TrainerDialogController> {
           ]),
         ),
         onTap: () {
-          controller.changePageIndex(surahNumber);
-          print(surahNumber);
+          controller.letsPageTest(pageNumb);
+          Get.toNamed(AppRoute.trainer);
+
+          print(pageNumb);
           //Get.toNamed(AppRoute.recitation);
           //onTap;
         },

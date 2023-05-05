@@ -10,6 +10,7 @@ const aurh=require("../middleware/auth")
 //add new user `sign up` 
 const signUp = async(req,res)=>{
     try{
+
         const {userName,userEmail,userAge,userPassword,userGender}=req.body;
         const hashPassword = await bcrypt.hashSync(userPassword,8);
         upload.single('image')(req, res, async function (err) {
@@ -40,6 +41,7 @@ const signUp = async(req,res)=>{
   
         }catch(e){
 
+
         res.status(500).json({error:e.message});
         console.log(" erooor!!\n \n"+error);
 
@@ -47,6 +49,56 @@ const signUp = async(req,res)=>{
 
  
 }
+
+//get user detailsfrom id in the url
+const userDetails = async(req,res)=>{
+    try{
+        //select * from users where id = ..
+        const user= await userModel.findOne({
+            where:{
+                id: req.user.id,
+            }
+        });
+        res.json({message:'success',user});    
+    }catch(error){
+        res.json({message:'catch error',error})
+    }
+
+}
+
+const addCoins = async (req, res)=>{
+    try {
+        console.log( req.body);
+        const{userEmail, userCoins} = req.body;
+        const user=  await userModel.findOne({
+            where:{
+                userEmail:userEmail,
+            }
+        });
+        console.log("gggggggggggggggggggggggggggg");
+
+        if(!user){
+            res.status(400)
+            res.json({msg:'No user with this email'});
+            console.log("nooo user");
+        }
+        else{
+            user.increment('userCoins', {by: userCoins});
+            // user.userCoins += userCoins;
+            // user.save();
+            res.json({message:'success',user});
+            console.log("elseeeee user");
+
+
+        }
+    } catch (error) {
+        res.json({message:'catch error ++',error})
+        console.log("catch" + error);
+
+    }
+}
+
+
 // check user information ` log in `
 const logIn = async (req,res)=>{
     try{
@@ -72,7 +124,7 @@ const logIn = async (req,res)=>{
         res.status(200)
         res.json({token,user});
         }
-  
+
     }}catch(e){
         res.status(500).json({error:e.message});
     }
@@ -176,4 +228,6 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,userDetails}
+module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails}
+
+

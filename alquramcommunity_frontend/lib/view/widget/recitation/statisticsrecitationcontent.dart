@@ -1,7 +1,9 @@
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/constant/color.dart';
+import '../../../core/constant/routes.dart';
 
 class statisticsRecitationContent extends StatelessWidget {
   const statisticsRecitationContent({super.key});
@@ -61,7 +63,9 @@ class statisticsRecitationContent extends StatelessWidget {
                   // child: Text("tasbeh"),
                 ),
                 EasyElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoute.home);
+                  },
                   height: 70,
                   width: MediaQuery.of(context).size.width / 2,
                   isRounded: true,

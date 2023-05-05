@@ -18,7 +18,7 @@ class JuzContentDialog extends StatelessWidget {
             return FadeInDown(
                 duration: const Duration(milliseconds: 300),
                 child: JuzCardTrainer(
-                  surahNumber: index + 1,
+                  juzNumber: index + 1,
                 ));
           },
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -8,52 +8,49 @@ import 'package:get/get.dart';
 import '../../controller/qiblascreen_controller.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/routes.dart';
-
+import '../widget/qiblah/customQiblahLogo.dart';
 
 class QiblaScreen extends StatelessWidget {
   const QiblaScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
     final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
     return WillPopScope(
-        onWillPop: () async {
-          Get.toNamed(AppRoute.home);
-          return false;
-        },
-        child: Scaffold(
-          backgroundColor: Colors.white70,
-          body: FutureBuilder(
-            future:_deviceSupport ,
-            builder: (_,AsyncSnapshot<bool?> snapshot){
-              if(snapshot.connectionState==ConnectionState.waiting){
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if(snapshot.hasError){
-                return Center(
-                  child: Text("Error : ${snapshot.error.toString()}"),
-                );
-              }
-              if(snapshot.hasData){
-                return QiblahCompass();
-              }
-              else {
-                return const Center(
-                  child: Text("your device doesn't support")
-                );
-              }
+      onWillPop: () async {
+        Get.toNamed(AppRoute.home);
+        return false;
+      },
+      child: Scaffold(
+          backgroundColor: AppColor.grey,
+          body: Stack(children: [
+            Positioned(
+                top: 50,
+                left: MediaQuery.of(context).size.width / 3.4,
+                child: logoWidgetQiblah()),
+            FutureBuilder(
+                future: _deviceSupport,
+                builder: (_, AsyncSnapshot<bool?> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error : ${snapshot.error.toString()}"),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    return QiblahCompass();
+                  } else {
+                    return const Center(
+                        child: Text("your device doesn't support"));
+                  }
+                }),
+          ])
 
-
-            }
-          )
-     
-          
-          
-          
-         /* 
+          /* 
           Column(
             children: [
               const SizedBox(height:30),
@@ -95,8 +92,7 @@ class QiblaScreen extends StatelessWidget {
            
            
            */
-              ),
-            );
- 
+          ),
+    );
   }
 }

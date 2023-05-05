@@ -7,8 +7,13 @@ const mistakeModel = sequelize.define('Mistake', {
     
     userEmail: {
       type: DataTypes.STRING(255),
+      primaryKey: true,
       allowNull: false,
       unique:false,
+      references: {
+        model: 'users', // اسم الجدول الذي يربط بها
+        key: 'userEmail', // اسم العمود الذي سيتم ربطه
+      },
       validate:{
         isEmail:{
           args: true,
@@ -16,6 +21,7 @@ const mistakeModel = sequelize.define('Mistake', {
         } 
       },
     },
+    
     mistakeType: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -43,7 +49,7 @@ const mistakeModel = sequelize.define('Mistake', {
             msg:"when insert, 50 for hint, and 100 for mistake"
           },
           min:{
-            args: -1,
+            args: -10,
             msg:"min weight"
           },
         },
@@ -51,6 +57,7 @@ const mistakeModel = sequelize.define('Mistake', {
     surahId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         validate:{
           isInt:{
             args: true,
@@ -69,6 +76,7 @@ const mistakeModel = sequelize.define('Mistake', {
     ayahId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         validate:{
           isInt:{
             args: true,

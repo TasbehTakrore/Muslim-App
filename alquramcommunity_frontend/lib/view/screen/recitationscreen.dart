@@ -31,6 +31,8 @@ class RecitationScreen extends GetView {
                 onPageChanged: (index) {
                   //recitationController.emptyLists();
                   //recitationController.createLists();
+                  recitationController.setReloadIcon();
+
                   recitationController.setPageIndex(index);
                   recitationController.cancleTimer();
 

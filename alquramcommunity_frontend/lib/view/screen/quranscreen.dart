@@ -1,10 +1,13 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
+import 'package:alquramcommunity_frontend/controller/recitationscreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
+import '../../core/constant/imageasset.dart';
 import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Quran/editquranthemedialog.dart';
@@ -17,8 +20,9 @@ class QuranScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    //final  quranController = Get.put(QuranPageController());
-
+    // Get.put(QuranPageController());
+    RecitationScreenController recitationScreenController =
+        Get.put(RecitationScreenController());
     return GetBuilder<QuranPageController>(builder: (controller) {
       return WillPopScope(
           onWillPop: () async {
@@ -26,16 +30,38 @@ class QuranScreen extends StatelessWidget {
             return false;
           },
           child: Scaffold(
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: AppColor.primaryColor,
-                child: const Icon(Icons.color_lens_outlined),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext b) {
-                        return EditQuranThemeDialog();
-                      });
-                }),
+            floatingActionButton: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
+                    heroTag: "recitation",
+                    backgroundColor: Color.fromARGB(0, 0, 0, 0),
+                    //hoverColor: AppColor.light2Yellow,
+                    elevation: 0,
+                    child: SvgPicture.asset(
+                      AppImageAsset.quranCategory,
+                      width: 35,
+                      height: 35,
+                    ),
+                    onPressed: () {
+                      recitationScreenController
+                          .changePageIndex(controller.getPageIndex() + 1);
+                      Get.toNamed(AppRoute.recitation);
+                    }),
+                const SizedBox(height: 5),
+                FloatingActionButton(
+                    heroTag: "theme",
+                    backgroundColor: AppColor.primaryColor,
+                    child: const Icon(Icons.color_lens_outlined),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext b) {
+                            return EditQuranThemeDialog();
+                          });
+                    }),
+              ],
+            ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: QuranConstant.backgroundColor.value,
             body: Column(

@@ -69,13 +69,19 @@ dependencies:
   google_fonts: ^3.0.1
   arabic_numbers: ^1.0.0
   top_snackbar_flutter: ^3.0.0+1
+  dartarabic: ^0.1.2
 
-  
+  speech_to_text: ^6.1.1
+
   geolocator: ^9.0.2
   adhan: ^2.0.0-nullsafety.2
   hijri: ^3.0.0
   geocoding: ^2.1.0
+  flutter_tts: ^3.6.3
+  confetti: ^0.7.0
+  direct_select: "^1.0.3"
 
+  numberpicker: ^2.1.2
 
   circular_countdown_timer: ^0.2.3
   custom_sliding_segmented_control: ^1.7.4

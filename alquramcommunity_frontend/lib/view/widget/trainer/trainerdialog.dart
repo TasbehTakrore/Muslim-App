@@ -3,7 +3,7 @@ import 'package:alquramcommunity_frontend/view/widget/trainer/juzcontentdialog.d
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
 import 'pagescontentdialog.dart';
 import 'surahcontentdialog.dart';
 
@@ -12,15 +12,16 @@ class TrainerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
 
-    return GetBuilder<TrainerDialogController>(
+    return GetBuilder<TrainerScreenController>(
       builder: (controller) {
+        controller.conteXt = context;
         return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 1.49,
+              height: MediaQuery.of(context).size.height / 1.45,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
