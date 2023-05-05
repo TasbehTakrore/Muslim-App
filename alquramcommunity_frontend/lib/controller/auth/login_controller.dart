@@ -11,6 +11,12 @@ abstract class LoginController extends GetxController{
 class LoginControllerImp extends LoginController{
   late TextEditingController email;
   late TextEditingController password;
+  bool isshowpass=false;
+
+  void showPassword(){
+    isshowpass= isshowpass==true?false:true;
+    update();
+  }
 
   @override
   Login() {
@@ -26,7 +32,8 @@ class LoginControllerImp extends LoginController{
   void onInit() {
     email = TextEditingController();
     password= TextEditingController();
-
+    email.text='';
+    password.text='';
     super.onInit();
   }
   @override
@@ -35,6 +42,7 @@ class LoginControllerImp extends LoginController{
     password.dispose();
     super.dispose();
   }
+
   
   @override
   ToForgetPassword() {

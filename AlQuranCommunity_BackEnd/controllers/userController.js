@@ -1,36 +1,46 @@
 const userModel= require("../DB/models/user.model");
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-
-//get all users
-const getAllUsers=async(req,res)=>{
-    const allUsers= await userModel.findAll({
-   //  attributes:['userEmail','userPassword'],
-    });
-    res.json({message:'success',allUsers});
-}
+const multer = require('multer');
+const upload=require("../middleware/upload")
+const path = require('path');
+const fs = require('fs');
+const aurh=require("../middleware/auth")
 
 //add new user `sign up` 
 const signUp = async(req,res)=>{
     try{
-        //from postman or front end
-         /*
-         const existuser=await userModel.findOne({
-            where:{
-                userEmail: req.user.userEmail,
-            }
-        })
-        if(existuser){
-            return res.status(400).json({msg:"This email is already used, try another one !"});
-        }*/
-        const {userName,userEmail,userAge,userPassword,userGender }=req.body;
-    
-        //insert into users() values()
+
+        const {userName,userEmail,userAge,userPassword,userGender}=req.body;
         const hashPassword = await bcrypt.hashSync(userPassword,8);
-        let user= await userModel.create({userName:userName,userEmail:userEmail,userAge:userAge,userPassword:hashPassword,userGender:userGender});
-        
-        res.json({message:'success',user});
-    }catch(e){
+        upload.single('image')(req, res, async function (err) {
+            if (err instanceof multer.MulterError) {
+              console.log(err);
+            } else if (err) {
+              console.log(err);
+
+            }
+            const tempFilename = req.tempFilename; 
+         //   const imageUrl = req.file ? req.file.filename : null;
+            const user= await userModel.create({userName:userName,userEmail:userEmail,userAge:userAge,userPassword:hashPassword,userGender:userGender,imageUrl:tempFilename});
+            const userId = user.id;
+            
+            const ext = tempFilename.split('.')[1];
+            const actualFilename = `user-${userId}.${ext}`;
+            fs.renameSync(path.join(__dirname, `../images/${tempFilename}`), path.join(__dirname, `../images/${actualFilename}`));
+            await userModel.update(
+              { imageUrl: actualFilename },
+              {
+                where: {
+                  id: userId,
+                },
+              }
+            );      
+            res.json({message:'success',user});
+          });
+  
+        }catch(e){
+
 
         res.status(500).json({error:e.message});
         console.log(" erooor!!\n \n"+error);
@@ -88,6 +98,7 @@ const addCoins = async (req, res)=>{
     }
 }
 
+
 // check user information ` log in `
 const logIn = async (req,res)=>{
     try{
@@ -113,35 +124,97 @@ const logIn = async (req,res)=>{
         res.status(200)
         res.json({token,user});
         }
-       
-    //    const token = jwt.sign({id:user.id},'QuranLogIn@123');
-      //  res.json({message:'success',token});
-    //    }
-    //    else
-    //    res.json({message:'invalid-data'});
 
     }}catch(e){
         res.status(500).json({error:e.message});
     }
 }
 
-// update user information
-const updateUser = async(req,res)=>{
-    const {id}= req.params; 
-    const {name,age,gender} =req.body;
-
-    const user= await userModel.update({
-        userName:name,
-        userAge:age,
-        userGender:gender,}, 
-        {where:{
-            id:id,}   
+//get user information 
+const userDetails=async(req,res)=>{
+    try{
+    const user= await userModel.findOne({
+        where:{
+            id: req.params.userId,
+            }
+        });
+        if(!user){
+            res.json({message:'no such user'});    
         }
-        )
-    user[0]? res.json({message:"success",user}):res.json({message:"invalid-account",user});
+        else{
+            res.status(200).json({message:'found',user});}
+        }catch(error){
+            res.json({message:'catch error',error})
+        }
+}
 
+//update user information
+const updateUser = async(req,res)=>{
+    try{
+    const {name,age,gender,password,checkPassword} =req.body;
+    const user= await userModel.findOne({
+        where:{
+            id: req.params.userId,}
+        });
+    if(!user){
+        res.json({message:'no such user'});    
+    }
+    
+        const matchPass =await bcrypt.compare(checkPassword,user.userPassword)
+        if(!matchPass){
+            res.status(400)
+            res.json({msg:'wrong password !'},);
+            return;
+        }
+        const hashPassword = await bcrypt.hashSync(password,8);
+            await userModel.update({
+            userName:name,
+            userAge:age,
+            userGender:gender,
+            userPassword:hashPassword}, 
+            {where:{
+                id:user.id,}   
+            }
+        )
+        res.status(200).json({msg:'updated',user:user});
+    }catch(e){
+        res.status(500)
+        res.json({error: e.message})
+    }
+}
+
+//get all users
+const getAllUsers=async(req,res)=>{
+    const allUsers= await userModel.findAll({
+   //  attributes:['userEmail','userPassword'],
+    });
+    res.json({message:'success',allUsers});
+}
+
+//get user detailsfrom id in the url
+const checkEmail = async(req,res)=>{
+    try{
+        //select * from users where id = ..
+        const user= await userModel.findOne({
+            where:{
+                userEmail: req.user.userEmail,
+            }
+        });
+        if(!user){
+
+        }
+        else{
+            res.json({message:'success',user});    
+
+        }
+    }catch(error){
+        res.json({message:'catch error',error})
+    }
 
 }
+
+
+
 
 //delete user account
 const deleteUser = async(req,res)=>{
@@ -155,4 +228,6 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,userDetails,logIn,updateUser,deleteUser,addCoins}
+module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails}
+
+

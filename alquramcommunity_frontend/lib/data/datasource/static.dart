@@ -6,6 +6,7 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import '../../controller/qiblascreen_controller.dart';
+import '../../controller/thikrCatgController.dart';
 import '../../core/constant/routes.dart';
 import '../../view/screen/thikr.dart';
 import '../../view/widget/recitation/listsurahcardrecitation.dart';
@@ -19,6 +20,8 @@ HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
 PrayScreenControllerImp prayScreenController =
     Get.put(PrayScreenControllerImp());
+ThikrCatgControllerImp thikrController=Get.put(ThikrCatgControllerImp());
+
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
@@ -59,7 +62,12 @@ List<CategoryModel> CategoryList = [
   CategoryModel(
     title: "Dhikr",
     image: AppImageAsset.duaa,
-    onPressed: () => homeScreenController.changePage(6),
+    onPressed: () async {
+      await thikrController.loadJSON();
+     // thikrController.my();
+     await thikrController.dataaa();
+      homeScreenController.changePage(6);
+    }
   )
 ];
 

@@ -2,6 +2,7 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/homescreen_controller.dart';
+import '../../../controller/profileController.dart';
 import 'custombuttonappbar.dart';
 
 class CustomBottonAppBarHome extends StatelessWidget {
@@ -9,12 +10,18 @@ class CustomBottonAppBarHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController profilesController =
+    Get.put(ProfileController());
+
     return GetBuilder<HomeScreenControllerImp>(
         builder: (controller) => BottomAppBar(
             shape: const CircularNotchedRectangle(),
             child: Row(children: [
               CustomButtonAppBar(
-                  onPressed: () => controller.changePage(0),
+                  onPressed: (){
+                    profilesController.userInformation();
+                    controller.changePage(0);
+                  },
                   textbutton: controller.titlebuttonAppBar[0],
                   iconbutton: controller.iconsbuttonAppBar[0],
                   active: controller.currentPage == (0) ? true : false),

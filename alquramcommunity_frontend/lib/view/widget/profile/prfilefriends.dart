@@ -8,28 +8,11 @@ class ProfileFriends extends StatelessWidget {
  
   @override 
   Widget build(BuildContext context) { 
-    return Container( 
-      height: 130,
-      margin: const EdgeInsets.only(top:0,left:5,right:5,bottom:5),
-      decoration: BoxDecoration(
-               ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 5),
-          Row(
-            children: [
-              SizedBox(width: 15),
-            Text("Friends",style:TextStyle(
-              fontSize:15,
-
-            ),          
-            ),
-            ],
-          ),
-  
+    return 
+       
           Container(
             height: 100,
+          decoration: BoxDecoration(color: AppColor.grey), 
             child: ListView.separated( 
                 scrollDirection: Axis.horizontal, 
                 itemBuilder: (BuildContext b, i) { 
@@ -46,8 +29,8 @@ class ProfileFriends extends StatelessWidget {
                         }, 
                         child: Container( 
                           margin: const EdgeInsets.only(top:10),
-                          width: 60, 
-                          height: 60, 
+                          width: 70, 
+                          height: 70, 
                           clipBehavior: Clip.antiAlias, 
                           decoration: const BoxDecoration(shape: BoxShape.circle), 
                            child :Image.asset( AppImageAsset.profile,
@@ -55,11 +38,11 @@ class ProfileFriends extends StatelessWidget {
                         ), 
                       ), 
                       Text( 
-                        "Tasbeh Tak", 
+                        "###", 
                         style: GoogleFonts.patrickHand( 
                             //fontWeight: FontWeight.w500, 
                             color: AppColor.primaryColor, 
-                            fontSize: 13), 
+                            fontSize: 10), 
                       ), 
                   
                     ], 
@@ -69,9 +52,9 @@ class ProfileFriends extends StatelessWidget {
                   return SizedBox(width: 6); 
                 }, 
                 itemCount: 14),
-          ),
-        ],
-      ), 
-    ); 
+          );
+        
+      
+    
   } 
 }

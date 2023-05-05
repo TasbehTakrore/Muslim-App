@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:alquramcommunity_frontend/data/model/front_models/thikrmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,60 +11,69 @@ abstract class ThikrCatgController extends GetxController {
   Future<dynamic> loadJSON();
   initialData();
   decrementRepeat(int listIndex, int itemIndex);
-  late int  selectedThikr;
+  RxInt selectedThikr=0.obs;
   }
 
 class ThikrCatgControllerImp extends ThikrCatgController{
-  final List<List<RxInt>> countersList = [];
+  final List<List<int>> countersList = [];
   dynamic argumentData ;
+  List<Thikr> data = [];
+  var myData = Athkar().obs;
+  dynamic? jsonResponse;
+
   @override
   Future<String> _loadJSON()   async {
     return await rootBundle.loadString('assets/thikr.json');
   }
   Future<dynamic> loadJSON() async {
     String json = await _loadJSON();
-    final jsonResponse = jsonDecode(json);
-    
+    jsonResponse = jsonDecode(json);  
     return jsonResponse;
   }
-  var myData = Athkar().obs;
+
+
+  //////////////////////////////try
+  Future<void> dataaa() async {
+    await loadJSON();
+    data =  List<Thikr>.from(
+    jsonResponse["Thikr"].map((x) => Thikr.fromJson(x))); 
+    for (int i = 0; i <  (myData.value.thikr?.length ?? 0); i++) {
+      Thikr? subList =  myData.value.thikr?[i];
+      List<int> subCounters = [];
+      for (int j = 0; j < subList!.tEXT!.length; j++) {
+        subCounters.add(data[selectedThikr.value].tEXT![j].rEPEAT!);
+        if(i==0)print(':::${countersList[i][j]} \n');
+      countersList.add(subCounters);
+    }
+    update();
+    } 
+  }
+  ///////////////////////////////
+
+  
   @override
   initialData() {
    argumentData = Get.arguments;
    final stringList = argumentData.map((item) => item.toString()).toList();
    final intList=stringList.map((str) => int.parse(str)).toList();
-   selectedThikr=intList[0];
-   print(selectedThikr);
+   selectedThikr.value=intList[0];
   }
   
-void my(){
+Future<void> my()async {
+    //countersList.clear();
     for (int i = 0; i <  (myData.value.thikr?.length ?? 0); i++) {
-       
       Thikr? subList =  myData.value.thikr?[i];
-      List<RxInt> subCounters = [];
-
+      List<int> subCounters = [];
       for (int j = 0; j < subList!.tEXT!.length; j++) {
-        subCounters.add(RxInt(0));
-
-      for (int j = 0; j < subList.tEXT!.length; j++) {
-        subCounters.add(RxInt(0)); 
-
-      }
+        subCounters.add(0);
       countersList.add(subCounters);
     }
+    update();
 }
 }
 
   @override
   void onInit() {
-    initialData();
-    loadJSON().then((value) {
-     myData.value = Athkar.fromJson(value);
-     print(myData);
-     my();
-    });
-    my();
-
     super.onInit();
   }
 
@@ -86,14 +96,21 @@ void my(){
 
   @override
   decrementRepeat(int listIndex, int itemIndex) {
-     if (countersList[listIndex][itemIndex].value> 0) {
-       countersList[listIndex][itemIndex].value--;
-      update();
-    }   
+     if (countersList[listIndex][itemIndex]> 0) {
+       countersList[listIndex][itemIndex]=countersList[listIndex][itemIndex]-1;
+       print('${countersList[listIndex][itemIndex]}');
+           update(); 
+    }  
+    update(); 
   }
-  void selectThikr(int index) {
-  selectedThikr = index;
-}
+  Future<void> selectThikr(int index) async {
+    selectedThikr.value = index;
+    await my();
+    loadJSON().then((value) {
+    myData.value = Athkar.fromJson(value);
+  });
+    update();
+  }
   
 /*
   @override

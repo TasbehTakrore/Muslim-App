@@ -1,4 +1,4 @@
-package com.example.tasbehtest
+package com.example.qurancomm
 
 import io.flutter.embedding.android.FlutterActivity
 

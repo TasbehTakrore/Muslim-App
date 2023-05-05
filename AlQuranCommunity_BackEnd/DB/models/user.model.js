@@ -18,12 +18,12 @@ const userModel = sequelize.define('User', {
     userEmail: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique:true,
+      //unique:true,
       validate:{
         isEmail:{
           args: true,
           msg:"must be an email"
-        } 
+        },
       },
     },
     userAge: {
@@ -34,14 +34,15 @@ const userModel = sequelize.define('User', {
             args: true,
             msg:"age must be integer"
           },
+
           min:{
             args: 1,
             msg:"age can't be less than 1"
-          },
+          },/*
           max:{
             args: 170,
             msg:"age can't be larger than 170"
-          }
+          }*/
         },
     },
     userPassword: {
@@ -54,7 +55,7 @@ const userModel = sequelize.define('User', {
   },
     userGender: {
         type: DataTypes.STRING(6),
-        allowNull: true,
+        allowNull: false,
         validate:{
           isIn:{
             args:[['female', 'male']],
@@ -64,9 +65,13 @@ const userModel = sequelize.define('User', {
     },
     confirmEmail: {
       type: DataTypes.BOOLEAN,
-      defaultValue:false,
-      allowNull: false,
+      allowNull: true,
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null,
+},
 
   }, {
     // Other model options go here

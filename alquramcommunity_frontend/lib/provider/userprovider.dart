@@ -8,7 +8,7 @@ class UserProvider extends ChangeNotifier{
   userEmail: '',
   userPassword: '',
   userAge: 0,
-  token: '',
+  token: '', userGender: '', imageUrl: '',
   );
 RegisterModel get user=>_user;
 void SetUser(String user){

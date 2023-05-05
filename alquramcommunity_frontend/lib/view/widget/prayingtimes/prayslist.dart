@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/prayscreen_controller.dart';
 import '../../../core/constant/color.dart';
+import '../../../core/services/notificationServices.dart';
 import 'alarmDialog.dart';
 
 class PrayerTimesListView extends StatelessWidget {
@@ -10,7 +11,7 @@ class PrayerTimesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final PrayScreenControllerImp prayController = Get.put(PrayScreenControllerImp());
     final Map<String, String> prayerTimes = prayController.prayerTimesmap.value;
-
+    NotificationServices notificationServices = Get.put(NotificationServices());
     final double checkboxSize = MediaQuery.of(context).size.width * 0.1;
     final double iconButtonSize = MediaQuery.of(context).size.width * 0.08;
     final double textSize = MediaQuery.of(context).size.width * 0.042;
@@ -24,8 +25,9 @@ class PrayerTimesListView extends StatelessWidget {
         final value = prayerTimes[key];
         //final isChecked = prayController.checkedItems.contains(index);
         return GestureDetector(
-          onTap: (){
-            Get.dialog(AlarmDialog( indx: index,));
+          onTap: () async {
+            notificationServices.requestNotificationPermissions();
+            notificationServices.sendNotification();
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
