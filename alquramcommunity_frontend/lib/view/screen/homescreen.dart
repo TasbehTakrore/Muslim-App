@@ -11,13 +11,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
-        
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     return WillPopScope(
         onWillPop: () async {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
           homeScreenControllerImp.changePage(4);
           Get.back();
 
@@ -39,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                     //primary: true,
                     elevation: 0.0,
                     backgroundColor: AppColor.grey,
-                    title:CustomAppBar(onPressedIcon: () {})
+                    title: CustomAppBar(onPressedIcon: () {})
                     //titleTextStyle: TextStyle(text),
                     ),
                 bottomNavigationBar: const CustomBottonAppBarHome(),

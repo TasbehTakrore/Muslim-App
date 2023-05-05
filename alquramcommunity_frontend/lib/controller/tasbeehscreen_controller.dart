@@ -1,84 +1,103 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:alquramcommunity_frontend/view/widget/Tasbeeh/Bead.dart';
+import 'package:alquramcommunity_frontend/core/constant/color.dart';
 
-class RosaryController extends GetxController {
-  var beads = <Bead>[].obs;
-  var activeBeadIndex = 0.obs;
-  var rightBeads = <Bead>[].obs;
-  var leftBeads = <Bead>[].obs;
-
+class TasbeehController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<Offset> animation;
+  Rx<Color> prim = AppColor.primaryColor.obs;
+  Rx<Color> Second = AppColor.secondaryColor.obs;
+  Color? swap;
   @override
   void onInit() {
     super.onInit();
-    for (var i = 1; i <= 33; i++) {
-      beads.add(Bead(id: i, offset: i * 20.0));
-    }
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
 
-    // Split the beads into rightBeads and leftBeads
-    final middleIndex = (beads.length / 2).ceil();
-    rightBeads.assignAll(beads.sublist(middleIndex));
-    leftBeads.assignAll(beads.sublist(0, middleIndex).reversed.toList());
-  }
+    animation = TweenSequence<Offset>([
+      TweenSequenceItem(
+        tween: Tween(begin: const Offset(0, 0), end: const Offset(0.5, 0.3)),
+        weight: 1,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: const Offset(0.5, 0.3), end: const Offset(1, 0.6)),
+        weight: 1,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: const Offset(1, 0.6), end: const Offset(1.3, 0.9)),
+        weight: 1,
+      ),
+      TweenSequenceItem(
+        tween:
+            Tween(begin: const Offset(1.3, 0.9), end: const Offset(1.6, 1.2)),
+        weight: 1,
+      ),
+    ]).animate(CurvedAnimation(
+      parent: controller,
+      curve: Curves.bounceInOut,
+    ));
 
-  void selectBead(int id) {
-    final index = id - 1;
-    beads[index].selected = !beads[index].selected;
-    update();
-  }
-
-  void setActiveBead(int index) {
-    activeBeadIndex.value = index;
-    update();
-  }
-
-  void moveBeadsRight() {
-    for (int i = 0; i < 32; i++) {
-      if (beads[i].selected) {
-        beads[i + 1].selected = true;
-        beads[i].selected = false;
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reset();
+        swap = prim.value;
+        prim.value = Second.value;
+        Second.value = swap!;
       }
-    }
-    if (beads.last.selected) {
-      beads.first.selected = true;
-      beads.last.selected = false;
-    }
+    });
+  }
+
+  void onTap() {
+    controller.forward();
+  }
+
+  @override
+  void onClose() {
+    controller.dispose();
+    super.onClose();
+  }
+
+  List<String> tasbehTypes = [
+    "سبحان الله",
+    "الحمد لله",
+    "لا إله إلّا الله",
+    "الله أكبر",
+    "لا حول ولا قوة إلا بالله",
+    "أستغفر الله",
+    "اللهمّ صلّ على محمّد"
+  ];
+  List<Rx<int>> tasbehValue = [
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+  ];
+
+  int typeIndex = 0;
+  getValue() {
+    return tasbehValue[typeIndex].value;
+  }
+
+  changeValue() {
+    tasbehValue[typeIndex].value += 1;
     update();
   }
 
-  void moveBeadsLeft() {
-    for (int i = 31; i >= 0; i--) {
-      if (beads[i].selected) {
-        beads[i - 1].selected = true;
-        beads[i].selected = false;
-      }
-    }
-    if (beads.first.selected) {
-      beads.last.selected = true;
-      beads.first.selected = false;
-    }
+  changeIteamIndex(String element) {
+    typeIndex = tasbehTypes.indexOf(element);
     update();
   }
 
-  void rotateBeads(bool isClockwise) {
-    if (isClockwise) {
-      final last = rightBeads.removeLast();
-      rightBeads.insert(0, last);
-      final first = leftBeads.removeAt(0);
-      leftBeads.add(first);
-    } else {
-      final first = rightBeads.removeAt(0);
-      rightBeads.add(first);
-      final last = leftBeads.removeLast();
-      leftBeads.insert(0, last);
-    }
-    update();
+  gettasbeehtype() {
+    return tasbehTypes[typeIndex];
   }
-}
-
-class Bead {
-  int id;
-  bool selected;
-  double offset;
-
-  Bead({required this.id, this.selected = false, required this.offset});
 }

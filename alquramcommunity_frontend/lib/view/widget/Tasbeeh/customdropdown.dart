@@ -40,13 +40,15 @@ class CustomDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Obx(() => Container(
+              margin: EdgeInsets.only(top: 6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(
-                  color: Colors.grey,
+                  color: Colors.black,
                   width: 1,
                 ),
               ),
@@ -61,7 +63,7 @@ class CustomDropdown extends StatelessWidget {
                       child: Text(
                         controller.selectedItem.value,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                     Icon(
@@ -96,7 +98,7 @@ class CustomDropdown extends StatelessWidget {
                               child: Text(
                                 item,
                                 style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                                    fontSize: 18, color: Colors.black),
                               ),
                             ),
                           ))
