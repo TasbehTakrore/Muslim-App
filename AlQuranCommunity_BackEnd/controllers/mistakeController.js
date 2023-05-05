@@ -17,15 +17,38 @@ const addMistakes=async(req,res)=>{
         let newMistakes = [];
         for (let i = 0; i < mistakes.length; i++) {
             const {userEmail, mistakeType, weight, surahId, ayahId} = mistakes[i];
+           // if (weight <0) continue;
             let [mistake, created] = await mistakeModel.findOrCreate({
                 where: {userEmail:userEmail, surahId: surahId, ayahId: ayahId},
                 defaults: {userEmail: userEmail, mistakeType: mistakeType, weight: weight, surahId: surahId, ayahId: ayahId}
             });
+
             if (!created) {
-                mistake.weight += weight;
-                await mistake.save();
-            }
-            newMistakes.push(mistake);
+              if(mistake.weight + weight <=0) await mistakeModel.destroy({
+                where: {
+                  userEmail: userEmail,
+                  surahId: surahId,
+                  ayahId: ayahId,
+                },
+              });
+              else{
+                 mistake.weight += weight;
+                await mistake.save();}
+            }else if(mistake.weight<=0)
+            {
+
+              mistakeModel.destroy({
+                where: {
+                  userEmail: userEmail,
+                  surahId: surahId,
+                  ayahId: ayahId,
+                },
+              });
+            //   console.log(">>>>>> 0")
+            // newMistakes.push(mistake);
+            // mistakeModel.create(mistake);
+          }
+            else console.log("----------------------");
         }
         res.json({message: 'success add mistakes', mistakes: newMistakes});
     } catch(error) {

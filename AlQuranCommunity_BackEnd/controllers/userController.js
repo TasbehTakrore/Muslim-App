@@ -13,7 +13,16 @@ const getAllUsers=async(req,res)=>{
 //add new user `sign up` 
 const signUp = async(req,res)=>{
     try{
-        //from postman or front end 
+        //from postman or front end
+         /*
+         const existuser=await userModel.findOne({
+            where:{
+                userEmail: req.user.userEmail,
+            }
+        })
+        if(existuser){
+            return res.status(400).json({msg:"This email is already used, try another one !"});
+        }*/
         const {userName,userEmail,userAge,userPassword,userGender }=req.body;
     
         //insert into users() values()
@@ -21,9 +30,11 @@ const signUp = async(req,res)=>{
         let user= await userModel.create({userName:userName,userEmail:userEmail,userAge:userAge,userPassword:hashPassword,userGender:userGender});
         
         res.json({message:'success',user});
-    }catch(error){
-        let msg = error.errors[0].message;
-        res.json({msg});
+    }catch(e){
+
+        res.status(500).json({error:e.message});
+        console.log(" erooor!!\n \n"+error);
+
     }
 
  
@@ -45,8 +56,41 @@ const userDetails = async(req,res)=>{
 
 }
 
+const addCoins = async (req, res)=>{
+    try {
+        console.log( req.body);
+        const{userEmail, userCoins} = req.body;
+        const user=  await userModel.findOne({
+            where:{
+                userEmail:userEmail,
+            }
+        });
+        console.log("gggggggggggggggggggggggggggg");
+
+        if(!user){
+            res.status(400)
+            res.json({msg:'No user with this email'});
+            console.log("nooo user");
+        }
+        else{
+            user.increment('userCoins', {by: userCoins});
+            // user.userCoins += userCoins;
+            // user.save();
+            res.json({message:'success',user});
+            console.log("elseeeee user");
+
+
+        }
+    } catch (error) {
+        res.json({message:'catch error ++',error})
+        console.log("catch" + error);
+
+    }
+}
+
 // check user information ` log in `
 const logIn = async (req,res)=>{
+    try{
     const {userEmail,userPassword} =req.body ;
     const user=  await userModel.findOne({
         where:{
@@ -54,17 +98,30 @@ const logIn = async (req,res)=>{
         }
     });
     if(!user){
-        res.json({message:'invalid-data'});
+        res.status(400)
+        res.json({msg:'No user with this email'});
+
     }
     else{
         const matchPass =await bcrypt.compare(userPassword,user.userPassword)
-        if(matchPass){
-        const token = jwt.sign({id:user.id},'QuranLogIn@123');
-        res.json({message:'success',token});
+        if(!matchPass){
+            res.status(400)
+            res.json({msg:'wrong password !'},);
         }
-        else
-        res.json({message:'invalid-data'});
+        else{
+        const token = jwt.sign({id:user.id},'QuranLogIn@123');
+        res.status(200)
+        res.json({token,user});
+        }
+       
+    //    const token = jwt.sign({id:user.id},'QuranLogIn@123');
+      //  res.json({message:'success',token});
+    //    }
+    //    else
+    //    res.json({message:'invalid-data'});
 
+    }}catch(e){
+        res.status(500).json({error:e.message});
     }
 }
 
@@ -98,4 +155,4 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,userDetails,logIn,updateUser,deleteUser}
+module.exports={getAllUsers,signUp,userDetails,logIn,updateUser,deleteUser,addCoins}

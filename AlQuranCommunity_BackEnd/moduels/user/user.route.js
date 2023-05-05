@@ -8,8 +8,9 @@ const auth = require('../../middleware/auth');
 router.get('/getAll',userController.getAllUsers);
 router.post('/signUp',userController.signUp);
 router.get('/getDetails',auth(),userController.userDetails);
-router.get('/logIn',userController.logIn);
+router.post('/logIn',userController.logIn);
 router.put('/:id',userController.updateUser);
 router.delete('/:id',userController.deleteUser);
+router.post('/addCoins',userController.addCoins);
 
 module.exports= router;

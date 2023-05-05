@@ -49,7 +49,7 @@ const mistakeModel = sequelize.define('Mistake', {
             msg:"when insert, 50 for hint, and 100 for mistake"
           },
           min:{
-            args: -1,
+            args: -10,
             msg:"min weight"
           },
         },
