@@ -63,7 +63,7 @@ class HomeScreenControllerImp extends HomeScreenController {
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];
   List<IconData> iconsbuttonAppBar = [
     Icons.person,
-    Icons.polyline,
+    Icons.playlist_add_check_rounded,
     Icons.list_alt,
     Icons.notifications
   ];

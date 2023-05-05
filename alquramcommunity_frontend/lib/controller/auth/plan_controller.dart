@@ -1,4 +1,7 @@
+import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+
+import '../../core/constant/color.dart';
 
 class PlanController extends GetxController {
   Rx<bool> mainPrayCheckValue = false.obs;
@@ -11,6 +14,94 @@ class PlanController extends GetxController {
   Rx<bool> addFivePray = false.obs;
   Rx<bool> addDuha = false.obs;
   Rx<bool> addQeiam = false.obs;
+
+  setQuranPlanCount(int val) {
+    quranPlanCount = val;
+    print("quranPlanCount: $quranPlanCount");
+    update();
+  }
+
+  int quranPlanType = 0; // 0=>safha, 1=> hezb, 2=>juz
+  int quranPlanCount = 2;
+  int? minQuran = 1;
+  int? maxQuran = 20;
+  BoxBorder? safhaBorder = Border.all(color: AppColor.primaryColor, width: 2);
+  Rx<bool> quranPlanVisible = false.obs;
+
+  BoxBorder? hezbBorder;
+  bool haveQuranPlan = false;
+
+  BoxBorder? juzBorder;
+  QuranVisibleFunc(int i) {
+    if (i == 1) {
+      quranPlanVisible.value = true;
+      haveQuranPlan = true;
+      quranPlanCheckValue.value = false;
+    } else {
+      mainQuranCheckValue.value = false;
+
+      haveQuranPlan = false;
+      quranPlanCount = 1;
+      quranPlanVisible.value = false;
+      haveQuranPlan = false;
+    }
+    update();
+  }
+
+  String getTypeQuranPlan() {
+    if (quranPlanType == 0) {
+      if (quranPlanCount == 1)
+        return "صفحة واحدة يوميًّا";
+      else if (quranPlanCount == 2) return "صفحتين  يوميًّا";
+      return "$quranPlanCount صفحات يوميًّا";
+    } else if (quranPlanType == 1) {
+      if (quranPlanCount == 1)
+        return "حزب واحد يوميًّا";
+      else if (quranPlanCount == 2) return "حزبين  يوميًّا";
+      return "$quranPlanCount أحزاب يوميًّا";
+    } else if (quranPlanType == 2) {
+      if (quranPlanCount == 1)
+        return "جزء واحد يوميًّا";
+      else if (quranPlanCount == 2) return "جزئين  يوميًّا";
+      return "$quranPlanCount أجزاء يوميًّا";
+    }
+    return "";
+  }
+
+  safhaSettings() {
+    quranPlanType = 0;
+    safhaBorder = Border.all(color: AppColor.primaryColor, width: 2);
+    hezbBorder = null;
+    juzBorder = null;
+    minQuran = 1;
+    quranPlanCount = 1;
+    maxQuran = 20;
+    update();
+  }
+
+  hezbSettings() {
+    quranPlanType = 1;
+    hezbBorder = Border.all(color: AppColor.primaryColor, width: 2);
+    juzBorder = null;
+    safhaBorder = null;
+    minQuran = 1;
+    quranPlanCount = 1;
+
+    maxQuran = 60;
+    update();
+  }
+
+  juzSettings() {
+    quranPlanType = 2;
+    juzBorder = Border.all(color: AppColor.primaryColor, width: 2);
+    hezbBorder = null;
+    safhaBorder = null;
+    minQuran = 1;
+    quranPlanCount = 1;
+
+    maxQuran = 30;
+    update();
+  }
 
   int prayPalnCount = 0;
   int prayPalnCheckCount = 0;
@@ -251,5 +342,183 @@ class PlanController extends GetxController {
   changesalahThikrCheck(bool val) {
     salahThikrCheckValue.value = val;
     update();
+  }
+
+  Rx<bool> mainQuranCheckValue = false.obs;
+  void changeMainQuranCheck(bool bool) {
+    if (bool == true && haveQuranPlan == false)
+      mainQuranCheckValue.value = false;
+    else {
+      mainQuranCheckValue.value = bool;
+      quranPlanCheckValue.value = bool;
+    }
+
+    update();
+  }
+
+  Rx<bool> quranPlanCheckValue = false.obs;
+  void changequranPlanCheck(bool bool) {
+    quranPlanCheckValue.value = bool;
+    update();
+  }
+
+  Rx<bool> mainRecitationCheckValue = false.obs;
+  Rx<bool> RecitationPlanCheckValue = false.obs;
+  Rx<bool> RecitationPlanVisible = false.obs;
+  bool haveRecitationPlan = false;
+
+  Rx<bool> mainTadabborCheckValue = false.obs;
+  Rx<bool> TadabborPlanCheckValue = false.obs;
+  Rx<bool> TadabborPlanVisible = false.obs;
+
+  void changeMainRecitationCheck(bool bool) {
+    if (bool == true && haveRecitationPlan == false)
+      mainRecitationCheckValue.value = false;
+    else {
+      mainRecitationCheckValue.value = bool;
+      RecitationPlanCheckValue.value = bool;
+    }
+    update();
+  }
+
+  void changeRecitationPlanCheck(bool bool) {
+    RecitationPlanCheckValue.value = bool;
+    update();
+  }
+
+////////////////////////////////
+  String getTypeRecitationPlan() {
+    print("TadabborPlanType $TadabborPlanType");
+    print("TadabborPlanCount $TadabborPlanCount");
+
+    if (RecitationPlanCount == 1)
+      return "صفحة واحدة يوميًّا";
+    else if (RecitationPlanCount == 2) return "صفحتين  يوميًّا";
+    return "$RecitationPlanCount صفحات يوميًّا";
+  }
+
+  int RecitationPlanCount = 1;
+  void setQuranPlanCountRecitation(int value) {
+    RecitationPlanCount = value;
+    print("RecitationPlanCount: $RecitationPlanCount");
+    update();
+  }
+
+  RecitationVisibleFunc(int i) {
+    if (i == 1) {
+      RecitationPlanVisible.value = true;
+      haveRecitationPlan = true;
+      RecitationPlanCheckValue.value = false;
+    } else {
+      mainRecitationCheckValue.value = false;
+
+      haveRecitationPlan = false;
+      RecitationPlanCount = 1;
+      RecitationPlanVisible.value = false;
+    }
+    update();
+  }
+
+  void changeMainTadabborCheck(bool bool) {
+    if (bool == true && haveTadabborPlan == false)
+      mainTadabborCheckValue.value = false;
+    else {
+      mainTadabborCheckValue.value = bool;
+      TadabborPlanCheckValue.value = bool;
+    }
+
+    update();
+  }
+
+  void changeTadabborPlanCheck(bool bool) {
+    TadabborPlanCheckValue.value = bool;
+    update();
+  }
+
+  bool haveTadabborPlan = false;
+  int TadabborPlanCount = 1;
+  TadabborVisibleFunc(int i) {
+    if (i == 1) {
+      TadabborPlanVisible.value = true;
+      haveTadabborPlan = true;
+      TadabborPlanCheckValue.value = false;
+    } else {
+      mainTadabborCheckValue.value = false;
+
+      haveTadabborPlan = false;
+      TadabborPlanCount = 1;
+      TadabborPlanVisible.value = false;
+    }
+    update();
+  }
+
+  BoxBorder? juzBorderTadabbor;
+  BoxBorder? safhaBorderTadabbor =
+      Border.all(color: AppColor.primaryColor, width: 2);
+  BoxBorder? hezbBorderTadabbor;
+  int minQuranTadabbor = 1;
+  int maxQuranTadabbor = 20;
+  int TadabborPlanType = 0;
+  juzSettingsTadabbor() {
+    TadabborPlanType = 2;
+    juzBorderTadabbor = Border.all(color: AppColor.primaryColor, width: 2);
+    hezbBorderTadabbor = null;
+    safhaBorderTadabbor = null;
+    minQuranTadabbor = 1;
+    TadabborPlanCount = 1;
+    maxQuranTadabbor = 30;
+    update();
+  }
+
+  hezbSettingsTadabbor() {
+    TadabborPlanType = 1;
+    hezbBorderTadabbor = Border.all(color: AppColor.primaryColor, width: 2);
+    juzBorderTadabbor = null;
+    safhaBorderTadabbor = null;
+    minQuranTadabbor = 1;
+    TadabborPlanCount = 1;
+
+    maxQuranTadabbor = 60;
+    update();
+  }
+
+  safhaSettingsTadabbor() {
+    TadabborPlanType = 0;
+    safhaBorderTadabbor = Border.all(color: AppColor.primaryColor, width: 2);
+    hezbBorderTadabbor = null;
+    juzBorderTadabbor = null;
+    minQuranTadabbor = 1;
+    TadabborPlanCount = 1;
+    maxQuranTadabbor = 20;
+    update();
+  }
+
+  void setQuranPlanCountTadabbor(int value) {
+    TadabborPlanCount = value;
+    print("TadabborPlanCount: $TadabborPlanCount");
+    update();
+  }
+
+  String getTypeTadabborPlan() {
+    print("TadabborPlanType $TadabborPlanType");
+    print("TadabborPlanCount $TadabborPlanCount");
+
+    if (TadabborPlanType == 0) {
+      if (TadabborPlanCount == 1)
+        return "صفحة واحدة يوميًّا";
+      else if (TadabborPlanCount == 2) return "صفحتين  يوميًّا";
+      return "$TadabborPlanCount صفحات يوميًّا";
+    } else if (TadabborPlanType == 1) {
+      if (TadabborPlanCount == 1)
+        return "حزب واحد يوميًّا";
+      else if (TadabborPlanCount == 2) return "حزبين  يوميًّا";
+      return "$TadabborPlanCount أحزاب يوميًّا";
+    } else if (TadabborPlanType == 2) {
+      if (TadabborPlanCount == 1)
+        return "جزء واحد يوميًّا";
+      else if (TadabborPlanCount == 2) return "جزئين  يوميًّا";
+      return "$TadabborPlanCount أجزاء يوميًّا";
+    }
+    return "";
   }
 }

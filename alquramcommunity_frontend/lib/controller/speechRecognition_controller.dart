@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:alquramcommunity_frontend/controller/trainerScreen_controller.dart';
-import 'package:arabic_tools/arabic_tools.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
@@ -80,7 +78,7 @@ class SpeechRecognitionController extends GetxController {
           print(text.value);
           setOpenMiceIcon();
 
-          if (Arabic_Tools().RemoveTashkeel(text.value) == _referenceText) {
+          if (text.value == _referenceText) {
             print("Match found!");
 
             correctDialog();

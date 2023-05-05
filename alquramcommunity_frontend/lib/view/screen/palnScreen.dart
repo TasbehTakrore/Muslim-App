@@ -9,6 +9,9 @@ import '../widget/Plan/partialpancard.dart';
 import '../widget/Plan/planmaincard.dart';
 import '../widget/Plan/prayPlanCard.dart';
 import '../widget/Plan/prayplanDialog.dart';
+import '../widget/Plan/qurahPlanCard.dart';
+import '../widget/Plan/recitationPlan.dart';
+import '../widget/Plan/tadabborPlanCard.dart';
 import '../widget/Plan/thikrPlanCard.dart';
 import '../widget/home/customcardhome.dart';
 import '../widget/prayingtimes/completedPray_dialog.dart';
@@ -44,6 +47,9 @@ class PalnScreen extends StatelessWidget {
                 PlanMainCard(),
                 PrayPalnCard(),
                 ThikrPalnCard(),
+                QuranPlanCard(),
+                TadabborPlanCard(),
+                RecitationPlanCard()
               ],
             ),
           ),

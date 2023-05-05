@@ -6,23 +6,14 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-
-import 'package:alquramcommunity_frontend/controller/speechRecognition_controller.dart';
-import 'package:arabic_tools/arabic_tools.dart';
-import 'package:flutter/Material.dart';
-import 'package:get/get.dart';
-import 'package:quran/juz_data.dart';
 import 'package:quran/quran.dart';
-import 'package:quran/quran_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'dart:convert';
 import '../core/constant/color.dart';
 import '../core/services/coins_services.dart';
 import '../core/services/mistake_services.dart';
 import '../core/services/services.dart';
 import '../data/model/backend_to_front_models/mistake_model.dart';
-import '../view/widget/recitation/statisticsrecitationcontent.dart';
 import '../view/widget/trainer/statistictrainercontent.dart';
 import 'auth/appbar_controller.dart';
 

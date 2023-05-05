@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  arabic_tools:
-    dependency: "direct main"
-    description:
-      name: arabic_tools
-      sha256: "8000c0e5fbd72821c6a586f0a0f2ffb441cbaed779a9c44c78b12fd8fead35b1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
   async:
     dependency: transitive
     description:
@@ -257,6 +249,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.5"
+  direct_select:
+    dependency: "direct main"
+    description:
+      name: direct_select
+      sha256: "120953140d1061f4ac71138e6b33713627d708c41da27219ca380dcc57316034"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   easy_actions:
     dependency: "direct main"
     description:
@@ -645,6 +645,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+6"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      sha256: f6062c1720eb59be553dfa6b89813d3e8dd2f054538445aaa5edaddfa5195ce6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   intl:
     dependency: "direct main"
     description:
@@ -717,6 +725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  numberpicker:
+    dependency: "direct main"
+    description:
+      name: numberpicker
+      sha256: "4c129154944b0f6b133e693f8749c3f8bfb67c4d07ef9dcab48b595c22d1f156"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   octo_image:
     dependency: transitive
     description:
