@@ -22,43 +22,45 @@ class ThikrDataCardArabic extends StatelessWidget {
   @override
    Widget build(BuildContext context) {
     ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
-    return Stack(
-      children: [
-     
-        Container(
-
-          margin:EdgeInsets.symmetric(vertical: 30),
-          child: Card(
-                      color:Colors.white70,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide  (
-                          color: AppColor.primaryColor,
+    return GetBuilder<ThikrCatgControllerImp>(
+      builder: (controller) {
+        return Stack(
+          children: [
+            Container(
+              margin:EdgeInsets.symmetric(vertical: 30),
+              child: Card(
+                color:Colors.white70,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(
+                    color: AppColor.primaryColor,
+                  ),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Container(
+                  padding:const EdgeInsets.only(right: 20,left:20,top: 20,bottom: 20),
+                  child:Column(
+                    children: [
+                      const ThikrCardsTop(),
+                      const SizedBox(height:30),
+                      Text(
+                        arabicText,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily:"QuranSurah1-mLKO5",
+                          fontSize:20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        borderRadius: BorderRadius.circular(20.0),), //<-- SEE HERE
-                      child: Container(
-                        padding:const EdgeInsets.only(right: 20,left:20,top: 20,bottom: 20),
-                        child:Column(
-                          children: [
-                            const ThikrCardsTop(),
-                            const SizedBox(height:30),
-                              Text(arabicText,
-                              textAlign :TextAlign.center,
-                              style: const  TextStyle(
-                                fontFamily:"QuranSurah1-mLKO5",
-                                 fontSize:20,
-                                 fontWeight: FontWeight.bold,
-                                 )
-                              ) ,
-                            const SizedBox(height:20),
-                          ],
-                        )),
-                  )
-                ,),
-          ThikrsBottomWidget(Catg: Catg, subCatg: subCatg)
-      ],
+                      ),
+                      const SizedBox(height:20),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            ThikrsBottomWidget(Catg: Catg, subCatg: subCatg)
+          ],
+        );
+      },
     );
-    
   }
-  
 }
- 

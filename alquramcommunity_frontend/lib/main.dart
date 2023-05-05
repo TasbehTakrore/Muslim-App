@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alquramcommunity_frontend/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constant/color.dart';
 import 'core/localization/changelocal.dart';
+import 'core/services/notificationServices.dart';
 import 'core/services/services.dart';
 import 'provider/userprovider.dart';
 import 'view/screen/auth/login.dart';
@@ -16,13 +19,19 @@ import 'routes.dart';
 import 'view/screen/language.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+  
   await initialServices();
-  runApp(MultiProvider(providers:[
-    ChangeNotifierProvider(create: (contex)=>UserProvider())
-  ], child:const MyApp()));
+  runApp(const MyApp());
+  
 }
-
+/* runApp(MultiProvider(providers:[
+    ChangeNotifierProvider(create: (contex)=>UserProvider())
+  ], child:const MyApp()));*/
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -56,10 +65,17 @@ class MyApp extends StatelessWidget {
                 bodyLarge: TextStyle(
                     color: AppColor.grey,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16))),
+                    fontSize: 16),
+            ),
+            radioTheme: RadioThemeData(
+                fillColor: MaterialStateProperty.all<Color>(AppColor.primaryColor),
+            ),
+
+                    
+                    ),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? SignUp()
+            ? HomeScreen()
             : Language(),
 
         // myServices.sharedPreferences.

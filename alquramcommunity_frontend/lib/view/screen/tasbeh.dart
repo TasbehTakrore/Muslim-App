@@ -1,136 +1,190 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-
-import '../../controller/tasbeehscreen_controller.dart';
-import '../../core/constant/color.dart';
-import '../../core/constant/imageasset.dart';
-import '../../core/constant/routes.dart';
-import '../widget/Tasbeeh/addnewtasbeeh.dart';
-import '../widget/Tasbeeh/customdropdown.dart';
-
-class TasbeehScreen extends StatelessWidget {
-  TasbeehScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-    Get.put(TasbeehScreenController());
-
-    return GetBuilder<TasbeehScreenController>(builder: (controller) {
-      return WillPopScope(
-          onWillPop: () async {
-            Get.offAllNamed(AppRoute.home);
-            return false;
-          },
-          child: Scaffold(
-            body: Container(
-                padding: EdgeInsets.only(top: 80),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(AppImageAsset.mosque),
-                      fit: BoxFit.cover,
-                      opacity: 0.2,
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [Color(0xff266f52), Color(0xff266f52)],
-                    )),
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.bottom,
-                child: ListView(
-                  children: [
-                    SizedBox(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const SizedBox(height: 50),
-                                InkWell(
-                                  onTap: () {
-                                    controller.changeValue();
-                                  },
-                                  child: CircularPercentIndicator(
-                                    radius: 150,
-                                    lineWidth: 20,
-                                    circularStrokeCap: CircularStrokeCap.round,
-                                    backgroundColor:
-                                        Color.fromARGB(32, 252, 204, 92),
-                                    percent:
-                                        (controller.getValue() % 100 / 100),
-                                    center: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          controller.getValue().toString(),
-                                          style: const TextStyle(
-                                              color: AppColor.thickYellow,
-                                              fontSize: 40),
-                                        ),
-                                        Text(
-                                          controller.gettasbeehtype(),
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                    progressColor: AppColor.thickYellow,
-                                  ),
-                                ),
-                                const SizedBox(height: 50),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.2,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext b) {
-                                                return AddNewTasbeeh();
-                                              });
-                                        },
-                                        child: const Icon(
-                                          Icons.add_box,
-                                          size: 60,
-                                          color: Color.fromARGB(
-                                              166, 255, 255, 255),
-                                          weight: 100,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        //padding: EdgeInsets.only(top: 60),
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.5,
-                                        child: CustomDropdown(
-                                          onChanged: (selectedItem) {
-                                            controller
-                                                .changeIteamIndex(selectedItem);
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
-          ));
-    });
-  }
+import 'dart:math'; 
+ 
+import 'package:alquramcommunity_frontend/core/constant/color.dart'; 
+import 'package:flutter/material.dart'; 
+ 
+void main() { 
+  runApp(MyApp()); 
+} 
+ 
+class MyApp extends StatefulWidget { 
+  const MyApp({Key? key}) : super(key: key); 
+ 
+  @override 
+  State<MyApp> createState() => _MyAppState(); 
+} 
+ 
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin { 
+  late AnimationController _controller; 
+  late Animation<Offset> _animation; 
+ 
+  @override 
+  void initState() { 
+    super.initState(); 
+    _controller = AnimationController( 
+      vsync: this, 
+      duration: const Duration(milliseconds: 500), 
+    ); 
+ 
+    _animation = TweenSequence<Offset>([ 
+      TweenSequenceItem( 
+        tween: Tween(begin: const Offset(0, 0), end: const Offset(1, 0.3)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: Tween(begin: const Offset(1, 0.3), end: const Offset(1.3, 0.6)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(1.3, 0.6), end: const Offset(1.6, 0.9)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(1.6, 0.9), end: const Offset(1.9, 1.2)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(1.9, 1.2), end: const Offset(2.3, 1.6)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(2.3, 1.6), end: const Offset(2.7, 2.0)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(2.7, 2.0), end: const Offset(3.1, 2.4)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(3.1, 2.4), end: const Offset(3.5, 2.8)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: Tween(begin: const Offset(3.5, 2.8), end: const Offset(4, 3.3)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: Tween(begin: const Offset(4, 3.3), end: const Offset(4.2, 3.8)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(4.2, 3.8), end: const Offset(4.4, 4.2)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(4.4, 4.2), end: const Offset(4.6, 4.6)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(4.6, 4.6), end: const Offset(4.8, 5.0)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(4.8, 5.0), end: const Offset(5.2, 5.4)), 
+        weight: 1, 
+      ), 
+      TweenSequenceItem( 
+        tween: 
+            Tween(begin: const Offset(5.2, 5.4), end: const Offset(5.2, 5.8)), 
+        weight: 1, 
+      ), 
+    ]).animate(CurvedAnimation( 
+      parent: _controller, 
+      curve: Curves.linear, 
+    )); 
+ 
+    _controller.addStatusListener((status) { 
+      if (status == AnimationStatus.completed) { 
+        _controller.reset(); 
+      } 
+    }); 
+  } 
+ 
+  @override 
+  void dispose() { 
+    _controller.dispose(); 
+    super.dispose(); 
+  } 
+ 
+  void _onTap() { 
+    _controller.forward(); 
+  } 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    return Container( 
+      color: AppColor.grey, 
+      child: Column( 
+        mainAxisSize: MainAxisSize.min, 
+        mainAxisAlignment: MainAxisAlignment.center, 
+        crossAxisAlignment: CrossAxisAlignment.end, 
+        children: [ 
+          Container( 
+            color: AppColor.grey, 
+            height: 400, 
+          ), 
+          Container( 
+            color: AppColor.grey, 
+            child: Row( 
+              mainAxisSize: MainAxisSize.min, 
+              mainAxisAlignment: MainAxisAlignment.end, 
+              children: [ 
+                Container( 
+                  color: AppColor.grey, 
+                  alignment: Alignment.centerLeft, 
+                  child: GestureDetector(
+onTap: _onTap, 
+                    child: AnimatedBuilder( 
+                      animation: _animation, 
+                      builder: (context, child) { 
+                        return Transform.translate( 
+                          offset: _animation.value * 30, 
+                          child: Opacity( 
+                            opacity: 
+                                _controller.status == AnimationStatus.completed 
+                                    ? 0 
+                                    : 1, 
+                            child: child, 
+                          ), 
+                        ); 
+                      }, 
+                      child: Container( 
+                        width: 50, 
+                        height: 50, 
+                        decoration: BoxDecoration( 
+                          color: AppColor.primaryColor, 
+                          shape: BoxShape.circle, 
+                        ), 
+                      ), 
+                    ), 
+                  ), 
+                ), 
+                Container( 
+                  width: 25, 
+                  height: 50, 
+                  decoration: BoxDecoration( 
+                    color: AppColor.secondaryColor, 
+                    borderRadius: BorderRadius.only( 
+                      topRight: Radius.circular(50), 
+                      bottomRight: Radius.circular(50), 
+                    ), 
+                  ), 
+                ), 
+              ], 
+            ), 
+          ), 
+        ], 
+      ), 
+    ); 
+  } 
 }

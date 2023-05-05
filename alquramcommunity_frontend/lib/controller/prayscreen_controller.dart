@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -51,6 +52,8 @@ class PrayScreenControllerImp extends PrayScreenController{
   DateTime nextPrayerTime=DateTime.now();
   StreamSubscription? _subscription;
   
+
+
   @override
   void onInit() {
     super.onInit();
@@ -58,6 +61,12 @@ class PrayScreenControllerImp extends PrayScreenController{
     if(formattedRemainingTime=='00:00:00'){
           getNextPrayer();
     }
+    
+   /* FirebaseMessaging.instance.getToken().then((value){
+    print('hi token :$value');
+}
+
+);*/
   }
   @override
   void onClose() {
@@ -269,8 +278,6 @@ return;
     isAlarmOn[index].value = !isAlarmOn[index].value;
     update();
   }
-  
-  
   final latitude = (0.0).obs;
   final longitude = (0.0).obs;
   final qiblaDirection = 0.0.obs;
@@ -288,14 +295,8 @@ double calculateQiblaDirection(double latitude, double longitude) {
 
 
 
-  
-  
-  
-  
-  
   }
 
-  //alarm setting 
 
 
  

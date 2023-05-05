@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "240635551604",
+    "project_id": "alqurancommunity-24a89",
+    "storage_bucket": "alqurancommunity-24a89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240635551604:android:cb0e9e821205ab0c405621",
+        "android_client_info": {
+          "package_name": "com.example.qurancomm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240635551604-ej8mo3klci2pq5mmkh8vtl4c9hpktoq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjeZeqQavUz2lgenu_KHV81nfSuegMtY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240635551604-ej8mo3klci2pq5mmkh8vtl4c9hpktoq1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "240635551604-m79icd6rp3e33js1fp00qpjv0o40i2oi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tasbehtest"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240635551604:android:f514274a050efebc405621",
+        "android_client_info": {
+          "package_name": "com.example.tasbehtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240635551604-ej8mo3klci2pq5mmkh8vtl4c9hpktoq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjeZeqQavUz2lgenu_KHV81nfSuegMtY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240635551604-ej8mo3klci2pq5mmkh8vtl4c9hpktoq1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "240635551604-m79icd6rp3e33js1fp00qpjv0o40i2oi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tasbehtest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

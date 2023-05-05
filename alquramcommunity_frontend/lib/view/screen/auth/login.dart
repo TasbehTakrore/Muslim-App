@@ -1,6 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/auth/login_controller.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
-import 'package:alquramcommunity_frontend/view/widget/auth/custombottomauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtexttitleauth.dart';
@@ -9,7 +8,6 @@ import 'package:alquramcommunity_frontend/view/widget/auth/textsignup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constant/color.dart';
-import '../../../core/constant/routes.dart';
 import '../../widget/custombuttomlang.dart';
 
 class Login extends StatelessWidget {
@@ -56,13 +54,19 @@ class Login extends StatelessWidget {
           //my controller
         ),
         //password
-        CustomTextFormAuth(
+        GetBuilder<LoginControllerImp>(
+          builder: (controller)=>CustomTextFormAuth(
           labelText: "6".tr,
           hinttext: "8".tr,
           iconData: Icons.lock_outline,
           mycontroller: controller.password,
+          obscureText:controller.isshowpass,
+          onTapIcon: (){
+            controller.showPassword();
+          },
+
           //my controller
-        ),
+        ),),
 
         //forget password
         InkWell(

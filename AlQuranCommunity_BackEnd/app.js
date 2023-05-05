@@ -10,10 +10,16 @@ const userRouter  = require('./moduels/user/user.route');
 app.use('/users/',userRouter);
 const mistakeRouter = require('./moduels/mistake.route');
 app.use('/mistake/',mistakeRouter);
+const notificationRouter = require('./moduels/notification.route');
+app.use('/notification/',notificationRouter);
 
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json({ limit: '1gb' }));
+app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
 
 /*
 app.post('/addUser',(req,res)=>{

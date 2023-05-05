@@ -13,4 +13,9 @@ class AppRoute {
   static const String specificCommunity = "/SpecificCommunity";
   static const String tasbeeh = "/tasbeeh";
   static const String SpecificCommunity = "/SpecificCommunity";
+  static const String AllCommunities = "/AllCommunities";
+  static const String ViewCommunity = "/ViewCommunity";
+
+
+
 }

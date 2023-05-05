@@ -31,4 +31,5 @@ class AppImageAsset {
   static const String profile = "$rootImages/profile.png";
 
   static const String dashboard = "$rootImages/dashboard.png";
+   static const String commBadge = "$rootImages/commBadge.svg";
 }

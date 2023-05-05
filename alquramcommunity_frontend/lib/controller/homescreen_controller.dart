@@ -39,9 +39,10 @@ class HomeScreenControllerImp extends HomeScreenController {
   Rx<Widget> content = Home().obs;
 
   List<Widget> listPage = [
-    Container(
-      child: Center(child: ProfileScreen()),
-    ),
+    
+   Center(
+    child: ProfileScreen()),
+
     Container(
       child: Center(child: Text("\uFD3E" + "1" + "\uFD3F")),
     ),
@@ -55,7 +56,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     PrayScreen(),
     const Thikr(),
     const QiblaScreen(),
-    TasbeehScreen()
+    MyApp()
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];
