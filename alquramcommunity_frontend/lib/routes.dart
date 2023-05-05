@@ -27,7 +27,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.forgetPassword: (context) => const ForgetPassword(),
   AppRoute.pray: (context) => PrayScreen(),
   AppRoute.qibla: (context) => QiblaScreen(),
-  AppRoute.tasbeeh: (context) => TasbeehScreen(),
+  AppRoute.tasbeeh: (context) => MyApp(),
   AppRoute.SpecificCommunity: (context) => SpecificCommunity(),
-  AppRoute.trainer: (context) =>TrainerMainScreen(),
+  AppRoute.trainer: (context) => TrainerMainScreen(),
 };

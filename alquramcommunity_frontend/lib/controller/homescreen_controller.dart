@@ -57,7 +57,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     PrayScreen(),
     const Thikr(),
     const QiblaScreen(),
-    TasbeehScreen(),
+    MyApp(),
   ];
 
   List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];
