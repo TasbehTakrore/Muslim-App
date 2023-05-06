@@ -19,16 +19,13 @@ import 'routes.dart';
 import 'view/screen/language.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
-  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await initialServices();
   runApp(const MyApp());
-
 }
+
 /* runApp(MultiProvider(providers:[
     ChangeNotifierProvider(create: (contex)=>UserProvider())
   ], child:const MyApp()));*/
@@ -44,38 +41,36 @@ class MyApp extends StatelessWidget {
         title: 'Al Quran Community',
         locale: controller.language,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-              toolbarHeight: 80,
-              //height: 80.0,
-            ),
-            //fontFamily: "CaiPlayfairDisplayro",
-            textTheme: TextTheme(
-                headlineLarge: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: AppColor.primaryColor),
-                headlineMedium: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: AppColor.black),
-                headlineSmall: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: AppColor.black),
-                bodyLarge: TextStyle(
-                    color: AppColor.grey,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-            ),
-            radioTheme: RadioThemeData(
-                fillColor: MaterialStateProperty.all<Color>(AppColor.primaryColor),
-            ),
-
-                    
-                    ),
+          appBarTheme: AppBarTheme(
+            toolbarHeight: 80,
+            //height: 80.0,
+          ),
+          //fontFamily: "CaiPlayfairDisplayro",
+          textTheme: TextTheme(
+            headlineLarge: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: AppColor.primaryColor),
+            headlineMedium: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: AppColor.black),
+            headlineSmall: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: AppColor.black),
+            bodyLarge: TextStyle(
+                color: AppColor.grey,
+                fontWeight: FontWeight.bold,
+                fontSize: 16),
+          ),
+          radioTheme: RadioThemeData(
+            fillColor: MaterialStateProperty.all<Color>(AppColor.primaryColor),
+          ),
+        ),
         home: controller.myServices.sharedPreferences.getBool("langSelected") ==
                 true
-            ? HomeScreen()
+            ? Login()
             : Language(),
 
         // myServices.sharedPreferences.

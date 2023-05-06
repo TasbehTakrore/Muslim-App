@@ -51,20 +51,20 @@ const signUp = async(req,res)=>{
 }
 
 //get user detailsfrom id in the url
-const userDetails = async(req,res)=>{
-    try{
-        //select * from users where id = ..
-        const user= await userModel.findOne({
-            where:{
-                id: req.user.id,
-            }
-        });
-        res.json({message:'success',user});    
-    }catch(error){
-        res.json({message:'catch error',error})
-    }
+// const userDetails = async(req,res)=>{
+//     try{
+//         //select * from users where id = ..
+//         const user= await userModel.findOne({
+//             where:{
+//                 id: req.user.id,
+//             }
+//         });
+//         res.json({message:'success',user});    
+//     }catch(error){
+//         res.json({message:'catch error',error})
+//     }
 
-}
+// }
 
 const addCoins = async (req, res)=>{
     try {
