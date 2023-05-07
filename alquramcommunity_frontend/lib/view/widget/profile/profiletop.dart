@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/profileController.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 
@@ -8,6 +10,8 @@ import '../../../core/constant/imageasset.dart';
 class ProfileTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return GetBuilder<ProfileController>(builder: (controller) {
+
     return 
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
@@ -45,5 +49,7 @@ class ProfileTop extends StatelessWidget {
             ),
           );
           
+  
+    });
   }
 }

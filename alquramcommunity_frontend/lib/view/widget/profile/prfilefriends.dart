@@ -1,7 +1,8 @@
 import 'package:flutter/Material.dart'; 
 import 'package:google_fonts/google_fonts.dart'; 
 import '../../../core/constant/color.dart';
-import '../../../core/constant/imageasset.dart'; 
+import '../../../core/constant/imageasset.dart';
+import 'friendtapdialog.dart'; 
  
 class ProfileFriends extends StatelessWidget { 
   const ProfileFriends({super.key}); 
@@ -19,18 +20,18 @@ class ProfileFriends extends StatelessWidget {
                   return Column( 
                     children: [ 
                       InkWell( 
-                        onLongPress: () { 
-                          /*
+                        onTap: () { 
+                          
                           showDialog( 
                               context: context, 
                               builder: (BuildContext b) { 
-                              //  return UserCommunitySettings(); 
-                              }); */
+                               return FriendTapDialog();
+                              });
                         }, 
                         child: Container( 
                           margin: const EdgeInsets.only(top:10),
-                          width: 70, 
-                          height: 70, 
+                          width: 50, 
+                          height: 50, 
                           clipBehavior: Clip.antiAlias, 
                           decoration: const BoxDecoration(shape: BoxShape.circle), 
                            child :Image.asset( AppImageAsset.profile,

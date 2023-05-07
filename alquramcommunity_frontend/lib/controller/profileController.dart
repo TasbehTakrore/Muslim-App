@@ -38,6 +38,7 @@ Future<void> userInformation() async{
   joinDate=formattedDate;
   print('${authservices.uri}/images/${userProfile['user']['imageUrl']}');
   img.value ='${authservices.uri2}/AlQuranCommunity_BackEnd/images/${userProfile['user']['imageUrl']}';
+update();
 
 }
 
@@ -54,6 +55,7 @@ void updateDetails(){
     gender: controller.selectedGender.value,
     password: controller.password.text,
     checkPassword: controller.checkPassword.text);
+
 }
 void clearFields(){
   controller.name.text='';

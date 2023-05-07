@@ -12,6 +12,8 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) { 
     final ProfileController profilesController = 
     Get.put(ProfileController()); 
+    return GetBuilder<ProfileController>(builder: (controller) {
+
     return Container( 
       decoration: BoxDecoration( 
           borderRadius: BorderRadius.circular(20), color: AppColor.grey, 
@@ -44,5 +46,7 @@ class ProfileCard extends StatelessWidget {
       ) 
      // ProfileFriends(), 
     ); 
-  } 
-}
+  
+  
+  });
+  }}

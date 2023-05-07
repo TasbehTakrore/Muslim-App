@@ -126,18 +126,17 @@ Future<void> showNotification(RemoteMessage message) async {
 
 }
 
-String uri = 'http://192.168.1.18:5000';
+String uri = 'http://172.19.21.46:5000';
 
-  //sign up user
 Future<void> createNotification({
-  required String scheduledTime,
+  required  DateTime scheduledTime,
   required String token,
   required String title,
   required String body,
 }) async {
   try {
     final message = json.encode({
-      'scheduledTime': scheduledTime,
+      'scheduledTime': scheduledTime.toIso8601String(),
       'token': token,
       'title': title,
       'body': body,
@@ -160,8 +159,9 @@ Future<void> createNotification({
 
 void sendNotification() async {
   String deviceToken = await NotificationServices().getDeviceToken();
+  print('token: ${deviceToken}');
   NotificationModel notification = NotificationModel(
-    scheduledTime: '2023-05-04 00:23:50',
+    scheduledTime:  DateTime.now(),
     title: 'New Notification',
     body: 'This is a notification sent from Flutter',
     token: deviceToken,

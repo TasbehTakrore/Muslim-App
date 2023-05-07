@@ -300,7 +300,7 @@ double calculateQiblaDirection(double latitude, double longitude) {
 }
 
   }
-}
+
 
 
 

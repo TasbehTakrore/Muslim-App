@@ -24,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
         Get.put(ProfileController()); 
     double width = MediaQuery.of(context).size.width; 
     double height = MediaQuery.of(context).size.height; 
+  return GetBuilder<ProfileController>(builder: (controller) {
     return Scaffold( 
       body: Stack( 
         children: [ 
@@ -127,5 +128,7 @@ child:
         ], 
       ), 
     ); 
+  
+  });
   } 
 }
