@@ -13,12 +13,11 @@ import '../../../data/model/front_models/thikrmodel.dart';
 
 class ThikrDataCardArabic extends StatelessWidget {
   final String arabicText;
-  final int Catg;
-  final int subCatg;
+  final String subCatg;
   final double? fontSize;
   final TEXT? thikr;
 
-  const ThikrDataCardArabic({super.key, required this.arabicText, required this.Catg, required this.subCatg, this.fontSize, this.thikr});
+  const ThikrDataCardArabic({super.key, required this.arabicText, required this.subCatg, this.fontSize, this.thikr});
   @override
    Widget build(BuildContext context) {
     ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
@@ -57,7 +56,7 @@ class ThikrDataCardArabic extends StatelessWidget {
                 ),
               ),
             ),
-            ThikrsBottomWidget(Catg: Catg, subCatg: subCatg)
+            ThikrsBottomWidget( subCatg: subCatg)
           ],
         );
       },

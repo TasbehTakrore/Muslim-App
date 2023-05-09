@@ -1,24 +1,28 @@
 import 'dart:convert'; 
 import 'dart:io'; 
+import 'package:alquramcommunity_frontend/controller/auth/fogetpassword_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/errorhandling.dart'; 
 import 'package:flutter/Material.dart'; 
 import 'package:get/get.dart'; 
 import 'package:http/http.dart' as http; 
 import 'package:alquramcommunity_frontend/core/services/services.dart'; 
 import '../../controller/profileController.dart'; 
+import '../../view/widget/auth/verifycodedialog.dart';
 import '../constant/routes.dart'; 
 import '../constant/utils.dart'; 
 import 'package:http_parser/http_parser.dart'; 
- 
+import '../constant/urls.dart';
+
 //String uri='http://192.168.1.7:5000'; 
  
 MyServices myServices = Get.put(MyServices()); 
- 
+
 class AuthServices { 
-  String uri = 'http://172.19.21.46:5000'; 
-  String uri2 = 'http://172.19.21.46:8080'; 
+  String uri = 'http://172.19.197.181:5000'; 
+  String uri2 = 'http://172.19.197.181:8080'; 
  
   final ProfileController profilesController = Get.put(ProfileController()); 
+  final ForgetPasswordControllerImp forgetController=Get.put(ForgetPasswordControllerImp());
  
   //sign up user 
   void signUpUser({ 
@@ -173,4 +177,67 @@ showSnackBar(context, ' Success');
       print(e); 
     } 
   } 
+
+
+
+//check email to use on change password
+void checkUser({
+  required BuildContext context,
+  required String userEmail,
+}) async {
+  final url = Uri.parse(MyURL.checkEmail); // Replace with the actual URL
+  try {
+    final response = await http.post(
+      url,
+      body: jsonEncode({ 
+      'userEmail': userEmail}),
+       headers: <String, String>{ 
+          'Content-Type': 'application/json; charset=UTF-8', 
+        }, 
+    );
+    if (response.statusCode == 200) {
+      showSnackBar(context, 'check a code sended to your email');
+      Get.toNamed(AppRoute.ResetPassword);
+    } else if(response.statusCode==400){
+      showSnackBar(context, 'not a valid email');
+    }
+  } catch (e) {
+    print(e.toString());
+    showSnackBar(context, 'An error occurred while checking email');
+  }
+}
+
+void updatePassword({
+  required BuildContext context,
+  required String vCode,
+  required String email,
+  required String newPassword,
+}) async {
+  final url = Uri.parse(MyURL.updatePassword); // Replace with the actual URL
+  try {
+    print(vCode);
+    final response = await http.post(
+      url,
+      body: jsonEncode({
+        'vCode': vCode,
+        'email': email,
+        'newPassword': newPassword,
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
+      showSnackBar(context, 'Password updated successfully,log in with new password');
+      Get.toNamed(AppRoute.login);
+    } else if (response.statusCode == 400) {
+      showSnackBar(context, 'No such user or invalid verification code');
+    }
+  } catch (e) {
+    print(e.toString());
+    showSnackBar(context, 'An error occurred while updating password');
+  }
+}
+
+
 }

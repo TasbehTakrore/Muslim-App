@@ -23,8 +23,7 @@ class PalnScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(PlanController());
-
+    PlanController planController=  Get.put(PlanController());
     return WillPopScope(
       onWillPop: () async {
         Get.toNamed(AppRoute.home);
@@ -44,6 +43,7 @@ class PalnScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 PlanMainCard(),
                 PrayPalnCard(),
                 ThikrPalnCard(),

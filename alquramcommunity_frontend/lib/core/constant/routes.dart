@@ -18,5 +18,6 @@ class AppRoute {
   static const String ViewCommunity = "/ViewCommunity";
 
   static const String trainer = "/trainer";
+  static const String ResetPassword="/ReserPassword";
 
 }

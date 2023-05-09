@@ -6,15 +6,18 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 
-abstract class ThikrCatgController extends GetxController {
+ class ThikrCatgController extends GetxController {
+  /*
   Future<String> _loadJSON();
   Future<dynamic> loadJSON();
   initialData();
   decrementRepeat(int listIndex, int itemIndex);
   RxInt selectedThikr=0.obs;
   }
-
+*/
+ }
 class ThikrCatgControllerImp extends ThikrCatgController{
+  /*
   final List<List<int>> countersList = [];
   dynamic argumentData ;
   List<Thikr> data = [];
@@ -68,10 +71,9 @@ Future<void> my()async {
         subCounters.add(0);
       countersList.add(subCounters);
     }
-    update();
+    //update();
 }
 }
-
   @override
   void onInit() {
     super.onInit();
@@ -105,7 +107,6 @@ Future<void> my()async {
   }
   Future<void> selectThikr(int index) async {
     selectedThikr.value = index;
-    await my();
     loadJSON().then((value) {
     myData.value = Athkar.fromJson(value);
   });
@@ -125,7 +126,59 @@ Future<void> my()async {
     throw UnimplementedError();
   }
 */
+
+*/
+
+
+  RxInt selectedThikr=0.obs;
+  dynamic ? jsonResponse;
+  var myData = Athkar().obs;
+  List<Thikr> data = [];
+  final List<List<int>> countersList = [];
+    final List<List<int>> followCounters = [];
+
+
+  Future<void> selectThikr(int index) async {
+    selectedThikr.value = index;
+    loadJSON_t().then((value) {
+    myData.value = Athkar.fromJson(value);
+  });
+    update();
+  }
+  @override
+  Future<String> _loadJSON_s()   async {
+    return await rootBundle.loadString('assets/thikr.json');
+  }
+  Future<dynamic> loadJSON_t() async {
+    String json = await _loadJSON_s();
+    jsonResponse = jsonDecode(json);  
+    return jsonResponse;
+  }
+  Future<void> intiaiteList()async {
+    for (int i = 0; i <  (myData.value.thikr?.length ?? 0); i++) {
+      Thikr? subList =  myData.value.thikr?[i];
+      List<int> subCounters = [];
+      for (int j = 0; j < subList!.tEXT!.length; j++) {
+        subCounters.add(0);
+      countersList.add(subCounters);
+      followCounters.add(subCounters);
+    }
+  }
+  decrementRepeat(int listIndex, int itemIndex) {
+   /*  if (followCounters[listIndex][itemIndex]< data[selectedThikr.value][itemIndex]) {
+       followCounters[listIndex][itemIndex]=followCounters[listIndex][itemIndex]-1;
+       print('${followCounters[listIndex][itemIndex]}');
+           update(); 
+    }  
+    update(); 
+  }
+*/
 }
+  
+  
+
+
+  }}
 
 
 

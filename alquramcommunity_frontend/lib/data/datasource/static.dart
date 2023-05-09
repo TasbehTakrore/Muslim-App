@@ -63,9 +63,9 @@ List<CategoryModel> CategoryList = [
     title: "Dhikr",
     image: AppImageAsset.duaa,
     onPressed: () async {
-      await thikrController.loadJSON();
+      await thikrController.loadJSON_t();
      // thikrController.my();
-     await thikrController.dataaa();
+    // await thikrController.dataaa();
       homeScreenController.changePage(6);
     }
   )

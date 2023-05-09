@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
 import 'package:alquramcommunity_frontend/view/widget/prayingtimes/completedPray_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,10 +29,12 @@ class PlanMainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PrayScreenControllerImp prayController =
-        Get.put(PrayScreenControllerImp());
+    final PlanController planController =
+        Get.put(PlanController());
     return InkWell(
-      // onTap: onTap,
+       onTap: (){
+      
+       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 5),
         child: Stack(children: [
@@ -51,30 +54,39 @@ class PlanMainCard extends StatelessWidget {
               alignment: Alignment.center,
               width: double.infinity,
               height: 150,
-              child: Column(
+              child: Obx(() =>  Column(
                 children: [
                   const SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
-                  // Text(
-                  //   date,
-                  //   style: TextStyle(color: Colors.white, fontSize: fontSize2),
-                  //   textAlign: TextAlign.right,
-                  // ),
-                  // const SizedBox(height: 10),
-                  // Text(hijridate,
-                  //     style:
-                  //         TextStyle(color: Colors.yellow, fontSize: fontSize1)),
-                  // const SizedBox(height: 10),
-                  // const SizedBox(height: 3),
                   Text("Time left to finish the plan",
                       style:
                           const TextStyle(color: Colors.white, fontSize: 15)),
-                  Text("2:45:30",
+                  
+                  Text(planController.formattedRemainingTime.value,
                       style:
                           const TextStyle(color: Colors.yellow, fontSize: 50)),
+                  const SizedBox(height:5),
+                  GestureDetector(
+                    onTap: () async {
+                      await planController.setUpdatePlan();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          width: 1,
+                          color: AppColor.grey,
+                        ),
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text("أنقر لتفعيل الخطة",style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+
                 ],
-              )),
+              )),),
         ]),
       ),
     );

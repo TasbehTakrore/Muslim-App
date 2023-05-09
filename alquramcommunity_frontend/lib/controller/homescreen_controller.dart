@@ -1,7 +1,6 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../view/screen/home.dart';
 import '../view/screen/lists.dart';
 import '../view/screen/palnScreen.dart';

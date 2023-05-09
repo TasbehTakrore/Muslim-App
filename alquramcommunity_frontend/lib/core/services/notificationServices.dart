@@ -6,10 +6,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:timezone/timezone.dart' as tz;
 import '../../data/model/backend_to_front_models/notification_model.dart';
 
 
@@ -177,5 +178,41 @@ void sendNotification() async {
 
 
  }
+//******************************************************************* //
+//plan reminder
+
+Future<void> scheduleNotification(int id, DateTime scheduledTime,tz.Location location) async {
+      final locall = tz.local;
+
+      final AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'alarm_notification_$id',
+        'Alarm Notification $id',
+        'Shows an alarm notification at a certain time of day',
+        importance: Importance.high,
+        priority: Priority.high,
+        showWhen: false,
+      );
+      final NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+          
+      await localNotificationPlugin.zonedSchedule(
+        
+          id,
+          'Alarm $id',
+          'Dont forget your plan! keep going on to finish before end of day',
+          tz.TZDateTime.from(scheduledTime,locall),
+          platformChannelSpecifics,
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime);
+    }
+
+/*
+Future<void>messageHandler(RemoteMessage message){}*/
 
 }
+
+
+
+

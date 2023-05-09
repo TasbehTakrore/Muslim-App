@@ -1,7 +1,18 @@
-import 'package:flutter/Material.dart';
-import 'package:get/get.dart';
+import 'dart:async';
 
+import 'package:flutter/Material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 import '../../core/constant/color.dart';
+import 'package:alquramcommunity_frontend/core/services/notificationServices.dart';
+//import 'package:timezone/timezone.dart' as tz;
+//import 'package:timezone/data/latest.dart' as tz;
+import 'package:alquramcommunity_frontend/core/services/plan_services.dart';
+import '../../core/services/services.dart';
+MyServices myServices = Get.put(MyServices());
+PlanServices planServices =Get.put(PlanServices());
+
+
 
 class PlanController extends GetxController {
   Rx<bool> mainPrayCheckValue = false.obs;
@@ -98,7 +109,6 @@ class PlanController extends GetxController {
     safhaBorder = null;
     minQuran = 1;
     quranPlanCount = 1;
-
     maxQuran = 30;
     update();
   }
@@ -521,4 +531,170 @@ class PlanController extends GetxController {
     }
     return "";
   }
+
+ // ****************************************************//
+  @override
+  void onInit()async {
+    getRemainingTime();   
+    await showPlantoUser();
+    super.onInit();  
+  }
+    @override
+  void onClose() {
+    super.onClose();
+    _subscription?.cancel();
+  }
+
+ //remaining time for plan 
+  StreamSubscription? _subscription;
+  DateTime  now = DateTime.now();
+  DateTime endOfDay=  DateTime.now();
+  RxString formattedRemainingTime = ''.obs;
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+  
+  Future<int> getRemainingTime() async {
+    try {
+       endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);  
+      _subscription =
+        Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
+        Duration remainingTime = endOfDay.difference(DateTime.now());
+        formattedRemainingTime.value = formatDuration(remainingTime);
+        if (formattedRemainingTime.value == '00:00:00') {
+          dayEnd();
+           
+        }
+      });
+    } catch (e) {}
+    return 0;
+  }
+
+  void dayEnd(){
+    return;
+  }
+  //end of remaininy time 
+
+  //add or update user plan function 
+  List<dynamic> planData=[];
+  int userId=0;
+  RxInt tasksCount=0.obs;
+  Future<void> getPlanFromUser()async{
+    print('fron func: ${addFivePray.value}');
+    planData.clear();
+    tasksCount.value=0;
+    planData.addAll([
+      addFivePray.value,
+      addDuha.value,
+      addQeiam.value,
+      false,//taraweeh
+      addSapahThikr.value,
+      addmasaThikr.value,
+      addsleep.value,
+      addwakeUp.value,
+      addwodoo.value,
+      addsalahThikr.value,
+      addadhan.value,
+      haveQuranPlan==false? 'none':(quranPlanType==0? 'page':(quranPlanType==1?'hizb':'juz')),
+      haveQuranPlan==false? 0:quranPlanCount,
+      haveTadabborPlan==false? 'none':(TadabborPlanType==0? 'page':(TadabborPlanType==1?'hizb':'juz')),
+      haveTadabborPlan==false? 0:TadabborPlanCount,
+      haveRecitationPlan==false? false:true,
+      haveRecitationPlan==false?  0:RecitationPlanCount,
+      ]);
+      for(int i=0;i<planData.length;i++){
+        if(i==11 ||i==13||i==15) continue;
+        else{
+          if(i<11&&planData[i]==true){
+            tasksCount.value=tasksCount.value+1;
+          }
+          else if(i>11&&planData[i]!=0){
+            tasksCount.value=tasksCount.value+1;
+          }
+        }
+      }
+    return;
+  }
+  Future<void> setUpdatePlan()async{
+    userId = myServices.sharedPreferences.getInt("user_id")!;
+    print("userid ${userId}\n");
+    await getPlanFromUser();
+    print('tasks #: ${tasksCount.value}');
+    await planServices.updatePlan(userId,planData);
+
+  }
+  
+  Future<void> showPlantoUser()async{
+    print("inside show...");
+    userId = myServices.sharedPreferences.getInt("user_id")!;
+    Map<String, dynamic> activePlan = await planServices.getActivePlan(userId);
+    if (activePlan != null && activePlan['data'] != null) {
+      var dataValues = activePlan['data'].values.toList();
+      print(dataValues);
+      addFivePray.value=fivePrayVisibleValue.value=dataValues[1];
+      addDuha.value=duhaVisibleValue.value=dataValues[2];
+      addQeiam.value=qeiamVisibleValue.value=dataValues[3];
+      addSapahThikr.value=sapahThikrVisibleValue.value=dataValues[5];
+      addmasaThikr.value=masaThikrVisibleValue.value=dataValues[6];
+      addsleep.value=sleepVisibleValue.value=dataValues[7];
+      addwakeUp.value=wakeUpVisibleValue.value=dataValues[8];
+      addwodoo.value=wodooVisibleValue.value=dataValues[9];
+      addsalahThikr.value=salahThikrVisibleValue.value=dataValues[10];
+      addadhan.value=adhanVisibleValue.value=dataValues[11];
+      if(dataValues[12]=='none'){
+        haveQuranPlan=false;
+        QuranVisibleFunc(0);
+      }
+      else{
+        haveQuranPlan=true;
+        (dataValues[12]=='page'
+        ? safhaSettings()
+       :(dataValues[12]=='hizb')
+       ?hezbSettings()
+        :(dataValues[12]=='juz'
+        ?juzSettings()
+        :quranPlanType=3));
+        quranPlanCount=(dataValues[13]) ;
+        QuranVisibleFunc(1);
+      }
+      if(dataValues[14]=='none'){
+        haveTadabborPlan=false;
+        TadabborVisibleFunc(0);
+      }
+      else{
+        haveTadabborPlan=true;
+        (dataValues[14]=='page'
+      ?safhaSettingsTadabbor()
+       :((dataValues[14]=='hizb'
+       ?hezbSettingsTadabbor()
+        :((dataValues[14]=='juz'
+        ? juzSettingsTadabbor()
+         :TadabborPlanType=3)))
+        ));
+        TadabborPlanCount=(dataValues[15]) ;
+        TadabborVisibleFunc(1);
+      }
+      if(dataValues[16]==false){
+        haveRecitationPlan=false;
+        RecitationVisibleFunc(0);
+      }
+      else{
+        haveRecitationPlan=true;
+        RecitationVisibleFunc(1);
+        RecitationPlanCount=(dataValues[17]);
+      }
+      update();
+
+    }
+    else{
+      return;
+    }
+
+
+  }
+
 }

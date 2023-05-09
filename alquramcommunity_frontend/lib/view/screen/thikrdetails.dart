@@ -18,7 +18,7 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
         Get.put(ThikrCatgControllerImp());
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
-                                thikrCatgController.my();
+                           //     thikrCatgController.my();
 
     thikrCatgController.onInit();
     return WillPopScope(
@@ -49,7 +49,7 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                 Expanded(
                   
                   child: FutureBuilder(
-                    future: thikrCatgController.loadJSON(),
+                    future: thikrCatgController.loadJSON_t(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) {
                         return Center(child: Text("${snapshot.error}"));
@@ -75,8 +75,8 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                                         itemBuilder: (BuildContext context, i) {
                                           final repeatCount = data[
                                                   thikrCatgController.selectedThikr.value].tEXT![i].rEPEAT!;
-/*
-                                          thikrCatgController.countersList[
+
+                                         /* thikrCatgController.countersList[
                                                   thikrCatgController.selectedThikr.value][i] =
                                               repeatCount;*/
                                           return GetBuilder<
@@ -87,8 +87,9 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                                                       thikrCatgController.selectedThikr.value].tEXT![i]
                                                   .aRABICTEXT
                                                   .toString(),
-                                              Catg: controller.selectedThikr.value,
-                                              subCatg: i,
+                                              subCatg: data[
+                                                      thikrCatgController.selectedThikr.value].tEXT![i]
+                                                  .rEPEAT.toString() ,
                                             );
                                           });
                                         },

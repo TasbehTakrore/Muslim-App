@@ -1,5 +1,6 @@
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/login.dart';
+import 'package:alquramcommunity_frontend/view/screen/auth/resetPassword.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:alquramcommunity_frontend/view/screen/recitationscreen.dart';
@@ -35,8 +36,8 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.AllCommunities: (context) => AllCommunities(),
   AppRoute.ViewCommunity: (context) => ViewCommunity(),
 
-  
 
   AppRoute.trainer: (context) => TrainerMainScreen(),
+  AppRoute.ResetPassword:(context)=>ResetPassword(),
 
 };
