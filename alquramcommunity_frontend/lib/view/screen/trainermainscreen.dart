@@ -103,7 +103,10 @@ class TrainerMainScreen extends GetView {
                         ],
                       ),
                       SizedBox(height: 20),
-                      Text("${trainerScreenController.text.value}"),
+                      Text(
+                        "${trainerScreenController.showText.value}",
+                        textDirection: TextDirection.rtl,
+                      ),
                       SizedBox(height: 20),
                     ],
                   ))),

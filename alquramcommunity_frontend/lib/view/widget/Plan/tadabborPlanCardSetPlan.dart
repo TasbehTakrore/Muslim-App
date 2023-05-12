@@ -10,8 +10,8 @@ import 'quranplandialog.dart';
 import 'tadabborPlanDialog.dart';
 import 'thikrPalnDialog.dart';
 
-class TadabborPlanCard extends StatelessWidget {
-  const TadabborPlanCard({super.key});
+class TadabborPlanCardSetPlan extends StatelessWidget {
+  const TadabborPlanCardSetPlan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,31 +44,10 @@ class TadabborPlanCard extends StatelessWidget {
                                     });
                               }),
                           const Text("خطّة تدبّر القرآن",
-                              style: TextStyle(fontSize: 25)),
+                              style: TextStyle(fontSize: 23)),
                         ],
                       ),
-                      Transform.scale(
-                        // لتكبير حجم الشيكبوكس
-                        scale: 1.3,
-                        child: Checkbox(
-                          activeColor: AppColor.primaryColor,
-                          hoverColor: Colors.black,
-                          value: controller.mainTadabborCheckValue.value,
-                          onChanged: (value) {
-                            controller.changeMainTadabborCheck(value!);
-                          },
-                        ),
-                      )
                     ],
-                  ),
-                  const Divider(),
-                  PartialPlanCard(
-                    checkValue: controller.TadabborPlanCheckValue,
-                    visibleValue: controller.TadabborPlanVisible,
-                    onChange: (val) {
-                      controller.changeTadabborPlanCheck(val!);
-                    },
-                    partialCardData: 'تدبّر  ' + controller.getTypeTadabborPlan(),
                   ),
                 ]),
               ),

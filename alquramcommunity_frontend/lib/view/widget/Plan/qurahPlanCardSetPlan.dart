@@ -7,12 +7,10 @@ import '../../../core/constant/color.dart';
 import 'partialpancard.dart';
 import 'prayplanDialog.dart';
 import 'quranplandialog.dart';
-import 'recitationPlanDialog.dart';
-import 'tadabborPlanDialog.dart';
 import 'thikrPalnDialog.dart';
 
-class RecitationPlanCard extends StatelessWidget {
-  const RecitationPlanCard({super.key});
+class QuranPlanCardSetPlan extends StatelessWidget {
+  const QuranPlanCardSetPlan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,36 +39,14 @@ class RecitationPlanCard extends StatelessWidget {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext b) {
-                                      return RecitationPlanDialog();
+                                      return QuranPlanDialog();
                                     });
                               }),
-                          const Text("خطّة التسميع",
+                          const Text("خطّة  القرآن",
                               style: TextStyle(fontSize: 25)),
                         ],
                       ),
-                      Transform.scale(
-                        // لتكبير حجم الشيكبوكس
-                        scale: 1.3,
-                        child: Checkbox(
-                          activeColor: AppColor.primaryColor,
-                          hoverColor: Colors.black,
-                          value: controller.mainRecitationCheckValue.value,
-                          onChanged: (value) {
-                            controller.changeMainRecitationCheck(value!);
-                          },
-                        ),
-                      )
                     ],
-                  ),
-                  const Divider(),
-                  PartialPlanCard(
-                    checkValue: controller.RecitationPlanCheckValue,
-                    visibleValue: controller.RecitationPlanVisible,
-                    onChange: (val) {
-                      controller.changeRecitationPlanCheck(val!);
-                    },
-                    partialCardData:
-                        'تسميع  ' + controller.getTypeRecitationPlan(),
                   ),
                 ]),
               ),

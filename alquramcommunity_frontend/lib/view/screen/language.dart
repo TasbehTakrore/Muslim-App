@@ -4,6 +4,7 @@ import 'package:alquramcommunity_frontend/core/localization/changelocal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widget/custombuttomlang.dart';
+import '../widget/customlogoForLang.dart';
 import '../widget/logowidget.dart';
 
 class Language extends GetView<LocaleController> {
@@ -20,8 +21,8 @@ class Language extends GetView<LocaleController> {
             children: [
               Container(
                 alignment: Alignment.center,
-                color: Colors.red,
-                child: logoWidget(
+                //color: Colors.red,
+                child: CustomLLogoWidgetForLang(
                   logowidth: 120.0,
                   sizeType: 1,
                 ),

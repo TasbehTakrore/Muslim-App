@@ -109,7 +109,7 @@ class TrainerScreenController extends GetxController {
     testTypeIndex = getRandom(0, 6);
     if (testTypeIndex == 0) {
       testWithhideTheFirstWord();
-      startListening(conteXt!);
+      //// startListening(conteXt!);
       type = 0;
     } else if (testTypeIndex == 1) {
       testWithhideTheEndWord();
@@ -117,19 +117,19 @@ class TrainerScreenController extends GetxController {
       type = 1;
     } else if (testTypeIndex == 2) {
       testWithhideThePartFirstWord();
-      startListening(conteXt!);
+      //  startListening(conteXt!);
       type = 2;
     } else if (testTypeIndex == 3) {
       testWithhideThePartEndWord();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 3;
     } else if (testTypeIndex == 4) {
       testWithPreviousAyah();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 4;
     } else if (testTypeIndex == 5) {
       testWithNextAyah();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 5;
     }
   }
@@ -618,6 +618,8 @@ class TrainerScreenController extends GetxController {
   RxBool _isAvailable = false.obs;
   RxBool _isListening = false.obs;
   RxString text = "".obs;
+  RxString showText = "".obs;
+
   String _referenceText = "";
   Rx<IconData> micIcon = Icons.mic_off.obs;
   BuildContext? conteXt;
@@ -639,6 +641,7 @@ class TrainerScreenController extends GetxController {
 
   void setReferenceText(String textt) {
     text.value = "";
+    showText.value = "";
     _referenceText = textt.replaceAll('إ', 'ا');
     _referenceText = _referenceText.replaceAll('آ', 'ا');
     _referenceText = _referenceText.replaceAll('أ', 'ا');
@@ -671,6 +674,7 @@ class TrainerScreenController extends GetxController {
     matchFlag = false;
     conteXt = context;
     text.value = "";
+    showText.value = "";
 
     if (_isAvailable.value && !_isListening.value) {
       _speech.listen(
@@ -680,6 +684,7 @@ class TrainerScreenController extends GetxController {
 
         onResult: (result) {
           text.value = result.recognizedWords;
+          showText.value = "هل تقصد: " + result.recognizedWords;
           print(text.value);
           setOpenMiceIcon();
 
@@ -719,6 +724,7 @@ class TrainerScreenController extends GetxController {
       _speech.stop();
       _isListening.value = false;
       text.value = "";
+      showText.value = "";
     }
   }
 

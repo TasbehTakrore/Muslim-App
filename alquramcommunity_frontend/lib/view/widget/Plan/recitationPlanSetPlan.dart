@@ -7,10 +7,12 @@ import '../../../core/constant/color.dart';
 import 'partialpancard.dart';
 import 'prayplanDialog.dart';
 import 'quranplandialog.dart';
+import 'recitationPlanDialog.dart';
+import 'tadabborPlanDialog.dart';
 import 'thikrPalnDialog.dart';
 
-class QuranPlanCard extends StatelessWidget {
-  const QuranPlanCard({super.key});
+class RecitationPlanCardSetPlan extends StatelessWidget {
+  const RecitationPlanCardSetPlan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,35 +41,14 @@ class QuranPlanCard extends StatelessWidget {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext b) {
-                                      return QuranPlanDialog();
+                                      return RecitationPlanDialog();
                                     });
                               }),
-                          const Text("خطّة قراءة القرآن",
+                          const Text("خطّة التسميع",
                               style: TextStyle(fontSize: 25)),
                         ],
                       ),
-                      Transform.scale(
-                        // لتكبير حجم الشيكبوكس
-                        scale: 1.3,
-                        child: Checkbox(
-                          activeColor: AppColor.primaryColor,
-                          hoverColor: Colors.black,
-                          value: controller.mainQuranCheckValue.value,
-                          onChanged: (value) {
-                            controller.changeMainQuranCheck(value!);
-                          },
-                        ),
-                      )
                     ],
-                  ),
-                  const Divider(),
-                  PartialPlanCard(
-                    checkValue: controller.quranPlanCheckValue,
-                    visibleValue: controller.quranPlanVisible,
-                    onChange: (val) {
-                      controller.changequranPlanCheck(val!);
-                    },
-                    partialCardData: 'قراءة  ' + controller.getTypeQuranPlan(),
                   ),
                 ]),
               ),

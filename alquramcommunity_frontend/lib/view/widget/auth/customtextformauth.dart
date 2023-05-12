@@ -29,6 +29,7 @@ class CustomTextFormAuth extends StatelessWidget {
                 obscureText: obscureText==null||obscureText==false?false:true,
                 
                 decoration: InputDecoration(
+                  
                   hintText: hinttext,
                   hintStyle:const TextStyle(fontSize: 15),
                   contentPadding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
