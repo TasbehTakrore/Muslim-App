@@ -20,6 +20,7 @@ import 'auth/appbar_controller.dart';
 class TrainerScreenController extends GetxController {
   //
   RxString ayahTest = "بسم الله".obs;
+  int coins = 0;
   int juzNumber = 0;
   int surahNumb = 0;
   int index = 1;
@@ -72,6 +73,15 @@ class TrainerScreenController extends GetxController {
   String _referenceText = "";
   Rx<IconData> micIcon = Icons.mic_off.obs;
   BuildContext? conteXt;
+  Stopwatch stopwatch = Stopwatch();
+  int sec = 0;
+  int min = 0;
+  int hours = 0;
+  String? hoursStr;
+  String? minutesStr;
+  String? secondsStr;
+  String durationResult = "";
+  int mistakesCount = 0;
 
   @override
   void onInit() {
@@ -99,6 +109,9 @@ class TrainerScreenController extends GetxController {
   List<MistakeModel> gettingMistakes = [];
 
   letsSurahTest(int surahIndex) async {
+    coins = 0;
+    mistakesCount = 0;
+
     gettingMistakes =
         await MistakeServices.getSurahMistakes(userEmail!, surahIndex);
     print("gettingMistakes $gettingMistakes");
@@ -167,6 +180,9 @@ class TrainerScreenController extends GetxController {
   }
 
   letsJuzTest(int juzIndex) async {
+    coins = 0;
+
+    mistakesCount = 0;
     gettingMistakes =
         await MistakeServices.getJuzMistakes(userEmail!, juzIndex);
     print("gettingMistakes $gettingMistakes");
@@ -232,6 +248,10 @@ class TrainerScreenController extends GetxController {
   }
 
   letsPageTest(int pageIndex) async {
+    coins = 0;
+
+    mistakesCount = 0;
+
     gettingMistakes =
         await MistakeServices.getPageMistakes(userEmail!, pageIndex);
     print("gettingMistakes $gettingMistakes");
@@ -345,6 +365,8 @@ class TrainerScreenController extends GetxController {
           .add(getVerseStandard(surahNumb, i + 1, verseEndSymbol: false));
     }
     print(ayahList);
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
   }
 
@@ -373,6 +395,8 @@ class TrainerScreenController extends GetxController {
       print("ayahList $ayahList");
     }
     testTypeFlag = 1; // 1= myMistake
+    stopwatch.reset();
+    stopwatch.start();
     // print("gettingMistakes---- ${gettingMistakes[0].ayahId}");
   }
 
@@ -400,6 +424,8 @@ class TrainerScreenController extends GetxController {
     testTypeFlag = 1;
 
     verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
   }
 
   prepareTestDataForPage() {
@@ -423,6 +449,8 @@ class TrainerScreenController extends GetxController {
     });
 
     verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
   }
 
@@ -450,6 +478,8 @@ class TrainerScreenController extends GetxController {
     testTypeFlag = 1;
 
     verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
   }
 
   prepareTestDataForJuz() {
@@ -478,6 +508,8 @@ class TrainerScreenController extends GetxController {
       });
     }
     verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
   }
 
@@ -564,6 +596,7 @@ class TrainerScreenController extends GetxController {
   }
 
   void falseAnswer() {
+    mistakesCount++;
     setSurahIDAndAyahID();
     print("false...");
     mistakeModelList.add(MistakeModel(
@@ -578,11 +611,11 @@ class TrainerScreenController extends GetxController {
     print(mistakeModelList);
     testType();
     print("false Answer ++++++++++%%%%%%%%%%%%++++++++++++");
-
-    testType();
   }
 
   void trueAnswer() {
+    coins += 2;
+
     setSurahIDAndAyahID();
     appBarController.addCoins();
     print("after match inside true answer");
@@ -999,9 +1032,21 @@ class TrainerScreenController extends GetxController {
   }
 
   statisticsAndEnd() {
+    stopwatch.stop();
+
+    sec = stopwatch.elapsed.inSeconds % 60;
+    min = stopwatch.elapsed.inMinutes % 60;
+    hours = stopwatch.elapsed.inHours;
+
+    hoursStr = hours.toString().padLeft(2, '0');
+    minutesStr = min.toString().padLeft(2, '0');
+    secondsStr = sec.toString().padLeft(2, '0');
+    durationResult = '$hoursStr:$minutesStr:$secondsStr';
+    print("recitationController: $durationResult");
+
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
-    CoinsServices.addCoins(appBarController.coinsCount.value);
+    CoinsServices.addCoins(coins);
     return showDialog(
         context: conteXt!,
         builder: (BuildContext context) {

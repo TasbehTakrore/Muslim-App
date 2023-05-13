@@ -89,9 +89,6 @@ class statisticsRecitationContent extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      
-                      
-
                       CircularPercentIndicator(
                         radius: 50,
                         animation: true,
@@ -100,7 +97,7 @@ class statisticsRecitationContent extends StatelessWidget {
                         circularStrokeCap: CircularStrokeCap.round,
                         backgroundColor: Color.fromARGB(32, 252, 204, 92),
                         percent: (recitationController.mistakesCount /
-                            recitationController.totalReciteVerseesCount),
+                            (recitationController.totalReciteVerseesCount - 1)),
                         center: const Text(
                           "الأخطاء",
                           style: TextStyle(color: Colors.red, fontSize: 18),
@@ -109,7 +106,7 @@ class statisticsRecitationContent extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "${recitationController.mistakesCount} أخطاء / ${recitationController.totalReciteVerseesCount} آية ",
+                        "${recitationController.mistakesCount} أخطاء / ${recitationController.totalReciteVerseesCount - 1} آية ",
                         style: TextStyle(fontSize: 18),
                       )
                     ],
@@ -139,8 +136,6 @@ class statisticsRecitationContent extends StatelessWidget {
                               fontSize: 16,
                             ),
                             children: [
-
-                              
                               TextSpan(
                                 text: 'سمّعت في هذه الجلسة ',
                               ),
@@ -157,10 +152,6 @@ class statisticsRecitationContent extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                        // Text(
-                        //         textAlign: TextAlign.center,
-                        // ),
                       ),
                       TextButton.icon(
                         onPressed: () {

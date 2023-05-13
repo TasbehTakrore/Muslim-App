@@ -1,7 +1,10 @@
+import 'package:alquramcommunity_frontend/controller/trainerScreen_controller.dart';
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../controller/homescreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/routes.dart';
 
@@ -10,6 +13,10 @@ class statisticsTrainerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TrainerScreenController trainerScreenController =
+        Get.put(TrainerScreenController());
+    final HomeScreenControllerImp homeScreenControllerImp =
+        Get.put(HomeScreenControllerImp());
     return Container(
         padding: EdgeInsets.all(0),
         color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.4),
@@ -18,12 +25,6 @@ class statisticsTrainerContent extends StatelessWidget {
               spacing: 10,
               runSpacing: 10,
               alignment: WrapAlignment.center,
-              // primary: false,
-              // padding: const EdgeInsets.all(20),
-              // crossAxisSpacing: 10,
-              // mainAxisSpacing:
-              //     10, //  gridDelegate: SliverGridDelegate ( ),
-              // crossAxisCount: 1,
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width - 20,
@@ -32,8 +33,51 @@ class statisticsTrainerContent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
-                  //child: Text("tasbeh"),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.alarm,
+                          size: 80, color: AppColor.secondaryColor, weight: 50),
+                      const SizedBox(width: 20),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "مدّة جلسة التدريب",
+                            style:
+                                TextStyle(fontSize: 20, color: AppColor.black),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(trainerScreenController.durationResult,
+                              style: TextStyle(fontSize: 25)),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
+                Container(
+                    width: MediaQuery.of(context).size.width / 2.15,
+                    height: MediaQuery.of(context).size.height / 3.5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.attach_money,
+                              size: 100,
+                              color: AppColor.thickYellow,
+                              weight: 5),
+                          SizedBox(height: 8),
+                          Text(
+                            style: TextStyle(fontSize: 16),
+                            " + ${trainerScreenController.coins} عُملة جديدة",
+                            textAlign: TextAlign.center,
+                          ),
+                        ])),
                 Container(
                   width: MediaQuery.of(context).size.width / 2.15,
                   height: MediaQuery.of(context).size.height / 3.5,
@@ -41,16 +85,32 @@ class statisticsTrainerContent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
-                  // child: Text("tasbeh"),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2.15,
-                  height: MediaQuery.of(context).size.height / 3.5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularPercentIndicator(
+                        radius: 50,
+                        animation: true,
+                        animationDuration: 1000,
+                        lineWidth: 8,
+                        circularStrokeCap: CircularStrokeCap.round,
+                        backgroundColor: Color.fromARGB(32, 252, 204, 92),
+                        percent: (trainerScreenController.mistakesCount /
+                            trainerScreenController.counter.value),
+                        center: const Text(
+                          "الأخطاء",
+                          style: TextStyle(color: Colors.red, fontSize: 18),
+                        ),
+                        progressColor: Color.fromARGB(255, 233, 0, 0),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        "${trainerScreenController.mistakesCount} أخطاء / ${trainerScreenController.counter.value} سؤال ",
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
                   ),
-                  //child: Text("tasbeh"),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 20,
@@ -61,7 +121,30 @@ class statisticsTrainerContent extends StatelessWidget {
 
                     color: Colors.white,
                   ),
-                  // child: Text("tasbeh"),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                              "أتتمت في هذه الجلسة التّدريب على (${trainerScreenController.counter.value}) آية، تمنحك القيم في الأعلى مؤشّرًا على مدى إتقانك الحفظ. \n\n تذكّر، لا خاسر مع القرآن!",
+                              textAlign: TextAlign.center)),
+                      TextButton.icon(
+                        onPressed: () {
+                          Get.toNamed(AppRoute.home);
+                          homeScreenControllerImp.changePage(2);
+                        },
+                        label: Text(
+                          "انتقل إلى قائمة الأخطاء",
+                          style: TextStyle(color: AppColor.primaryColor),
+                        ),
+                        icon: Icon(Icons.list_sharp,
+                            color: AppColor.secondaryColor),
+                      )
+                    ],
+                  ),
                 ),
                 EasyElevatedButton(
                   onPressed: () {
