@@ -5,4 +5,6 @@ class MyURL {
   static const String deleteMistake = '$uri/mistake/deleteMistake';
   static const String addCoins = '$uri/users/addCoins';
   static const String getSurahMistakeURL = '$uri/mistake/getMistakesSurah/';
+  static const String getJuzMistakeURL = '$uri/mistake/getMistakesJuz/';
+  static const String getPagehMistakeURL = '$uri/mistake/getMistakesPage/';
 }

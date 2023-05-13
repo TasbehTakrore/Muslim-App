@@ -17,10 +17,10 @@ app.use('/notification/',notificationRouter);
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
-app.use(bodyParser.json({ limit: '1gb' }));
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
+// app.use(bodyParser.json({ limit: '1gb' }));
+// app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
 
 
 /*

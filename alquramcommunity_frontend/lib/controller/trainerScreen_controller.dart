@@ -108,6 +108,8 @@ class TrainerScreenController extends GetxController {
     counter.value = 0;
     surahNumb = surahIndex;
     print(surahNumb);
+    testTypeFlag = 0;
+
     verseCount = getVerseCount(surahNumb);
     if (gettingMistakes.length == 0) {
       prepareTestDataForSurah();
@@ -165,13 +167,15 @@ class TrainerScreenController extends GetxController {
   }
 
   letsJuzTest(int juzIndex) async {
-    // gettingMistakes =
-    //     await MistakeServices.getJuzMistakes(userEmail!, juzIndex);
+    gettingMistakes =
+        await MistakeServices.getJuzMistakes(userEmail!, juzIndex);
     print("gettingMistakes $gettingMistakes");
 
     mistakeModelList.clear();
     juzNumber = juzIndex;
     print(juzNumber);
+    counter.value = 0;
+    testTypeFlag = 0;
 
     if (gettingMistakes.length == 0) {
       prepareTestDataForJuz();
@@ -227,11 +231,68 @@ class TrainerScreenController extends GetxController {
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
-  letsPageTest(int pageIndex) {
+  letsPageTest(int pageIndex) async {
+    gettingMistakes =
+        await MistakeServices.getPageMistakes(userEmail!, pageIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     pageNumber = pageIndex;
     print(pageIndex);
-    prepareTestDataForPage();
+    counter.value = 0;
+    testTypeFlag = 0;
+
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForPage();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذه الصّفحة، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForPage();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForPageMistake();
+                        testTypeFlag = 1; //
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+    }
+
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
@@ -339,7 +400,6 @@ class TrainerScreenController extends GetxController {
     testTypeFlag = 1;
 
     verseCount = ayahList.length;
-    testType();
   }
 
   prepareTestDataForPage() {
@@ -363,8 +423,33 @@ class TrainerScreenController extends GetxController {
     });
 
     verseCount = ayahList.length;
-    testType();
     // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  prepareTestDataForPageMistake() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    print(quranJuzList[juzNumber - 1]);
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1;
+
+    verseCount = ayahList.length;
   }
 
   prepareTestDataForJuz() {
@@ -393,7 +478,6 @@ class TrainerScreenController extends GetxController {
       });
     }
     verseCount = ayahList.length;
-    testType();
     // print(searchWords(["سَوَآءٌ"]));
   }
 
