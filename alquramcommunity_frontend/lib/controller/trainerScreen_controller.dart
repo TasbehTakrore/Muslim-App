@@ -56,6 +56,22 @@ class TrainerScreenController extends GetxController {
   String? userEmail;
   MyServices myServices = Get.put(MyServices());
   APPBarController appBarController = Get.put(APPBarController());
+  Rx<bool> firstWordCheck = true.obs;
+  Rx<bool> lastWordCheck = true.obs;
+  Rx<bool> firstPartCheck = true.obs;
+  Rx<bool> lastPartCheck = true.obs;
+  Rx<bool> previousCheck = true.obs;
+  Rx<bool> nextCheck = true.obs;
+
+  late SpeechToText _speech;
+  RxBool _isAvailable = false.obs;
+  RxBool _isListening = false.obs;
+  RxString text = "".obs;
+  RxString showText = "".obs;
+
+  String _referenceText = "";
+  Rx<IconData> micIcon = Icons.mic_off.obs;
+  BuildContext? conteXt;
 
   @override
   void onInit() {
@@ -76,23 +92,138 @@ class TrainerScreenController extends GetxController {
     // min =0
   }
 
-  letsSurahTest(int surahIndex) {
+  void setContext(BuildContext context) {
+    conteXt = context;
+  }
+
+  List<MistakeModel> gettingMistakes = [];
+
+  letsSurahTest(int surahIndex) async {
+    gettingMistakes =
+        await MistakeServices.getSurahMistakes(userEmail!, surahIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     wordsWidgetList.clear();
     counter.value = 0;
     surahNumb = surahIndex;
     print(surahNumb);
     verseCount = getVerseCount(surahNumb);
-    prepareTestDataForSurah();
-    testType();
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForSurah();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذه السّورة، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForSurah();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForSurahMistake();
+                        testTypeFlag = 1; //
+
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+      print("------------- my mistake choice");
+    }
     //testWithhideTheFirstWord();
   }
 
-  letsJuzTest(int juzIndex) {
+  letsJuzTest(int juzIndex) async {
+    // gettingMistakes =
+    //     await MistakeServices.getJuzMistakes(userEmail!, juzIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     juzNumber = juzIndex;
     print(juzNumber);
-    prepareTestDataForJuz();
+
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForJuz();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذا الجزء، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForJuz();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForJuzMistake();
+                        testTypeFlag = 1; //
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+      print("------------- my mistake choice");
+    }
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
@@ -106,31 +237,36 @@ class TrainerScreenController extends GetxController {
 
   int type = 0;
   void testType() {
-    testTypeIndex = getRandom(0, 6);
-    if (testTypeIndex == 0) {
+    if (testTypeFlag == 1)
+      testTypeIndex = getRandom(0, 4);
+    else
+      testTypeIndex = getRandom(0, 6);
+    if (testTypeIndex == 0 && firstWordCheck.value == true) {
       testWithhideTheFirstWord();
       //// startListening(conteXt!);
       type = 0;
-    } else if (testTypeIndex == 1) {
+    } else if (testTypeIndex == 1 && lastWordCheck.value == true) {
       testWithhideTheEndWord();
-      startListening(conteXt!);
+      //startListening(conteXt!);
       type = 1;
-    } else if (testTypeIndex == 2) {
+    } else if (testTypeIndex == 2 && firstPartCheck.value == true) {
       testWithhideThePartFirstWord();
       //  startListening(conteXt!);
       type = 2;
-    } else if (testTypeIndex == 3) {
+    } else if (testTypeIndex == 3 && lastPartCheck.value == true) {
       testWithhideThePartEndWord();
       // startListening(conteXt!);
       type = 3;
-    } else if (testTypeIndex == 4) {
+    } else if (testTypeIndex == 4 && previousCheck.value == true) {
       testWithPreviousAyah();
       // startListening(conteXt!);
       type = 4;
-    } else if (testTypeIndex == 5) {
+    } else if (testTypeIndex == 5 && nextCheck.value == true) {
       testWithNextAyah();
       // startListening(conteXt!);
       type = 5;
+    } else {
+      testType();
     }
   }
 
@@ -149,6 +285,61 @@ class TrainerScreenController extends GetxController {
     }
     print(ayahList);
     // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  int surId = 0;
+  int ayID = 0;
+  int testTypeFlag = 0;
+  prepareTestDataForSurahMistake() {
+    juzFlag = true; ///////////////
+
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1; // 1= myMistake
+    // print("gettingMistakes---- ${gettingMistakes[0].ayahId}");
+  }
+
+  prepareTestDataForJuzMistake() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    print(quranJuzList[juzNumber - 1]);
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1;
+
+    verseCount = ayahList.length;
+    testType();
   }
 
   prepareTestDataForPage() {
@@ -292,12 +483,14 @@ class TrainerScreenController extends GetxController {
     setSurahIDAndAyahID();
     print("false...");
     mistakeModelList.add(MistakeModel(
-            userEmail: userEmail,
-            mistakeType: 0,
-            weight: 10,
-            surahId: surahIDToSave,
-            ayahId: ayahIDToSave)
-        .toJson());
+      userEmail: userEmail,
+      mistakeType: 0,
+      weight: 10,
+      surahId: surahIDToSave,
+      ayahId: ayahIDToSave,
+      juzId: getJuzNumber(surahIDToSave, ayahIDToSave),
+      pageId: getPageNumber(surahIDToSave, ayahIDToSave),
+    ).toJson());
     print(mistakeModelList);
     testType();
     print("false Answer ++++++++++%%%%%%%%%%%%++++++++++++");
@@ -310,12 +503,14 @@ class TrainerScreenController extends GetxController {
     appBarController.addCoins();
     print("after match inside true answer");
     mistakeModelList.add(MistakeModel(
-            userEmail: userEmail,
-            mistakeType: 0,
-            weight: -10,
-            surahId: surahIDToSave,
-            ayahId: ayahIDToSave)
-        .toJson());
+      userEmail: userEmail,
+      mistakeType: 0,
+      weight: -10,
+      surahId: surahIDToSave,
+      ayahId: ayahIDToSave,
+      juzId: getJuzNumber(surahIDToSave, ayahIDToSave),
+      pageId: getPageNumber(surahIDToSave, ayahIDToSave),
+    ).toJson());
     print(mistakeModelList);
     testType();
     print("true Answer ++++++++++**++++++++++++");
@@ -614,15 +809,6 @@ class TrainerScreenController extends GetxController {
     {"start": 582, "end": 604},
   ];
 
-  late SpeechToText _speech;
-  RxBool _isAvailable = false.obs;
-  RxBool _isListening = false.obs;
-  RxString text = "".obs;
-  RxString showText = "".obs;
-
-  String _referenceText = "";
-  Rx<IconData> micIcon = Icons.mic_off.obs;
-  BuildContext? conteXt;
   void setOpenMiceIcon() {
     micIcon.value = Icons.mic_none;
     print("Inside");

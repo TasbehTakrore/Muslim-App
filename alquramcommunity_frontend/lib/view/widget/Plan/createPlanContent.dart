@@ -20,11 +20,11 @@ class CreatePlanContent extends StatelessWidget {
       width: 400,
       child: ListView(
         children: [
-          Divider(),
-          PrayPalnCardSetPlan(),
-          ThikrPalnCardSetPlan(),
-          QuranPlanCardSetPlan(),
-          TadabborPlanCardSetPlan(),
+         const Divider(),
+          const PrayPalnCardSetPlan(),
+         const ThikrPalnCardSetPlan(),
+        const  QuranPlanCardSetPlan(),
+        const  TadabborPlanCardSetPlan(),
           RecitationPlanCardSetPlan(),
           SizedBox(height: 10),
           Container(
