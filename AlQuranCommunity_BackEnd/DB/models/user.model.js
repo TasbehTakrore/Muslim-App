@@ -8,12 +8,6 @@ const userModel = sequelize.define('User', {
     userName: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      validate:{
-        isAlphanumeric:{
-          args: true,
-          msg:"user name just include isAlphanumeric values only"
-        } 
-      },
     },
     userEmail: {
       type: DataTypes.STRING(255),

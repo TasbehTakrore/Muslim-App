@@ -32,4 +32,5 @@ class AppImageAsset {
 
   static const String dashboard = "$rootImages/dashboard.png";
   static const String commBadge = "$rootImages/commBadge.svg";
+  static const String people = "$rootImages/people.png";
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:alquramcommunity_frontend/data/model/front_models/thikrmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

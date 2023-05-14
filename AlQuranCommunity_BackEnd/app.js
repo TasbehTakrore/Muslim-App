@@ -14,6 +14,10 @@ app.use('/mistake/',mistakeRouter);
 const notificationRouter = require('./moduels/notification.route');
 app.use('/notification/',notificationRouter);
 
+const communityRouter = require('./moduels/community.route');
+app.use('/communities/',communityRouter);
+
+
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })

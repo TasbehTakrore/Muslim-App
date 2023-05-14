@@ -7,4 +7,6 @@ class MyURL {
   static const String getSurahMistakeURL = '$uri/mistake/getMistakesSurah/';
   static const String getJuzMistakeURL = '$uri/mistake/getMistakesJuz/';
   static const String getPagehMistakeURL = '$uri/mistake/getMistakesPage/';
+  static const String createCommunityURL = '$uri/communities/createCommunity/';
+  static const String getAllCommunitiesURL = '$uri/communities/findAllCommunities';
 }

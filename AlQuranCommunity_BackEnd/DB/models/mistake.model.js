@@ -7,6 +7,7 @@ const mistakeModel = sequelize.define('Mistake', {
     
     userEmail: {
       type: DataTypes.STRING(255),
+      references: true,
       primaryKey: true,
       allowNull: false,
       unique:false,

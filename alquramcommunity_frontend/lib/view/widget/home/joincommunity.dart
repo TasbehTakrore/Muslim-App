@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/commnity_controller.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
@@ -9,10 +10,14 @@ class JoinCommunity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CommunitityController communitityController =
+        Get.put(CommunitityController());
     return Container(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 12, 12),
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
+            communitityController.getAllCommunities();
+
             Get.toNamed(AppRoute.AllCommunities);
           },
           child: Container(

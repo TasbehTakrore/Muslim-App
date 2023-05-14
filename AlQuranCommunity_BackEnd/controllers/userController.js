@@ -10,7 +10,6 @@ const aurh=require("../middleware/auth")
 //add new user `sign up` 
 const signUp = async(req,res)=>{
     try{
-
         const {userName,userEmail,userAge,userPassword,userGender}=req.body;
         const hashPassword = await bcrypt.hashSync(userPassword,8);
         upload.single('image')(req, res, async function (err) {
@@ -18,7 +17,6 @@ const signUp = async(req,res)=>{
               console.log(err);
             } else if (err) {
               console.log(err);
-
             }
             const tempFilename = req.tempFilename; 
          //   const imageUrl = req.file ? req.file.filename : null;

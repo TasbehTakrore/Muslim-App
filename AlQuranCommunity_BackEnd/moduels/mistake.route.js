@@ -8,8 +8,5 @@ router.get('/getMistakesSurah/:id/:surahId',mistakeController.getMistakesSurah);
 router.get('/getMistakesJuz/:id/:juzId',mistakeController.getMistakesJuz);
 router.get('/getMistakesPage/:id/:pageId',mistakeController.getMistakesPage);
 
-
-
-
 module.exports= router;
 
