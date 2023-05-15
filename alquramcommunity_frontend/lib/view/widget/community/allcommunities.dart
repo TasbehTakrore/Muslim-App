@@ -5,7 +5,6 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import '../../../controller/allcommunities_controller.dart';
 import '../../../controller/commnity_controller.dart';
-import '../../../controller/specificCommunity_controller.dart';
 import '../../../core/constant/routes.dart';
 import '../home/customappbar.dart';
 import 'createNewCommunityDialog.dart';
@@ -74,7 +73,10 @@ class AllCommunities extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Get.dialog(CommDetailsDialog());
+                            Get.dialog(CommDetailsDialog(
+                                index: index,
+                                CommunityID: communitityController
+                                    .communities[index].id));
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import '../../../controller/specificCommunity_controller.dart';
+import '../../../controller/commnity_controller.dart';
 import '../../../core/constant/routes.dart';
 import '../Quran/editquranthemedialog.dart';
 import 'chat.dart';
@@ -19,10 +19,11 @@ class SpecificCommunity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    Get.put(SpecificCommunityController());
-    return GetBuilder<SpecificCommunityController>(builder: (controller) {
+    Get.put(CommunitityController());
+    return GetBuilder<CommunitityController>(builder: (controller) {
       return WillPopScope(
           onWillPop: () async {
+            controller.getAllCommunities();
             Get.offAllNamed(AppRoute.home);
             return false;
           },
@@ -66,7 +67,7 @@ class SpecificCommunity extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "An-Najah Students Group",
+                      controller.communityName,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.patrickHand(
                           //fontWeight: FontWeight.w500,

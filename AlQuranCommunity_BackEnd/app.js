@@ -17,6 +17,8 @@ app.use('/notification/',notificationRouter);
 const communityRouter = require('./moduels/community.route');
 app.use('/communities/',communityRouter);
 
+const communityRequestRouter = require('./moduels/communityRequest.route');
+app.use('/communities/',communityRequestRouter);
 
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 

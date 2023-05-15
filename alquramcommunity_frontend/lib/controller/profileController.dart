@@ -1,6 +1,7 @@
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../core/constant/urls.dart';
 import '../core/services/services.dart';
 import 'package:alquramcommunity_frontend/core/services/auth_services.dart';
 
@@ -37,7 +38,7 @@ class ProfileController extends GetxController {
     final createdAt = DateTime.parse(userProfile['user']['createdAt']);
     final formattedDate = DateFormat('yyyy-MM-dd').format(createdAt);
     joinDate = formattedDate;
-    print('${authservices.uri}/images/${userProfile['user']['imageUrl']}');
+    print('${MyURL.uri}/images/${userProfile['user']['imageUrl']}');
     img.value =
         '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${userProfile['user']['imageUrl']}';
   }
@@ -56,6 +57,9 @@ class ProfileController extends GetxController {
         gender: controller.selectedGender.value,
         password: controller.password.text,
         checkPassword: controller.checkPassword.text);
+
+    myServices.sharedPreferences
+        .setString("user_gender", controller.selectedGender.value);
   }
 
   void clearFields() {

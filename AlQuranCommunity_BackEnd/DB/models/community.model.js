@@ -21,10 +21,10 @@ const communityModel = sequelize.define('Community', {
     },     
     adminEmail: {
         type: DataTypes.STRING(255),
-        references: { 
-            model: UserModel, 
-            key: 'id' 
-          } ,
+        // references: { 
+        //     model: UserModel, 
+        //     key: 'id' 
+        //   } ,
         allowNull: false,
         unique:false,
         references: {

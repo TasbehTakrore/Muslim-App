@@ -14,9 +14,11 @@ import 'package:http_parser/http_parser.dart';
 
 MyServices myServices = Get.put(MyServices());
 
-class AuthServices {
+class AuthServices extends GetxService {
   String uri = 'http://192.168.1.19:5000';
   String uri2 = 'http://192.168.1.19:8080';
+
+  // static const String uri = 'http://172.19.66.29:5000';
 
   final ProfileController profilesController = Get.put(ProfileController());
 
@@ -103,8 +105,13 @@ class AuthServices {
               .setString("user_name", jsonDecode(res.body)['user']['userName']);
           myServices.sharedPreferences.setString(
               "user_email", jsonDecode(res.body)['user']['userEmail']);
+          myServices.sharedPreferences.setString(
+              "user_gender", jsonDecode(res.body)['user']['userGender']);
+          print(
+              "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_gender")}");
           myServices.sharedPreferences
               .setInt("user_id", jsonDecode(res.body)['user']['id']);
+
           //      myServices.sharedPreferences.setInt("user_age", jsonDecode(res.body)['userAge']);
           //  myServices.sharedPreferences.setString("prof_gender", jsonDecode(res.body)['userGender']);
 

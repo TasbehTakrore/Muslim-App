@@ -32,9 +32,9 @@ const createCommunity = async(req, res) => {
 }
 
 
-const findAllCommunities = async (req, res) => {
+const findAllCommunitiesFemale = async (req, res) => {
     try {
-      const communities = await communityModel.findAll();
+      const communities = await communityModel.findAll({where: {usersGender:'female'}});
       return res.status(200).json({
         message: "All Communities",
         communities,
@@ -48,5 +48,20 @@ const findAllCommunities = async (req, res) => {
     }
   };
 
+  const findAllCommunitiesMale = async (req, res) => {
+    try {
+      const communities = await communityModel.findAll({where: {usersGender:'male'}});
+      return res.status(200).json({
+        message: "All Communities",
+        communities,
+      });
+    } catch (error) {
+      console.log("fail get all Communities!" + error);
+      return res.status(500).json({
+        message: "Something went wrong while fetching the communities",
+        error: error.message,
+      });
+    }
+  };
 
-module.exports = {createCommunity,findAllCommunities};
+module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale};

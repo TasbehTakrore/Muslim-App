@@ -17,7 +17,7 @@ class JoinCommunity extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             communitityController.getAllCommunities();
-
+            print("Click at Join New Community...");
             Get.toNamed(AppRoute.AllCommunities);
           },
           child: Container(

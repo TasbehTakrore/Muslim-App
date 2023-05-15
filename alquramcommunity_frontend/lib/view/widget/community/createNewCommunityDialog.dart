@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -90,9 +91,10 @@ class createNewCommunityDialog extends StatelessWidget {
                   labelColor: AppColor.grey,
                   color: AppColor.primaryColor,
                   onPressed: () {
-                      communitityController.createNewCommunity();
+                    communitityController.createNewCommunity();
+                    
                     // trainerScreenController.testType();
-                    Get.back();
+                    Get.toNamed(AppRoute.SpecificCommunity);
                   }),
             )
           ],
