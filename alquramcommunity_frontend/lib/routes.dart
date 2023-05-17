@@ -30,7 +30,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.pray: (context) => PrayScreen(),
   AppRoute.qibla: (context) => QiblaScreen(),
   AppRoute.tasbeeh: (context) => TasbeehPage(),
-  AppRoute.SpecificCommunity: (context) => SpecificCommunity(),
   AppRoute.AllCommunities: (context) => AllCommunities(),
   AppRoute.ViewCommunity: (context) => ViewCommunity(),
   AppRoute.trainer: (context) => TrainerMainScreen(),

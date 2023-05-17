@@ -1,4 +1,5 @@
 const communityModel = require("../DB/models/community.model");
+const communityMemberModel = require("../DB/models/community_member.model");
 
 const createCommunity = async(req, res) => {
   try {
@@ -64,4 +65,38 @@ const findAllCommunitiesFemale = async (req, res) => {
     }
   };
 
-module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale};
+  const addMemberCommunity = async (req, res) => {
+    try {
+
+      const {communityID, userEmail , isAdmin} = req.body;
+      console.log("bgjmkdls,;fmkgnjfdkm"+req.body);
+      const request = await communityMemberModel.create({
+        communityID,
+        userEmail,
+        isAdmin
+      });
+      
+      res.status(200).json({ message: "member added sucsses" });
+    } catch (error) {
+      res.status(500).json({ error: "Error! "+error });
+    }
+  };
+
+  const getMyCommunities = async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+  
+      const communities = await communityMemberModel.findAll({
+        where: {
+          userEmail: userEmail
+        }
+      });
+  
+      res.status(200).json({ communities });
+    } catch (error) {
+      res.status(500).json({ error: "Error! " + error });
+    }
+  };
+  
+
+module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities};

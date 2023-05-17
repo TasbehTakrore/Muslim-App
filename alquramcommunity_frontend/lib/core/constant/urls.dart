@@ -1,6 +1,7 @@
 class MyURL {
   static const String uri = 'http://192.168.1.19:5000';
-  // static const String uri = 'http://172.19.66.29:5000';
+
+  // static const String uri = 'http://172.19.108.121:5000';
 
   static const String addAllMistakeURL = '$uri/mistake/addMistakes';
   static const String getAllMistakeURL = '$uri/mistake/getMistakes/';
@@ -16,7 +17,8 @@ class MyURL {
       '$uri/communities/findAllCommunitiesMale';
   static const String sendRequest = '$uri/communities/requestToCommunity';
   static const String deleteRequest = '$uri/communities/deleteRequest';
-
+  static const String addMemberCommunity = '$uri/communities/addMemberCommunity';
+  static const String getMyCommunities = '$uri/communities/getMyCommunities';
 
   
 }

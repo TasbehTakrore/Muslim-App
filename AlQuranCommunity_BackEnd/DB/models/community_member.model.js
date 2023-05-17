@@ -4,8 +4,7 @@ const UserModel = require('./user.model');
 const CommunityModel = require('./community.model');
 
 
-const communityRequestModel = sequelize.define('CommunityRequest', {
-    // Model attributes are defined here
+const communityMemberModel = sequelize.define('CommunityMember', {
     
     communityID: {
       type: DataTypes.INTEGER,
@@ -14,9 +13,14 @@ const communityRequestModel = sequelize.define('CommunityRequest', {
       references: { 
         model: CommunityModel, 
         key: 'id' 
-      } ,   
+      } ,
     },
-    userReqEmail: {
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    userEmail: {
         type: DataTypes.STRING(255),
         allowNull: false,
         primaryKey: true,
@@ -30,4 +34,4 @@ const communityRequestModel = sequelize.define('CommunityRequest', {
   }
   );
 
-  module.exports= communityRequestModel
+  module.exports= communityMemberModel

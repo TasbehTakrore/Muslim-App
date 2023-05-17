@@ -48,11 +48,18 @@ class CommunitityController extends GetxController {
     print("inside Send");
   }
 
-void deleteRequest(int communityId) {
+  addMemberCommunity(int communityId, bool isAdmin) {
+    communityServices.addMemberCommunity(
+        communityId: communityId, userEmail: userEmail!, isAdmin: isAdmin);
+    print("inside Send member community...");
+  }
+
+  void deleteRequest(int communityId) {
     communityServices.deleteRequest(
         communityId: communityId, userEmail: userEmail!);
     print("inside delete");
   }
+
   int getGender() {
     int type;
     myServices.sharedPreferences.getString("user_gender") == "female"
@@ -68,6 +75,10 @@ void deleteRequest(int communityId) {
     } catch (error) {
       print('Error: $error');
     }
+  }
+
+  getMyCommunities() {
+    communityServices.getMyCommunities(userEmail: userEmail!);
   }
 
   void buttonText() {

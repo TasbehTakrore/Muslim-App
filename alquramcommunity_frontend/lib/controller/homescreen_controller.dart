@@ -2,6 +2,8 @@ import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../core/services/community_services.dart';
+import '../core/services/services.dart';
 import '../view/screen/home.dart';
 import '../view/screen/lists.dart';
 import '../view/screen/palnScreen.dart';
@@ -11,17 +13,41 @@ import '../view/screen/qibla.dart';
 import '../view/screen/thikr.dart';
 import '../view/screen/tasbeh.dart';
 import '../view/widget/notifications/notification.dart';
+import 'commnity_controller.dart';
 
 abstract class HomeScreenController extends GetxController {
   changePage(int currentPage);
 }
 
 class HomeScreenControllerImp extends HomeScreenController {
+  MyServices myServices = Get.put(MyServices());
+  CommunitityController communitityController =
+      Get.put(CommunitityController());
+  List<String> myCommunities = [];
+  CommunityServices communityServices = Get.put(CommunityServices());
+
   // @override
   // void onInit() {
   //   super.onInit();
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   // }
+
+  String userEmail = "";
+
+  @override
+  void onInit() async {
+    super.onInit();
+    userEmail = myServices.sharedPreferences.getString("user_email")!;
+    getMyCommu();
+    print("myCommunities inside homeScreen $myCommunities");
+    communitityController.getAllCommunities();
+  }
+
+  Future<List<String>> getMyCommu() async {
+    myCommunities =
+        await communityServices.getMyCommunities(userEmail: userEmail);
+     return  myCommunities;
+  }
 
   void reSystemChrome() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

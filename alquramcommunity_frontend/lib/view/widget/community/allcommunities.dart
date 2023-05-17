@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/view/widget/community/communitydetailts.dart';
@@ -16,9 +17,11 @@ class AllCommunities extends StatelessWidget {
   Widget build(BuildContext context) {
     CommunitityController communitityController =
         Get.put(CommunitityController());
-
+    HomeScreenControllerImp homeScreenController =
+        Get.put(HomeScreenControllerImp());
     return WillPopScope(
         onWillPop: () async {
+          homeScreenController.getMyCommu();
           Get.offAllNamed(AppRoute.home);
           return false;
         },

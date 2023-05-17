@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 
 
 const userModel = sequelize.define('User', {
-    // Model attributes are defined here
     
     userName: {
       type: DataTypes.STRING(100),

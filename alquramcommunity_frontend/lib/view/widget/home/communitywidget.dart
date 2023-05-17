@@ -4,15 +4,31 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../core/constant/color.dart';
+import '../community/specificcommunity.dart';
 
-class Community extends StatelessWidget {
-  const Community({super.key});
+class CommunityW extends StatelessWidget {
+  final String communityName;
+  final String communityDateCreate;
+  final int communityID;
+  final bool isAdmin;
+  const CommunityW(
+      {super.key,
+      required this.communityName,
+      required this.communityDateCreate,
+      required this.communityID, required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppRoute.specificCommunity);
+        print("communityName: -- $communityName");
+        Get.dialog(SpecificCommunity(
+            communityID: communityID,
+            communityName: communityName,
+            communityDateCreate: communityDateCreate,
+            isAdmin: isAdmin,
+            ));
+        // Get.toNamed(AppRoute.specificCommunity);
       },
       child: Container(
         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 12, 12),
@@ -37,14 +53,7 @@ class Community extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 100,
-                  decoration: BoxDecoration(
-                    // image: DecorationImage(
-                    //   image: NetworkImage(
-                    //       'https://i.pinimg.com/564x/1a/3e/87/1a3e87c62a840fff35a1747cf611f656.jpg'),
-                    //   alignment: Alignment.topLeft,
-                    //   fit: BoxFit.cover,
-                    //   opacity: 0.06,
-                    // ),
+                  decoration: const BoxDecoration(
                     color: AppColor.secondaryColor,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0),
@@ -69,7 +78,7 @@ class Community extends StatelessWidget {
                             child: const Icon(Icons.people_alt_sharp,
                                 color: Colors.white, size: 20)),
                         Text(
-                          'An-Najah Students',
+                          communityName,
                           style: TextStyle(color: Colors.white),
                         ),
                       ],

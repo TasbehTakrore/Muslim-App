@@ -27,7 +27,13 @@ class CommunityServices extends GetxService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print("Response Community: ${res.toString()}");
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print(
+          "Response Community:${json.decode(res.body)['community']['id']}  +${json.decode(res.body)}");
+      addMemberCommunity(
+          communityId: json.decode(res.body)['community']['id'],
+          userEmail: adminEmail,
+          isAdmin: true);
     } catch (error) {
       print('noooo $error');
     }
@@ -82,6 +88,83 @@ class CommunityServices extends GetxService {
       }
     } catch (error) {
       print('Error: $error');
+    }
+  }
+
+  void addMemberCommunity(
+      {required int communityId,
+      required String userEmail,
+      required bool isAdmin}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(MyURL.addMemberCommunity),
+        body: jsonEncode({
+          'communityID': communityId.toString(),
+          'userEmail': userEmail,
+          'isAdmin': isAdmin
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        print('addMemberCommunity sent successfully + ${response.body}');
+      } else {
+        print(response.toString());
+        print('Failed to addMemberCommunity request + ${response.body}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  // Future<List<Community>> getMyCommunities({required String userEmail}) async {
+  Future<List<String>> getMyCommunities({required String userEmail}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("${MyURL.getMyCommunities}/$userEmail"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        print("==========");
+        print('getMyCommunities sent successfully + ${response.body}');
+
+        final List<dynamic> communityList =
+            jsonDecode(response.body)['communities'];
+        print("communityList ---------------------: $communityList");
+        List<String> IDList = [];
+
+        communityList.forEach((element) {
+          print("element:  ???????????? $element.runtimeType");
+
+          IDList.add(element['communityID'].toString());
+          print("IDList $IDList");
+        });
+// final List<Community> communities = communityList.map((community) {
+//   return Community(
+//     id: community['communityID'],
+//     isAdmin: community['isAdmin'],
+//     userEmail: community['userEmail'],
+//     createdAt: DateTime.parse(community['createdAt']),
+//     updatedAt: DateTime.parse(community['updatedAt']),
+//   );
+// }).toList();
+
+        // final  = communitiesMap['communities'] as List<dynamic>;
+        // final communitiesList = communities
+        //     .map((community) => Community.fromJson(community))
+        //     .toList();
+        return IDList;
+      } else {
+        print(response.toString());
+        print('Failed to getMyCommu request + ${response.body}');
+        return [];
+      }
+    } catch (error) {
+      print('Error: $error');
+      return [];
     }
   }
 

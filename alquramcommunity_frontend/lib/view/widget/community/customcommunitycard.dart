@@ -12,6 +12,7 @@ class CustomCommunityCard extends StatelessWidget {
   final double fontSize1;
   final double fontSize2;
   final double heigh;
+  final bool isAdmin;
 
   CustomCommunityCard(
       {Key? key,
@@ -20,7 +21,8 @@ class CustomCommunityCard extends StatelessWidget {
       this.onTap,
       required this.fontSize1,
       required this.fontSize2,
-      required this.heigh})
+      required this.heigh,
+      required this.isAdmin})
       : super(key: key);
 
   @override
@@ -48,6 +50,10 @@ class CustomCommunityCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Visibility(
+                    visible: true,
+                    child: IconButton(
+                        onPressed: () {}, icon: Icon(Icons.person_add))),
                 Text(title,
                     style: TextStyle(color: Colors.white, fontSize: fontSize1)),
                 SizedBox(height: 10),

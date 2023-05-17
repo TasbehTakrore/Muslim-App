@@ -129,8 +129,10 @@ class statisticsTrainerContent extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                              "أتتمت في هذه الجلسة التّدريب على (${trainerScreenController.counter.value}) آية، تمنحك القيم في الأعلى مؤشّرًا على مدى إتقانك الحفظ. \n\n تذكّر، لا خاسر مع القرآن!",
-                              textAlign: TextAlign.center)),
+                            "أتتمت في هذه الجلسة التّدريب على (${trainerScreenController.counter.value}) آية، تمنحك القيم في الأعلى مؤشّرًا على مدى إتقانك الحفظ. \n\n تذكّر، لا خاسر مع القرآن!",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16),
+                          )),
                       TextButton.icon(
                         onPressed: () {
                           Get.toNamed(AppRoute.home);

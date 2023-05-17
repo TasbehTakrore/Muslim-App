@@ -10,11 +10,13 @@ import '../constant/routes.dart';
 import '../constant/utils.dart';
 import 'package:http_parser/http_parser.dart';
 
-//String uri='http://192.168.1.7:5000';
+// String uri='http://192.168.1.7:5000';
 
 MyServices myServices = Get.put(MyServices());
 
 class AuthServices extends GetxService {
+  // String uri = 'http://172.19.108.121:5000';
+
   String uri = 'http://192.168.1.19:5000';
   String uri2 = 'http://192.168.1.19:8080';
 

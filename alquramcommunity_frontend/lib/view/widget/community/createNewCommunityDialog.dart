@@ -92,7 +92,8 @@ class createNewCommunityDialog extends StatelessWidget {
                   color: AppColor.primaryColor,
                   onPressed: () {
                     communitityController.createNewCommunity();
-                    
+                    //communitityController.addMemberCommunity();
+
                     // trainerScreenController.testType();
                     Get.toNamed(AppRoute.SpecificCommunity);
                   }),
