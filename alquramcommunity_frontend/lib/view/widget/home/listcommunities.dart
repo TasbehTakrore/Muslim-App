@@ -47,18 +47,20 @@ class ListCommunities extends StatelessWidget {
                               int.parse(
                                   homeScreenControllerImp.myCommunities[index]),
                         );
-                        print("desiredCommunity : ${desiredCommunity}");
+                        print(
+                            "desiredCommunity : ${desiredCommunity.createdAt}");
                         String formattedDate = DateFormat('d-M-yyyy')
                             .format(desiredCommunity.createdAt);
                         print("formattedDate: $formattedDate");
 
                         return CommunityW(
-                          communityName: desiredCommunity.communityName,
-                          communityDateCreate: formattedDate,
-                          communityID: int.parse(
-                              homeScreenControllerImp.myCommunities[index]),
-                          isAdmin: true,
-                        );
+                            communityName: desiredCommunity.communityName,
+                            communityDateCreate: formattedDate,
+                            communityID: int.parse(
+                                  homeScreenControllerImp.myCommunities[index]),
+                                  isAdmin: desiredCommunity.adminEmail == homeScreenControllerImp.userEmail? true: false,
+
+                            );
                       } else {
                         return const JoinCommunity();
                       }

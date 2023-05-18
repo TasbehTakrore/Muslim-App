@@ -11,6 +11,7 @@ import '../Quran/editquranthemedialog.dart';
 import 'chat.dart';
 import 'customcommunitycard.dart';
 import 'editcommunityplan.dart';
+import 'memberRequestDialog.dart';
 import 'userscommunity.dart';
 
 class SpecificCommunity extends StatelessWidget {
@@ -22,7 +23,8 @@ class SpecificCommunity extends StatelessWidget {
       {super.key,
       required this.communityID,
       required this.communityName,
-      required this.communityDateCreate, required this.isAdmin});
+      required this.communityDateCreate,
+      required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +94,12 @@ class SpecificCommunity extends StatelessWidget {
                             fontSize: 15),
                       ),
                       CustomCommunityCard(
-                        title: 'Remining Time',
-                        fontSize1: 15,
-                        fontSize2: 40,
-                        heigh: 200,
-                        body: '12:45:30',
-                        isAdmin: isAdmin
-                      ),
+                          title: 'Remining Time',
+                          fontSize1: 15,
+                          fontSize2: 40,
+                          heigh: 200,
+                          body: '12:45:30',
+                          isAdmin: isAdmin),
                       SizedBox(height: 5),
                       const UsersCommunity(),
                       const SizedBox(height: 15),

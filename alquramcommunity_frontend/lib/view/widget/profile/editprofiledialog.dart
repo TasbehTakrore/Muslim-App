@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/profileController.dart';
+import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -171,6 +172,20 @@ class EditProfile extends StatelessWidget {
                     color: AppColor.primaryColor,
                   ),
                 ),
+                TextButton.icon(
+                    onPressed: () {
+                      Get.offAllNamed(AppRoute.home);
+                    },
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.grey,
+                    ),
+                    label: Text(
+                      "تسجيل الخروج",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ))
               ],
             ),
           ),

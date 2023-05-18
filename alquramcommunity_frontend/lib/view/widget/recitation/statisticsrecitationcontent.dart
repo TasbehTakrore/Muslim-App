@@ -97,7 +97,7 @@ class statisticsRecitationContent extends StatelessWidget {
                         circularStrokeCap: CircularStrokeCap.round,
                         backgroundColor: Color.fromARGB(32, 252, 204, 92),
                         percent: (recitationController.mistakesCount /
-                            (recitationController.totalReciteVerseesCount - 1)),
+                            (recitationController.totalReciteVerseesCount)),
                         center: const Text(
                           "الأخطاء",
                           style: TextStyle(color: Colors.red, fontSize: 18),
@@ -106,7 +106,7 @@ class statisticsRecitationContent extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "${recitationController.mistakesCount} أخطاء / ${recitationController.totalReciteVerseesCount - 1} آية ",
+                        "${recitationController.mistakesCount} أخطاء / ${recitationController.totalReciteVerseesCount} آية ",
                         style: TextStyle(fontSize: 18),
                       )
                     ],

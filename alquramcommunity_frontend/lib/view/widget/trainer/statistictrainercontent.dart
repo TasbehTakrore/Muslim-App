@@ -97,7 +97,7 @@ class statisticsTrainerContent extends StatelessWidget {
                         circularStrokeCap: CircularStrokeCap.round,
                         backgroundColor: Color.fromARGB(32, 252, 204, 92),
                         percent: (trainerScreenController.mistakesCount /
-                            trainerScreenController.counter.value),
+                            (trainerScreenController.counter.value - 1)),
                         center: const Text(
                           "الأخطاء",
                           style: TextStyle(color: Colors.red, fontSize: 18),
@@ -106,7 +106,7 @@ class statisticsTrainerContent extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "${trainerScreenController.mistakesCount} أخطاء / ${trainerScreenController.counter.value} سؤال ",
+                        "${trainerScreenController.mistakesCount} أخطاء / ${trainerScreenController.counter.value - 1} سؤال ",
                         style: TextStyle(fontSize: 16),
                       )
                     ],

@@ -15,7 +15,8 @@ class CommunityW extends StatelessWidget {
       {super.key,
       required this.communityName,
       required this.communityDateCreate,
-      required this.communityID, required this.isAdmin});
+      required this.communityID,
+      required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,11 @@ class CommunityW extends StatelessWidget {
       onTap: () {
         print("communityName: -- $communityName");
         Get.dialog(SpecificCommunity(
-            communityID: communityID,
-            communityName: communityName,
-            communityDateCreate: communityDateCreate,
-            isAdmin: isAdmin,
-            ));
+          communityID: communityID,
+          communityName: communityName,
+          communityDateCreate: communityDateCreate,
+          isAdmin: isAdmin,
+        ));
         // Get.toNamed(AppRoute.specificCommunity);
       },
       child: Container(
