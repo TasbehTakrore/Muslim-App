@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/profileController.dart';
 import 'package:alquramcommunity_frontend/data/datasource/static.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,10 +11,10 @@ import '../../../data/model/front_models/thikrmodel.dart';
 import '../custombuttomlang.dart';
 
 class ThikrsBottomWidget extends StatelessWidget {
-  //final int Catg;
+  final int Catg;
   final String subCatg;
 
-  const ThikrsBottomWidget({Key? key, required this.subCatg,})
+  const ThikrsBottomWidget({Key? key, required this.subCatg, required this.Catg,})
       : super(key: key);
 
   @override
@@ -38,11 +39,13 @@ class ThikrsBottomWidget extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(0),
               child: CustomButton(
-                color: AppColor.black,
-                onPressed: () {
-               //   thikrCatgController.decrementRepeat(Catg, subCatg);
+                color: thikrCatgController.isFinish(thikrCatgController.selectedThikr.value, Catg)?
+                Colors.white70:Colors.black,
+              
+                onPressed: () async {
+                  await thikrCatgController.decrementRepeat(thikrCatgController.selectedThikr.value,Catg);
                 },
-                textbutton: '0 / ${subCatg}' ,
+                textbutton: subCatg,
                 
                  //   '${thikrCatgController.countersList[Catg][subCatg]}',
               ),

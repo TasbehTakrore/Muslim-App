@@ -22,6 +22,7 @@ class ThikrDataList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: 600,
@@ -37,7 +38,7 @@ class ThikrDataList extends StatelessWidget {
               return ThikrDataCardArabic(
                 arabicText:
                     data[controller.selectedThikr.value].tEXT![i].aRABICTEXT.toString(),
-                subCatg: data[controller.selectedThikr.value].tEXT![i].rEPEAT.toString(),
+                subCatg: controller.followCounters[controller.selectedThikr.value][i].toString(), catg: i,
               );
             },
           );

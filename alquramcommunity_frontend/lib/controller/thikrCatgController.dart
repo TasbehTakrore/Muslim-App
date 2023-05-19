@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
+//import 'dart:ffi';
 import 'package:alquramcommunity_frontend/data/model/front_models/thikrmodel.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:flutter/cupertino.dart';
 
  class ThikrCatgController extends GetxController {
   /*
@@ -131,12 +133,17 @@ Future<void> my()async {
 
 
   RxInt selectedThikr=0.obs;
-  dynamic ? jsonResponse;
+  dynamic  jsonResponse;
   var myData = Athkar().obs;
   List<Thikr> data = [];
   final List<List<int>> countersList = [];
-    final List<List<int>> followCounters = [];
-
+  List<List<int>> followCounters = [];
+  
+  @override
+  void onInit(){
+    super.onInit();
+ 
+  }
 
   Future<void> selectThikr(int index) async {
     selectedThikr.value = index;
@@ -162,23 +169,106 @@ Future<void> my()async {
         subCounters.add(0);
       countersList.add(subCounters);
       followCounters.add(subCounters);
+      
+    }
+   }
+  }
+  void getData(){
+       data =  List<Thikr>.from(jsonResponse["Thikr"].map((x) => Thikr.fromJson(x)));
+  } 
+  Future<void> maxCount() async {
+     await counterMax();
+    print(countersList);
+  }
+  Future<void> fillFollow() async {
+      await maxCount();
+      followCounters = List.generate(
+      countersList.length,
+      (index) => List<int>.from(countersList[index]),
+    );}
+  Future<void> counterMax() async {
+    getData();
+      for (int i = 0; i <= 5; i++) {
+      Thikr? subList =  data[i];
+      List<int> subCounters = [];
+      for (int j = 0; j < data[i].tEXT!.length; j++) {
+        subCounters.add(data[i].tEXT![j].rEPEAT!);
+      countersList.add(subCounters);
     }
   }
-  decrementRepeat(int listIndex, int itemIndex) {
-   /*  if (followCounters[listIndex][itemIndex]< data[selectedThikr.value][itemIndex]) {
-       followCounters[listIndex][itemIndex]=followCounters[listIndex][itemIndex]-1;
-       print('${followCounters[listIndex][itemIndex]}');
-           update(); 
-    }  
-    update(); 
   }
-*/
+
+  decrementRepeat(int listIndex, int itemIndex) {
+               print('listIndex:${listIndex}, ${itemIndex}');
+           print('before:${followCounters[listIndex][itemIndex]}');
+     if (followCounters[listIndex][itemIndex]>0) {
+       followCounters[listIndex][itemIndex]=followCounters[listIndex][itemIndex]-1;
+           print('after:${followCounters[listIndex][itemIndex]}');
+
+      update(); 
+    }  
+  }
+  isFinish(int i, int j ){
+    if(followCounters[i][j]==0) {
+      return true;
+    } else {
+      return false ;
+    }
+  }
+  void resetCounter(i,j){
+    print('before reset :${followCounters[i][j]}');
+    followCounters[i][j]=countersList[i][j];
+    update();
+    print('after reset :${followCounters[i][j]}');
+
+  }
+  //*************************//
+
+  AudioPlayer myAudioPlayer=AudioPlayer();
+  late Source audioUrl;
+List<List<bool>> isPlaying = [];
+void setisPlaying(){
+   isPlaying = List.generate(
+  data.length,
+  (index) => List.filled(data[index].tEXT!.length, false),
+);
+}
+
+Future<void> togglePlayPause(String url,int i,int j) async {
+  if (isPlaying.isEmpty){
+     setisPlaying();
+  }
+  if (!isPlaying[i][j]) {
+    audioUrl = UrlSource(url);
+    await myAudioPlayer.play(audioUrl);
+    isPlaying[i][j] = true;
+    update();
+    if(myAudioPlayer.state==ReleaseMode.stop){
+        isPlaying[i][j] = false;
+    update();
+    }
+
+  } else {
+    await myAudioPlayer.pause();
+    isPlaying[i][j] = false;
+    update();
+  }
+  update();
+  
+}
+
+Future<void> stop(int i , int j) async {
+  await myAudioPlayer.stop();
+  isPlaying[i][j] = false;
+  update();
+}
+
+
+ 
+
+  
+
 }
   
-  
-
-
-  }}
-
 
 

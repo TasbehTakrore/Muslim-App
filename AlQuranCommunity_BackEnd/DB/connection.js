@@ -3,20 +3,20 @@ const dotenov =require('dotenv')
 dotenov.config({path:"./.env"});
 const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
     host: process.env.DATABASE_HOST,
-    dialect: 'mysql' 
+    dialect: 'mysql' ,
+    alter: true,
+
   });
 
  
   const connectDB = async() => {
     try {
-      await sequelize.sync({ force: true });
+      await sequelize.sync({ alter: true });
       console.log('Database synced successfully!');
     } catch (error) {
       console.error('Error syncing database: ', error);
     }
   };
-  
-
 
   
 // const connectDB = async()=>{

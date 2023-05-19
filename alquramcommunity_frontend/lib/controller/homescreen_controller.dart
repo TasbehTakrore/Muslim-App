@@ -16,11 +16,14 @@ abstract class HomeScreenController extends GetxController {
 }
 
 class HomeScreenControllerImp extends HomeScreenController {
+
   // @override
-  // void onInit() {
+  Future<void> onInit() async {
+   await planController.showPlantoUser();
+  //  await planController.weekCalc();
   //   super.onInit();
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  // }
+   }
 
   void reSystemChrome() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../controller/prayscreen_controller.dart';
 
 class PlanMainCard extends StatelessWidget {
@@ -53,7 +53,7 @@ class PlanMainCard extends StatelessWidget {
                   )),
               alignment: Alignment.center,
               width: double.infinity,
-              height: 150,
+              height: 170,
               child: Obx(() =>  Column(
                 children: [
                   const SizedBox(
@@ -67,22 +67,55 @@ class PlanMainCard extends StatelessWidget {
                       style:
                           const TextStyle(color: Colors.yellow, fontSize: 50)),
                   const SizedBox(height:5),
-                  GestureDetector(
-                    onTap: () async {
-                      await planController.setUpdatePlan();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          width: 1,
-                          color: AppColor.grey,
+                  /*
+                   Row(
+                     children: [
+                       GestureDetector(
+                        child: Icon(Icons.upcoming),
+                        onTap: () async {
+                           await planController.dayEnd();
+                        },
+                       ),
+                       GestureDetector(
+                        child: Icon(Icons.person),
+                        onTap: () async {
+                           await planController.weekCalc();
+                        },
+                       ),
+                       SizedBox(width: 20,),
+                           GestureDetector(
+                        child: Icon(Icons.notification_add),
+                        onTap: ()  {
+                            planController.callNotification();
+                        },
+                       ),
+                     ],
+                   ),
+                  */
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(10, 8, 0, 8),
+                        child: LinearPercentIndicator(
+                          
+                          percent: planController.progress.value,
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          lineHeight: 20,
+                          animation: true,
+                          progressColor: Color.fromARGB(193, 252, 204, 92),
+                          backgroundColor: Color(0xFFE0E3E7),
+                          barRadius: Radius.circular(10),
+                          padding: EdgeInsets.zero,
                         ),
-                        color: Colors.white,
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: Text("أنقر لتفعيل الخطة",style: TextStyle(fontWeight: FontWeight.bold),),
-                    ),
+                      // const Text(
+                      //   "..75% ",
+                      //   style: TextStyle(
+                      //       fontSize: 12, color: AppColor.thickYellow),
+                      // )
+                    ],
                   ),
 
                 ],
@@ -92,3 +125,7 @@ class PlanMainCard extends StatelessWidget {
     );
   }
 }
+
+
+
+

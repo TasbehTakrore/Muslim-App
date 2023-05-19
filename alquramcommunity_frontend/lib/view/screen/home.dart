@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,12 +10,18 @@ import '../widget/home/customcardhome.dart';
 import '../widget/home/customappbar.dart';
 import '../widget/home/listcommunities.dart';
 import '../widget/home/statisticscard.dart';
-
+PlanController planController=Get.put(PlanController());
+Future<void> initializeData() async {
+    await planController.showPlantoUser();
+    await planController.weekCalc();
+  }
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    initializeData();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     return Container(

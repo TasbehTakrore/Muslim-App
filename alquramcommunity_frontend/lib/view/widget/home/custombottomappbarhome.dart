@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/auth/plan_controller.dart';
 import '../../../controller/homescreen_controller.dart';
 import '../../../controller/profileController.dart';
 import 'custombuttonappbar.dart';
@@ -12,6 +13,8 @@ class CustomBottonAppBarHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProfileController profilesController =
     Get.put(ProfileController());
+    final PlanController planController =
+    Get.put(PlanController());
 
     return GetBuilder<HomeScreenControllerImp>(
         builder: (controller) => BottomAppBar(
@@ -27,7 +30,12 @@ class CustomBottonAppBarHome extends StatelessWidget {
                   active: controller.currentPage == (0) ? true : false),
 
               CustomButtonAppBar(
-                  onPressed: () => controller.changePage(1),
+                  onPressed: () async {
+                    await planController.getRemainingTime();
+                    await planController.showPlantoUser();
+                    await planController.dailyProgress();
+                    controller.changePage(1);
+                  } ,
                   textbutton: controller.titlebuttonAppBar[1],
                   iconbutton: controller.iconsbuttonAppBar[1],
                   active: controller.currentPage == (1) ? true : false),

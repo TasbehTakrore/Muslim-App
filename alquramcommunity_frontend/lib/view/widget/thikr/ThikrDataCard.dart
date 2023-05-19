@@ -16,10 +16,13 @@ class ThikrDataCardArabic extends StatelessWidget {
   final String subCatg;
   final double? fontSize;
   final TEXT? thikr;
+  final int catg;
 
-  const ThikrDataCardArabic({super.key, required this.arabicText, required this.subCatg, this.fontSize, this.thikr});
+  const ThikrDataCardArabic({super.key, required this.arabicText, required this.subCatg, this.fontSize, this.thikr, required this.catg});
+ 
   @override
    Widget build(BuildContext context) {
+    
     ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
     return GetBuilder<ThikrCatgControllerImp>(
       builder: (controller) {
@@ -39,7 +42,7 @@ class ThikrDataCardArabic extends StatelessWidget {
                   padding:const EdgeInsets.only(right: 20,left:20,top: 20,bottom: 20),
                   child:Column(
                     children: [
-                      const ThikrCardsTop(),
+                       ThikrCardsTop(catgg: catg,),
                       const SizedBox(height:30),
                       Text(
                         arabicText,
@@ -56,7 +59,7 @@ class ThikrDataCardArabic extends StatelessWidget {
                 ),
               ),
             ),
-            ThikrsBottomWidget( subCatg: subCatg)
+            ThikrsBottomWidget( subCatg: subCatg, Catg: catg,)
           ],
         );
       },

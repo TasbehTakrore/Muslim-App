@@ -180,39 +180,32 @@ void sendNotification() async {
  }
 //******************************************************************* //
 //plan reminder
+Future<void> scheduleNotification(int id, DateTime scheduledTime, tz.Location location) async {
+  final locall = tz.local;
+  
+  final AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    'alarm_notification_$id',
+    'Alarm Notification $id',
+    'Shows an alarm notification at a certain time of day',
+    importance: Importance.high,
+    priority: Priority.high,
+    showWhen: false,
+  );
+  final NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+  
+  await localNotificationPlugin.zonedSchedule(
+    id,
+    'Alarm $id',
+    "Don't forget your plan! Keep going on to finish before the end of the day.",
+    tz.TZDateTime.from(scheduledTime, locall),
+    platformChannelSpecifics,
+    androidAllowWhileIdle: true,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+  );
 
-Future<void> scheduleNotification(int id, DateTime scheduledTime,tz.Location location) async {
-      final locall = tz.local;
-
-      final AndroidNotificationDetails androidPlatformChannelSpecifics =
-          AndroidNotificationDetails(
-        'alarm_notification_$id',
-        'Alarm Notification $id',
-        'Shows an alarm notification at a certain time of day',
-        importance: Importance.high,
-        priority: Priority.high,
-        showWhen: false,
-      );
-      final NotificationDetails platformChannelSpecifics =
-          NotificationDetails(android: androidPlatformChannelSpecifics);
-          
-      await localNotificationPlugin.zonedSchedule(
-        
-          id,
-          'Alarm $id',
-          'Dont forget your plan! keep going on to finish before end of day',
-          tz.TZDateTime.from(scheduledTime,locall),
-          platformChannelSpecifics,
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
-    }
-
-/*
-Future<void>messageHandler(RemoteMessage message){}*/
-
+  print('Notification scheduled successfully.');
 }
-
-
-
-
+}

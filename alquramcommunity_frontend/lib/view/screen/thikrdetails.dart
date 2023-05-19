@@ -7,7 +7,6 @@ import '../../controller/thikrCatgController.dart';
 import '../../core/constant/imageasset.dart';
 import '../../data/model/front_models/thikrmodel.dart';
 import '../widget/thikr/ThikrDataCard.dart';
-
 class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   const ThikrDetails({super.key});
   @override
@@ -18,9 +17,6 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
         Get.put(ThikrCatgControllerImp());
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
-                           //     thikrCatgController.my();
-
-    thikrCatgController.onInit();
     return WillPopScope(
         onWillPop: () async {
           Get.offAllNamed(AppRoute.home);
@@ -55,12 +51,10 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                         return Center(child: Text("${snapshot.error}"));
                       } else if (snapshot.hasData) {
                         var section = snapshot.data;
-                        print(snapshot.data);
                         final  data =  List<Thikr>.from(
                             controller.jsonResponse["Thikr"].map((x) => Thikr.fromJson(x)));
                               return ListView.builder(
-                                itemCount:
-                                    section.length == 0 ? 0 : section.length,
+                                itemCount:section.length == 0 ? 0 : section.length,
                                 itemBuilder: (context, index) {
                                   if (data != null) {
                                     return Container(
@@ -73,12 +67,6 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                                             .tEXT!
                                             .length,
                                         itemBuilder: (BuildContext context, i) {
-                                          final repeatCount = data[
-                                                  thikrCatgController.selectedThikr.value].tEXT![i].rEPEAT!;
-
-                                         /* thikrCatgController.countersList[
-                                                  thikrCatgController.selectedThikr.value][i] =
-                                              repeatCount;*/
                                           return GetBuilder<
                                                   ThikrCatgControllerImp>(
                                               builder: (thikrCatgController) {
@@ -87,9 +75,7 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                                                       thikrCatgController.selectedThikr.value].tEXT![i]
                                                   .aRABICTEXT
                                                   .toString(),
-                                              subCatg: data[
-                                                      thikrCatgController.selectedThikr.value].tEXT![i]
-                                                  .rEPEAT.toString() ,
+                                              subCatg:controller.followCounters[controller.selectedThikr.value][i].toString(), catg: i ,
                                             );
                                           });
                                         },

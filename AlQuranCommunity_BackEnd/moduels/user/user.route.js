@@ -13,7 +13,7 @@ router.put('/updateUser/:userId',userController.updateUser);
 
 
 //router.get('/showUser',auth(),userController.userDetails);
-router.get('/checkEmail',userController.checkEmail);
+router.post('/checkEmail',userController.checkEmail);
 //router.get('/getAll',userController.getAllUsers);
 //router.get('/logIn',userController.logIn);
 
@@ -21,7 +21,7 @@ router.get('/getAll',userController.getAllUsers);
 router.post('/signUp',userController.signUp);
 router.get('/getDetails',auth(),userController.userDetails);
 router.post('/logIn',userController.logIn);
-
+router.post('/updatePassword',userController.updatePassword);
 router.put('/:id',userController.updateUser);
 router.delete('/:id',userController.deleteUser);
 router.post('/addCoins',userController.addCoins);

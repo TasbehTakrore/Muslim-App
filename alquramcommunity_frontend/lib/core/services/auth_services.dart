@@ -18,12 +18,13 @@ import '../constant/urls.dart';
 MyServices myServices = Get.put(MyServices()); 
 
 class AuthServices { 
-  String uri = 'http://172.19.197.181:5000'; 
-  String uri2 = 'http://172.19.197.181:8080'; 
+  String uri = 'http://192.168.1.19:5000'; 
+  String uri2 = 'http://192.168.1.19:8080'; 
  
   final ProfileController profilesController = Get.put(ProfileController()); 
   final ForgetPasswordControllerImp forgetController=Get.put(ForgetPasswordControllerImp());
  
+
   //sign up user 
   void signUpUser({ 
     required BuildContext context, 
@@ -109,17 +110,8 @@ class AuthServices {
               "user_email", jsonDecode(res.body)['user']['userEmail']); 
           myServices.sharedPreferences 
               .setInt("user_id", jsonDecode(res.body)['user']['id']); 
-          //      myServices.sharedPreferences.setInt("user_age", jsonDecode(res.body)['userAge']); 
-          //  myServices.sharedPreferences.setString("prof_gender", jsonDecode(res.body)['userGender']); 
- 
+
           print(myServices.sharedPreferences.getString("user_name")); 
-          //print(myServices.sharedPreferences.getString("user_email")); 
-          //print(myServices.sharedPreferences.getInt("user_id").toString()); 
- 
-          //SharedPreferences token = await SharedPreferences.getInstance(); 
-          // Provider.of<UserProvider>(context,listen:false).SetUser(res.body); 
-          //token.setString('x_auth_token', jsonDecode(res.body)['token']);
-showSnackBar(context, ' Success'); 
           Get.toNamed(AppRoute.home); 
           profilesController.userInformation(); 
         }, 
