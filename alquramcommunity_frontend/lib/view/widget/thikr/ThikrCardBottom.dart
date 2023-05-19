@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/profileController.dart';
 import 'package:alquramcommunity_frontend/data/datasource/static.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,17 +7,19 @@ import '../../../controller/thikrCatgController.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
+import '../../../data/model/front_models/thikrmodel.dart';
 import '../custombuttomlang.dart';
 
 class ThikrsBottomWidget extends StatelessWidget {
   final int Catg;
-  final int subCatg;
+  final String subCatg;
 
-  const ThikrsBottomWidget({Key? key, required this.Catg, required this.subCatg})
+  const ThikrsBottomWidget({Key? key, required this.subCatg, required this.Catg,})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+       final List<Thikr> data;
       ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
     return GetBuilder<ThikrCatgControllerImp>(
       init: ThikrCatgControllerImp(),
@@ -36,12 +39,15 @@ class ThikrsBottomWidget extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(0),
               child: CustomButton(
-                color: AppColor.black,
-                onPressed: () {
-                  thikrCatgController.decrementRepeat(Catg, subCatg);
+                color: thikrCatgController.isFinish(thikrCatgController.selectedThikr.value, Catg)?
+                Colors.white70:Colors.black,
+              
+                onPressed: () async {
+                  await thikrCatgController.decrementRepeat(thikrCatgController.selectedThikr.value,Catg);
                 },
-                textbutton:
-                    '${thikrCatgController.countersList[Catg][subCatg]}',
+                textbutton: subCatg,
+                
+                 //   '${thikrCatgController.countersList[Catg][subCatg]}',
               ),
             ),
           ),

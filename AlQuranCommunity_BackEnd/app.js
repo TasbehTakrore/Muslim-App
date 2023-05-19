@@ -10,9 +10,17 @@ const userRouter  = require('./moduels/user/user.route');
 app.use('/users/',userRouter);
 const mistakeRouter = require('./moduels/mistake.route');
 app.use('/mistake/',mistakeRouter);
+const activePlanRouter = require('./moduels/plans/active.plan.route');
+app.use('/activeplan/',activePlanRouter);
+
+const backUpPlanRouter = require('./moduels/plans/backup.plan.route');
+app.use('/BackUpplan/',backUpPlanRouter);
 
 const notificationRouter = require('./moduels/notification.route');
 app.use('/notification/',notificationRouter);
+
+const tasbehRouter = require('./moduels/tasbeh.route');
+app.use('/tasbeh/',tasbehRouter);
 
 const communityRouter = require('./moduels/community.route');
 app.use('/communities/',communityRouter);

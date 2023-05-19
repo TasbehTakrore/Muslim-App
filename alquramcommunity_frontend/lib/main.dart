@@ -3,6 +3,7 @@
 import 'package:alquramcommunity_frontend/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constant/color.dart';
@@ -17,12 +18,25 @@ import 'package:get/get.dart';
 import 'core/localization/translation.dart';
 import 'routes.dart';
 import 'view/screen/language.dart';
+import 'package:timezone/data/latest.dart' as tz;
+// import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+// <<<<<<< HEAD
+
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform
+//   );
+//   //FirebaseMessaging.onBackgroundMessage(messageHandler);
+//   //FirebaseMessagingListner();
+//   tz.initializeTimeZones();
+
+// =======
   await Firebase.initializeApp();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+// >>>>>>> main
   await initialServices();
   runApp(const MyApp());
 }

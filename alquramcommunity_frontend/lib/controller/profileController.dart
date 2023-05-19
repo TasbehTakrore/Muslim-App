@@ -38,10 +38,10 @@ class ProfileController extends GetxController {
     final createdAt = DateTime.parse(userProfile['user']['createdAt']);
     final formattedDate = DateFormat('yyyy-MM-dd').format(createdAt);
     joinDate = formattedDate;
-    print(
-        '${MyURL.uri}/images/${userProfile['user']['imageUrl']}  + ${myServices.sharedPreferences.getString("user_email")} ++ ${myServices.sharedPreferences.getInt("user_id")} ');
+    print('${authservices.uri}/images/${userProfile['user']['imageUrl']}');
     img.value =
         '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${userProfile['user']['imageUrl']}';
+    update();
   }
 
   void setDetails() {
@@ -58,9 +58,6 @@ class ProfileController extends GetxController {
         gender: controller.selectedGender.value,
         password: controller.password.text,
         checkPassword: controller.checkPassword.text);
-
-    myServices.sharedPreferences
-        .setString("user_gender", controller.selectedGender.value);
   }
 
   void clearFields() {
@@ -68,5 +65,32 @@ class ProfileController extends GetxController {
     controller.age.text = '';
     controller.password.text = '';
     controller.checkPassword.text = '';
+// =======
+//   void setDetails() {
+//     controller.name.text = userName.value;
+//     controller.age.text = userAge.value;
+//     controller.selectedGender.value = userGender.value;
+//   }
+// >>>>>>> main
+
+    void updateDetails() {
+      authservices.updateUser(
+          id: (myServices.sharedPreferences.getInt("user_id")!.toString()),
+          name: controller.name.text,
+          age: controller.age.text,
+          gender: controller.selectedGender.value,
+          password: controller.password.text,
+          checkPassword: controller.checkPassword.text);
+
+      myServices.sharedPreferences
+          .setString("user_gender", controller.selectedGender.value);
+    }
+
+    void clearFields() {
+      controller.name.text = '';
+      controller.age.text = '';
+      controller.password.text = '';
+      controller.checkPassword.text = '';
+    }
   }
 }

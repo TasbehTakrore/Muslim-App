@@ -1,9 +1,10 @@
+import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
 import 'package:alquramcommunity_frontend/view/widget/prayingtimes/completedPray_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../controller/prayscreen_controller.dart';
 
 class PlanMainCard extends StatelessWidget {
@@ -28,10 +29,12 @@ class PlanMainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PrayScreenControllerImp prayController =
-        Get.put(PrayScreenControllerImp());
+    final PlanController planController =
+        Get.put(PlanController());
     return InkWell(
-      // onTap: onTap,
+       onTap: (){
+      
+       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 5),
         child: Stack(children: [
@@ -50,33 +53,79 @@ class PlanMainCard extends StatelessWidget {
                   )),
               alignment: Alignment.center,
               width: double.infinity,
-              height: 150,
-              child: Column(
+              height: 170,
+              child: Obx(() =>  Column(
                 children: [
                   const SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
-                  // Text(
-                  //   date,
-                  //   style: TextStyle(color: Colors.white, fontSize: fontSize2),
-                  //   textAlign: TextAlign.right,
-                  // ),
-                  // const SizedBox(height: 10),
-                  // Text(hijridate,
-                  //     style:
-                  //         TextStyle(color: Colors.yellow, fontSize: fontSize1)),
-                  // const SizedBox(height: 10),
-                  // const SizedBox(height: 3),
                   Text("Time left to finish the plan",
                       style:
                           const TextStyle(color: Colors.white, fontSize: 15)),
-                  Text("2:45:30",
+                  
+                  Text(planController.formattedRemainingTime.value,
                       style:
                           const TextStyle(color: Colors.yellow, fontSize: 50)),
+                  const SizedBox(height:5),
+                  /*
+                   Row(
+                     children: [
+                       GestureDetector(
+                        child: Icon(Icons.upcoming),
+                        onTap: () async {
+                           await planController.dayEnd();
+                        },
+                       ),
+                       GestureDetector(
+                        child: Icon(Icons.person),
+                        onTap: () async {
+                           await planController.weekCalc();
+                        },
+                       ),
+                       SizedBox(width: 20,),
+                           GestureDetector(
+                        child: Icon(Icons.notification_add),
+                        onTap: ()  {
+                            planController.callNotification();
+                        },
+                       ),
+                     ],
+                   ),
+                  */
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(10, 8, 0, 8),
+                        child: LinearPercentIndicator(
+                          
+                          percent: planController.progress.value,
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          lineHeight: 20,
+                          animation: true,
+                          progressColor: Color.fromARGB(193, 252, 204, 92),
+                          backgroundColor: Color(0xFFE0E3E7),
+                          barRadius: Radius.circular(10),
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                      // const Text(
+                      //   "..75% ",
+                      //   style: TextStyle(
+                      //       fontSize: 12, color: AppColor.thickYellow),
+                      // )
+                    ],
+                  ),
+
                 ],
-              )),
+              )),),
         ]),
       ),
     );
   }
 }
+
+
+
+

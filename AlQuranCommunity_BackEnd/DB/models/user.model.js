@@ -10,6 +10,7 @@ const userModel = sequelize.define('User', {
     },
     userEmail: {
       type: DataTypes.STRING(255),
+
       allowNull: false,
       unique:true,
       validate:{
@@ -46,6 +47,11 @@ const userModel = sequelize.define('User', {
       type: DataTypes.INTEGER,
       defaultValue: 0,
   },
+
+  jewel:{
+    type:DataTypes.INTEGER,
+    defaultValue:0,
+  },
     userGender: {
         type: DataTypes.STRING(6),
         allowNull: false,
@@ -59,6 +65,10 @@ const userModel = sequelize.define('User', {
     confirmEmail: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
+  },
+  verifyCode:{
+   type: DataTypes.STRING,
+   default:null, 
   },
   imageUrl: {
     type: DataTypes.STRING,

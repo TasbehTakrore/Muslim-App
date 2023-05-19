@@ -1,19 +1,25 @@
 import 'dart:convert';
 import 'package:alquramcommunity_frontend/data/model/front_models/thikrmodel.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class ThikrCatgController extends GetxController {
+class ThikrCatgController extends GetxController {
+  /*
   Future<String> _loadJSON();
   Future<dynamic> loadJSON();
   initialData();
   decrementRepeat(int listIndex, int itemIndex);
   RxInt selectedThikr=0.obs;
   }
+*/
+}
 
-class ThikrCatgControllerImp extends ThikrCatgController{
+class ThikrCatgControllerImp extends ThikrCatgController {
+  /*
   final List<List<int>> countersList = [];
   dynamic argumentData ;
   List<Thikr> data = [];
@@ -67,10 +73,9 @@ Future<void> my()async {
         subCounters.add(0);
       countersList.add(subCounters);
     }
-    update();
+    //update();
 }
 }
-
   @override
   void onInit() {
     super.onInit();
@@ -104,7 +109,6 @@ Future<void> my()async {
   }
   Future<void> selectThikr(int index) async {
     selectedThikr.value = index;
-    await my();
     loadJSON().then((value) {
     myData.value = Athkar.fromJson(value);
   });
@@ -124,7 +128,144 @@ Future<void> my()async {
     throw UnimplementedError();
   }
 */
+
+*/
+
+  RxInt selectedThikr = 0.obs;
+  dynamic jsonResponse;
+  var myData = Athkar().obs;
+  List<Thikr> data = [];
+  final List<List<int>> countersList = [];
+  List<List<int>> followCounters = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  Future<void> selectThikr(int index) async {
+    selectedThikr.value = index;
+    loadJSON_t().then((value) {
+      myData.value = Athkar.fromJson(value);
+    });
+    update();
+  }
+
+  @override
+  Future<String> _loadJSON_s() async {
+    return await rootBundle.loadString('assets/thikr.json');
+  }
+
+  Future<dynamic> loadJSON_t() async {
+    String json = await _loadJSON_s();
+    jsonResponse = jsonDecode(json);
+    return jsonResponse;
+  }
+
+  Future<void> intiaiteList() async {
+    for (int i = 0; i < (myData.value.thikr?.length ?? 0); i++) {
+      Thikr? subList = myData.value.thikr?[i];
+      List<int> subCounters = [];
+      for (int j = 0; j < subList!.tEXT!.length; j++) {
+        subCounters.add(0);
+        countersList.add(subCounters);
+        followCounters.add(subCounters);
+      }
+    }
+  }
+
+  void getData() {
+    data =
+        List<Thikr>.from(jsonResponse["Thikr"].map((x) => Thikr.fromJson(x)));
+  }
+
+  Future<void> maxCount() async {
+    await counterMax();
+    print(countersList);
+  }
+
+  Future<void> fillFollow() async {
+    await maxCount();
+    followCounters = List.generate(
+      countersList.length,
+      (index) => List<int>.from(countersList[index]),
+    );
+  }
+
+  Future<void> counterMax() async {
+    getData();
+    for (int i = 0; i <= 5; i++) {
+      Thikr? subList = data[i];
+      List<int> subCounters = [];
+      for (int j = 0; j < data[i].tEXT!.length; j++) {
+        subCounters.add(data[i].tEXT![j].rEPEAT!);
+        countersList.add(subCounters);
+      }
+    }
+  }
+
+  decrementRepeat(int listIndex, int itemIndex) {
+    print('listIndex:${listIndex}, ${itemIndex}');
+    print('before:${followCounters[listIndex][itemIndex]}');
+    if (followCounters[listIndex][itemIndex] > 0) {
+      followCounters[listIndex][itemIndex] =
+          followCounters[listIndex][itemIndex] - 1;
+      print('after:${followCounters[listIndex][itemIndex]}');
+
+      update();
+    }
+  }
+
+  isFinish(int i, int j) {
+    if (followCounters[i][j] == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void resetCounter(i, j) {
+    print('before reset :${followCounters[i][j]}');
+    followCounters[i][j] = countersList[i][j];
+    update();
+    print('after reset :${followCounters[i][j]}');
+  }
+  //*************************//
+
+  AudioPlayer myAudioPlayer = AudioPlayer();
+  late Source audioUrl;
+  List<List<bool>> isPlaying = [];
+  void setisPlaying() {
+    isPlaying = List.generate(
+      data.length,
+      (index) => List.filled(data[index].tEXT!.length, false),
+    );
+  }
+
+  Future<void> togglePlayPause(String url, int i, int j) async {
+    if (isPlaying.isEmpty) {
+      setisPlaying();
+    }
+    if (!isPlaying[i][j]) {
+      audioUrl = UrlSource(url);
+      await myAudioPlayer.play(audioUrl);
+      isPlaying[i][j] = true;
+      update();
+      if (myAudioPlayer.state == ReleaseMode.stop) {
+        isPlaying[i][j] = false;
+        update();
+      }
+    } else {
+      await myAudioPlayer.pause();
+      isPlaying[i][j] = false;
+      update();
+    }
+    update();
+  }
+
+  Future<void> stop(int i, int j) async {
+    await myAudioPlayer.stop();
+    isPlaying[i][j] = false;
+    update();
+  }
 }
-
-
-

@@ -5,7 +5,9 @@ const multer = require('multer');
 const upload=require("../middleware/upload")
 const path = require('path');
 const fs = require('fs');
-const aurh=require("../middleware/auth")
+const aurh=require("../middleware/auth");
+const { sendEmail } = require("../services/email");
+const { nanoid } = require('nanoid');
 
 //add new user `sign up` 
 const signUp = async(req,res)=>{
@@ -48,21 +50,6 @@ const signUp = async(req,res)=>{
  
 }
 
-//get user detailsfrom id in the url
-// const userDetails = async(req,res)=>{
-//     try{
-//         //select * from users where id = ..
-//         const user= await userModel.findOne({
-//             where:{
-//                 id: req.user.id,
-//             }
-//         });
-//         res.json({message:'success',user});    
-//     }catch(error){
-//         res.json({message:'catch error',error})
-//     }
-
-// }
 
 const addCoins = async (req, res)=>{
     try {
@@ -86,8 +73,35 @@ const addCoins = async (req, res)=>{
             // user.save();
             res.json({message:'success',user});
             console.log("elseeeee user");
+        }
+    } catch (error) {
+        res.json({message:'catch error ++',error})
+        console.log("catch" + error);
 
+    }
+}
 
+const addJewel = async (req, res)=>{
+    try {
+        console.log( req.body);
+        const{userId, userCoins} = req.body;
+        const user=  await userModel.findOne({
+            where:{
+                id:userId,
+            }
+        });
+        console.log("found");
+
+        if(!user){
+            res.status(400)
+            res.json({msg:'No user with this email'});
+            console.log("not found");
+        }
+        else{
+            user.increment('userCoins', {by: userCoins});
+            
+            res.json({message:'success',user});
+            console.log("done");
         }
     } catch (error) {
         res.json({message:'catch error ++',error})
@@ -206,27 +220,78 @@ const getAllUsers=async(req,res)=>{
     res.json({message:'success',allUsers});
 }
 
-//get user detailsfrom id in the url
-const checkEmail = async(req,res)=>{
+//check uer email
+const checkEmail = async (req,res)=>{
     try{
-        //select * from users where id = ..
-        const user= await userModel.findOne({
+        const {userEmail} =req.body ;
+        const user = await userModel.findOne({
             where:{
-                userEmail: req.user.userEmail,
+                userEmail: userEmail,
             }
         });
         if(!user){
-
+            res.status(400).json({msg: 'User not found with the specified email'})
+        } else {
+            const code=nanoid(5);
+            await sendEmail(user.userEmail,'forget password' ,`verify code : ${code}`);
+            await userModel.update({
+                verifyCode:code},
+                {where:{
+                    id:user.id,}   
+                }
+                );
+            
+            res.status(200).json({msg: 'Success', user});   
+         //   const updateUser=await userModel.
         }
-        else{
-            res.json({message:'success',user});    
-
-        }
-    }catch(error){
-        res.json({message:'catch error',error})
+    } catch(error){
+        console.error(error);
+        res.status(500).json({message:'Error occurred while checking email', error})
     }
 
 }
+const updatePassword=async(req,res)=>{
+    try{
+        const {vCode,email,newPassword} =req.body ;
+        const user = await userModel.findOne({
+            where:{
+                userEmail: email,
+            }
+        });
+        if(!user){
+            res.status(400)
+            res.json({message:'no such user'})
+        }
+        else{
+        if(user.verifyCode==null) {
+            res.status(400)
+            res.json({message:'no code'})
+        }
+        if(user.verifyCode!=vCode){
+            res.status(400)
+            res.json({message:"wrong verify code"})
+
+        }
+        else if(user.verifyCode==vCode){
+            const hash=await bcrypt.hash(newPassword,8);
+            await userModel.update({
+                userPassword:hash,
+                verifyCode:null
+            },
+                {where:{
+                    id:user.id,}   
+                }
+                );
+        res.status(200)
+        res.json({message:"password changed"})
+        }       
+        }
+    }catch(e){
+       res.status(500)
+       res.json({message:"server error:"})
+    }
+}
+
 
 
 
@@ -243,6 +308,6 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails, userDetailsByEmail}
+module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails, userDetailsByEmail, updatePassword}
 
 

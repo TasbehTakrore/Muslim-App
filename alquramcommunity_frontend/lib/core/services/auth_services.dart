@@ -1,31 +1,32 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:alquramcommunity_frontend/controller/auth/fogetpassword_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/errorhandling.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:alquramcommunity_frontend/core/services/services.dart';
-import '../../controller/auth/appbar_controller.dart';
 import '../../controller/profileController.dart';
-import '../../data/model/backend_to_front_models/specificUder_Model.dart';
-import '../../data/model/backend_to_front_models/user_model.dart';
+import '../../view/widget/auth/verifycodedialog.dart';
 import '../constant/routes.dart';
 import '../constant/utils.dart';
 import 'package:http_parser/http_parser.dart';
+import '../constant/urls.dart';
+import '../../controller/auth/appbar_controller.dart';
+import '../../data/model/backend_to_front_models/specificUder_Model.dart';
 
-// String uri='http://192.168.1.7:5000';
+//String uri='http://192.168.1.7:5000';
 
 MyServices myServices = Get.put(MyServices());
 
-class AuthServices extends GetxService {
-  // String uri = 'http://172.19.108.121:5000';
-
+class AuthServices {
   String uri = 'http://192.168.1.19:5000';
   String uri2 = 'http://192.168.1.19:8080';
 
-  // static const String uri = 'http://172.19.66.29:5000';
-  APPBarController appBarController = Get.put(APPBarController());
   final ProfileController profilesController = Get.put(ProfileController());
+  final ForgetPasswordControllerImp forgetController =
+      Get.put(ForgetPasswordControllerImp());
+  APPBarController appBarController = Get.put(APPBarController());
 
   //sign up user
   void signUpUser({
@@ -104,35 +105,23 @@ class AuthServices extends GetxService {
         response: res,
         context: context,
         onSuccess: () async {
-          print(
-              "################################################## ${jsonDecode(res.body)}");
-
           myServices.sharedPreferences
               .setString("x_auth_token", jsonDecode(res.body)['token']);
           myServices.sharedPreferences
               .setString("user_name", jsonDecode(res.body)['user']['userName']);
           myServices.sharedPreferences.setString(
               "user_email", jsonDecode(res.body)['user']['userEmail']);
-          myServices.sharedPreferences.setString(
-              "user_gender", jsonDecode(res.body)['user']['userGender']);
+          myServices.sharedPreferences
+              .setInt("user_id", jsonDecode(res.body)['user']['id']);
+
           myServices.sharedPreferences
               .setInt("user_coins", jsonDecode(res.body)['user']['userCoins']);
           print(
               "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_email")}");
-          myServices.sharedPreferences
-              .setInt("user_id", jsonDecode(res.body)['user']['id']);
+
           appBarController.getCoins();
-          //      myServices.sharedPreferences.setInt("user_age", jsonDecode(res.body)['userAge']);
-          //  myServices.sharedPreferences.setString("prof_gender", jsonDecode(res.body)['userGender']);
 
           print(myServices.sharedPreferences.getString("user_name"));
-          //print(myServices.sharedPreferences.getString("user_email"));
-          //print(myServices.sharedPreferences.getInt("user_id").toString());
-
-          //SharedPreferences token = await SharedPreferences.getInstance();
-          // Provider.of<UserProvider>(context,listen:false).SetUser(res.body);
-          //token.setString('x_auth_token', jsonDecode(res.body)['token']);
-          showSnackBar(context, ' Success');
           Get.toNamed(AppRoute.home);
           profilesController.userInformation();
         },
@@ -147,28 +136,6 @@ class AuthServices extends GetxService {
     if (response.statusCode == 200) {
       final userProfile = jsonDecode(response.body);
       return userProfile;
-    } else {
-      throw Exception('Failed to get user profile data');
-    }
-  }
-
-  Future<UserModel> getUserProfileByEmail(String userEmail) async {
-    final response =
-        await http.get(Uri.parse('$uri/users/showUserByEmail/$userEmail'));
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      var userJson = responseData['user'];
-      // RegisterModel userProfile = RegisterModel.fromJson(userJson.toString());
-      print("userProfile: ${userJson['id']}");
-      return UserModel(
-        id: userJson['id'],
-        userName: userJson['userName'],
-        userEmail: userJson['userEmail'],
-        userAge: userJson['userAge'],
-        userGender: userJson['userGender'],
-        imageUrl: userJson['imageUrl'],
-      );
-      // return userProfile;
     } else {
       throw Exception('Failed to get user profile data');
     }
@@ -202,6 +169,7 @@ class AuthServices extends GetxService {
         profilesController.userAge.value =
             userProfile['user']['userAge'].toString();
         profilesController.userGender.value = userProfile['user']['userGender'];
+        profilesController.userInformation();
         Get.back();
       } else {
         //SnackBar(content: Text("wrong password"));
@@ -209,6 +177,104 @@ class AuthServices extends GetxService {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+//check email to use on change password
+  void checkUser({
+    required BuildContext context,
+    required String userEmail,
+  }) async {
+    final url = Uri.parse(MyURL.checkEmail); // Replace with the actual URL
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode({'userEmail': userEmail}),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        showSnackBar(context, 'check a code sended to your email');
+        Get.toNamed(AppRoute.ResetPassword);
+      } else if (response.statusCode == 400) {
+        showSnackBar(context, 'not a valid email');
+      }
+    } catch (e) {
+      print(e.toString());
+      showSnackBar(context, 'An error occurred while checking email');
+    }
+  }
+
+  void updatePassword({
+    required BuildContext context,
+    required String vCode,
+    required String email,
+    required String newPassword,
+  }) async {
+    final url = Uri.parse(MyURL.updatePassword); // Replace with the actual URL
+    try {
+      print(vCode);
+      final response = await http.post(
+        url,
+        body: jsonEncode({
+          'vCode': vCode,
+          'email': email,
+          'newPassword': newPassword,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        showSnackBar(
+            context, 'Password updated successfully,log in with new password');
+        Get.toNamed(AppRoute.login);
+      } else if (response.statusCode == 400) {
+        showSnackBar(context, 'No such user or invalid verification code');
+      }
+    } catch (e) {
+      print(e.toString());
+      showSnackBar(context, 'An error occurred while updating password');
+    }
+  }
+
+// MyServices myServices = Get.put(MyServices());
+
+// class AuthServices extends GetxService {
+  // String uri = 'http://172.19.108.121:5000';
+
+  // static const String uri = 'http://172.19.66.29:5000';
+
+  // Future<Map<String, dynamic>> getUserProfile(int userId) async {
+  //   final response = await http.get(Uri.parse('$uri/users/showUser/$userId'));
+  //   if (response.statusCode == 200) {
+  //     final userProfile = jsonDecode(response.body);
+  //     return userProfile;
+  //   } else {
+  //     throw Exception('Failed to get user profile data');
+  //   }
+  // }
+
+  Future<UserModel> getUserProfileByEmail(String userEmail) async {
+    final response =
+        await http.get(Uri.parse('$uri/users/showUserByEmail/$userEmail'));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      var userJson = responseData['user'];
+      // RegisterModel userProfile = RegisterModel.fromJson(userJson.toString());
+      print("userProfile: ${userJson['id']}");
+      return UserModel(
+        id: userJson['id'],
+        userName: userJson['userName'],
+        userEmail: userJson['userEmail'],
+        userAge: userJson['userAge'],
+        userGender: userJson['userGender'],
+        imageUrl: userJson['imageUrl'],
+      );
+      // return userProfile;
+    } else {
+      throw Exception('Failed to get user profile data');
     }
   }
 }

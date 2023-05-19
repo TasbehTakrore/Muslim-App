@@ -44,7 +44,7 @@ class TadabborPlanCardSetPlan extends StatelessWidget {
                                     });
                               }),
                           const Text("خطّة تدبّر القرآن",
-                              style: TextStyle(fontSize: 23)),
+                              style: TextStyle(fontSize: 20)),
                         ],
                       ),
                     ],

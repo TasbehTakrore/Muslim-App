@@ -1,3 +1,4 @@
+import 'package:alquramcommunity_frontend/controller/thikrCatgController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/homescreen_controller.dart';
@@ -10,6 +11,8 @@ class Thikr extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
+     ThikrCatgControllerImp thikrController=Get.put(ThikrCatgControllerImp());
+     thikrController.setisPlaying();
     return
         ListView(  
           children: [

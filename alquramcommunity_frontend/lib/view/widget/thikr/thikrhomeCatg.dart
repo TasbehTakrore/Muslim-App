@@ -33,9 +33,8 @@ class ThikrHomeCard2 extends StatelessWidget {
           child: Column( 
             children: [ 
               InkWell( 
-                onTap: () { 
-                   
-                  controller.selectThikr(index); 
+                onTap: () async {  
+                  await controller.selectThikr(index); 
                   Get.toNamed(AppRoute.thikrdetails, arguments: ['$index']); 
                 }, 
                 child: Container( 

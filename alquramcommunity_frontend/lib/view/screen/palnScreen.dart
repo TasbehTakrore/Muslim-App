@@ -23,6 +23,7 @@ class PalnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(PlanController());
+    PlanController planController=  Get.put(PlanController());
 
     return WillPopScope(
       onWillPop: () async {

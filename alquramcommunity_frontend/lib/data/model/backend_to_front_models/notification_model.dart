@@ -5,7 +5,7 @@ class NotificationModel {
     required this.body,
     required this.token,
   });
-  late final String scheduledTime;
+  late final DateTime scheduledTime;
   late final String title;
   late final String body;
   late final String token;

@@ -14,7 +14,7 @@ const sendPushNotification = async (notification) => {
     data: {
       title: title,
       body: body,
-      topic: 'my-topic',
+    //  topic: 'my-topic',
 
     },
         token: token,
@@ -32,7 +32,7 @@ const sendPushNotification = async (notification) => {
 };
 
 const createNotification = async (req, res) => {
-    const { scheduledTime, title, body, token, sound } = req.body;
+    const { scheduledTime, title, body, token } = req.body;
   
     try {
       // Create a new notification object
@@ -41,7 +41,6 @@ const createNotification = async (req, res) => {
         title:title,
         body:body,
         token:token,
-        sound:sound,
       });
   
       // Schedule the push notification to be sent at the specified time
