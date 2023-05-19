@@ -70,9 +70,7 @@ dependencies:
   arabic_numbers: ^1.0.0
   top_snackbar_flutter: ^3.0.0+1
   dartarabic: ^0.1.2
-
   speech_to_text: ^6.1.1
-
   geolocator: ^9.0.2
   adhan: ^2.0.0-nullsafety.2
   hijri: ^3.0.0
@@ -80,23 +78,25 @@ dependencies:
   flutter_tts: ^3.6.3
   confetti: ^0.7.0
   direct_select: "^1.0.3"
-
   numberpicker: ^2.1.2
-
   circular_countdown_timer: ^0.2.3
   custom_sliding_segmented_control: ^1.7.4
   awesome_dialog: ^3.0.2
   audioplayers: ^4.0.1
-  firebase_messaging: ^14.4.1
+  # firebase_messaging: ^14.4.1
   flutter_qiblah: ^2.1.0
   provider: ^5.0.0
-  firebase_core: ^2.10.0
+  firebase_core: ^2.13.0
+  cloud_firestore: ^4.7.1
   app_settings: ^4.2.0
   flutter_local_notifications: ^8.2.0
   flutter_rating_bar: ^4.0.1
   pin_code_fields: ^7.4.0
   just_audio: ^0.9.32
   fl_chart: ^0.62.0
+  fluttertoast: ^8.2.1
+  app_tutorial: ^0.3.2
+
 
 
 dev_dependencies:
@@ -144,6 +144,7 @@ flutter:
     - assets/images/mosqueLine.png
     - assets/images/profile.png
     - assets/
+    - assets/sounds/Beam.wav
 
     
     

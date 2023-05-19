@@ -12,7 +12,6 @@ const { nanoid } = require('nanoid');
 //add new user `sign up` 
 const signUp = async(req,res)=>{
     try{
-
         const {userName,userEmail,userAge,userPassword,userGender}=req.body;
         const hashPassword = await bcrypt.hashSync(userPassword,8);
         upload.single('image')(req, res, async function (err) {
@@ -20,7 +19,6 @@ const signUp = async(req,res)=>{
               console.log(err);
             } else if (err) {
               console.log(err);
-
             }
             const tempFilename = req.tempFilename; 
          //   const imageUrl = req.file ? req.file.filename : null;
@@ -51,6 +49,7 @@ const signUp = async(req,res)=>{
 
  
 }
+
 
 const addCoins = async (req, res)=>{
     try {
@@ -149,6 +148,23 @@ const userDetails=async(req,res)=>{
     const user= await userModel.findOne({
         where:{
             id: req.params.userId,
+            }
+        });
+        if(!user){
+            res.json({message:'no such user'});    
+        }
+        else{
+            res.status(200).json({message:'found',user});}
+        }catch(error){
+            res.json({message:'catch error',error})
+        }
+}
+
+const userDetailsByEmail=async(req,res)=>{
+    try{
+    const user= await userModel.findOne({
+        where:{
+            userEmail: req.params.userEmail,
             }
         });
         if(!user){
@@ -292,6 +308,6 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails,updatePassword}
+module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails, userDetailsByEmail, updatePassword}
 
 

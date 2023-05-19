@@ -59,6 +59,9 @@ class SurahCardRecitation extends GetView<RecitationScreenController> {
         onTap: () {
           controller.changePageIndex(startPage + 1);
           Get.toNamed(AppRoute.recitation);
+          controller.stopwatch.reset();
+          controller.stopwatch.start();
+
           //onTap;
         },
       ),

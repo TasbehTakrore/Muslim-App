@@ -3,23 +3,15 @@ const { DataTypes } = require('sequelize');
 
 
 const userModel = sequelize.define('User', {
-    // Model attributes are defined here
     
     userName: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      validate:{
-        isAlphanumeric:{
-          args: true,
-          msg:"user name just include isAlphanumeric values only"
-        } 
-      },
     },
     userEmail: {
       type: DataTypes.STRING(255),
 
-            allowNull: false,
-
+      allowNull: false,
       unique:true,
       validate:{
         isEmail:{

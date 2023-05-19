@@ -26,28 +26,56 @@ class HomeScreen extends StatelessWidget {
         },
         child: GetBuilder<HomeScreenControllerImp>(
             builder: (controller) => Scaffold(
-                floatingActionButton: FloatingActionButton(
-                    backgroundColor: AppColor.primaryColor,
-                    onPressed: () {
-                      controller.changePage(4);
-                    },
-                    child: const Icon(Icons.home)),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerDocked,
-                appBar: AppBar(
-                    shadowColor: AppColor.grey,
-                    automaticallyImplyLeading: false,
-                    //primary: true,
-                    elevation: 0.0,
-                    backgroundColor: AppColor.grey,
-                    title: CustomAppBar(onPressedIcon: () {})
-                    //titleTextStyle: TextStyle(text),
-                    ),
-                bottomNavigationBar: const CustomBottonAppBarHome(),
-                backgroundColor: AppColor.grey,
-                body: controller.content.value
-                //controller.listPage.elementAt(controller.currentPage)
+                  floatingActionButton: FloatingActionButton(
+                      backgroundColor: AppColor.primaryColor,
+                      onPressed: () {
+                        controller.changePage(4);
+                      },
+                      child: const Icon(Icons.home)),
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.centerDocked,
+                  appBar: AppBar(
+                      shadowColor: AppColor.grey,
+                      automaticallyImplyLeading: false,
+                      //primary: true,
+                      elevation: 0.0,
+                      backgroundColor: AppColor.grey,
+                      title: CustomAppBar(onPressedIcon: () {})
+                      //titleTextStyle: TextStyle(text),
+                      ),
+                  bottomNavigationBar: const CustomBottonAppBarHome(),
+                  backgroundColor: AppColor.grey,
+                  body:
+                  
+                  
+                                             controller.content.value
 
+                  //  FutureBuilder<List<String>>(
+                  //   future: homeScreenControllerImp.getMyCommu(),
+                  //   builder: (BuildContext context,
+                  //       AsyncSnapshot<List<String>> snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       return const Center(child: CircularProgressIndicator());
+                  //     } else if (snapshot.hasError) {
+                  //       return const Center(
+                  //           child:
+                  //               Text('حدث خطأ في الاستعلام عن قاعدة البيانات'));
+                  //     } else {
+                  //       if (snapshot.hasData && snapshot.data != null) {
+
+                  //         // return ListView.builder(
+                  //         //   itemCount: snapshot.data!.length,
+                  //         //   itemBuilder: (BuildContext context, int index) {
+                  //         //     return Text(snapshot.data![index]);
+                  //         //   },
+                  //         // );
+                  //       } else {
+                  //         return const Center(child: Text('لا توجد بيانات'));
+                  //       }
+                  //     }
+                  //   },
+                  // ),
+                  //controller.listPage.elementAt(controller.currentPage)
                 )));
   }
 }

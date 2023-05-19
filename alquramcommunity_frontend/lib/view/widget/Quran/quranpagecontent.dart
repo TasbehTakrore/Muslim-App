@@ -19,7 +19,6 @@ class QuranPageContent extends StatelessWidget {
     return GetBuilder<QuranPageController>(
       builder: (controller) => Container(
         //color: Colors.amber,
-
         child: ListView.separated(
             itemCount: getSurahCountByPage(indexP + 1),
             itemBuilder: (context, index) {

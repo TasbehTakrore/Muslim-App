@@ -1,18 +1,12 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
-import 'package:confetti/confetti.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:quran/quran.dart';
-import '../../controller/recitationscreen_controller.dart';
-import '../../controller/speechRecognition_controller.dart';
 import '../../controller/trainerScreen_controller.dart';
 import '../../core/constant/routes.dart';
 import '../widget/home/customappbar.dart';
-import '../widget/logowidget.dart';
-import '../widget/recitation/floatingbuttonsgroup.dart';
-import '../widget/recitation/recitationqurancontent.dart';
 import '../widget/trainer/floatingbottontrainer.dart';
+import '../widget/trainer/setTrainerSettingDialog.dart';
 
 class TrainerMainScreen extends GetView {
   const TrainerMainScreen({super.key});
@@ -23,7 +17,7 @@ class TrainerMainScreen extends GetView {
 
     TrainerScreenController trainerScreenController =
         Get.put(TrainerScreenController());
-
+    trainerScreenController.setContext(context);
     return WillPopScope(
         onWillPop: () async {
           Get.offAllNamed(AppRoute.home);
@@ -34,17 +28,27 @@ class TrainerMainScreen extends GetView {
           floatingActionButton: const TrainerFloatingButtonsGroup(),
           backgroundColor: AppColor.grey,
           body: Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               alignment: Alignment.center,
               child: Obx(() => Column(
-                    //logoWidget(),
-                    // ConfettiWidget(
-                    //   confettiController: null,
-                    // ),
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomAppBar(onPressedIcon: () {}),
-
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.settings),
+                            color: AppColor.black,
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return SetTrainerSettingDialog();
+                                  });
+                            },
+                          )
+                        ],
+                      ),
                       Text(
                         "${trainerScreenController.counter.value}",
                         textDirection: TextDirection.rtl,
@@ -103,7 +107,10 @@ class TrainerMainScreen extends GetView {
                         ],
                       ),
                       SizedBox(height: 20),
-                      Text("${trainerScreenController.text.value}"),
+                      Text(
+                        "${trainerScreenController.showText.value}",
+                        textDirection: TextDirection.rtl,
+                      ),
                       SizedBox(height: 20),
                     ],
                   ))),

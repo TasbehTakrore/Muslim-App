@@ -20,10 +20,10 @@ class QuranScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    // Get.put(QuranPageController());
     RecitationScreenController recitationScreenController =
         Get.put(RecitationScreenController());
     return GetBuilder<QuranPageController>(builder: (controller) {
+      controller.setContext(context);
       return WillPopScope(
           onWillPop: () async {
             Get.offAllNamed(AppRoute.home);
@@ -67,58 +67,26 @@ class QuranScreen extends StatelessWidget {
             body: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomSlidingSegmentedControl<int>(
-                    fixedWidth: MediaQuery.of(context).size.width / 2.05,
-                    height: 39,
-                    initialValue: controller.getIndex(),
-                    children: {
-                      1: Text('Page\'',
-                          style: TextStyle(
-                              color: controller.getIndex() != 1
-                                  ? AppColor.black
-                                  : Colors.white)),
-                      2: Text('Detailes',
-                          style: TextStyle(
-                              color: controller.getIndex() != 2
-                                  ? AppColor.black
-                                  : Colors.white)),
-                    },
-                    decoration: BoxDecoration(
-                      color: QuranConstant.backgroundColor.value,
-                    ),
-                    thumbDecoration: BoxDecoration(
-                      color: AppColor.secondaryColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    duration: const Duration(milliseconds: 300),
-                    onValueChanged: (v) {
-                      controller.changeIndex(v);
-                    }),
-                controller.getIndex() == 1
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.height,
-                        height: MediaQuery.of(context).size.height - 80,
-                        child: PageView.builder(
-                            onPageChanged: (index) {
-                              controller.changePageIndexAndSurahName(index);
-                            },
-                            controller: PageController(
-                                initialPage: controller.getPageIndex()),
-                            reverse: controller.englishLang() ? true : false,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: totalPagesCount,
-                            itemBuilder: (context, indexP) {
-                              return Container(
-                                  padding: indexP == 0 || indexP == 1
-                                      ? const EdgeInsets.only(top: 150)
-                                      : const EdgeInsets.only(top: 0),
-                                  child: QuranPageContent(indexP: indexP));
-                            }),
-                      )
-                    : Container(
-                        height: 500,
-                        color: Color.fromARGB(255, 244, 67, 54),
-                      )
+                SizedBox(
+                  width: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height - 80,
+                  child: PageView.builder(
+                      onPageChanged: (index) {
+                        controller.changePageIndexAndSurahName(index);
+                      },
+                      controller: PageController(
+                          initialPage: controller.getPageIndex()),
+                      reverse: controller.englishLang() ? true : false,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: totalPagesCount,
+                      itemBuilder: (context, indexP) {
+                        return Container(
+                            padding: indexP == 0 || indexP == 1
+                                ? const EdgeInsets.only(top: 150)
+                                : const EdgeInsets.only(top: 0),
+                            child: QuranPageContent(indexP: indexP));
+                      }),
+                )
               ],
             ),
           ));

@@ -20,6 +20,7 @@ import 'auth/appbar_controller.dart';
 class TrainerScreenController extends GetxController {
   //
   RxString ayahTest = "بسم الله".obs;
+  int coins = 0;
   int juzNumber = 0;
   int surahNumb = 0;
   int index = 1;
@@ -56,6 +57,31 @@ class TrainerScreenController extends GetxController {
   String? userEmail;
   MyServices myServices = Get.put(MyServices());
   APPBarController appBarController = Get.put(APPBarController());
+  Rx<bool> firstWordCheck = true.obs;
+  Rx<bool> lastWordCheck = true.obs;
+  Rx<bool> firstPartCheck = true.obs;
+  Rx<bool> lastPartCheck = true.obs;
+  Rx<bool> previousCheck = true.obs;
+  Rx<bool> nextCheck = true.obs;
+
+  late SpeechToText _speech;
+  RxBool _isAvailable = false.obs;
+  RxBool _isListening = false.obs;
+  RxString text = "".obs;
+  RxString showText = "".obs;
+
+  String _referenceText = "";
+  Rx<IconData> micIcon = Icons.mic_off.obs;
+  BuildContext? conteXt;
+  Stopwatch stopwatch = Stopwatch();
+  int sec = 0;
+  int min = 0;
+  int hours = 0;
+  String? hoursStr;
+  String? minutesStr;
+  String? secondsStr;
+  String durationResult = "";
+  int mistakesCount = 0;
 
   @override
   void onInit() {
@@ -76,61 +102,252 @@ class TrainerScreenController extends GetxController {
     // min =0
   }
 
-  letsSurahTest(int surahIndex) {
+  void setContext(BuildContext context) {
+    conteXt = context;
+  }
+
+  List<MistakeModel> gettingMistakes = [];
+
+  letsSurahTest(int surahIndex) async {
+    coins = 0;
+    mistakesCount = 0;
+
+    gettingMistakes =
+        await MistakeServices.getSurahMistakes(userEmail!, surahIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     wordsWidgetList.clear();
     counter.value = 0;
     surahNumb = surahIndex;
     print(surahNumb);
+    testTypeFlag = 0;
+
     verseCount = getVerseCount(surahNumb);
-    prepareTestDataForSurah();
-    testType();
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForSurah();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذه السّورة، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForSurah();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForSurahMistake();
+                        testTypeFlag = 1; //
+
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+      print("------------- my mistake choice");
+    }
     //testWithhideTheFirstWord();
   }
 
-  letsJuzTest(int juzIndex) {
+  letsJuzTest(int juzIndex) async {
+    coins = 0;
+
+    mistakesCount = 0;
+    gettingMistakes =
+        await MistakeServices.getJuzMistakes(userEmail!, juzIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     juzNumber = juzIndex;
     print(juzNumber);
-    prepareTestDataForJuz();
+    counter.value = 0;
+    testTypeFlag = 0;
+
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForJuz();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذا الجزء، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForJuz();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForJuzMistake();
+                        testTypeFlag = 1; //
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+      print("------------- my mistake choice");
+    }
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
-  letsPageTest(int pageIndex) {
+  letsPageTest(int pageIndex) async {
+    coins = 0;
+
+    mistakesCount = 0;
+
+    gettingMistakes =
+        await MistakeServices.getPageMistakes(userEmail!, pageIndex);
+    print("gettingMistakes $gettingMistakes");
+
     mistakeModelList.clear();
     pageNumber = pageIndex;
     print(pageIndex);
-    prepareTestDataForPage();
+    counter.value = 0;
+    testTypeFlag = 0;
+
+    if (gettingMistakes.length == 0) {
+      prepareTestDataForPage();
+      testType();
+    } else {
+      showDialog(
+          context: conteXt!,
+          barrierDismissible: false,
+          builder: (conteXt) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "لديك ${gettingMistakes.length} أخطاء في هذه الصّفحة، اختر نوع التّدريب الّذي تريده:",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Divider(),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.primaryColor)),
+                      onPressed: () {
+                        testTypeFlag = 0;
+                        prepareTestDataForPage();
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.data_saver_off),
+                      label: const Text("تدريب شامل")),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        prepareTestDataForPageMistake();
+                        testTypeFlag = 1; //
+                        testType();
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text("على أخطائي"))
+                ],
+              ),
+            );
+          });
+    }
+
     //service.recitation.setInt("surahTrainerIndex", pageIndex);
   }
 
   int type = 0;
   void testType() {
-    testTypeIndex = getRandom(0, 6);
-    if (testTypeIndex == 0) {
+    if (testTypeFlag == 1)
+      testTypeIndex = getRandom(0, 4);
+    else
+      testTypeIndex = getRandom(0, 6);
+    if (testTypeIndex == 0 && firstWordCheck.value == true) {
       testWithhideTheFirstWord();
-      startListening(conteXt!);
+      //// startListening(conteXt!);
       type = 0;
-    } else if (testTypeIndex == 1) {
+    } else if (testTypeIndex == 1 && lastWordCheck.value == true) {
       testWithhideTheEndWord();
-      startListening(conteXt!);
+      //startListening(conteXt!);
       type = 1;
-    } else if (testTypeIndex == 2) {
+    } else if (testTypeIndex == 2 && firstPartCheck.value == true) {
       testWithhideThePartFirstWord();
-      startListening(conteXt!);
+      //  startListening(conteXt!);
       type = 2;
-    } else if (testTypeIndex == 3) {
+    } else if (testTypeIndex == 3 && lastPartCheck.value == true) {
       testWithhideThePartEndWord();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 3;
-    } else if (testTypeIndex == 4) {
+    } else if (testTypeIndex == 4 && previousCheck.value == true) {
       testWithPreviousAyah();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 4;
-    } else if (testTypeIndex == 5) {
+    } else if (testTypeIndex == 5 && nextCheck.value == true) {
       testWithNextAyah();
-      startListening(conteXt!);
+      // startListening(conteXt!);
       type = 5;
+    } else {
+      testType();
     }
   }
 
@@ -148,7 +365,67 @@ class TrainerScreenController extends GetxController {
           .add(getVerseStandard(surahNumb, i + 1, verseEndSymbol: false));
     }
     print(ayahList);
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  int surId = 0;
+  int ayID = 0;
+  int testTypeFlag = 0;
+  prepareTestDataForSurahMistake() {
+    juzFlag = true; ///////////////
+
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1; // 1= myMistake
+    stopwatch.reset();
+    stopwatch.start();
+    // print("gettingMistakes---- ${gettingMistakes[0].ayahId}");
+  }
+
+  prepareTestDataForJuzMistake() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    print(quranJuzList[juzNumber - 1]);
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1;
+
+    verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
   }
 
   prepareTestDataForPage() {
@@ -172,8 +449,37 @@ class TrainerScreenController extends GetxController {
     });
 
     verseCount = ayahList.length;
-    testType();
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
+  }
+
+  prepareTestDataForPageMistake() {
+    juzFlag = true;
+    ayahList.clear();
+    verseIndex.clear();
+    surahIndex.clear();
+    wordsWidgetList.clear();
+    ayahListStandard.clear();
+
+    print(quranJuzList[juzNumber - 1]);
+    verseCount = gettingMistakes.length;
+
+    for (int i = 0; i < verseCount; i++) {
+      surId = gettingMistakes[i].surahId!;
+      ayID = gettingMistakes[i].ayahId!;
+
+      ayahList.add(getVerse(surId, ayID));
+      ayahListStandard.add(getVerseStandard(surId, ayID));
+      verseIndex.add(ayID);
+      surahIndex.add(surId);
+      print("ayahList $ayahList");
+    }
+    testTypeFlag = 1;
+
+    verseCount = ayahList.length;
+    stopwatch.reset();
+    stopwatch.start();
   }
 
   prepareTestDataForJuz() {
@@ -202,7 +508,8 @@ class TrainerScreenController extends GetxController {
       });
     }
     verseCount = ayahList.length;
-    testType();
+    stopwatch.reset();
+    stopwatch.start();
     // print(searchWords(["سَوَآءٌ"]));
   }
 
@@ -289,33 +596,38 @@ class TrainerScreenController extends GetxController {
   }
 
   void falseAnswer() {
+    mistakesCount++;
     setSurahIDAndAyahID();
     print("false...");
     mistakeModelList.add(MistakeModel(
-            userEmail: userEmail,
-            mistakeType: 0,
-            weight: 10,
-            surahId: surahIDToSave,
-            ayahId: ayahIDToSave)
-        .toJson());
+      userEmail: userEmail,
+      mistakeType: 0,
+      weight: 10,
+      surahId: surahIDToSave,
+      ayahId: ayahIDToSave,
+      juzId: getJuzNumber(surahIDToSave, ayahIDToSave),
+      pageId: getPageNumber(surahIDToSave, ayahIDToSave),
+    ).toJson());
     print(mistakeModelList);
     testType();
     print("false Answer ++++++++++%%%%%%%%%%%%++++++++++++");
-
-    testType();
   }
 
   void trueAnswer() {
+    coins += 2;
+
     setSurahIDAndAyahID();
     appBarController.addCoins();
     print("after match inside true answer");
     mistakeModelList.add(MistakeModel(
-            userEmail: userEmail,
-            mistakeType: 0,
-            weight: -10,
-            surahId: surahIDToSave,
-            ayahId: ayahIDToSave)
-        .toJson());
+      userEmail: userEmail,
+      mistakeType: 0,
+      weight: -10,
+      surahId: surahIDToSave,
+      ayahId: ayahIDToSave,
+      juzId: getJuzNumber(surahIDToSave, ayahIDToSave),
+      pageId: getPageNumber(surahIDToSave, ayahIDToSave),
+    ).toJson());
     print(mistakeModelList);
     testType();
     print("true Answer ++++++++++**++++++++++++");
@@ -614,13 +926,6 @@ class TrainerScreenController extends GetxController {
     {"start": 582, "end": 604},
   ];
 
-  late SpeechToText _speech;
-  RxBool _isAvailable = false.obs;
-  RxBool _isListening = false.obs;
-  RxString text = "".obs;
-  String _referenceText = "";
-  Rx<IconData> micIcon = Icons.mic_off.obs;
-  BuildContext? conteXt;
   void setOpenMiceIcon() {
     micIcon.value = Icons.mic_none;
     print("Inside");
@@ -639,6 +944,7 @@ class TrainerScreenController extends GetxController {
 
   void setReferenceText(String textt) {
     text.value = "";
+    showText.value = "";
     _referenceText = textt.replaceAll('إ', 'ا');
     _referenceText = _referenceText.replaceAll('آ', 'ا');
     _referenceText = _referenceText.replaceAll('أ', 'ا');
@@ -671,6 +977,7 @@ class TrainerScreenController extends GetxController {
     matchFlag = false;
     conteXt = context;
     text.value = "";
+    showText.value = "";
 
     if (_isAvailable.value && !_isListening.value) {
       _speech.listen(
@@ -680,6 +987,7 @@ class TrainerScreenController extends GetxController {
 
         onResult: (result) {
           text.value = result.recognizedWords;
+          showText.value = "هل تقصد: " + result.recognizedWords;
           print(text.value);
           setOpenMiceIcon();
 
@@ -719,13 +1027,26 @@ class TrainerScreenController extends GetxController {
       _speech.stop();
       _isListening.value = false;
       text.value = "";
+      showText.value = "";
     }
   }
 
   statisticsAndEnd() {
+    stopwatch.stop();
+
+    sec = stopwatch.elapsed.inSeconds % 60;
+    min = stopwatch.elapsed.inMinutes % 60;
+    hours = stopwatch.elapsed.inHours;
+
+    hoursStr = hours.toString().padLeft(2, '0');
+    minutesStr = min.toString().padLeft(2, '0');
+    secondsStr = sec.toString().padLeft(2, '0');
+    durationResult = '$hoursStr:$minutesStr:$secondsStr';
+    print("recitationController: $durationResult");
+
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
-    CoinsServices.addCoins(appBarController.coinsCount.value);
+    CoinsServices.addCoins(coins);
     return showDialog(
         context: conteXt!,
         builder: (BuildContext context) {

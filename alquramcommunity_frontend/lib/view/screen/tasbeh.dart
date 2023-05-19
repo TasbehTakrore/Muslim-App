@@ -10,7 +10,7 @@ import '../../core/constant/routes.dart';
 import '../widget/Tasbeeh/addnewtasbeeh.dart';
 import '../widget/Tasbeeh/customdropdown.dart';
 
-class MyApp extends StatelessWidget {
+class TasbeehPage extends StatelessWidget {
   final TasbeehController _myController = Get.put(TasbeehController());
 
   @override
@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
     return GetBuilder<TasbeehController>(builder: (controller) {
       return WillPopScope(
           onWillPop: () async {
+            await _myController.addTasbehCount();
+
             Get.offAllNamed(AppRoute.home);
 
             return false;

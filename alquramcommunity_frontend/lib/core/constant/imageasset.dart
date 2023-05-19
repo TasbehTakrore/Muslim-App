@@ -28,8 +28,9 @@ class AppImageAsset {
   static const String praying = "$rootImages/praying.png";
   static const String athan = "$rootImages/athan.png";
   static const String dua = "$rootImages/duaa.png";
-  static const String profile = "$rootImages/profile.png";
+  static const String profile = "$rootImages/user-128.png";
 
   static const String dashboard = "$rootImages/dashboard.png";
-   static const String commBadge = "$rootImages/commBadge.svg";
+  static const String commBadge = "$rootImages/commBadge.svg";
+  static const String people = "$rootImages/people.png";
 }

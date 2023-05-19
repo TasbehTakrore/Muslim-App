@@ -22,13 +22,19 @@ app.use('/notification/',notificationRouter);
 const tasbehRouter = require('./moduels/tasbeh.route');
 app.use('/tasbeh/',tasbehRouter);
 
+const communityRouter = require('./moduels/community.route');
+app.use('/communities/',communityRouter);
+
+const communityRequestRouter = require('./moduels/communityRequest.route');
+app.use('/communities/',communityRequestRouter);
+
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
-app.use(bodyParser.json({ limit: '1gb' }));
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
+// app.use(bodyParser.json({ limit: '1gb' }));
+// app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
 
 
 /*

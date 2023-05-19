@@ -7,6 +7,7 @@ const mistakeModel = sequelize.define('Mistake', {
     
     userEmail: {
       type: DataTypes.STRING(255),
+      references: true,
       primaryKey: true,
       allowNull: false,
       unique:false,
@@ -91,7 +92,44 @@ const mistakeModel = sequelize.define('Mistake', {
             msg:"maximum Id ever - baqarah"
           }
         },
-    },   
+    }, 
+    juzId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: false,
+      validate:{
+        isInt:{
+          args: true,
+          msg:"juz Id"
+        },
+        min:{
+          args: 1,
+          msg:"juz 1"
+        },
+        max:{
+          args: 30,
+          msg:"juz 30"
+        }
+      },
+  },  pageId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: false,
+    validate:{
+      isInt:{
+        args: true,
+        msg:"page Id"
+      },
+      min:{
+        args: 1,
+        msg:"page 1"
+      },
+      max:{
+        args: 604,
+        msg:"page 604"
+      }
+    },
+},  
   }, {
     // Other model options go here
   }

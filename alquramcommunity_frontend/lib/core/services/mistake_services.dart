@@ -42,7 +42,6 @@ class MistakeServices extends GetxService {
 
   static Future<List<MistakeModel>> getMistakes(String id) async {
     List<MistakeModel> mistakesList = [];
-
     try {
       print("inside mistake get id: $id");
       print("${MyURL.getAllMistakeURL}$id");
@@ -53,13 +52,11 @@ class MistakeServices extends GetxService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       List<dynamic> mistakesData = json.decode(res.body)['mistakes'];
       mistakesData.forEach((mistakeData) {
         MistakeModel mistake = MistakeModel.fromJson(mistakeData);
         mistakesList.add(mistake);
       });
-
       print("Mistakes: ${mistakesList[0].surahId}");
       return mistakesList;
     } catch (error) {
@@ -67,6 +64,83 @@ class MistakeServices extends GetxService {
       return mistakesList;
     }
   }
+
+  static Future<List<MistakeModel>> getSurahMistakes(
+      String id, int surahId) async {
+    List<MistakeModel> mistakesList = [];
+    try {
+      print("inside mistake get id: $id");
+
+      http.Response res = await http.get(
+        Uri.parse("${MyURL.getSurahMistakeURL}$id/$surahId"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      List<dynamic> mistakesData = json.decode(res.body)['mistakes'];
+      mistakesData.forEach((mistakeData) {
+        MistakeModel mistake = MistakeModel.fromJson(mistakeData);
+        mistakesList.add(mistake);
+      });
+      print("Mistakes: $mistakesList");
+      return mistakesList;
+    } catch (error) {
+      print('noooo $error');
+      return [];
+    }
+  }
+
+  static Future<List<MistakeModel>> getJuzMistakes(
+      String id, int juzId) async {
+    List<MistakeModel> mistakesList = [];
+    try {
+      print("inside mistake get id: $id");
+
+      http.Response res = await http.get(
+        Uri.parse("${MyURL.getJuzMistakeURL}$id/$juzId"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      List<dynamic> mistakesData = json.decode(res.body)['mistakes'];
+      mistakesData.forEach((mistakeData) {
+        MistakeModel mistake = MistakeModel.fromJson(mistakeData);
+        mistakesList.add(mistake);
+      });
+      print("Mistakes: $mistakesList");
+      return mistakesList;
+    } catch (error) {
+      print('noooo $error');
+      return [];
+    }
+  }
+
+  static Future<List<MistakeModel>> getPageMistakes(
+      String id, int pageId) async {
+    List<MistakeModel> mistakesList = [];
+    try {
+      print("inside mistake get id: $id");
+
+      http.Response res = await http.get(
+        Uri.parse("${MyURL.getPagehMistakeURL}$id/$pageId"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      List<dynamic> mistakesData = json.decode(res.body)['mistakes'];
+      mistakesData.forEach((mistakeData) {
+        MistakeModel mistake = MistakeModel.fromJson(mistakeData);
+        mistakesList.add(mistake);
+      });
+      print("Mistakes: $mistakesList");
+      return mistakesList;
+    } catch (error) {
+      print('noooo $error');
+      return [];
+    }
+  }
+
+
 
   // static void mistakeLogging(List<Map<String, dynamic>> mistakeList) async {
   //   try {

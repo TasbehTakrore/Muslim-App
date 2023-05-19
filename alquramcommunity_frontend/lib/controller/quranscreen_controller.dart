@@ -10,6 +10,8 @@ import '../core/localization/changelocal.dart';
 import '../core/services/mistake_services.dart';
 import '../core/services/services.dart';
 import '../data/model/backend_to_front_models/mistake_model.dart';
+import '../view/widget/Quran/ayahDetaileDialog.dart';
+import '../view/widget/Quran/tafser.dart';
 
 class QuranPageController extends GetxController {
   MyServices myServices = Get.put(MyServices());
@@ -26,6 +28,7 @@ class QuranPageController extends GetxController {
   int index = 1;
   List<MistakeModel> mistakesList = [];
   String? userEmail;
+  BuildContext? context;
 
   @override
   void onInit() {
@@ -139,7 +142,16 @@ class QuranPageController extends GetxController {
                     )),
               ));
       versesList.add(InkWell(
-        onTap: () => () {},
+        onTap: () {
+          showDialog(
+              context: context!,
+              builder: (context) {
+                print((tafser[0][(startVerse! + i).toString()]
+                    as Map<String, Object>)["verse"]);
+                return AyahDetailsDialog(
+                    surahNumb: surahNumb!, verseNumb: startVerse! + i);
+              });
+        },
         child: Text(
           key: UniqueKey(),
           getVerseEndSymbol(startVerse! + i),
@@ -156,5 +168,8 @@ class QuranPageController extends GetxController {
     // for (var i = 0; i < 10; i++) {
     //   childs.add(new Text("hiii"));
     // }
+  }
+  void setContext(BuildContext conteXt) {
+    context = conteXt;
   }
 }

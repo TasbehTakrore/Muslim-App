@@ -16,13 +16,13 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoginControllerImp controller = Get.put(LoginControllerImp());
-    void signInUser(){
-        authservices.signInUser(
-        context: context,
-        userEmail: controller.email.text,
-        userPassword: controller.password.text);
-        
+    void signInUser() {
+      authservices.signInUser(
+          context: context,
+          userEmail: controller.email.text,
+          userPassword: controller.password.text);
     }
+
     return Scaffold(
         //  backgroundColor: AppColor.grey_sec,
 
@@ -51,22 +51,24 @@ class Login extends StatelessWidget {
           hinttext: "7".tr,
           iconData: Icons.email_outlined,
           mycontroller: controller.email,
+          
           //my controller
         ),
         //password
         GetBuilder<LoginControllerImp>(
-          builder: (controller)=>CustomTextFormAuth(
-          labelText: "6".tr,
-          hinttext: "8".tr,
-          iconData: Icons.lock_outline,
-          mycontroller: controller.password,
-          obscureText:controller.isshowpass,
-          onTapIcon: (){
-            controller.showPassword();
-          },
+          builder: (controller) => CustomTextFormAuth(
+            labelText: "6".tr,
+            hinttext: "8".tr,
+            iconData: Icons.lock_outline,
+            mycontroller: controller.password,
+            obscureText: true,
+            onTapIcon: () {
+              controller.showPassword();
+            },
 
-          //my controller
-        ),),
+            //my controller
+          ),
+        ),
 
         //forget password
         InkWell(

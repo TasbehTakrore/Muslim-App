@@ -20,7 +20,7 @@ class StatisticsCard extends StatelessWidget {
         //   colors: [Color(0xff2C8066), Color(0xff5FCFAE)],
         // )
       ),
-      height: 500,
+      height: 520,
       width: double.infinity,
       margin: EdgeInsets.only(top: 30),
       child: Column(
@@ -33,7 +33,6 @@ class StatisticsCard extends StatelessWidget {
                 BarChartPage(),
                 SizedBox(height: 3),
                 StatisticDown(),
-          
               ],
             ),
           ),

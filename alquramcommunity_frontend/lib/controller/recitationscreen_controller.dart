@@ -63,6 +63,16 @@ class RecitationScreenController extends GetxController {
   int indexTime = 0;
   Rx<bool> visibleBar = false.obs;
   Rx<double>? percent = 0.0.obs;
+  int totalReciteVerseesCount = 0;
+  int totalRecitPageCount = 0;
+  Stopwatch stopwatch = Stopwatch();
+  int sec = 0;
+  int min = 0;
+  int hours = 0;
+  String? hoursStr;
+  String? minutesStr;
+  String? secondsStr;
+  String durationResult = "";
 
 //
 
@@ -95,6 +105,8 @@ class RecitationScreenController extends GetxController {
   }
 
   emptyLists() {
+    totalRecitPageCount = 0;
+    totalReciteVerseesCount = 0;
     mistakesCount = 0;
     hintsCount = 0;
     savepageOpacity.clear();
@@ -169,7 +181,11 @@ class RecitationScreenController extends GetxController {
       if (setBlack == true)
         verseColor[pageWidgetindex][index].value = Colors.black;
       index = index + 1;
-      if (index == savepageOpacity[pageWidgetindex].length) setReloadIcon();
+      totalReciteVerseesCount += 1;
+      if (index == savepageOpacity[pageWidgetindex].length) {
+        totalRecitPageCount += 1;
+        setReloadIcon();
+      }
       setBlack = true;
       for (int i = index; i < savepageOpacity[pageWidgetindex].length; i++) {
         verseColor[pageWidgetindex][i].value =
@@ -178,7 +194,6 @@ class RecitationScreenController extends GetxController {
       }
 
       hintColor.value = AppColor.thickYellow;
-      firstHint = true;
     } else if (index == savepageOpacity[pageWidgetindex].length) {
       reStartPage();
     }
@@ -187,6 +202,11 @@ class RecitationScreenController extends GetxController {
     } else {
       nextForAutoState = true;
     }
+
+    firstHint = true;
+    //secondHint == false;
+
+    print("hh++: $firstHint  ++ $secondHint");
   }
 
   reStartPage() {
@@ -202,6 +222,21 @@ class RecitationScreenController extends GetxController {
   }
 
   statisticsAndEnd() {
+    stopwatch.stop();
+    print("stopwatch:${stopwatch.elapsed}");
+    print(
+        "totalRecitPageCount: $totalRecitPageCount totalReciteVerseesCount: $totalReciteVerseesCount  mistakesCount: $mistakesCount hintsCount: $hintsCount");
+
+    sec = stopwatch.elapsed.inSeconds % 60;
+    min = stopwatch.elapsed.inMinutes % 60;
+    hours = stopwatch.elapsed.inHours;
+
+    hoursStr = hours.toString().padLeft(2, '0');
+    minutesStr = min.toString().padLeft(2, '0');
+    secondsStr = sec.toString().padLeft(2, '0');
+    durationResult = '$hoursStr:$minutesStr:$secondsStr';
+    print("recitationController: $durationResult");
+
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
     return showDialog(
@@ -296,26 +331,33 @@ class RecitationScreenController extends GetxController {
       ));
     }
     print("versesList: $versesList");
-
-////////
   }
 
   showsHint(BuildContext context) {
     if (index >= (beginningVerses[pageWidgetindex].length)) return;
-    if (firstHint == true && secondHint == false) {
+    if (firstHint == true) {
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
               weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
-              ayahId: listOfversesID[pageWidgetindex][index])
+              ayahId: listOfversesID[pageWidgetindex][index],
+              juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]),
+              pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]))
           .toJson());
       hintsCount++;
+      print("hintsCount++: $hintsCount");
+
       firstHint = false;
       if (NumberWordsOfVerse[pageWidgetindex][index] > 3) {
+        print(
+            "------------------------- Yes ${NumberWordsOfVerse[pageWidgetindex][index]}");
         secondHint = true;
       } else {
         hintColor.value = Colors.red;
+        secondHint = false;
       }
       hint = beginningVerses[pageWidgetindex][index].obs;
       // dddhintsList.add(allVersesInformation[pageWidgetindex][index]);
@@ -340,12 +382,17 @@ class RecitationScreenController extends GetxController {
                 size: 35,
               ))));
     } else if (secondHint == true) {
+      print("Second!! + $secondHint");
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
               weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
-              ayahId: listOfversesID[pageWidgetindex][index])
+              ayahId: listOfversesID[pageWidgetindex][index],
+              juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]),
+              pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]))
           .toJson());
 
       hintColor.value = Colors.red;
@@ -372,26 +419,40 @@ class RecitationScreenController extends GetxController {
               ))));
     } else {
       hintsCount--;
+      print("hintsCount--: $hintsCount");
+
       mistakeModelList.remove(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
               weight: 50,
               surahId: listOfSurahsID[pageWidgetindex][index],
-              ayahId: listOfversesID[pageWidgetindex][index])
+              ayahId: listOfversesID[pageWidgetindex][index],
+              juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]),
+              pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]))
           .toJson());
       mistakeModelList.remove(MistakeModel(
               userEmail: userEmail,
               mistakeType: 0,
               weight: 25,
               surahId: listOfSurahsID[pageWidgetindex][index],
-              ayahId: listOfversesID[pageWidgetindex][index])
+              ayahId: listOfversesID[pageWidgetindex][index],
+              juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]),
+              pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]))
           .toJson());
       mistakeModelList.add(MistakeModel(
               userEmail: userEmail,
               mistakeType: 1,
               weight: 100,
               surahId: listOfSurahsID[pageWidgetindex][index],
-              ayahId: listOfversesID[pageWidgetindex][index])
+              ayahId: listOfversesID[pageWidgetindex][index],
+              juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]),
+              pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                  listOfversesID[pageWidgetindex][index]))
           .toJson());
 
       mistakesCount++;
@@ -421,7 +482,11 @@ class RecitationScreenController extends GetxController {
                 mistakeType: 1,
                 weight: 100,
                 surahId: listOfSurahsID[pageWidgetindex][index],
-                ayahId: listOfversesID[pageWidgetindex][index])
+                ayahId: listOfversesID[pageWidgetindex][index],
+                juzId: getJuzNumber(listOfSurahsID[pageWidgetindex][index],
+                    listOfversesID[pageWidgetindex][index]),
+                pageId: getPageNumber(listOfSurahsID[pageWidgetindex][index],
+                    listOfversesID[pageWidgetindex][index]))
             .toJson());
 
         mistakesCount++;

@@ -77,49 +77,57 @@ class MistakesPart extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
                                     content: SizedBox(
-                                  //height: 50,
-                                  child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        //surah name
-                                        Text(
-                                          getSurahNameArabic(
-                                            snapshot.data[index].surahId,
-                                          ),
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          getVerse(snapshot.data[index].surahId,
-                                              snapshot.data[index].ayahId,
-                                              verseEndSymbol: true),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        const SizedBox(height: 20),
-
-                                        ElevatedButton.icon(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(Colors.red)),
-                                            onPressed: () {
-                                              controller.deleteMistake(
+                                      //height: 50,
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            //surah name
+                                            Text(
+                                              getSurahNameArabic(
+                                                snapshot.data[index].surahId,
+                                              ),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              getVerse(
                                                   snapshot.data[index].surahId,
-                                                  snapshot.data[index].ayahId);
-                                              Get.back();
-                                              controller.changeIndex(1);
-                                              // homeScreenController
-                                              //     .changePage(2);
-                                            },
-                                            icon: const Icon(Icons.delete),
-                                            label: const Text(
-                                                "Delete Frome Mistakes"))
-                                        // Text(snapshot.data[index]),
-                                      ]),
-                                ));
+                                                  snapshot.data[index].ayahId,
+                                                  verseEndSymbol: true),
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            const SizedBox(height: 20),
+
+                                            ElevatedButton.icon(
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                Colors.red)),
+                                                onPressed: () {
+                                                  controller.deleteMistake(
+                                                      snapshot
+                                                          .data[index].surahId,
+                                                      snapshot
+                                                          .data[index].ayahId);
+                                                  Get.back();
+                                                  controller.changeIndex(1);
+                                                  // homeScreenController
+                                                  //     .changePage(2);
+                                                },
+                                                icon: const Icon(Icons.delete),
+                                                label: const Text(
+                                                    "Delete Frome Mistakes"))
+                                            // Text(snapshot.data[index]),
+                                          ]),
+                                    ));
                               }),
                         ),
                         const SizedBox(height: 4),

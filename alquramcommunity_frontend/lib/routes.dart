@@ -30,13 +30,10 @@ Map<String, Widget Function(BuildContext)> routes = {
   AppRoute.forgetPassword: (context) => const ForgetPassword(),
   AppRoute.pray: (context) => PrayScreen(),
   AppRoute.qibla: (context) => QiblaScreen(),
-  AppRoute.tasbeeh: (context) => MyApp(),
-  AppRoute.SpecificCommunity: (context) => SpecificCommunity(),
-
+  AppRoute.tasbeeh: (context) => TasbeehPage(),
+  // AppRoute.SpecificCommunity: (context) => SpecificCommunity(),
   AppRoute.AllCommunities: (context) => AllCommunities(),
   AppRoute.ViewCommunity: (context) => ViewCommunity(),
-
-
   AppRoute.trainer: (context) => TrainerMainScreen(),
   AppRoute.ResetPassword:(context)=>ResetPassword(),
 

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,8 @@ MyServices myServices = Get.put(MyServices());
 TasbehServices tasbehServices=Get.put(TasbehServices());
 class TasbeehController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  final player = AudioPlayer();
+
   late AnimationController controller;
   late Animation<Offset> animation;
   Rx<Color> prim = AppColor.primaryColor.obs;
@@ -21,7 +24,7 @@ class TasbeehController extends GetxController
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
     );
 
     animation = TweenSequence<Offset>([
@@ -39,7 +42,7 @@ class TasbeehController extends GetxController
       ),
       TweenSequenceItem(
         tween:
-            Tween(begin: const Offset(1.3, 0.9), end: const Offset(1.6, 1.2)),
+            Tween(begin: const Offset(1.3, 0.9), end: const Offset(1.5, 1.0)),
         weight: 1,
       ),
     ]).animate(CurvedAnimation(
@@ -50,6 +53,7 @@ class TasbeehController extends GetxController
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.reset();
+
         swap = prim.value;
         prim.value = Second.value;
         Second.value = swap!;
@@ -57,8 +61,15 @@ class TasbeehController extends GetxController
     });
   }
 
+  void playCollisionSound() async {
+    print("hmmmmmmmm");
+  }
+
   void onTap() {
-    controller.forward();
+    AudioPlayer().play(AssetSource('sounds/Beam.wav'));
+    Future.delayed(Duration(milliseconds: 120)).then((value) {
+      controller.forward();
+    });
   }
 
   @override

@@ -14,7 +14,7 @@ import '../../core/services/services.dart';
 import '../tasbeehscreen_controller.dart';
 MyServices myServices = Get.put(MyServices());
 PlanServices planServices =Get.put(PlanServices());
-NotificationServices notifyServices =Get.put(NotificationServices());
+// NotificationServices notifyServices =Get.put(NotificationServices());
 TasbeehController tasbehController=Get.put(TasbeehController());
 
 
@@ -946,7 +946,7 @@ void callNotification() async {
   userId = myServices.sharedPreferences.getInt("user_id")!;
   tz.Location location = tz.local;
   DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
-  await notifyServices.scheduleNotification(userId, scheduledTime, location);
+  // await notifyServices.scheduleNotification(userId, scheduledTime, location);
 }
 
 
