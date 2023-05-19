@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../controller/commnity_controller.dart';
 import 'communityPlan.dart';
 import 'memberRequestDialog.dart';
+import 'memberRequestList.dart';
 
 class CustomCommunityCard extends StatelessWidget {
+  final int communityID;
   final String title;
   final String body;
   void Function()? onTap;
@@ -24,11 +27,15 @@ class CustomCommunityCard extends StatelessWidget {
       required this.fontSize1,
       required this.fontSize2,
       required this.heigh,
-      required this.isAdmin})
+      required this.isAdmin,
+      required this.communityID})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    CommunitityController communitityController =
+        Get.put(CommunitityController());
+
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -64,7 +71,10 @@ class CustomCommunityCard extends StatelessWidget {
                     visible: isAdmin,
                     child: TextButton.icon(
                         onPressed: () {
-                          Get.dialog(memberRequestDialog());
+                          // communitityController.communityID = communityID;
+                          // communitityController.getMemberRequests(communityID);
+
+                          Get.dialog(memberRequestDialog(communityID: communityID));
                         },
                         icon: const Icon(
                           Icons.person_add,

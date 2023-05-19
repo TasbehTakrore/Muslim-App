@@ -17,8 +17,13 @@ class MyURL {
       '$uri/communities/findAllCommunitiesMale';
   static const String sendRequest = '$uri/communities/requestToCommunity';
   static const String deleteRequest = '$uri/communities/deleteRequest';
-  static const String addMemberCommunity = '$uri/communities/addMemberCommunity';
+  static const String addMemberCommunity =
+      '$uri/communities/addMemberCommunity';
   static const String getMyCommunities = '$uri/communities/getMyCommunities';
+  static const String getAllMemberRequests =
+      '$uri/communities/getAllMemberRequests'; static
+       const String getAllCommunityMembers =
+      '$uri/communities/getAllCommunityMembers';
 
-  
+      // showUserByEmail
 }

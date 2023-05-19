@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:alquramcommunity_frontend/core/services/services.dart';
 import '../../controller/profileController.dart';
+import '../../data/model/backend_to_front_models/specificUder_Model.dart';
+import '../../data/model/backend_to_front_models/user_model.dart';
 import '../constant/routes.dart';
 import '../constant/utils.dart';
 import 'package:http_parser/http_parser.dart';
@@ -101,6 +103,8 @@ class AuthServices extends GetxService {
         response: res,
         context: context,
         onSuccess: () async {
+          print("##################################################");
+
           myServices.sharedPreferences
               .setString("x_auth_token", jsonDecode(res.body)['token']);
           myServices.sharedPreferences
@@ -110,7 +114,7 @@ class AuthServices extends GetxService {
           myServices.sharedPreferences.setString(
               "user_gender", jsonDecode(res.body)['user']['userGender']);
           print(
-              "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_gender")}");
+              "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_email")}");
           myServices.sharedPreferences
               .setInt("user_id", jsonDecode(res.body)['user']['id']);
 
@@ -139,6 +143,28 @@ class AuthServices extends GetxService {
     if (response.statusCode == 200) {
       final userProfile = jsonDecode(response.body);
       return userProfile;
+    } else {
+      throw Exception('Failed to get user profile data');
+    }
+  }
+
+  Future<UserModel> getUserProfileByEmail(String userEmail) async {
+    final response =
+        await http.get(Uri.parse('$uri/users/showUserByEmail/$userEmail'));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      var userJson = responseData['user'];
+      // RegisterModel userProfile = RegisterModel.fromJson(userJson.toString());
+      print("userProfile: ${userJson['id']}");
+      return UserModel(
+        id: userJson['id'],
+        userName: userJson['userName'],
+        userEmail: userJson['userEmail'],
+        userAge: userJson['userAge'],
+        userGender: userJson['userGender'],
+        imageUrl: userJson['imageUrl'],
+      );
+      // return userProfile;
     } else {
       throw Exception('Failed to get user profile data');
     }

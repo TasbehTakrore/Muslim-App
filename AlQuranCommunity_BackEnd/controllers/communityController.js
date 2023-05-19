@@ -1,11 +1,11 @@
 const communityModel = require("../DB/models/community.model");
 const communityMemberModel = require("../DB/models/community_member.model");
+const communityRequestModel = require("../DB/models/communityRequest.model");
 
 const createCommunity = async(req, res) => {
   try {
     const { communityName, communityDescription, stickyMessage, adminEmail, usersGender, timerFlag } = req.body;
     
-    // تنفيذ العملية المطلوبة لإنشاء المجتمع في قاعدة البيانات
     const community = await communityModel.create({
       communityName,
       communityDescription,
@@ -15,7 +15,6 @@ const createCommunity = async(req, res) => {
       timerFlag
     });
 
-    // رسالة الإستجابة بنجاح إنشاء المجتمع
     return res.status(200).json({
       message: "Community created successfully",
       community
@@ -24,7 +23,6 @@ const createCommunity = async(req, res) => {
   } catch (error) {
     console.log("fail create Community!" + error);
 
-    // رسالة الإستجابة في حالة وجود خطأ أثناء إنشاء المجتمع
     return res.status(500).json({
       message: "Something went wrong while creating the community",
       error: error.message
@@ -75,12 +73,33 @@ const findAllCommunitiesFemale = async (req, res) => {
         userEmail,
         isAdmin
       });
+      const deletedRequest = await communityRequestModel.destroy({
+        where: {
+            communityID: communityID,
+            userReqEmail:  userEmail
+        }
+      });
       
       res.status(200).json({ message: "member added sucsses" });
     } catch (error) {
       res.status(500).json({ error: "Error! "+error });
     }
+
   };
+  const getAllCommunityMembers = async (req, res) => {
+    try {
+      const communityID = req.params.communityID;
+  
+      const members = await communityMemberModel.findAll({
+        where: { communityID },
+      });
+  
+      res.status(200).json({ members });
+    } catch (error) {
+      res.status(500).json({ error: "Error! " + error });
+    }
+  };
+  
 
   const getMyCommunities = async (req, res) => {
     try {
@@ -99,4 +118,63 @@ const findAllCommunitiesFemale = async (req, res) => {
   };
   
 
-module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities};
+
+  const requestToCommunity = async (req, res) => {
+    try {
+      const { communityID, userReqEmail } = req.body;
+      
+      const request = await communityRequestModel.create({
+        communityID,
+        userReqEmail
+      });
+      
+      res.status(200).json({ message: "req send sucsses" });
+    } catch (error) {
+      res.status(500).json({ error: "Error!" });
+    }
+  };
+  
+  const deleteRequest = async (req, res) => {
+      console.log("ngfsdmkl,a");
+      try {
+        const { communityID, userReqEmail } = req.params;
+        
+        const deletedRequest = await communityRequestModel.destroy({
+          where: {
+              communityID,
+              userReqEmail
+          }
+        });
+        
+        if (deletedRequest) {
+          res.status(200).json({ message: "Request deleted successfully" });
+        } else {
+          res.status(404).json({ error: "Request not found" });
+        }
+      } catch (error) {
+        res.status(500).json({ error: "Error!" });
+      }
+    };
+    
+    const getAllMemberRequests = async (req, res) => {
+      try {
+        const { communityID } = req.params;
+        
+        const requests = await communityRequestModel.findAll({ where:{ communityID:communityID }});
+        
+        res.status(200).json({ requests });
+      } catch (error) {
+        res.status(500).json({ error: "Error!"+ error});
+      }
+    };
+    
+  
+
+
+
+
+
+
+
+
+module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities,requestToCommunity, deleteRequest, getAllMemberRequests, getAllCommunityMembers};

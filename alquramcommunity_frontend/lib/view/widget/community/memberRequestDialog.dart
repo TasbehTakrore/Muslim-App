@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import '../../../controller/quranscreen_controller.dart';
 import '../../../core/constant/quranconst.dart';
 import '../custombuttomlang.dart';
+import 'memberRequestList.dart';
 
 class memberRequestDialog extends StatelessWidget {
-  memberRequestDialog({super.key});
+  final int communityID;
+
+  memberRequestDialog({super.key, required this.communityID});
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -18,7 +21,11 @@ class memberRequestDialog extends StatelessWidget {
         height: 400,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [Text("طلبات العُضويّة"), Divider()],
+          children: [
+            Text("طلبات العُضويّة"),
+            Divider(),
+            memberRequestList(communityID: communityID)
+          ],
         ),
       ),
     );

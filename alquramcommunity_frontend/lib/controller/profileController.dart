@@ -38,7 +38,8 @@ class ProfileController extends GetxController {
     final createdAt = DateTime.parse(userProfile['user']['createdAt']);
     final formattedDate = DateFormat('yyyy-MM-dd').format(createdAt);
     joinDate = formattedDate;
-    print('${MyURL.uri}/images/${userProfile['user']['imageUrl']}');
+    print(
+        '${MyURL.uri}/images/${userProfile['user']['imageUrl']}  + ${myServices.sharedPreferences.getString("user_email")} ++ ${myServices.sharedPreferences.getInt("user_id")} ');
     img.value =
         '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${userProfile['user']['imageUrl']}';
   }

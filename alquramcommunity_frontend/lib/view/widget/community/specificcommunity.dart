@@ -42,17 +42,19 @@ class SpecificCommunity extends StatelessWidget {
                 floatingActionButton: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    FloatingActionButton(
-                        heroTag: "setting",
-                        backgroundColor: AppColor.thickYellow,
-                        child: const Icon(Icons.settings),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext b) {
-                                return EditCommunityPlan();
-                              });
-                        }),
+                    isAdmin == true
+                        ? FloatingActionButton(
+                            heroTag: "setting",
+                            backgroundColor: AppColor.thickYellow,
+                            child: const Icon(Icons.settings),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext b) {
+                                    return EditCommunityPlan();
+                                  });
+                            })
+                        : SizedBox(),
                     const SizedBox(height: 5),
                     FloatingActionButton(
                         heroTag: "chat",
@@ -94,6 +96,7 @@ class SpecificCommunity extends StatelessWidget {
                             fontSize: 15),
                       ),
                       CustomCommunityCard(
+                          communityID: communityID,
                           title: 'Remining Time',
                           fontSize1: 15,
                           fontSize2: 40,
@@ -101,7 +104,7 @@ class SpecificCommunity extends StatelessWidget {
                           body: '12:45:30',
                           isAdmin: isAdmin),
                       SizedBox(height: 5),
-                      const UsersCommunity(),
+                      UsersCommunity(communityID: communityID),
                       const SizedBox(height: 15),
                       Container(
                         height: 500,

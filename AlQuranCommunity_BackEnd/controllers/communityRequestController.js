@@ -43,7 +43,21 @@ const deleteRequest = async (req, res) => {
     }
   };
   
+  const getAllMemberRequests = async (req, res) => {
+    try {
+      const { communityID } = req.params;
+      
+      // Retrieve all requests for the specific communityID
+      const requests = await communityRequestModel.findAll({ where:{ communityID:communityID }});
+      
+      // Return successful response with the requests
+      res.status(200).json({ requests });
+    } catch (error) {
+      // Return error response
+      res.status(500).json({ error: "Error!"+ error});
+    }
+  };
+  
 
 
-
-module.exports = { requestToCommunity, deleteRequest };
+module.exports = { requestToCommunity, deleteRequest, getAllMemberRequests };

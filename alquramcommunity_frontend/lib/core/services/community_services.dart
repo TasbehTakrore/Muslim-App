@@ -2,11 +2,16 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import '../../data/model/backend_to_front_models/community_model.dart';
+import '../../data/model/backend_to_front_models/specificUder_Model.dart';
+import '../../data/model/backend_to_front_models/user_model.dart';
 import '../constant/urls.dart';
 import 'package:http/http.dart' as http;
 
+import 'auth_services.dart';
+
 class CommunityServices extends GetxService {
-  void createNewCommunity(
+  AuthServices authServices = Get.put(AuthServices());
+  Future<int> createNewCommunity(
       {required String communityName,
       required String communityDescription,
       required String adminEmail,
@@ -34,8 +39,10 @@ class CommunityServices extends GetxService {
           communityId: json.decode(res.body)['community']['id'],
           userEmail: adminEmail,
           isAdmin: true);
+      return json.decode(res.body)['community']['id'];
     } catch (error) {
       print('noooo $error');
+      return 0;
     }
   }
 
@@ -62,6 +69,69 @@ class CommunityServices extends GetxService {
     } catch (error) {
       print('Error: $error');
       rethrow;
+    }
+  }
+
+  Future<List<UserModel>> getAllMemberRequests(int communityID) async {
+    try {
+      print(Uri.parse(MyURL.getAllMemberRequests + "/$communityID"));
+      http.Response response = await http
+          .get(Uri.parse(MyURL.getAllMemberRequests + "/$communityID"));
+      List<String> requestEmails = [];
+      if (response.statusCode == 200) {
+        final List<dynamic> responseRequest =
+            jsonDecode(response.body)['requests'];
+        responseRequest.forEach((element) {
+          requestEmails.add(element['userReqEmail']);
+        });
+        print("requestEmails res:  ${requestEmails}");
+        List<UserModel> usersRequ = [];
+        await Future.wait(requestEmails.map((element) async {
+          print("element ## $element");
+          UserModel user = await authServices.getUserProfileByEmail(element);
+          usersRequ.add(user);
+          print(user.imageUrl);
+        }));
+        print("*************usersRequ: $usersRequ");
+        return usersRequ;
+      } else {
+        throw Exception('Failed to load memb Requests');
+      }
+    } catch (error) {
+      print('Error: $error');
+      return [];
+    }
+  }
+
+  Future<List<UserModel>> getAllCommunityMembers(int communityID) async {
+    try {
+      http.Response response = await http
+          .get(Uri.parse(MyURL.getAllCommunityMembers + "/$communityID"));
+      List<String> usersEmails = [];
+      if (response.statusCode == 200) {
+        print(Uri.parse(MyURL.getAllCommunityMembers + "/$communityID"));
+        print("response.body res:  ${response.body}");
+
+        final List<dynamic> responseRequest =
+            jsonDecode(response.body)['members'];
+        responseRequest.forEach((element) {
+          usersEmails.add(element['userEmail']);
+        });
+        List<UserModel> usersMemb = [];
+        await Future.wait(usersEmails.map((element) async {
+          print("element ## $element");
+          UserModel user = await authServices.getUserProfileByEmail(element);
+          usersMemb.add(user);
+          print(user.imageUrl);
+        }));
+        print("*************usersMemb: $usersMemb");
+        return usersMemb;
+      } else {
+        throw Exception('Failed to load memb Requests');
+      }
+    } catch (error) {
+      print('Error: $error');
+      return [];
     }
   }
 
@@ -121,6 +191,7 @@ class CommunityServices extends GetxService {
   // Future<List<Community>> getMyCommunities({required String userEmail}) async {
   Future<List<String>> getMyCommunities({required String userEmail}) async {
     try {
+      print("userEmail: $userEmail");
       final response = await http.get(
         Uri.parse("${MyURL.getMyCommunities}/$userEmail"),
         headers: <String, String>{

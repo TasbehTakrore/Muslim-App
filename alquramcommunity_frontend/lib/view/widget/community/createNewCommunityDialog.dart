@@ -7,6 +7,7 @@ import '../../../controller/commnity_controller.dart';
 import '../../../core/constant/color.dart';
 import '../auth/customtextformauth.dart';
 import 'customText.dart';
+import 'specificcommunity.dart';
 
 class createNewCommunityDialog extends StatelessWidget {
   const createNewCommunityDialog({super.key});
@@ -92,10 +93,17 @@ class createNewCommunityDialog extends StatelessWidget {
                   color: AppColor.primaryColor,
                   onPressed: () {
                     communitityController.createNewCommunity();
+                    Get.dialog(SpecificCommunity(
+                      communityName:
+                          communitityController.communityNameController!.text,
+                      isAdmin: true,
+                      communityDateCreate: '',
+                      communityID: communitityController.communityID!,
+                    ));
                     //communitityController.addMemberCommunity();
 
                     // trainerScreenController.testType();
-                    Get.toNamed(AppRoute.SpecificCommunity);
+                    // Get.toNamed(AppRoute.SpecificCommunity);
                   }),
             )
           ],

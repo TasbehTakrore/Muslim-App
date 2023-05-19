@@ -103,7 +103,8 @@ class CommDetailsDialog extends StatelessWidget {
                         // rqFLag.value = true;
                       } else {
                         buttonTxt.value = "إرسال طلب للانضمام";
-                        communitityController.deleteRequest(CommunityID);
+                        communitityController.deleteRequest(
+                            CommunityID, communitityController.getUserEmail());
 
                         // rqFLag.value = false;
                       }

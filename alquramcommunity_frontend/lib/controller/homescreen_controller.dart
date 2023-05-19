@@ -38,15 +38,22 @@ class HomeScreenControllerImp extends HomeScreenController {
   void onInit() async {
     super.onInit();
     userEmail = myServices.sharedPreferences.getString("user_email")!;
+
     getMyCommu();
+
     print("myCommunities inside homeScreen $myCommunities");
     communitityController.getAllCommunities();
   }
 
+  String getEmail() {
+    userEmail = myServices.sharedPreferences.getString("user_email")!;
+    return userEmail;
+  }
+
   Future<List<String>> getMyCommu() async {
     myCommunities =
-        await communityServices.getMyCommunities(userEmail: userEmail);
-     return  myCommunities;
+        await communityServices.getMyCommunities(userEmail: getEmail());
+    return myCommunities;
   }
 
   void reSystemChrome() {

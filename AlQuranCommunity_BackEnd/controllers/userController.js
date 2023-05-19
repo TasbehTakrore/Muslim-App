@@ -146,6 +146,23 @@ const userDetails=async(req,res)=>{
         }
 }
 
+const userDetailsByEmail=async(req,res)=>{
+    try{
+    const user= await userModel.findOne({
+        where:{
+            userEmail: req.params.userEmail,
+            }
+        });
+        if(!user){
+            res.json({message:'no such user'});    
+        }
+        else{
+            res.status(200).json({message:'found',user});}
+        }catch(error){
+            res.json({message:'catch error',error})
+        }
+}
+
 //update user information
 const updateUser = async(req,res)=>{
     try{
@@ -226,6 +243,6 @@ const deleteUser = async(req,res)=>{
     user? res.json({message:"success",user}):res.json({message:"invalid-account",user});
 }
 
-module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails}
+module.exports={getAllUsers,signUp,checkEmail,logIn,updateUser,deleteUser,addCoins,userDetails, userDetailsByEmail}
 
 

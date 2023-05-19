@@ -10,6 +10,7 @@ router.post('/upload',upload.single('image'),(req,res)=>{
 router.post('/logIn',userController.logIn);
 router.get('/showUser/:userId',userController.userDetails);
 router.put('/updateUser/:userId',userController.updateUser);
+router.get('/showUserByEmail/:userEmail',userController.userDetailsByEmail);
 
 
 //router.get('/showUser',auth(),userController.userDetails);
@@ -20,6 +21,8 @@ router.get('/checkEmail',userController.checkEmail);
 router.get('/getAll',userController.getAllUsers);
 router.post('/signUp',userController.signUp);
 router.get('/getDetails',auth(),userController.userDetails);
+
+
 router.post('/logIn',userController.logIn);
 
 router.put('/:id',userController.updateUser);

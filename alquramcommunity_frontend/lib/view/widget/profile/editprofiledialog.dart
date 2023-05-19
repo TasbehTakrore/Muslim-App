@@ -174,7 +174,8 @@ class EditProfile extends StatelessWidget {
                 ),
                 TextButton.icon(
                     onPressed: () {
-                      Get.offAllNamed(AppRoute.home);
+                      print("تسجيل الخروج");
+                      Get.offAllNamed(AppRoute.login);
                     },
                     icon: Icon(
                       Icons.logout,

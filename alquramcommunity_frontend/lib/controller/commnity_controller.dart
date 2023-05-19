@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../core/services/community_services.dart';
 import '../core/services/services.dart';
 import '../data/model/backend_to_front_models/community_model.dart';
+import '../data/model/backend_to_front_models/specificUder_Model.dart';
 
 class CommunitityController extends GetxController {
   TextEditingController? communityNameController = TextEditingController();
@@ -23,43 +24,71 @@ class CommunitityController extends GetxController {
   var communities = [];
   String communityName = "";
   // String communityName;
-
+  int? communityID = 0;
   @override
   void onInit() {
     super.onInit();
-    userEmail = myServices.sharedPreferences.getString("user_email");
+    userEmail = getUserEmail();
     getAllCommunities();
     print("AllComm Inside onInit $communities");
   }
 
-  void createNewCommunity() {
-    communityServices.createNewCommunity(
+  String getUserEmail() {
+    try {
+      print(
+          "myServices.sharedPreferences.getString(user_email): ${myServices.sharedPreferences.getString("user_email")}");
+      return myServices.sharedPreferences.getString("user_email")!;
+    } catch (error) {
+      print("****EROOR getuserEmail + $error");
+      return "";
+    }
+  }
+
+  
+
+  void createNewCommunity() async {
+    communityID = await communityServices.createNewCommunity(
         communityName: communityNameController!.text,
         communityDescription: communityDescriptionController!.text,
-        adminEmail: userEmail!,
+        adminEmail: getUserEmail(),
         usersGender: selectedGender.value,
         timerFlage: true);
     communityName = communityNameController!.text;
   }
 
+  Future<List<UserModel>> getMemberRequests(int communityID) async {
+    return communityServices.getAllMemberRequests(communityID);
+  }
+
+  Future<List<UserModel>> getAllCommunityMembers(int communityID) async {
+    return communityServices.getAllCommunityMembers(communityID);
+  }
+
   void sendRequest(int communityId) {
     communityServices.sendRequest(
-        communityId: communityId, userEmail: userEmail!);
+        communityId: communityId, userEmail: getUserEmail());
     print("inside Send");
   }
 
-  addMemberCommunity(int communityId, bool isAdmin) {
+   updatee() {
+    update();
+  }
+
+  addMemberCommunity(int communityId, bool isAdmin, String userEmail) {
     communityServices.addMemberCommunity(
-        communityId: communityId, userEmail: userEmail!, isAdmin: isAdmin);
+        communityId: communityId,
+        userEmail: isAdmin == true ? getUserEmail() : userEmail,
+        isAdmin: isAdmin);
     print("inside Send member community...");
   }
 
-  void deleteRequest(int communityId) {
+  void deleteRequest(int communityId, String userEmail) {
     communityServices.deleteRequest(
-        communityId: communityId, userEmail: userEmail!);
+        communityId: communityId, userEmail: userEmail);
     print("inside delete");
   }
 
+  void acceptUser(String userEmail) {}
   int getGender() {
     int type;
     myServices.sharedPreferences.getString("user_gender") == "female"
@@ -78,7 +107,11 @@ class CommunitityController extends GetxController {
   }
 
   getMyCommunities() {
-    communityServices.getMyCommunities(userEmail: userEmail!);
+    print("[[ userEmail : $userEmail");
+    print(
+        "getMyCommunities Email: ${myServices.sharedPreferences.getString("user_email")}}");
+    communityServices.getMyCommunities(
+        userEmail: myServices.sharedPreferences.getString("user_email")!);
   }
 
   void buttonText() {
