@@ -5,6 +5,7 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:alquramcommunity_frontend/core/services/services.dart';
+import '../../controller/auth/appbar_controller.dart';
 import '../../controller/profileController.dart';
 import '../../data/model/backend_to_front_models/specificUder_Model.dart';
 import '../../data/model/backend_to_front_models/user_model.dart';
@@ -23,7 +24,7 @@ class AuthServices extends GetxService {
   String uri2 = 'http://192.168.1.19:8080';
 
   // static const String uri = 'http://172.19.66.29:5000';
-
+  APPBarController appBarController = Get.put(APPBarController());
   final ProfileController profilesController = Get.put(ProfileController());
 
   //sign up user
@@ -103,7 +104,8 @@ class AuthServices extends GetxService {
         response: res,
         context: context,
         onSuccess: () async {
-          print("##################################################");
+          print(
+              "################################################## ${jsonDecode(res.body)}");
 
           myServices.sharedPreferences
               .setString("x_auth_token", jsonDecode(res.body)['token']);
@@ -113,11 +115,13 @@ class AuthServices extends GetxService {
               "user_email", jsonDecode(res.body)['user']['userEmail']);
           myServices.sharedPreferences.setString(
               "user_gender", jsonDecode(res.body)['user']['userGender']);
+          myServices.sharedPreferences
+              .setInt("user_coins", jsonDecode(res.body)['user']['userCoins']);
           print(
               "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_email")}");
           myServices.sharedPreferences
               .setInt("user_id", jsonDecode(res.body)['user']['id']);
-
+          appBarController.getCoins();
           //      myServices.sharedPreferences.setInt("user_age", jsonDecode(res.body)['userAge']);
           //  myServices.sharedPreferences.setString("prof_gender", jsonDecode(res.body)['userGender']);
 
