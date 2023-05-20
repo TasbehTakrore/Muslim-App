@@ -33,6 +33,7 @@ const createCommunity = async(req, res) => {
 
 const findAllCommunitiesFemale = async (req, res) => {
     try {
+      console.log("-------------------------------------");
       const communities = await communityModel.findAll({where: {usersGender:'female'}});
       return res.status(200).json({
         message: "All Communities",
@@ -47,8 +48,28 @@ const findAllCommunitiesFemale = async (req, res) => {
     }
   };
 
+  const findAllCommunities = async (req, res) => {
+    try {
+      console.log("-------------------------------------");
+      const communities = await communityModel.findAll();
+      return res.status(200).json({
+        message: "All Communities",
+        communities,
+      });
+    } catch (error) {
+      console.log("fail get all Communities!" + error);
+      return res.status(500).json({
+        message: "Something went wrong while fetching the communities",
+        error: error.message,
+      });
+    }
+  };
+
+
   const findAllCommunitiesMale = async (req, res) => {
     try {
+      console.log("----------------***---------------------");
+
       const communities = await communityModel.findAll({where: {usersGender:'male'}});
       return res.status(200).json({
         message: "All Communities",
@@ -104,7 +125,6 @@ const findAllCommunitiesFemale = async (req, res) => {
   const getMyCommunities = async (req, res) => {
     try {
       const { userEmail } = req.params;
-  
       const communities = await communityMemberModel.findAll({
         where: {
           userEmail: userEmail
@@ -112,6 +132,8 @@ const findAllCommunitiesFemale = async (req, res) => {
       });
   
       res.status(200).json({ communities });
+      console.log("getMyCommunities ++++ "+res);
+
     } catch (error) {
       res.status(500).json({ error: "Error! " + error });
     }
@@ -177,4 +199,4 @@ const findAllCommunitiesFemale = async (req, res) => {
 
 
 
-module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities,requestToCommunity, deleteRequest, getAllMemberRequests, getAllCommunityMembers};
+module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities,requestToCommunity, deleteRequest, getAllMemberRequests, getAllCommunityMembers, findAllCommunities};

@@ -1,6 +1,7 @@
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import '../core/services/community_services.dart';
 import '../core/services/services.dart';
 import '../view/screen/home.dart';
@@ -26,11 +27,18 @@ class HomeScreenControllerImp extends HomeScreenController {
   CommunityServices communityServices = Get.put(CommunityServices());
 
   // @override
-  Future<void> onInit() async {
+  // void onInit() {
+  //   super.onInit();
+  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // }
+
+  String userEmail = "";
+
+  @override
+  void onInit() async {
+    super.onInit();
     await planController.showPlantoUser();
-    //  await planController.weekCalc();
-    //   super.onInit();
-    //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     userEmail = myServices.sharedPreferences.getString("user_email")!;
 
     getMyCommu();
@@ -39,14 +47,14 @@ class HomeScreenControllerImp extends HomeScreenController {
     communitityController.getAllCommunities();
   }
 
-  String userEmail = "";
-
   String getEmail() {
     userEmail = myServices.sharedPreferences.getString("user_email")!;
     return userEmail;
   }
 
   Future<List<String>> getMyCommu() async {
+    print("inssssssssssssssss ^^^^^^^^^^^^^^^^");
+    communitityController.getAllCommunities();
     myCommunities =
         await communityServices.getMyCommunities(userEmail: getEmail());
     return myCommunities;

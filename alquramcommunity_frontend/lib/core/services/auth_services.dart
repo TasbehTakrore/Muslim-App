@@ -113,9 +113,11 @@ class AuthServices {
               "user_email", jsonDecode(res.body)['user']['userEmail']);
           myServices.sharedPreferences
               .setInt("user_id", jsonDecode(res.body)['user']['id']);
-
+          myServices.sharedPreferences.setString(
+              "user_gender", jsonDecode(res.body)['user']['userGender']);
           myServices.sharedPreferences
               .setInt("user_coins", jsonDecode(res.body)['user']['userCoins']);
+
           print(
               "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_email")}");
 

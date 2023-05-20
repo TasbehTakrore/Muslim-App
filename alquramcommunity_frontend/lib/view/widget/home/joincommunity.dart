@@ -16,7 +16,7 @@ class JoinCommunity extends StatelessWidget {
         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 12, 12),
         child: GestureDetector(
           onTap: () {
-            communitityController.getAllCommunities();
+            // communitityController.getAllCommunitiesGender();
             print("Click at Join New Community...");
             Get.toNamed(AppRoute.AllCommunities);
           },

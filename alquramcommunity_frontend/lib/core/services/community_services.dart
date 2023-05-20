@@ -54,14 +54,18 @@ class CommunityServices extends GetxService {
       type == 0
           ? response =
               await http.get(Uri.parse(MyURL.getAllCommunitiesFemaleURL))
-          : response =
-              await http.get(Uri.parse(MyURL.getAllCommunitiesMaleURL));
+          : type == 1
+              ? response =
+                  await http.get(Uri.parse(MyURL.getAllCommunitiesMaleURL))
+              : response = await http.get(Uri.parse(MyURL.getAllCommunitie));
+
       if (response.statusCode == 200) {
         final communitiesMap = jsonDecode(response.body);
         final communities = communitiesMap['communities'] as List<dynamic>;
         final communitiesList = communities
             .map((community) => Community.fromJson(community))
             .toList();
+        print("response communitiesList:: ${response.body}");
         return communitiesList;
       } else {
         throw Exception('Failed to load communities');

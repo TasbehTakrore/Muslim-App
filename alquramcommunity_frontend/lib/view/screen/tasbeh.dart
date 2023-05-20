@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:alquramcommunity_frontend/controller/auth/chartsController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,12 +17,14 @@ class TasbeehPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
+    ChartsController chartsController = Get.put(ChartsController());
     return GetBuilder<TasbeehController>(builder: (controller) {
       return WillPopScope(
           onWillPop: () async {
             await _myController.addTasbehCount();
-
+            chartsController.tasbehData.value =
+                await chartsController.getTasbehData();
+            print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
             Get.offAllNamed(AppRoute.home);
 
             return false;

@@ -4,8 +4,8 @@ const { sequelize } = require('../DB/connection');
 
 const createTasbehEntry = async (req, res) => {
     try {
-      const { userId, data } = req.body;
-  
+      const { user_id, data } = req.body;
+  console.log("userId in createTasbehEntry  "+ user_id);
       const {
         subhanAllah,
         alhamdulliah,
@@ -30,7 +30,7 @@ const createTasbehEntry = async (req, res) => {
   
       // Find the existing Tasbeh entry for the user and today's date
       const existingEntry = await tasbehModel.findOne({
-        user_id: userId,
+        user_id: user_id,
         date: { $gte: new Date().setHours(0, 0, 0, 0), $lt: new Date().setHours(23, 59, 59, 999) },
       });
   
@@ -52,7 +52,7 @@ const createTasbehEntry = async (req, res) => {
       } else {
         // Create a new entry in the Tasbeh model
         const tasbehEntry = await tasbehModel.create({
-          user_id: userId,
+          user_id: user_id,
           date: new Date().setHours(0, 0, 0, 0), // Set the time to 00:00:00.000
           subhanAllah: subhanAllah,
           alhamdulliah: alhamdulliah,
@@ -75,7 +75,8 @@ const createTasbehEntry = async (req, res) => {
 
   const getUsertasbeh = async (req, res) => {
     try {
-      const userId = req.params.id;
+      const user_id = req.params.id;
+      console.log("222 user_id " + user_id);
       const today = new Date();
       const startOfWeek = new Date(today);
       startOfWeek.setDate(today.getDate() - ((today.getDay() + 1) % 7));
@@ -90,7 +91,7 @@ const createTasbehEntry = async (req, res) => {
       // Remove the time component from createdAt attribute
       const result = await tasbehModel.findAll({
         where: {
-          user_id: userId,
+          user_id: user_id,
           createdAt: {
             [Op.gte]: startOfWeek,
             [Op.lte]: endOfWeek,

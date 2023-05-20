@@ -30,6 +30,8 @@ class MyURL {
       '$uri/communities/findAllCommunitiesFemale';
   static const String getAllCommunitiesMaleURL =
       '$uri/communities/findAllCommunitiesMale';
+        static const String getAllCommunitie =
+      '$uri/communities/findAllCommunities';
   static const String sendRequest = '$uri/communities/requestToCommunity';
   static const String deleteRequest = '$uri/communities/deleteRequest';
   static const String addMemberCommunity =

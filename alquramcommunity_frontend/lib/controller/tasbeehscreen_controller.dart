@@ -7,8 +7,12 @@ import 'package:alquramcommunity_frontend/core/constant/color.dart';
 
 import '../core/services/services.dart';
 import '../core/services/tasbeh_services.dart';
+import 'auth/chartsController.dart';
+
 MyServices myServices = Get.put(MyServices());
-TasbehServices tasbehServices=Get.put(TasbehServices());
+TasbehServices tasbehServices = Get.put(TasbehServices());
+ChartsController chartsController = Get.put(ChartsController());
+
 class TasbeehController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final player = AudioPlayer();
@@ -116,26 +120,26 @@ class TasbeehController extends GetxController
     return tasbehTypes[typeIndex];
   }
 
-  Future<void> addTasbehCount()async{
-  final userId = myServices.sharedPreferences.getInt("user_id")!;
-  RxInt custom=0.obs;
-  update();
-  for(int i=7;i<tasbehValue.length;i++)
-  {
-custom.value=custom.value+tasbehValue[i].value;
-  }
-  final data = {
-    'subhanAllah': tasbehValue[0].value,
-    'alhamdulliah': tasbehValue[1].value,
-    'LaIlahaElaAllah': tasbehValue[2].value,
-    'AllahuAkbar': tasbehValue[3].value,
-    'LaHawalaWalaQuwaElaBillah': tasbehValue[4].value,
-    'AstagfirAllah': tasbehValue[5].value,
-    'blessingsOnTheProphetMuhammad': tasbehValue[6].value,
-    'custom': custom.value,
-  };
-  await tasbehServices.createTasbehEntry(userId,data);
+  Future<void> addTasbehCount() async {
+    final userId = myServices.sharedPreferences.getInt("user_id")!;
+    RxInt custom = 0.obs;
+    print("Add Tasbeh Count &&&&&&&&&&& $userId");
 
+    update();
+    for (int i = 7; i < tasbehValue.length; i++) {
+      custom.value = custom.value + tasbehValue[i].value;
+    }
+    final data = {
+      'subhanAllah': tasbehValue[0].value,
+      'alhamdulliah': tasbehValue[1].value,
+      'LaIlahaElaAllah': tasbehValue[2].value,
+      'AllahuAkbar': tasbehValue[3].value,
+      'LaHawalaWalaQuwaElaBillah': tasbehValue[4].value,
+      'AstagfirAllah': tasbehValue[5].value,
+      'blessingsOnTheProphetMuhammad': tasbehValue[6].value,
+      'custom': custom.value,
+    };
+    await tasbehServices.createTasbehEntry(userId, data);
+    // chartsController.tasbehData.value = await chartsController.getTasbehData();
   }
-
 }

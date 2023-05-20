@@ -38,6 +38,8 @@ class ListCommunities extends StatelessWidget {
                         homeScreenControllerImp.myCommunities.length + 1, ////
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
+                      print(
+                          " homeScreenControllerImp.myCommunities.length:: ${homeScreenControllerImp.myCommunities.length}");
                       if (index <
                           homeScreenControllerImp.myCommunities.length) {
                         Community desiredCommunity =
@@ -54,13 +56,15 @@ class ListCommunities extends StatelessWidget {
                         print("formattedDate: $formattedDate");
 
                         return CommunityW(
-                            communityName: desiredCommunity.communityName,
-                            communityDateCreate: formattedDate,
-                            communityID: int.parse(
-                                  homeScreenControllerImp.myCommunities[index]),
-                                  isAdmin: desiredCommunity.adminEmail == homeScreenControllerImp.userEmail? true: false,
-
-                            );
+                          communityName: desiredCommunity.communityName,
+                          communityDateCreate: formattedDate,
+                          communityID: int.parse(
+                              homeScreenControllerImp.myCommunities[index]),
+                          isAdmin: desiredCommunity.adminEmail ==
+                                  homeScreenControllerImp.userEmail
+                              ? true
+                              : false,
+                        );
                       } else {
                         return const JoinCommunity();
                       }

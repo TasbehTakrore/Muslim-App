@@ -44,8 +44,6 @@ class CommunitityController extends GetxController {
     }
   }
 
-  
-
   void createNewCommunity() async {
     communityID = await communityServices.createNewCommunity(
         communityName: communityNameController!.text,
@@ -70,7 +68,7 @@ class CommunitityController extends GetxController {
     print("inside Send");
   }
 
-   updatee() {
+  updatee() {
     update();
   }
 
@@ -91,15 +89,29 @@ class CommunitityController extends GetxController {
   void acceptUser(String userEmail) {}
   int getGender() {
     int type;
+    print(myServices.sharedPreferences.getString("user_gender"));
     myServices.sharedPreferences.getString("user_gender") == "female"
         ? type = 0
         : type = 1;
+
+    print("Type inside getGender: $type");
     return type;
+  }
+
+  void getAllCommunitiesGender() async {
+    try {
+      communities = await communityServices.getAllCommunities(getGender());
+
+      print("communities: $communities");
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 
   void getAllCommunities() async {
     try {
-      communities = await communityServices.getAllCommunities(getGender());
+      communities = await communityServices.getAllCommunities(2);
+
       print("communities: $communities");
     } catch (error) {
       print('Error: $error');

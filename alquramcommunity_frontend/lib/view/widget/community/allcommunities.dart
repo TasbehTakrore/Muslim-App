@@ -74,9 +74,9 @@ class AllCommunities extends StatelessWidget {
                         child: ListView.builder(
                       itemCount: communitityController.communities.length,
                       itemBuilder: (context, index) {
-                        return communitityController
+                        return (communitityController
                                     .communities[index].adminEmail !=
-                                communitityController.getUserEmail()
+                                communitityController.getUserEmail())
                             ? GestureDetector(
                                 onTap: () {
                                   Get.dialog(CommDetailsDialog(
