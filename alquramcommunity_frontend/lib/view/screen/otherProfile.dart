@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 import '../../controller/profileController.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
@@ -15,12 +16,25 @@ import '../widget/profile/editprofiledialog.dart';
 import '../widget/profile/prfilefriends.dart';
 import '../widget/profile/profilecard.dart';
 import '../widget/profile/profiletop.dart';
+import 'auth/signup.dart';
 
-class ProfileScreen extends StatelessWidget {
+class OtherProfileScreen extends StatelessWidget {
+  final String userName;
+  // final String joinedDate;
+  final String gender;
+  final String age;
+  final String userProfileImage;
+
+  const OtherProfileScreen(
+      {super.key,
+      required this.userName,
+      // required this.joinedDate,
+      required this.gender,
+      required this.age,
+      required this.userProfileImage});
   @override
   Widget build(BuildContext context) {
     MyServices myServices = Get.put(MyServices());
-    final ProfileController profilesController = Get.put(ProfileController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -52,30 +66,14 @@ class ProfileScreen extends StatelessWidget {
                 opacity: 0.2,
               ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    profilesController.setDetails();
-                    Get.dialog(EditProfile());
-                  },
-                  child: const Padding(
-                      padding: EdgeInsets.only(top: 10, right: 5, left: 5),
-                      child:
-                          Icon(Icons.settings, size: 30, color: AppColor.grey)),
-                ),
-              ],
-            ),
           ),
           Positioned(
-            top: 270,
+            top: 275,
             left: 20,
             right: 20,
             child: Stack(
               children: [
-                Obx(() => Container(
+                Container(
                     height: 200,
                     width: width,
                     decoration: BoxDecoration(
@@ -86,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         const SizedBox(height: 65),
                         Text(
-                          profilesController.userName.value,
+                          userName,
                           style: GoogleFonts.patrickHand(
                               //fontWeight: FontWeight.w500,
                               color: AppColor.primaryColor,
@@ -94,18 +92,14 @@ class ProfileScreen extends StatelessWidget {
                         ),
 
                         SizedBox(height: 5),
-                        Text("Joined : ${profilesController.joinDate}",
-                            style: TextStyle(fontSize: 12)),
-                        SizedBox(height: 8),
+                        // Text("Joined : ${joinedDate}",
+                        //     style: TextStyle(fontSize: 12)),
+                        // SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "(" +
-                                  profilesController.userGender.value +
-                                  ", " +
-                                  profilesController.userAge.value +
-                                  ")",
+                              "(" + gender + ", " + age + ")",
                               style: const TextStyle(
                                   fontSize: 12, color: AppColor.primaryColor),
                             ),
@@ -113,48 +107,49 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         // ProfileTop(),
                       ],
-                    ))),
+                    )),
               ],
             ),
           ),
           Positioned(
             top: 150,
-            left: width / 4,
-            right: width / 4,
+            left: width / 4.5,
+            right: width / 4.5,
             child: Padding(
               padding: EdgeInsets.all(25.0),
-              child: Obx(() => CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(profilesController.img.value),
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          width: 3,
-                        ),
-                      ),
+              child: CircleAvatar(
+                radius: 80,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(
+                    '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${userProfileImage}'),
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 3,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
-          Positioned(
-            top: 270,
-            right: 220,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(15)),
-                width: 65,
-                height: 65,
-                padding: const EdgeInsets.all(12),
-                child: Image.asset(
-                  "assets/images/planpadge.png",
-                )),
-          ),
+          // Positioned(
+          //   top: 270,
+          //   right: 220,
+          //   child: Container(
+          //       decoration: BoxDecoration(
+          //           color: Colors.transparent,
+          //           borderRadius: BorderRadius.circular(15)),
+          //       width: 65,
+          //       height: 65,
+          //       padding: const EdgeInsets.all(12),
+          //       child: Image.asset(
+          //         "assets/images/planpadge.png",
+          //       )),
+          // ),
         ],
       ),
     );

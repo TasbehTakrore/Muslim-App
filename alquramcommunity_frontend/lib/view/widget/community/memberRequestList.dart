@@ -7,6 +7,7 @@ import '../../../controller/auth/plan_controller.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../data/model/backend_to_front_models/specificUder_Model.dart';
 import '../../screen/auth/signup.dart';
+import '../../screen/otherProfile.dart';
 
 class memberRequestList extends StatelessWidget {
   const memberRequestList({
@@ -47,77 +48,93 @@ class memberRequestList extends StatelessWidget {
                           Rx<bool> vs = true.obs;
                           return Visibility(
                             visible: vs.value,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColor.lightYellow,
-                                  borderRadius: BorderRadius.circular(15)),
-                              margin: const EdgeInsets.symmetric(vertical: 5),
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage: NetworkImage(
-                                      '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${snapshot.data![index].imageUrl}'),
-                                  backgroundColor: Colors.transparent,
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                        width: 3,
+                            child: InkWell(
+                              onTap: () {
+                                Get.dialog(Dialog.fullscreen(
+                                    child: OtherProfileScreen(
+                                        userName:
+                                            snapshot.data![index].userName,
+                                        gender:
+                                            snapshot.data![index].userGender,
+                                        age: snapshot.data![index].userAge
+                                            .toString(),
+                                        userProfileImage:
+                                            snapshot.data![index].imageUrl)));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColor.lightYellow,
+                                    borderRadius: BorderRadius.circular(15)),
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 30.0,
+                                    backgroundImage: NetworkImage(
+                                        '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${snapshot.data![index].imageUrl}'),
+                                    backgroundColor: Colors.transparent,
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          width: 3,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                onTap: () {
-                                  print("hiii");
-                                },
-                                title: Text(
-                                  "${snapshot.data![index].userName}",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                subtitle: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Divider(),
-                                    Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          InkWell(
-                                              onTap: () {
-                                                print("accept");
-                                                vs.value = false;
-                                                controller.updatee();
-                                                controller.addMemberCommunity(
-                                                    communityID,
-                                                    false,
-                                                    snapshot.data![index]
-                                                        .userEmail);
-                                              },
-                                              child: const Icon(Icons.check,
-                                                  size: 30,
-                                                  color:
-                                                      AppColor.primaryColor)),
-                                          const SizedBox(
-                                            width: 12,
-                                          ),
-                                          InkWell(
-                                              onTap: () {
-                                                print("reject");
-                                                vs.value = false;
-                                                controller.updatee();
-                                                controller.deleteRequest(
-                                                    communityID,
-                                                    snapshot.data![index]
-                                                        .userEmail);
-                                              },
-                                              child: const Icon(Icons.close,
-                                                  size: 30, color: Colors.red)),
-                                        ]),
-                                  ],
+                                  onTap: () {
+                                    print("hiii");
+                                  },
+                                  title: Text(
+                                    "${snapshot.data![index].userName}",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  subtitle: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Divider(),
+                                      Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  print("accept");
+                                                  vs.value = false;
+                                                  controller.updatee();
+                                                  controller.addMemberCommunity(
+                                                      communityID,
+                                                      false,
+                                                      snapshot.data![index]
+                                                          .userEmail);
+                                                },
+                                                child: const Icon(Icons.check,
+                                                    size: 30,
+                                                    color:
+                                                        AppColor.primaryColor)),
+                                            const SizedBox(
+                                              width: 12,
+                                            ),
+                                            InkWell(
+                                                onTap: () {
+                                                  print("reject");
+                                                  vs.value = false;
+                                                  controller.updatee();
+                                                  controller.deleteRequest(
+                                                      communityID,
+                                                      snapshot.data![index]
+                                                          .userEmail);
+                                                },
+                                                child: const Icon(Icons.close,
+                                                    size: 30,
+                                                    color: Colors.red)),
+                                          ]),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

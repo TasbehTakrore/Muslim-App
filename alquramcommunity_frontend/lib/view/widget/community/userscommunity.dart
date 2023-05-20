@@ -7,6 +7,7 @@ import '../../../controller/auth/plan_controller.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../data/model/backend_to_front_models/specificUder_Model.dart';
 import '../../screen/auth/signup.dart';
+import '../../screen/otherProfile.dart';
 
 class UsersCommunity extends StatelessWidget {
   const UsersCommunity({
@@ -50,31 +51,45 @@ class UsersCommunity extends StatelessWidget {
                                   controller.getUserEmail()
                               ? Visibility(
                                   visible: vs.value,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 40.0,
-                                        backgroundImage: NetworkImage(
-                                            '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${snapshot.data![index].imageUrl}'),
-                                        backgroundColor: Colors.transparent,
-                                        child: Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color:
-                                                  Color.fromARGB(255, 0, 0, 0),
-                                              width: 3,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.dialog(Dialog.fullscreen(
+                                          child: OtherProfileScreen(
+                                              userName: snapshot
+                                                  .data![index].userName,
+                                              gender: snapshot
+                                                  .data![index].userGender,
+                                              age: snapshot.data![index].userAge
+                                                  .toString(),
+                                              userProfileImage: snapshot
+                                                  .data![index].imageUrl)));
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 40.0,
+                                          backgroundImage: NetworkImage(
+                                              '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${snapshot.data![index].imageUrl}'),
+                                          backgroundColor: Colors.transparent,
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                                width: 3,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        "${snapshot.data![index].userName.substring(0, snapshot.data![index].userName.length > 12 ? 12 : snapshot.data![index].userName.length)}",
-                                      ),
-                                    ],
+                                        Text(
+                                          "${snapshot.data![index].userName.split(' ')[0]}",
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 )
                               : SizedBox();
