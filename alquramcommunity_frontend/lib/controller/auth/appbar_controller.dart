@@ -16,7 +16,9 @@ class APPBarController extends GetxController {
   }
 
   void getCoins() {
-    coinsCount.value = myServices.sharedPreferences.getInt("user_coins")!;
+    myServices.sharedPreferences.getInt("user_coins") == null
+        ? coinsCount.value = 0
+        : coinsCount.value = myServices.sharedPreferences.getInt("user_coins")!;
   }
 
   addCoins() {

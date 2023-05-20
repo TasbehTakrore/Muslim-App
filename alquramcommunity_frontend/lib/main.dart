@@ -21,23 +21,11 @@ import 'view/screen/language.dart';
 import 'package:timezone/data/latest.dart' as tz;
 // import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-// <<<<<<< HEAD
+  // await Firebase.initializeApp();
 
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform
-//   );
-//   //FirebaseMessaging.onBackgroundMessage(messageHandler);
-//   //FirebaseMessagingListner();
-//   tz.initializeTimeZones();
-
-// =======
-  await Firebase.initializeApp();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-// >>>>>>> main
-  await initialServices();
+  initialServices();
   runApp(const MyApp());
 }
 
