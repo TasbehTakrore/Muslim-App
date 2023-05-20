@@ -20,8 +20,8 @@ import '../../data/model/backend_to_front_models/specificUder_Model.dart';
 MyServices myServices = Get.put(MyServices());
 
 class AuthServices {
-  String uri = 'http://192.168.1.19:5000';
-  String uri2 = 'http://192.168.1.19:8080';
+  String uri = 'http://192.168.1.106:5000';
+  String uri2 = 'http://192.168.1.106:8080';
 
   final ProfileController profilesController = Get.put(ProfileController());
   final ForgetPasswordControllerImp forgetController =

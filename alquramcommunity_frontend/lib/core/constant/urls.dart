@@ -1,5 +1,5 @@
 class MyURL {
-  static const String uri = 'http://192.168.1.19:5000';
+  static const String uri = 'http://192.168.1.106:5000';
 
   // static const String uri = 'http://172.19.108.121:5000';
 
