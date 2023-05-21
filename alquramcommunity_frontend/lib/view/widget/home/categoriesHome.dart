@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../controller/homescreen_controller.dart';
 import '../../../core/constant/color.dart';
+import '../../../core/constant/constants.dart';
 import '../../../data/datasource/static.dart';
 import '../../screen/surahsdialog.dart';
 
@@ -11,41 +12,48 @@ class ListCategoriesHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     return SizedBox(
-      height: 100,
+      height: (isLaptopScreen == true) ? screenWidth / 5 : 100,
       child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        separatorBuilder: (context, index) => (isLaptopScreen == true)
+            ? const SizedBox(width: 15)
+            : const SizedBox(width: 10),
         itemCount: CategoryList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Column(children: [
-            InkWell(
-              onTap: index > 2
-                  ? CategoryList[index].onPressed
-                  : () => showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CategoryList[index].onPressedWidgetDialog!;
-                      }),
-              // CategoryList[index].onPressed,
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: index < 2
-                          ? AppColor.secondaryColor
-                          : AppColor.lightYellow,
-                      borderRadius: BorderRadius.circular(15)),
-                  width: 65,
-                  height: 65,
-                  padding: const EdgeInsets.all(12),
-                  child: SvgPicture.asset("${CategoryList[index].image}")),
-            ),
-            const SizedBox(height: 4),
-            Text("${CategoryList[index].title}",
-                style: TextStyle(
-                    fontSize: index < 2 ? 11.5 : 11.5,
-                    fontWeight:
-                        index < 2 ? FontWeight.bold : FontWeight.normal))
-          ]);
+          return (isLaptopScreen == true) && ((index == 3) || (index == 5))
+              ? SizedBox()
+              : Column(children: [
+                  InkWell(
+                    onTap: index > 2
+                        ? CategoryList[index].onPressed
+                        : () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CategoryList[index].onPressedWidgetDialog!;
+                            }),
+                    // CategoryList[index].onPressed,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: index < 2
+                                ? AppColor.secondaryColor
+                                : AppColor.lightYellow,
+                            borderRadius: BorderRadius.circular(15)),
+                        width: (isLaptopScreen == true) ? screenWidth / 6 : 68,
+                        height: (isLaptopScreen == true) ? screenWidth / 6 : 68,
+                        padding: const EdgeInsets.all(12),
+                        child:
+                            SvgPicture.asset("${CategoryList[index].image}")),
+                  ),
+                  const SizedBox(height: 4),
+                  Text("${CategoryList[index].title}",
+                      style: TextStyle(
+                          fontSize: index < 2 ? 11.5 : 11.5,
+                          fontWeight:
+                              index < 2 ? FontWeight.bold : FontWeight.normal))
+                ]);
         },
       ),
     );

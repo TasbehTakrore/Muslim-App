@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 import '../../controller/lists_controller.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Lists/mistakespart.dart';
@@ -19,6 +20,8 @@ class ListsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
 
     Get.put(ListsController());
 
@@ -28,13 +31,17 @@ class ListsScreen extends StatelessWidget {
           Get.offAllNamed(AppRoute.home);
           return false;
         },
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
+        child: Container(
+          padding: isLaptopScreen == true
+              ? EdgeInsets.only(right: screenWidth / 11, left: screenWidth / 6)
+              : EdgeInsets.all(6.0),
           child: ListView(
             //mainAxisSize: MainAxisSize.min,
             children: [
               CustomSlidingSegmentedControl<int>(
-                  fixedWidth: MediaQuery.of(context).size.width / 2.1,
+                  fixedWidth: isLaptopScreen == true
+                      ? screenWidth / 2.72
+                      : screenWidth / 2.1,
                   height: 39,
                   initialValue: controller.getIndex(),
                   children: {

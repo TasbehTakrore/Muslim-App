@@ -3,6 +3,7 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/auth/plan_controller.dart';
+import '../../../core/constant/constants.dart';
 
 class PartialPlanCard extends StatelessWidget {
   const PartialPlanCard(
@@ -21,6 +22,8 @@ class PartialPlanCard extends StatelessWidget {
     //bool val = false;
 
     Get.put(PlanController());
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
 
     return GetBuilder<PlanController>(
         builder: (controller) => Visibility(
@@ -35,7 +38,10 @@ class PartialPlanCard extends StatelessWidget {
                       value: checkValue.value,
                       onChanged: onChange,
                     ),
-                    Text(partialCardData),
+                    Text(
+                      partialCardData,
+                      style: TextStyle(fontSize: isLaptopScreen==true? 26:18),
+                    ),
                   ],
                 ),
               ),

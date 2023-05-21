@@ -33,18 +33,6 @@ class PrayPalnCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("خطّتي اليوميّة", style: TextStyle(fontSize: 25)),
-                        // Transform.scale(
-                        //   // لتكبير حجم الشيكبوكس
-                        //   scale: 1.3,
-                        //   child: Checkbox(
-                        //     activeColor: AppColor.primaryColor,
-                        //     hoverColor: Colors.black,
-                        //     value: controller.mainPrayCheckValue.value,
-                        //     onChanged: (value) {
-                        //       controller.changeMainPrayCheck(value!);
-                        //     },
-                        //   ),
-                        // )
                       ],
                     ),
                     const Divider(),

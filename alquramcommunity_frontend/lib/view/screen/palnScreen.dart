@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controller/auth/plan_controller.dart';
 import '../../controller/prayscreen_controller.dart';
 import '../../core/constant/color.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/imageasset.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Plan/createPlanContent.dart';
@@ -24,7 +25,8 @@ class PalnScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(PlanController());
     PlanController planController=  Get.put(PlanController());
-
+  final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     return WillPopScope(
       onWillPop: () async {
         Get.toNamed(AppRoute.home);
@@ -35,6 +37,7 @@ class PalnScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),
+          padding: isLaptopScreen==true? EdgeInsets.only(right: screenWidth/11, left: screenWidth/6):null,
           margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
           width: double.infinity,
           height: MediaQuery.of(context).size.height -

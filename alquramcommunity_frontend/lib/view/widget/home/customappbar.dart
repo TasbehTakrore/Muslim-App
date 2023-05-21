@@ -3,6 +3,7 @@ import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/view/widget/logowidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../controller/auth/appbar_controller.dart';
 
@@ -20,8 +21,7 @@ class CustomAppBar extends StatelessWidget {
           textDirection: TextDirection.ltr,
           //mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Expanded(
-                flex: 2, child: logoWidget(logowidth: 70, sizeType: 2)),
+            // logoWidget(logowidth: 70, sizeType: 2)),
             Expanded(
                 flex: 1,
                 child: Container(
@@ -31,7 +31,7 @@ class CustomAppBar extends StatelessWidget {
                         children: [
                       Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          textDirection: TextDirection.ltr,
+                          textDirection: TextDirection.rtl,
                           children: [
                             Container(
                                 padding: const EdgeInsets.only(top: 5),
@@ -50,7 +50,7 @@ class CustomAppBar extends StatelessWidget {
                       const SizedBox(height: 5),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          textDirection: TextDirection.ltr,
+                          textDirection: TextDirection.rtl,
                           children: [
                             Text(
                               "${appBarController.coinsCount.value}",
@@ -64,7 +64,16 @@ class CustomAppBar extends StatelessWidget {
                                 child: Image.asset(AppImageAsset.coin,
                                     width: 20, height: 20))
                           ])
-                    ])))
+                    ]))),
+            Expanded(
+                flex: 2,
+                child: Text(
+                  " مُسْلم",
+                  style: GoogleFonts.lemonada(
+                      //fontWeight: FontWeight.w500,
+                      color: AppColor.primaryColor,
+                      fontSize: 30),
+                )),
           ]),
     );
   }
