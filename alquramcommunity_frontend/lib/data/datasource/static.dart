@@ -20,36 +20,36 @@ HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
 PrayScreenControllerImp prayScreenController =
     Get.put(PrayScreenControllerImp());
-ThikrCatgControllerImp thikrController=Get.put(ThikrCatgControllerImp());
+ThikrCatgControllerImp thikrController = Get.put(ThikrCatgControllerImp());
 
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
-      title: "Trainer",
+      title: "تدريب",
       image: AppImageAsset.question,
       onPressedWidgetDialog: const TrainerDialog()),
   CategoryModel(
-      title: "Recitation",
+      title: "تسميع",
       image: AppImageAsset.quranCategory,
       onPressedWidgetDialog: const SurahsDialogRecitation()),
   CategoryModel(
-      title: "Quran",
+      title: "قُرآن",
       image: AppImageAsset.reading,
       onPressedWidgetDialog: const SurahsDialog()),
   CategoryModel(
-      title: "Qibla",
+      title: "قِبلة",
       image: AppImageAsset.qibla,
       onPressed: () async {
-       Get.toNamed(AppRoute.qibla);
+        Get.toNamed(AppRoute.qibla);
       }),
   CategoryModel(
-    title: "Tasbeeh",
+    title: "تَسْبيح",
     image: AppImageAsset.rosary,
     onPressed: () => Get.toNamed(AppRoute.tasbeeh),
     onPressedWidgetDialog: const TrainerDialog(),
   ),
   CategoryModel(
-    title: "Prayer",
+    title: "صلاة",
     image: AppImageAsset.prayer,
     onPressed: () async {
       await prayScreenController.checkLocationPermission();
@@ -60,19 +60,17 @@ List<CategoryModel> CategoryList = [
     },
   ),
   CategoryModel(
-    title: "Dhikr",
-    image: AppImageAsset.duaa,
-    onPressed: () async {
-      await thikrController.loadJSON_t();
-      if(thikrController.followCounters.isEmpty){
-      await thikrController.fillFollow();
-      
-      }
-     // thikrController.my();
-    // await thikrController.dataaa();
-      homeScreenController.changePage(6);
-    }
-  )
+      title: "أذكار",
+      image: AppImageAsset.duaa,
+      onPressed: () async {
+        await thikrController.loadJSON_t();
+        if (thikrController.followCounters.isEmpty) {
+          await thikrController.fillFollow();
+        }
+        // thikrController.my();
+        // await thikrController.dataaa();
+        homeScreenController.changePage(6);
+      })
 ];
 
 //athkar main category models

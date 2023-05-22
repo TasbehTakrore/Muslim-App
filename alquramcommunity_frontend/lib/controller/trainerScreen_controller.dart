@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -86,6 +87,8 @@ class TrainerScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     userEmail = myServices.sharedPreferences.getString("user_email");
     _speech = SpeechToText();
     initSpeechRecognition();
@@ -1047,11 +1050,12 @@ class TrainerScreenController extends GetxController {
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
     CoinsServices.addCoins(coins);
-    return showDialog(
-        context: conteXt!,
-        builder: (BuildContext context) {
-          return statisticsTrainerContent();
-        });
+    Get.dialog(statisticsTrainerContent());
+    // return showDialog(
+    //     context: conteXt!,
+    //     builder: (BuildContext context) {
+    //       return statisticsTrainerContent();
+    //     });
     //  Get.toNamed(AppRoute.home);
   }
 }

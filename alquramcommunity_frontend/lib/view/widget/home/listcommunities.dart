@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:get/get.dart';
 import '../../../controller/commnity_controller.dart';
+import '../../../core/constant/constants.dart';
 import '../../../data/model/backend_to_front_models/community_model.dart';
 import 'communitywidget.dart';
 import 'joincommunity.dart';
@@ -14,12 +15,15 @@ class ListCommunities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
+
     CommunitityController communitityController =
         Get.put(CommunitityController());
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
     return Container(
-        height: 205,
+        height: isLaptopScreen == true ? 260 : 205,
         child: FutureBuilder<List<String>>(
           future: homeScreenControllerImp.getMyCommu(),
           builder:

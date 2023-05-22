@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 import '../widget/home/categoriesHome.dart';
 import '../widget/home/customcardhome.dart';
-import '../widget/home/customappbar.dart';
 import '../widget/home/listcommunities.dart';
 import '../widget/home/statisticscard.dart';
 
@@ -42,10 +41,10 @@ class Home extends StatelessWidget {
               fontSize1: 15,
               fontSize2: 30,
             ),
-            isLaptopScreen == true ? SizedBox(height: 5) : SizedBox(),
+            isLaptopScreen == true ? SizedBox(height: 10) : SizedBox(),
             const ListCategoriesHome(),
             const SizedBox(height: 10),
-            const Text("Al-Quran Communities"),
+            const Text(" المُجتمعات"),
             const ListCommunities(),
             const StatisticsCard(),
           ],

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -34,6 +35,7 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Container(
               color: AppColor.grey,
+              // child: Switch(value: true, onChanged: (value) {}),
             ),
             // Padding(
             //   padding: const EdgeInsets.only(bottom: 0),
@@ -75,6 +77,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
+
             Positioned(
               top: 270,
               left: 20,
@@ -82,13 +85,14 @@ class ProfileScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Obx(() => Container(
-                      height: 200,
+                      height: 230,
                       width: width,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
                       ),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const SizedBox(height: 65),
                           Text(
@@ -117,6 +121,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+
                           // ProfileTop(),
                         ],
                       ))),
@@ -146,6 +151,31 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                     )),
+              ),
+            ),
+            Positioned(
+              top: 510,
+              right: width / 10,
+              left: width / 10,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "هل تريد تفعيل وضع الطّفل؟",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Obx(() => Container(
+                        // color: AppColor.grey,r
+                        child: Switch(
+                            dragStartBehavior: DragStartBehavior.start,
+                            value: profilesController.childMode.value,
+                            activeColor: AppColor.thickYellow,
+                            onChanged: (value) {
+                              profilesController.childMode.value = value;
+                            }),
+                      )),
+                ],
               ),
             ),
             // Positioned(

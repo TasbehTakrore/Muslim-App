@@ -3,6 +3,7 @@ import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../controller/trainerScreen_controller.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/routes.dart';
 import '../widget/home/customappbar.dart';
 import '../widget/trainer/floatingbottontrainer.dart';
@@ -13,27 +14,41 @@ class TrainerMainScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
 
     TrainerScreenController trainerScreenController =
         Get.put(TrainerScreenController());
     trainerScreenController.setContext(context);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     return WillPopScope(
         onWillPop: () async {
           Get.offAllNamed(AppRoute.home);
+          // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
           return false;
         },
         child: Scaffold(
+          appBar: AppBar(
+              shadowColor: AppColor.grey,
+              automaticallyImplyLeading: false,
+              //primary: true,
+              elevation: 0.0,
+              backgroundColor: AppColor.grey,
+              title: CustomAppBar(onPressedIcon: () {})
+              //titleTextStyle: TextStyle(text),
+              ),
           floatingActionButton: const TrainerFloatingButtonsGroup(),
           backgroundColor: AppColor.grey,
           body: Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
               child: Obx(() => Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomAppBar(onPressedIcon: () {}),
+                      SizedBox(),
                       Row(
                         children: [
                           IconButton(

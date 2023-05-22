@@ -13,7 +13,7 @@ class RecitationScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     final RecitationScreenController recitationController =
         Get.put(RecitationScreenController());

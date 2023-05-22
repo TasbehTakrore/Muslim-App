@@ -1,9 +1,11 @@
+import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../../core/constant/color.dart';
+import '../../../core/constant/constants.dart';
 import '../community/specificcommunity.dart';
 
 class CommunityW extends StatelessWidget {
@@ -20,6 +22,9 @@ class CommunityW extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
+
     return InkWell(
       onTap: () {
         print("communityName: -- $communityName");
@@ -53,8 +58,12 @@ class CommunityW extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 100,
-                  decoration: const BoxDecoration(
+                  height: isLaptopScreen == true ? 150 : 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/tasbehBorderTop.png'),
+                        fit: BoxFit.cover,
+                        opacity: isLaptopScreen == false ? 0.05 : 0.08),
                     color: AppColor.secondaryColor,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0),
@@ -86,68 +95,68 @@ class CommunityW extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 150,
-                        child: Stack(
-                          alignment: AlignmentDirectional(-1, 0),
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(-0.91, 0),
-                              child: Container(
-                                width: 28,
-                                height: 28,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                // child: Image.network(
-                                //   'https://images.unsplash.com/photo-1610737241336-371badac3b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                                //   fit: BoxFit.fitWidth,
-                                // ),
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-0.62, 0),
-                              child: Container(
-                                width: 28,
-                                height: 28,
-                                clipBehavior: Clip.antiAlias,
-                                decoration:
-                                    BoxDecoration(shape: BoxShape.circle),
-                                //   child: Image.network(
-                                //       'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                                //       fit: BoxFit.fitWidth),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                        child: Text('30%'),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10, 8, 0, 8),
-                  child: LinearPercentIndicator(
-                    percent: 0.3,
-                    width: 210,
-                    lineHeight: 16,
-                    animation: true,
-                    progressColor: AppColor.primaryColor,
-                    backgroundColor: Color(0xFFE0E3E7),
-                    barRadius: Radius.circular(12),
-                    padding: EdgeInsets.zero,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 0),
+                //   child: Row(
+                //     mainAxisSize: MainAxisSize.max,
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                // Container(
+                //   width: 150,
+                //   child: Stack(
+                //     alignment: AlignmentDirectional(-1, 0),
+                //     children: [
+                //     Align(
+                //       alignment: AlignmentDirectional(-0.91, 0),
+                //       child: Container(
+                //         width: 28,
+                //         height: 28,
+                //         clipBehavior: Clip.antiAlias,
+                //         decoration: BoxDecoration(
+                //           shape: BoxShape.circle,
+                //         ),
+                //         child: Image.asset(
+                //           'https://images.unsplash.com/photo-1610737241336-371badac3b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+                //           fit: BoxFit.fitWidth,
+                //         ),
+                //       ),
+                //     ),
+                //     Align(
+                //       alignment: AlignmentDirectional(-0.62, 0),
+                //       child: Container(
+                //         width: 28,
+                //         height: 28,
+                //         clipBehavior: Clip.antiAlias,
+                //         decoration:
+                //             BoxDecoration(shape: BoxShape.circle),
+                //         //   child: Image.network(
+                //         //       'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+                //         //       fit: BoxFit.fitWidth),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // ),
+                // const Padding(
+                //   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                //   child: Text('30%'),
+                // ),
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsetsDirectional.fromSTEB(10, 8, 0, 8),
+                //   child: LinearPercentIndicator(
+                //     percent: 0.3,
+                //     width: 210,
+                //     lineHeight: 16,
+                //     animation: true,
+                //     progressColor: AppColor.primaryColor,
+                //     backgroundColor: Color(0xFFE0E3E7),
+                //     barRadius: Radius.circular(12),
+                //     padding: EdgeInsets.zero,
+                //   ),
+                // ),
               ],
             ),
           ),

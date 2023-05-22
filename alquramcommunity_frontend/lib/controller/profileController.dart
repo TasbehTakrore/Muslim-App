@@ -19,7 +19,7 @@ class ProfileController extends GetxController {
   String? location;
   RxString img = ''.obs;
   String? joinDate;
-
+  Rx<bool> childMode = false.obs;
   @override
   void onInit() {
     super.onInit();

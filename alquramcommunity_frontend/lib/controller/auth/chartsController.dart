@@ -8,19 +8,18 @@ import 'package:get/get.dart';
 import '../../core/constant/color.dart';
 import '../../core/services/plan_services.dart';
 import '../../core/services/services.dart';
-MyServices myServices = Get.put(MyServices());
-PlanServices planServices =Get.put(PlanServices());
-PlanController planController=Get.put(PlanController());
-TasbehServices tasbehServices=Get.put(TasbehServices());
 
+MyServices myServices = Get.put(MyServices());
+PlanServices planServices = Get.put(PlanServices());
+PlanController planController = Get.put(PlanController());
+TasbehServices tasbehServices = Get.put(TasbehServices());
 
 class ChartsController extends GetxController {
-
 // ************************* Start week chart***********************//
   RxInt touchedIndex = RxInt(-1);
   bool isPlaying = false;
   final Duration animDuration = const Duration(milliseconds: 250);
-  final int x =planServices.weekData()-1;
+  final int x = planServices.weekData() - 1;
   // Colors part
   List<Color> get availableColors => const <Color>[
         Colors.purple,
@@ -33,26 +32,32 @@ class ChartsController extends GetxController {
       ];
   final Color barBackgroundColor = Color.fromARGB(162, 158, 158, 158);
   final Color barColor = Color.fromARGB(232, 56, 67, 214);
-  final Color touchedBarColor =AppColor.thickYellow;
+  final Color touchedBarColor = AppColor.thickYellow;
 
   @override
   void onInit() {
-  super.onInit();
-  planServices.dayByDay = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
-  refreshState() ;
-    
+    super.onInit();
+    planServices.dayByDay = [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0]
+    ];
+    refreshState();
   }
 
   void togglePlaying() {
     isPlaying = !isPlaying;
     update();
     if (isPlaying) {
-    refreshState() ;
-     Future.delayed(const Duration(seconds: 2), () {
-      // Stop the playing after 5 seconds (adjust the duration as needed)
-      togglePlaying();
-    });
-
+      refreshState();
+      Future.delayed(const Duration(seconds: 2), () {
+        // Stop the playing after 5 seconds (adjust the duration as needed)
+        togglePlaying();
+      });
     }
   }
 
@@ -61,12 +66,11 @@ class ChartsController extends GetxController {
       required Color barColor,
       double width = 22,
       List<int> showTooltips = const []}) {
-
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
-          toY: isTouched ? y-1  :y,
+          toY: isTouched ? y - 1 : y,
           color: isTouched ? touchedBarColor : barColor,
           width: width,
           borderSide: isTouched
@@ -79,35 +83,84 @@ class ChartsController extends GetxController {
           ),
         ),
       ],
-
       showingTooltipIndicators: showTooltips,
     );
   }
+
   List<BarChartGroupData> showingGroups() {
     return List.generate(7, (i) {
       switch (i) {
         case 0:
-          return makeGroupData(0,planServices.dayByDay[0][0]==0?0.5:(planServices.dayByDay[0][0]*15)/planServices.dayByDay[0][1], isTouched: i == touchedIndex.value , barColor: AppColor.primaryColor);
+          return makeGroupData(
+              0,
+              planServices.dayByDay[0][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[0][0] * 15) /
+                      planServices.dayByDay[0][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
         case 1:
-          return makeGroupData(1,planServices.dayByDay[1][0]==0?0.5:(planServices.dayByDay[1][0]*15)/planServices.dayByDay[1][1] , isTouched: i == touchedIndex.value, barColor: AppColor.primaryColor);
+          return makeGroupData(
+              1,
+              planServices.dayByDay[1][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[1][0] * 15) /
+                      planServices.dayByDay[1][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
         case 2:
-          return makeGroupData(2,planServices.dayByDay[2][0]==0?0.5:(planServices.dayByDay[2][0]*15)/planServices.dayByDay[2][1], isTouched: i == touchedIndex.value, barColor:AppColor.primaryColor);
+          return makeGroupData(
+              2,
+              planServices.dayByDay[2][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[2][0] * 15) /
+                      planServices.dayByDay[2][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
         case 3:
-          return makeGroupData(3,planServices.dayByDay[3][0]==0?0.5:(planServices.dayByDay[3][0]*15)/planServices.dayByDay[3][1], isTouched: i == touchedIndex.value, barColor:AppColor.primaryColor);
-      case 4:
-          return makeGroupData(4,planServices.dayByDay[4][0]==0?0.5:(planServices.dayByDay[4][0]*15)/planServices.dayByDay[4][1], isTouched: i == touchedIndex.value, barColor: AppColor.primaryColor);
-      case 5:
-          return makeGroupData(5,planServices.dayByDay[5][0]==0?0.5:(planServices.dayByDay[5][0]*15)/planServices.dayByDay[5][1], isTouched: i == touchedIndex.value, barColor: AppColor.primaryColor);
-      case 6:
-          return makeGroupData(6, planServices.dayByDay[6][0]==0?0.5:(planServices.dayByDay[6][0]*15)/planServices.dayByDay[6][1], isTouched: i == touchedIndex.value, barColor:AppColor.primaryColor);
-      default:
-        throw Error();
+          return makeGroupData(
+              3,
+              planServices.dayByDay[3][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[3][0] * 15) /
+                      planServices.dayByDay[3][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
+        case 4:
+          return makeGroupData(
+              4,
+              planServices.dayByDay[4][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[4][0] * 15) /
+                      planServices.dayByDay[4][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
+        case 5:
+          return makeGroupData(
+              5,
+              planServices.dayByDay[5][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[5][0] * 15) /
+                      planServices.dayByDay[5][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
+        case 6:
+          return makeGroupData(
+              6,
+              planServices.dayByDay[6][0] == 0
+                  ? 0.5
+                  : (planServices.dayByDay[6][0] * 15) /
+                      planServices.dayByDay[6][1],
+              isTouched: i == touchedIndex.value,
+              barColor: AppColor.primaryColor);
+        default:
+          throw Error();
       }
     });
   }
 
   BarChartData mainBarData() {
-    int i=0;
+    int i = 0;
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
@@ -119,31 +172,31 @@ class ChartsController extends GetxController {
             switch (group.x.toInt()) {
               case 0:
                 weekDay = 'Saturday';
-                i=0;
+                i = 0;
                 break;
               case 1:
                 weekDay = 'Sunday';
-                i=1;
+                i = 1;
                 break;
               case 2:
                 weekDay = 'Monday';
-                i=2;
+                i = 2;
                 break;
               case 3:
                 weekDay = 'Tuesday';
-                i=3;
+                i = 3;
                 break;
               case 4:
                 weekDay = 'Wednesday';
-                i=4;
+                i = 4;
                 break;
               case 5:
                 weekDay = 'Thursday';
-                i=5;
+                i = 5;
                 break;
               case 6:
                 weekDay = 'Friday';
-                i=6;
+                i = 6;
                 break;
               default:
                 throw Error();
@@ -157,7 +210,8 @@ class ChartsController extends GetxController {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: ('${planServices.dayByDay[i][0]} / ${planServices.dayByDay[i][1]}'),
+                  text:
+                      ('${planServices.dayByDay[i][0]} / ${planServices.dayByDay[i][1]}'),
                   style: TextStyle(
                     color: touchedBarColor,
                     fontSize: 16,
@@ -175,7 +229,7 @@ class ChartsController extends GetxController {
             touchedIndex.value = -1;
             return;
           }
-touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
+          touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
         },
       ),
       titlesData: FlTitlesData(
@@ -193,7 +247,7 @@ touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
       ),
       borderData: FlBorderData(show: false),
       barGroups: showingGroups(),
-      gridData:  FlGridData(show: false),
+      gridData: FlGridData(show: false),
     );
   }
 
@@ -206,26 +260,26 @@ touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('S', style: style);
+        text = const Text('س', style: style);
         break;
       case 1:
-        text = const Text('S', style: style);
+        text = const Text('أ', style: style);
         break;
       case 2:
-        text = const Text('M', style: style);
+        text = const Text('ن', style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
-                text = const Text('T', style: style);
+        text = const Text('ث', style: style);
+        // text = const Text('ث', style: style);
         break;
       case 4:
-        text = const Text('W', style: style);
+        text = const Text('ع', style: style);
         break;
       case 5:
-        text = const Text('T', style: style);
+        text = const Text('خ', style: style);
         break;
       case 6:
-        text = const Text('F', style: style);
+        text = const Text('ج', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -250,36 +304,37 @@ touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
             reservedSize: 38,
           ),
         ),
-        leftTitles:  AxisTitles(
+        leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
           ),
         ),
-        topTitles:  AxisTitles(
+        topTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
           ),
         ),
-        rightTitles:  AxisTitles(
+        rightTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
           ),
         ),
       ),
-      
       borderData: FlBorderData(show: false),
       barGroups: List.generate(
         7,
         (i) => makeGroupData(
           i,
           Random().nextInt(15).toDouble() + 1,
-          isTouched: i == touchedIndex.value, barColor: availableColors[Random().nextInt(6)],
+          isTouched: i == touchedIndex.value,
+          barColor: availableColors[Random().nextInt(6)],
         ),
       ),
       gridData: FlGridData(show: false),
     );
   }
-   Future<dynamic> refreshState() async {
+
+  Future<dynamic> refreshState() async {
     update();
     await Future<dynamic>.delayed(
       animDuration + const Duration(milliseconds: 10),
@@ -293,26 +348,28 @@ touchedIndex.value = (barTouchResponse.spot!.touchedBarGroupIndex);
 
 // ************************* Start tasbeh chart***********************//
 
-Future<int> getTasbehData() async {
-  final userId = myServices.sharedPreferences.getInt("user_id") ?? 0;
-  int userTasbeh = await tasbehServices.getUserTasbeh(userId);
-  print("dddddd${userTasbeh}");
-  return userTasbeh;
-}
- RxInt tasbehData = 0.obs;
-Future<void> fetchTasbehData() async {
-  // Generate a random number between 0 and 100 for 1 second
-  final random = Random();
-  for (int i = 0; i < 10; i++) {
-    await Future.delayed(Duration(milliseconds: 100));
-    tasbehData.value = random.nextInt(101); // Update with a random number
+  Future<int> getTasbehData() async {
+    final userId = myServices.sharedPreferences.getInt("user_id") ?? 0;
+    int userTasbeh = await tasbehServices.getUserTasbeh(userId);
+    print("dddddd${userTasbeh}");
+    return userTasbeh;
   }
 
-  // Fetch the actual data
-  int fetchedData = await getTasbehData();
-  tasbehData.value = fetchedData;
-}
- bool isFlipped = false;
+  RxInt tasbehData = 0.obs;
+  Future<void> fetchTasbehData() async {
+    // Generate a random number between 0 and 100 for 1 second
+    final random = Random();
+    for (int i = 0; i < 10; i++) {
+      await Future.delayed(Duration(milliseconds: 100));
+      tasbehData.value = random.nextInt(101); // Update with a random number
+    }
+
+    // Fetch the actual data
+    int fetchedData = await getTasbehData();
+    tasbehData.value = fetchedData;
+  }
+
+  bool isFlipped = false;
 
   void flipCard() {
     isFlipped = !isFlipped;
@@ -399,11 +456,4 @@ Future<void> fetchTasbehData() async {
   }
 
 */
-  }
-
-
-
-
-
-
-
+}

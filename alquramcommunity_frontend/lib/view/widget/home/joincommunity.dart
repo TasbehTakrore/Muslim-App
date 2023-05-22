@@ -46,7 +46,7 @@ class JoinCommunity extends StatelessWidget {
                       child: Column(children: const [
                         Icon(Icons.add, color: Colors.white, size: 80),
                         Text(
-                          "Join New Community!",
+                          "ابحث عن مُجتمعٍ جديد!",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,

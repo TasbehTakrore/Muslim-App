@@ -15,10 +15,10 @@ class ListCategoriesHome extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     return SizedBox(
-      height: (isLaptopScreen == true) ? screenWidth / 5 : 100,
+      height: (isLaptopScreen == true) ? screenWidth / 4.97 : 100,
       child: ListView.separated(
         separatorBuilder: (context, index) => (isLaptopScreen == true)
-            ? const SizedBox(width: 15)
+            ? const SizedBox(width: 20)
             : const SizedBox(width: 10),
         itemCount: CategoryList.length,
         scrollDirection: Axis.horizontal,
@@ -41,8 +41,8 @@ class ListCategoriesHome extends StatelessWidget {
                                 ? AppColor.secondaryColor
                                 : AppColor.lightYellow,
                             borderRadius: BorderRadius.circular(15)),
-                        width: (isLaptopScreen == true) ? screenWidth / 6 : 68,
-                        height: (isLaptopScreen == true) ? screenWidth / 6 : 68,
+                        width: (isLaptopScreen == true) ? screenWidth / 7 : 68,
+                        height: (isLaptopScreen == true) ? screenWidth / 7 : 68,
                         padding: const EdgeInsets.all(12),
                         child:
                             SvgPicture.asset("${CategoryList[index].image}")),
@@ -50,7 +50,7 @@ class ListCategoriesHome extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text("${CategoryList[index].title}",
                       style: TextStyle(
-                          fontSize: index < 2 ? 11.5 : 11.5,
+                          fontSize: index < 2 ? 14 : 14,
                           fontWeight:
                               index < 2 ? FontWeight.bold : FontWeight.normal))
                 ]);

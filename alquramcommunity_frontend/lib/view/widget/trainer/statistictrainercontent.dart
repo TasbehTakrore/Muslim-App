@@ -18,7 +18,7 @@ class statisticsTrainerContent extends StatelessWidget {
     final HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
     return Container(
-        padding: EdgeInsets.all(0),
+        // padding: EdgeInsets.all(0),
         color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.4),
         child: Center(
           child: Wrap(
@@ -43,14 +43,20 @@ class statisticsTrainerContent extends StatelessWidget {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            "مدّة جلسة التدريب",
+                          const DefaultTextStyle(
                             style:
                                 TextStyle(fontSize: 20, color: AppColor.black),
+                            child: Text(
+                              "مدّة جلسة التدريب",
+                            ),
                           ),
-                          const SizedBox(height: 5),
-                          Text(trainerScreenController.durationResult,
-                              style: TextStyle(fontSize: 25)),
+
+                          // const
+                          // const SizedBox(height: 5),
+                          DefaultTextStyle(
+                            child: Text(trainerScreenController.durationResult),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
                         ],
                       )
                     ],
@@ -72,11 +78,14 @@ class statisticsTrainerContent extends StatelessWidget {
                               color: AppColor.thickYellow,
                               weight: 5),
                           SizedBox(height: 8),
-                          Text(
-                            style: TextStyle(fontSize: 16),
-                            " + ${trainerScreenController.coins} عُملة جديدة",
-                            textAlign: TextAlign.center,
-                          ),
+                          DefaultTextStyle(
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black),
+                              child: Text(
+                                " + ${trainerScreenController.coins} عُملة جديدة",
+                              )
+                              // textAlign: TextAlign.center,
+                              )
                         ])),
                 Container(
                   width: MediaQuery.of(context).size.width / 2.15,
@@ -98,16 +107,17 @@ class statisticsTrainerContent extends StatelessWidget {
                         backgroundColor: Color.fromARGB(32, 252, 204, 92),
                         percent: (trainerScreenController.mistakesCount /
                             (trainerScreenController.counter.value - 1)),
-                        center: const Text(
-                          "الأخطاء",
+                        center: DefaultTextStyle(
+                          child: Text("الأخطاء"),
                           style: TextStyle(color: Colors.red, fontSize: 18),
                         ),
                         progressColor: Color.fromARGB(255, 233, 0, 0),
                       ),
                       SizedBox(height: 12),
-                      Text(
-                        "${trainerScreenController.mistakesCount} أخطاء / ${trainerScreenController.counter.value - 1} سؤال ",
-                        style: TextStyle(fontSize: 16),
+                      DefaultTextStyle(
+                        child: Text(
+                            "${trainerScreenController.mistakesCount} أخطاء / ${trainerScreenController.counter.value - 1} سؤال "),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                       )
                     ],
                   ),
@@ -127,18 +137,20 @@ class statisticsTrainerContent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Text(
-                            "أتتمت في هذه الجلسة التّدريب على (${trainerScreenController.counter.value}) آية، تمنحك القيم في الأعلى مؤشّرًا على مدى إتقانك الحفظ. \n\n تذكّر، لا خاسر مع القرآن!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16),
-                          )),
+                        padding: const EdgeInsets.all(20.0),
+                        child: DefaultTextStyle(
+                            child: Text(
+                                "أتتمت في هذه الجلسة التّدريب على (${trainerScreenController.counter.value - 1}) آية، تمنحك القيم في الأعلى مؤشّرًا على مدى إتقانك الحفظ. \n تذكّر، لا خاسر مع القرآن!",
+                                textAlign: TextAlign.center),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black)),
+                      ),
                       TextButton.icon(
                         onPressed: () {
                           Get.toNamed(AppRoute.home);
                           homeScreenControllerImp.changePage(2);
                         },
-                        label: Text(
+                        label: const Text(
                           "انتقل إلى قائمة الأخطاء",
                           style: TextStyle(color: AppColor.primaryColor),
                         ),

@@ -8,6 +8,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../controller/recitationscreen_controller.dart';
 import '../../../controller/speechRecognition_controller.dart';
 import '../../../core/constant/color.dart';
+import '../../../core/constant/constants.dart';
 
 class TrainerFloatingButtonsGroup extends StatelessWidget {
   const TrainerFloatingButtonsGroup({super.key});
@@ -16,15 +17,19 @@ class TrainerFloatingButtonsGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     TrainerScreenController trainerScreenController =
         Get.put(TrainerScreenController());
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
 
     return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: isLaptopScreen == true ? screenWidth / 4 : 2),
       //color: Colors.red,
       child: Row(
         // mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 20),
+          isLaptopScreen == true ? SizedBox() : SizedBox(width: 18),
           FloatingActionButton(
             heroTag: "end",
             onPressed: () {
@@ -80,6 +85,7 @@ class TrainerFloatingButtonsGroup extends StatelessWidget {
                 trainerScreenController.text.value = "";
                 trainerScreenController.testType();
               }),
+          SizedBox()
         ],
       ),
     );

@@ -14,6 +14,7 @@ class StatisticDown extends StatelessWidget {
     chartsController.fetchTasbehData();
     return Expanded(
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
