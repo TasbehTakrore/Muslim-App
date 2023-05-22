@@ -9,7 +9,7 @@ class ListSurahCardRecitation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height / 1.7,
+        height: MediaQuery.of(context).size.height / 1.2,
         child: ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemCount: 114,

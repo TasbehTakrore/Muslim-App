@@ -19,48 +19,53 @@ class PagesContentDialog extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              // width: 1000,
-              child: Obx(
-                () => RangeSlider(
-                  activeColor: const Color.fromARGB(255, 246, 206, 149),
-                  inactiveColor: const Color.fromARGB(255, 250, 240, 227),
-                  values: controller.rangeValues,
-                  min: 1,
-                  max: 604,
-                  divisions: 603,
-                  onChanged: (RangeValues values) {
-                    controller.rangeValues =
-                        RangeValues(values.start, values.end);
-                  },
-                ),
-              ),
+            Text(
+              "اختر صفحةً للتدريب",
+              style: TextStyle(fontFamily: "Cairo"),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Obx(() => Text(
-                    'from: ${controller.startPageIndex} - to: ${controller.endPageIndex}',
-                    style: const TextStyle(fontSize: 13))),
-                const SizedBox(
-                  width: 15,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: const Text(
-                    "Start",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: AppColor.thickYellow,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
+            // SizedBox(
+            //   // width: 1000,
+            //   child: Obx(
+            //     () => RangeSlider(
+            //       activeColor: const Color.fromARGB(255, 246, 206, 149),
+            //       inactiveColor: const Color.fromARGB(255, 250, 240, 227),
+            //       values: controller.rangeValues,
+            //       min: 1,
+            //       max: 604,
+            //       divisions: 603,
+            //       onChanged: (RangeValues values) {
+            //         controller.rangeValues =
+            //             RangeValues(values.start, values.end);
+            //       },
+            //     ),
+            //   ),
+            // ),
+            // Row(
+            //   mainAxisSize: MainAxisSize.min,
+            //   children: [
+            //     Obx(() => Text(
+            //         'from: ${controller.startPageIndex} - to: ${controller.endPageIndex}',
+            //         style: const TextStyle(fontSize: 13))),
+            //     const SizedBox(
+            //       width: 15,
+            //     ),
+            //     InkWell(
+            //       onTap: () {},
+            //       child: const Text(
+            //         "ابدأ",
+            //         style: TextStyle(
+            //             fontSize: 20,
+            //             color: AppColor.thickYellow,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     )
+            //   ],
+            // ),
             const Divider(),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 2.15,
+              height: MediaQuery.of(context).size.height / 2,
               child: GridView.builder(
                 itemCount: 604,
                 itemBuilder: (BuildContext context, int index) {

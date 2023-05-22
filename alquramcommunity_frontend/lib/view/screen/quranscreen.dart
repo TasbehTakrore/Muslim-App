@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/imageasset.dart';
 import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
@@ -20,6 +21,9 @@ class QuranScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
+
     RecitationScreenController recitationScreenController =
         Get.put(RecitationScreenController());
     return GetBuilder<QuranPageController>(builder: (controller) {
@@ -32,6 +36,8 @@ class QuranScreen extends StatelessWidget {
           child: Scaffold(
             floatingActionButton: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FloatingActionButton(
                     heroTag: "recitation",
@@ -64,30 +70,37 @@ class QuranScreen extends StatelessWidget {
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: QuranConstant.backgroundColor.value,
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.height,
-                  height: MediaQuery.of(context).size.height - 80,
-                  child: PageView.builder(
-                      onPageChanged: (index) {
-                        controller.changePageIndexAndSurahName(index);
-                      },
-                      controller: PageController(
-                          initialPage: controller.getPageIndex()),
-                      reverse: controller.englishLang() ? true : false,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: totalPagesCount,
-                      itemBuilder: (context, indexP) {
-                        return Container(
-                            padding: indexP == 0 || indexP == 1
-                                ? const EdgeInsets.only(top: 150)
-                                : const EdgeInsets.only(top: 0),
-                            child: QuranPageContent(indexP: indexP));
-                      }),
-                )
-              ],
+            body: Container(
+              // padding: EdgeInsets.all(50),
+              //                   color: Colors.amber,
+              width: screenWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.height,
+                    height: MediaQuery.of(context).size.height - 80,
+                    child: PageView.builder(
+                        onPageChanged: (index) {
+                          controller.changePageIndexAndSurahName(index);
+                        },
+                        controller: PageController(
+                            initialPage: controller.getPageIndex()),
+                        reverse: controller.englishLang() ? true : false,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: totalPagesCount,
+                        itemBuilder: (context, indexP) {
+                          return Container(
+                              padding: indexP == 0 || indexP == 1
+                                  ? const EdgeInsets.only(top: 150)
+                                  : const EdgeInsets.only(top: 0),
+                              child: QuranPageContent(indexP: indexP));
+                        }),
+                  )
+                ],
+              ),
             ),
           ));
     });

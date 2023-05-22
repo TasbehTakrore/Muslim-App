@@ -15,7 +15,7 @@ class ListCategoriesHome extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     return SizedBox(
-      height: (isLaptopScreen == true) ? screenWidth / 4.97 : 100,
+      height: (isLaptopScreen == true) ? screenWidth / 4.8 : 105,
       child: ListView.separated(
         separatorBuilder: (context, index) => (isLaptopScreen == true)
             ? const SizedBox(width: 20)

@@ -11,8 +11,6 @@ import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Lists/mistakespart.dart';
 import '../widget/Lists/versemarkpart.dart';
-import '../widget/Quran/editquranthemedialog.dart';
-import '../widget/Quran/quranpagecontent.dart';
 
 class ListsScreen extends StatelessWidget {
   const ListsScreen({super.key});
@@ -39,22 +37,24 @@ class ListsScreen extends StatelessWidget {
             //mainAxisSize: MainAxisSize.min,
             children: [
               CustomSlidingSegmentedControl<int>(
-                  fixedWidth: isLaptopScreen == true
-                      ? screenWidth / 2.72
-                      : screenWidth / 2.1,
+                  fixedWidth:
+                      isLaptopScreen == false ? screenWidth/1.05 : screenWidth / 1.37,
+                  // fixedWidth: isLaptopScreen == true
+                  //     ? screenWidth / 2.72
+                  //     : screenWidth / 2.1,
                   height: 39,
                   initialValue: controller.getIndex(),
                   children: {
-                    1: Text('My Mistakes',
+                    1: Text('أخطائي',
                         style: TextStyle(
                             color: controller.getIndex() != 1
                                 ? AppColor.black
                                 : Colors.white)),
-                    2: Text('Versemarks',
-                        style: TextStyle(
-                            color: controller.getIndex() != 2
-                                ? AppColor.black
-                                : Colors.white)),
+                    // 2: Text('Versemarks',
+                    //     style: TextStyle(
+                    //         color: controller.getIndex() != 2
+                    //             ? AppColor.black
+                    //             : Colors.white)),
                   },
                   decoration: BoxDecoration(
                     color: QuranConstant.backgroundColor.value,
