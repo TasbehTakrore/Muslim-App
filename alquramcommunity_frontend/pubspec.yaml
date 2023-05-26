@@ -96,6 +96,8 @@ dependencies:
   fl_chart: ^0.62.0
   fluttertoast: ^8.2.1
   app_tutorial: ^0.3.2
+  easy_splash_screen: ^1.0.4
+
 
 
 

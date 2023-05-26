@@ -36,7 +36,7 @@ class EditProfile extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  "Edit Profile Information",
+                  "تعديل معلوماتي",
                   style: GoogleFonts.patrickHand(
                       //fontWeight: FontWeight.w500,
                       color: AppColor.primaryColor,
@@ -69,7 +69,7 @@ class EditProfile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const Text(
-                        'Gender',
+                        'الجنس',
                         style: TextStyle(fontSize: 15),
                       ),
                       Obx(() => Row(
@@ -108,7 +108,7 @@ class EditProfile extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: CustomTextFormAuth(
                       labelText: "6".tr,
-                      hinttext: "Enter Paaword",
+                      hinttext: "أدخل كلمة السر الجديدة",
                       iconData: Icons.lock_outline,
                       mycontroller: controller.password,
                       obscureText: true
@@ -139,7 +139,7 @@ class EditProfile extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Are you sure want to update your information?\n Please inter your password if you're",
+                                      "هل تريد تغيير معلوماتك؟\n أدخل كلمة السرّ ",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 20,
@@ -147,7 +147,7 @@ class EditProfile extends StatelessWidget {
                                     ),
                                     CustomTextFormAuth(
                                         labelText: "6".tr,
-                                        hinttext: "Enter old Paaword",
+                                        hinttext: "أدخل كلمة السرّ القديمة",
                                         iconData: Icons.lock_outline,
                                         mycontroller: controller.checkPassword,
                                         obscureText: true

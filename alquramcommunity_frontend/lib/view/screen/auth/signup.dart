@@ -24,18 +24,18 @@ class SignUp extends StatelessWidget {
           userName: controller.name.text,
           userEmail: controller.email.text,
           userAge: int.parse(controller.age.text),
-          userGender: controller.selectedGender.value,
-          userPassword: controller.password.text, 
+          userGender:
+              controller.selectedGender.value == "ذكر" ? "male" : "female",
+          userPassword: controller.password.text,
           image: controller.profileImg.value);
     }
 
     return Scaffold(
-
         body: Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
       child: ListView(children: [
         const SizedBox(height: 25),
-    
+
         ProfileImg(onTap: () {
           showModalBottomSheet(
             context: context,
@@ -67,51 +67,49 @@ class SignUp extends StatelessWidget {
           mycontroller: controller.age,
           //my controller
         ),
-       
+
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          
           children: [
-            const Text('Gender',style: TextStyle(fontSize: 15),),
+            const Text(
+              'الجنس',
+              style: TextStyle(fontSize: 15),
+            ),
             Obx(() => Row(
-              children: [
-                for (String gender in controller.genders)
-                  Row(
-                    
-                    children: [
-                      SizedBox(width:20),
-                      Theme(
-                        data: ThemeData(
-                          focusColor:AppColor.primaryColor 
-                        ),
-                        child: Radio(
-                          value: gender,
-                          groupValue: controller.selectedGender.value,
-                          onChanged: (value) {
-                          controller.selectedGender.value = value!;
-                          },
-                        ),
+                  children: [
+                    for (String gender in controller.genders)
+                      Row(
+                        children: [
+                          SizedBox(width: 20),
+                          Theme(
+                            data: ThemeData(focusColor: AppColor.primaryColor),
+                            child: Radio(
+                              value: gender,
+                              groupValue: controller.selectedGender.value,
+                              onChanged: (value) {
+                                controller.selectedGender.value = value!;
+                              },
+                            ),
+                          ),
+                          Text(gender.capitalizeFirst!),
+                        ],
                       ),
-                  Text(gender.capitalizeFirst!),
-                   ],
-                  ),
-              ],
-            )),
+                  ],
+                )),
           ],
         ),
         const SizedBox(height: 10),
 
         //password
         CustomTextFormAuth(
-          
-          labelText: "6".tr,
-          hinttext: "8".tr,
-          iconData: Icons.lock_outline,
-          mycontroller: controller.password,
-          obscureText:true
+            labelText: "6".tr,
+            hinttext: "8".tr,
+            iconData: Icons.lock_outline,
+            mycontroller: controller.password,
+            obscureText: true
 
-          //my controller
-        ),
+            //my controller
+            ),
         const SizedBox(height: 10),
         CustomButton(
           textbutton: "12".tr,

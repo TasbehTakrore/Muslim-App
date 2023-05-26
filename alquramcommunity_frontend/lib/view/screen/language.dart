@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../widget/custombuttomlang.dart';
 import '../widget/customlogoForLang.dart';
 import '../widget/logowidget.dart';
+import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 
 class Language extends GetView<LocaleController> {
   const Language({super.key});
@@ -20,12 +21,12 @@ class Language extends GetView<LocaleController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                alignment: Alignment.center,
-                //color: Colors.red,
-                child: CustomLLogoWidgetForLang(
-                  logowidth: 120.0,
-                  sizeType: 1,
-                ),
+                // color: Colors.amber,
+                padding: const EdgeInsets.only(top: 2, left: 10),
+                height: 160,
+                width: 160,
+                child:
+                    Image.asset(AppImageAsset.mosqueLine, fit: BoxFit.contain),
               ),
               const SizedBox(height: 55),
               Text("1".tr, style: Theme.of(context).textTheme.headlineMedium),

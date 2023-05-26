@@ -7,7 +7,8 @@ import '../../widget/auth/logoauth.dart';
 import '../../widget/custombuttomlang.dart';
 
 class ResetPassword extends StatelessWidget {
-  ForgetPasswordControllerImp forgetPassword = Get.put(ForgetPasswordControllerImp());
+  ForgetPasswordControllerImp forgetPassword =
+      Get.put(ForgetPasswordControllerImp());
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +22,11 @@ class ResetPassword extends StatelessWidget {
             const LogoAuth(),
             SizedBox(height: 10.0),
             Text(
-              'Enter the verification code:',
-              style:  TextStyle(
-                fontSize: 19.0,
-                fontWeight: FontWeight.bold,
-                color: AppColor.primaryColor
-              ),
+              'أدخل رمز التحقّق',
+              style: TextStyle(
+                  fontSize: 19.0,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.primaryColor),
             ),
             SizedBox(height: 16.0),
             Row(
@@ -46,7 +46,7 @@ class ResetPassword extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color:AppColor.primaryColor),
+                          borderSide: BorderSide(color: AppColor.primaryColor),
                         ),
                       ),
                       onChanged: (value) {
@@ -55,36 +55,38 @@ class ResetPassword extends StatelessWidget {
                           FocusScope.of(context).nextFocus();
                         }
                       },
-                      controller: TextEditingController(text: forgetPassword.pin[i]),
+                      controller:
+                          TextEditingController(text: forgetPassword.pin[i]),
                     ),
                   ),
               ],
             ),
-                        Divider(),
-
+            Divider(),
             SizedBox(height: 10.0),
             Text(
-              'New Password :',
+              'كلة السرّ الجديدة',
               style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height:5.0),
+            SizedBox(height: 5.0),
             GetBuilder<ForgetPasswordControllerImp>(
-              builder: (controller)=>CustomTextFormAuth(
-              labelText: "6".tr,
-              hinttext: "Enter New Password",
-              iconData: Icons.lock_outline,
-              mycontroller: forgetPassword.newPasswordController,
-              obscureText:true,  
-            ),),
+              builder: (controller) => CustomTextFormAuth(
+                labelText: "6".tr,
+                hinttext: "Enter New Password",
+                iconData: Icons.lock_outline,
+                mycontroller: forgetPassword.newPasswordController,
+                obscureText: true,
+              ),
+            ),
             SizedBox(height: 15.0),
             CustomButton(
-            textbutton: "22".tr,
-            onPressed: () {
-               forgetPassword.chngPass();
-            }, color: AppColor.primaryColor,
+              textbutton: "22".tr,
+              onPressed: () {
+                forgetPassword.chngPass();
+              },
+              color: AppColor.primaryColor,
             ),
           ],
         ),

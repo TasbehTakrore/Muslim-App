@@ -30,7 +30,6 @@ class PlanMainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     final PlanController planController = Get.put(PlanController());
     return InkWell(
       onTap: () {},
@@ -58,7 +57,7 @@ class PlanMainCard extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text("Time left to finish the plan",
+                    Text("الوقت المتبقّي لإنهاء الخطّة",
                         style:
                             const TextStyle(color: Colors.white, fontSize: 15)),
                     Text(planController.formattedRemainingTime.value,

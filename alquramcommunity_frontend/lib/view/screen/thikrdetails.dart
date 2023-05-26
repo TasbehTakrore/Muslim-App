@@ -2,8 +2,10 @@ import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../controller/homescreen_controller.dart';
 import '../../controller/thikrCatgController.dart';
+import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
 import '../../data/model/front_models/thikrmodel.dart';
 import '../widget/thikr/ThikrDataCard.dart';
@@ -42,7 +44,36 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
             width: double.infinity,
             height: MediaQuery.of(context).size.height -
                 MediaQuery.of(context).padding.bottom,
-            child: Column(
+            child:
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       " مُسْلم",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 35),
+                //     ),
+                //     SizedBox(
+                //       height: 25,
+                //     ),
+                //     Text(
+                //       " كلّ ما تحتاجه في مكانٍ واحد!",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 20),
+                //     ),
+                //     SizedBox(
+                //       height: 140,
+                //     ),
+                //   ],
+                // )
+
+                Column(
               children: [
                 Expanded(
                   child: FutureBuilder(

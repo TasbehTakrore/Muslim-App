@@ -104,18 +104,17 @@ class ProfileScreen extends StatelessWidget {
                           ),
 
                           SizedBox(height: 5),
-                          Text("Joined : ${profilesController.joinDate}",
+                          Text(
+                              "تاريخ الانضمام : ${profilesController.joinDate}",
                               style: TextStyle(fontSize: 12)),
                           SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "(" +
-                                    profilesController.userGender.value +
-                                    ", " +
-                                    profilesController.userAge.value +
-                                    ")",
+                                profilesController.userGender.value == "female"
+                                    ? "(أنثى، ${profilesController.userAge.value})"
+                                    : "(ذكر، ${profilesController.userAge.value})",
                                 style: const TextStyle(
                                     fontSize: 12, color: AppColor.primaryColor),
                               ),
@@ -161,20 +160,20 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 // mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "هل تريد تفعيل وضع الطّفل؟",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  Obx(() => Container(
-                        // color: AppColor.grey,r
-                        child: Switch(
-                            dragStartBehavior: DragStartBehavior.start,
-                            value: profilesController.childMode.value,
-                            activeColor: AppColor.thickYellow,
-                            onChanged: (value) {
-                              profilesController.childMode.value = value;
-                            }),
-                      )),
+                  // Text(
+                  //   "هل تريد تفعيل وضع الطّفل؟",
+                  //   style: TextStyle(color: Colors.black),
+                  // ),
+                  // Obx(() => Container(
+                  //       // color: AppColor.grey,r
+                  //       child: Switch(
+                  //           dragStartBehavior: DragStartBehavior.start,
+                  //           value: profilesController.childMode.value,
+                  //           activeColor: AppColor.thickYellow,
+                  //           onChanged: (value) {
+                  //             profilesController.childMode.value = value;
+                  //           }),
+                  //     )),
                 ],
               ),
             ),

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:alquramcommunity_frontend/firebase_options.dart';
+import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:flutter/services.dart';
@@ -71,10 +73,31 @@ class MyApp extends StatelessWidget {
             fillColor: MaterialStateProperty.all<Color>(AppColor.primaryColor),
           ),
         ),
-        home: controller.myServices.sharedPreferences.getBool("langSelected") ==
-                true
-            ? Login()
-            : Language(),
+        home: EasySplashScreen(
+          logo: Image.asset('assets/images/fakeLogo.png'),
+          backgroundImage: AssetImage('assets/images/muslim.jpg'),
+          loaderColor: AppColor.thickYellow,
+          // title: Text(
+          //   "Title",
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          backgroundColor: Colors.grey.shade400,
+          showLoader: true,
+          loadingText: Text(
+            "يجري تحميل الصفحة...",
+            textDirection: TextDirection.rtl,
+            style: TextStyle(color: AppColor.thickYellow),
+          ),
+          navigator:
+              controller.myServices.sharedPreferences.getBool("langSelected") ==
+                      true
+                  ? Login()
+                  : Language(),
+          durationInSeconds: 5,
+        ),
 
         // myServices.sharedPreferences.
 

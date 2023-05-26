@@ -14,6 +14,7 @@ import 'package:http_parser/http_parser.dart';
 import '../constant/urls.dart';
 import '../../controller/auth/appbar_controller.dart';
 import '../../data/model/backend_to_front_models/specificUder_Model.dart';
+import '../localization/changelocal.dart';
 
 //String uri='http://192.168.1.7:5000';
 
@@ -22,6 +23,8 @@ MyServices myServices = Get.put(MyServices());
 class AuthServices {
   String uri = 'http://192.168.1.19:5000';
   String uri2 = 'http://192.168.1.19:8080';
+
+  final LocaleController localeController = Get.put(LocaleController());
 
   final ProfileController profilesController = Get.put(ProfileController());
   final ForgetPasswordControllerImp forgetController =
@@ -81,6 +84,14 @@ class AuthServices {
     }
   }
 
+  bool englishLang() {
+    String userEmail = myServices.sharedPreferences.getString("user_email")!;
+    return localeController.myServices.sharedPreferences.getString("lang") ==
+            "en"
+        ? true
+        : false;
+  }
+
 //Sign in
   void signInUser({
     required BuildContext context,
@@ -105,6 +116,8 @@ class AuthServices {
         response: res,
         context: context,
         onSuccess: () async {
+          Get.toNamed(AppRoute.home);
+
           myServices.sharedPreferences
               .setString("x_auth_token", jsonDecode(res.body)['token']);
           myServices.sharedPreferences
@@ -124,7 +137,6 @@ class AuthServices {
           appBarController.getCoins();
 
           print(myServices.sharedPreferences.getString("user_name"));
-          Get.toNamed(AppRoute.home);
           profilesController.userInformation();
         },
       );
@@ -220,7 +232,8 @@ class AuthServices {
       final response = await http.post(
         url,
         body: jsonEncode({
-          'vCode': vCode,
+          'vCode':
+              englishLang() == true ? vCode : vCode.split('').reversed.join(),
           'email': email,
           'newPassword': newPassword,
         }),

@@ -2,7 +2,7 @@ class AppImageAsset {
   static const String rootImages = "assets/images";
   static const String quranLogo = "$rootImages/quranLogo.png";
   static const String flame = "$rootImages/icons8-fire.gif";
-  static const String coin = "$rootImages/coin.png";
+  static const String coin = "$rootImages/plusCoin.png";
   static const String diamond = "$rootImages/diamond.png";
   static const String qibla = "$rootImages/qiblah.svg";
   static const String reading = "$rootImages/quranCategory.svg";
@@ -33,4 +33,5 @@ class AppImageAsset {
   static const String dashboard = "$rootImages/dashboard.png";
   static const String commBadge = "$rootImages/commBadge.svg";
   static const String people = "$rootImages/people.png";
+  static const String testLogo = "$rootImages/mosqueLine.png";
 }

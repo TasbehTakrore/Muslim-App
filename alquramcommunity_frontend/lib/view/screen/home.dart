@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
+import '../../core/constant/imageasset.dart';
 import '../widget/home/categoriesHome.dart';
 import '../widget/home/customcardhome.dart';
 import '../widget/home/listcommunities.dart';
@@ -43,7 +44,8 @@ class Home extends StatelessWidget {
             ),
             isLaptopScreen == true ? SizedBox(height: 10) : SizedBox(),
             const ListCategoriesHome(),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
+
             const Text(" المُجتمعات"),
             const ListCommunities(),
             const StatisticsCard(),

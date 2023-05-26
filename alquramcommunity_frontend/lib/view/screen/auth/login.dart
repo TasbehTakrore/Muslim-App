@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
         const SizedBox(height: 10),
         CustomTextBodyAuth(text: "3".tr),
         const SizedBox(height: 25),
-        const LogoAuth(),
+        LogoAuth(),
         const SizedBox(height: 15),
         //email
         CustomTextFormAuth(
@@ -51,7 +51,7 @@ class Login extends StatelessWidget {
           hinttext: "7".tr,
           iconData: Icons.email_outlined,
           mycontroller: controller.email,
-          
+
           //my controller
         ),
         //password

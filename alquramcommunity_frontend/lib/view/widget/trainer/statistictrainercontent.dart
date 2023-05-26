@@ -82,7 +82,7 @@ class statisticsTrainerContent extends StatelessWidget {
                               style:
                                   TextStyle(fontSize: 16, color: Colors.black),
                               child: Text(
-                                " + ${trainerScreenController.coins} عُملة جديدة",
+                                " + ${trainerScreenController.coins} نقطة جديدة",
                               )
                               // textAlign: TextAlign.center,
                               )

@@ -15,17 +15,18 @@ class ProfileImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        SignUpControllerImp controller = Get.put(SignUpControllerImp());
+    SignUpControllerImp controller = Get.put(SignUpControllerImp());
 
     return Center(
       child: Stack(
         children: [
           Obx(() => CircleAvatar(
-          radius: 80,
-          backgroundImage: controller.isProfileImgPathSet.value == true
-              ? FileImage(File(controller.profileImg.value.path)) as ImageProvider
-              : AssetImage(AppImageAsset.profile),
-          )),
+                radius: 80,
+                backgroundImage: controller.isProfileImgPathSet.value == true
+                    ? FileImage(File(controller.profileImg.value.path))
+                        as ImageProvider
+                    : AssetImage(AppImageAsset.user),
+              )),
           Positioned(
               bottom: 10,
               right: 15,

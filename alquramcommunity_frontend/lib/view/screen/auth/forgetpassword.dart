@@ -15,22 +15,23 @@ class ForgetPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     ForgetPasswordControllerImp controller =
         Get.put(ForgetPasswordControllerImp());
-        controller.context=context;
+    controller.context = context;
     return Scaffold(
         body: Center(
-          child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-              child: ListView(children: [
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
           const SizedBox(height: 25),
-        
+
           CustomTextTitleAuth(
             text: "9".tr,
           ),
-        
+
           const SizedBox(height: 25),
           const LogoAuth(),
           const SizedBox(height: 15),
-        
+
           //email
           CustomTextFormAuth(
             labelText: "5".tr,
@@ -39,19 +40,19 @@ class ForgetPassword extends StatelessWidget {
             mycontroller: controller.email,
             //my controller
           ),
-        
+
           const SizedBox(height: 10),
           CustomButton(
             textbutton: "22".tr,
             onPressed: () {
               controller.checkEmail();
-            //  Get.toNamed(AppRoute.home);
+              //  Get.toNamed(AppRoute.home);
             },
             color: AppColor.primaryColor,
           ),
           const SizedBox(height: 20),
-              ]),
-            ),
-        ));
+        ]),
+      ),
+    ));
   }
 }

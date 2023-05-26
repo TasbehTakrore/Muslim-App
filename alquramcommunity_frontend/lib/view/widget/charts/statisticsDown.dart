@@ -39,7 +39,7 @@ class StatisticDown extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      "30 دقيقة",
+                      "0 دقيقة",
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
                         color: AppColor.thickYellow,
