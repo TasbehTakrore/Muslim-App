@@ -97,7 +97,7 @@ class ThikrPlanDialog extends StatelessWidget {
                         Text(" أذكار الوضوء")
                       ],
                     ),
-                            Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Checkbox(
@@ -109,12 +109,11 @@ class ThikrPlanDialog extends StatelessWidget {
                         Text(" أذكار الصلاة")
                       ],
                     ),
-
                     const Divider(),
                     CustomButton(
                       color: AppColor.secondaryColor,
                       onPressed: () => Get.back(),
-                      textbutton: 'Done',
+                      textbutton: 'إضافة',
                     ),
                   ],
                 ),

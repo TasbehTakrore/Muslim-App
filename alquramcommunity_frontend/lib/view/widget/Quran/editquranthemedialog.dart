@@ -30,7 +30,7 @@ class EditQuranThemeDialog extends StatelessWidget {
                   controller.changeFontSize(v);
                 },
               )),
-          Obx(() => Text('Font Size ${QuranConstant.fontsize.value}',
+          Obx(() => Text('حجم الخطّ  ${QuranConstant.fontsize.value}',
               style: const TextStyle(fontSize: 13))),
           Divider(),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [

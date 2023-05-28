@@ -5,7 +5,7 @@ import '../../../controller/homescreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/constants.dart';
 import '../../../data/datasource/static.dart';
-import '../../screen/surahsdialog.dart';
+import '../Quran/surahsdialog.dart';
 
 class ListCategoriesHome extends StatelessWidget {
   const ListCategoriesHome({super.key});

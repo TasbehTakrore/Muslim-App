@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
     return Container(
         color: AppColor.grey,
         padding: isLaptopScreen == true
-            ? EdgeInsets.only(left: 120, right: 30)
+            ? EdgeInsets.only(left: 150, right: 30)
             : const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
           children: [

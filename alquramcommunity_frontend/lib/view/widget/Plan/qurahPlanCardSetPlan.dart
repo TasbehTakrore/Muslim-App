@@ -42,8 +42,8 @@ class QuranPlanCardSetPlan extends StatelessWidget {
                                       return QuranPlanDialog();
                                     });
                               }),
-                          const Text("خطّة  القرآن",
-                              style: TextStyle(fontSize: 25)),
+                          const Text("خطّة قراءة القرآن",
+                              style: TextStyle(fontSize: 22)),
                         ],
                       ),
                     ],

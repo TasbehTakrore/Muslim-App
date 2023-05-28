@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controller/homescreen_controller.dart';
 import '../../controller/thikrCatgController.dart';
 import '../../core/constant/color.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/imageasset.dart';
 import '../../data/model/front_models/thikrmodel.dart';
 import '../widget/thikr/ThikrDataCard.dart';
@@ -16,6 +17,8 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   Widget build(BuildContext context) {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     ThikrCatgControllerImp thikrCatgController =
         Get.put(ThikrCatgControllerImp());
     HomeScreenControllerImp homeScreenControllerImp =
@@ -29,6 +32,9 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
         },
         child: Scaffold(
           body: Container(
+            padding: isLaptopScreen == true
+                ? EdgeInsets.symmetric(horizontal: 150)
+                : null,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(AppImageAsset.mosque),

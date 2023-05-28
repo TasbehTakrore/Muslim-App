@@ -41,6 +41,7 @@ class CustomCardHome extends StatelessWidget {
                   colors: [Color(0xff266f52), Color(0xff266f52)],
                 )),
             alignment: Alignment.center,
+            // width: 600,
             height: heigh,
             child: ListTile(
               title: Text(title,

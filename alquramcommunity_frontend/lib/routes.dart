@@ -4,7 +4,7 @@ import 'package:alquramcommunity_frontend/view/screen/auth/resetPassword.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:alquramcommunity_frontend/view/screen/homescreen.dart';
 import 'package:alquramcommunity_frontend/view/screen/recitationscreen.dart';
-import 'package:alquramcommunity_frontend/view/screen/surahsdialog.dart';
+import 'package:alquramcommunity_frontend/view/widget/Quran/surahsdialog.dart';
 import 'package:alquramcommunity_frontend/view/screen/tasbeh.dart';
 import 'package:alquramcommunity_frontend/view/screen/thikr.dart';
 import 'package:alquramcommunity_frontend/view/widget/community/allcommunities.dart';

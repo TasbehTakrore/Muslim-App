@@ -88,7 +88,7 @@ class SpecificCommunity extends StatelessWidget {
                             fontSize: 30),
                       ),
                       Text(
-                        "Since $communityDateCreate",
+                        "منذُ  $communityDateCreate",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.patrickHand(
                             //fontWeight: FontWeight.w500,
@@ -97,7 +97,7 @@ class SpecificCommunity extends StatelessWidget {
                       ),
                       CustomCommunityCard(
                           communityID: communityID,
-                          title: 'Remining Time',
+                          title: 'الوقت المُتبقّي',
                           fontSize1: 15,
                           fontSize2: 40,
                           heigh: 200,

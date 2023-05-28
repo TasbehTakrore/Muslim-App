@@ -41,7 +41,7 @@ class PrayCardHome extends StatelessWidget {
         child: Stack(children: [
           Container(
               decoration: BoxDecoration(
-                  image:const DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage(AppImageAsset.mosque),
                     fit: BoxFit.cover,
                     opacity: 0.2,
@@ -65,49 +65,43 @@ class PrayCardHome extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: fontSize2),
                     textAlign: TextAlign.right,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 0),
                   Text(hijridate,
                       style:
                           TextStyle(color: Colors.yellow, fontSize: fontSize1)),
-                  const SizedBox(height: 10),
-                  Text(nextPray,
+                  const SizedBox(height: 0),
+                  Text("المغرب",
                       style:
                           const TextStyle(color: Colors.white, fontSize: 45)),
-                  const SizedBox(height: 3),
-                  Text("After +  ${remainingTime}",
+                  const SizedBox(height: 0),
+                  Text("بعد +  ${remainingTime}",
                       style:
                           const TextStyle(color: Colors.yellow, fontSize: 15)),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children:  [
-                       const SizedBox(width: 3),
-                      GestureDetector (
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(width: 3),
+                      GestureDetector(
                         child: const Icon(
                           Icons.location_on_outlined,
                           color: Colors.white,
                           size: 15,
                         ),
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                       ),
                       Expanded(
-                        child: Text(city_name,style:
-                            const TextStyle(color: Colors.white, fontSize: 12)),
+                        child: Text(city_name,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12)),
                       ),
-                        GestureDetector(     
-                    onTap: () {
-                    prayController.CompletedPray();
-                    
-                   Get.dialog(PrayerProgressDialog());
-                    },
-                      child: Card(
-                        child: Icon(Icons.timelapse)
-                        
+                      GestureDetector(
+                        onTap: () {
+                          prayController.CompletedPray();
+
+                          Get.dialog(PrayerProgressDialog());
+                        },
+                        child: Card(child: Icon(Icons.timelapse)),
                       ),
-                  ),
-                     
                     ],
                   )
                 ],

@@ -162,8 +162,8 @@ class TrainerScreenController extends GetxController {
                       label: const Text("تدريب شامل")),
                   ElevatedButton.icon(
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.thickYellow)),
                       onPressed: () {
                         prepareTestDataForSurahMistake();
                         testTypeFlag = 1; //
@@ -231,8 +231,8 @@ class TrainerScreenController extends GetxController {
                       label: const Text("تدريب شامل")),
                   ElevatedButton.icon(
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.thickYellow)),
                       onPressed: () {
                         prepareTestDataForJuzMistake();
                         testTypeFlag = 1; //
@@ -300,8 +300,8 @@ class TrainerScreenController extends GetxController {
                       label: const Text("تدريب شامل")),
                   ElevatedButton.icon(
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColor.thickYellow)),
                       onPressed: () {
                         prepareTestDataForPageMistake();
                         testTypeFlag = 1; //

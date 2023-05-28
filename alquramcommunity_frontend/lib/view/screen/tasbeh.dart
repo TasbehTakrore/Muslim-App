@@ -293,7 +293,7 @@ class TasbeehPage extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                          top: 220,
+                          top: 170,
                           right: 22,
                           child: Text(
                             _myController.gettasbeehtype(),

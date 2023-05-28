@@ -42,12 +42,12 @@ class PrayScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Obx(() => PrayCardHome(
-                              heigh: 180,
+                              heigh: 200,
                               date: prayController.formativeCurrentDate.value,
                               hijridate:
                                   prayController.formativeHijriDate.value,
                               fontSize1: 17,
-                              fontSize2: 20,
+                              fontSize2: 15,
                               nextPray: prayController.nextPrayer.value.name
                                   .toUpperCase(),
                               city_name: prayController.city.value,

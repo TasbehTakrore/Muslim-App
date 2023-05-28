@@ -69,7 +69,7 @@ class RecitationPlanDialog extends StatelessWidget {
 
                         Get.back();
                       },
-                      textbutton: 'Done',
+                      textbutton: 'إضافة',
                     ),
                   ],
                 ),

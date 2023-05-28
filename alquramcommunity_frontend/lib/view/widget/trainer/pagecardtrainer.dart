@@ -1,5 +1,6 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -34,13 +35,13 @@ class PageCardTrainer extends GetView<TrainerScreenController> {
         child: Container(
           height: 50,
           child: Stack(alignment: Alignment.center, children: [
-            Text(pageNumb.toString(),
+            Text(ArabicNumbers().convert(pageNumb),
                 style: TextStyle(
                   fontSize: 18,
                   color: (pageNumb - 2) % 3 == 0
                       ? Colors.black
                       : AppColor.primaryColor,
-                  fontFamily: "quran",
+                  // fontFamily: "quran",
                   //fontFamily: "PlayfairDisplay",
                 ))
             // SvgPicture.asset(

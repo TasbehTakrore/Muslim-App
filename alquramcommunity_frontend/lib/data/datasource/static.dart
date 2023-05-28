@@ -11,7 +11,7 @@ import '../../core/constant/routes.dart';
 import '../../view/screen/thikr.dart';
 import '../../view/widget/recitation/listsurahcardrecitation.dart';
 import '../../view/widget/recitation/smartrecitationdialog.dart';
-import '../../view/screen/surahsdialog.dart';
+import '../../view/widget/Quran/surahsdialog.dart';
 import '../../view/widget/recitation/surahdialogrecitation.dart';
 import '../../view/widget/trainer/trainerdialog.dart';
 import '../model/front_models/categorymodel.dart';

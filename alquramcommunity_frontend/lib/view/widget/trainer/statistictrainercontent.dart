@@ -73,7 +73,7 @@ class statisticsTrainerContent extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.attach_money,
+                          const Icon(Icons.add_circle_outline,
                               size: 100,
                               color: AppColor.thickYellow,
                               weight: 5),

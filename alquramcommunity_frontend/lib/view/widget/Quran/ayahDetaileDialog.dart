@@ -50,7 +50,7 @@ class AyahDetailsDialog extends StatelessWidget {
                                 text:
                                     "${(tafser[0][surahNumb != 1 ? (getVerseCount(surahNumb - 1) + verseNumb).toString() : (verseNumb).toString()] as Map<String, Object>)["verse"]} \n(التّفسير المُيسّر، سورة ${getSurahNameArabic(surahNumb)}، الآية: ${ArabicNumbers().convert(verseNumb)})"));
                             Fluttertoast.showToast(
-                              msg: "Text copied to clipboard!",
+                              msg: "تمّ النسخ إلى الحافظة!",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,

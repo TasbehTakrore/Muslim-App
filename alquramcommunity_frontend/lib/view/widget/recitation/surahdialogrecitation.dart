@@ -21,7 +21,7 @@ class SurahsDialogRecitation extends StatelessWidget {
               height: 550,
               child: ListView(
                 children: const [
-                  Text("Surahs of the Qur'an",
+                  Text("سوَر القُرآن الكريم",
                       style: TextStyle(fontFamily: "Cairo")),
                   SizedBox(height: 6),
                   ListSurahCardRecitation(),

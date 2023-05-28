@@ -2,6 +2,7 @@ import 'package:alquramcommunity_frontend/controller/thikrCatgController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/homescreen_controller.dart';
+import '../../core/constant/constants.dart';
 import '../widget/thikr/thikrhomeCatg.dart';
 
 class Thikr extends StatelessWidget {
@@ -11,14 +12,15 @@ class Thikr extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
-     ThikrCatgControllerImp thikrController=Get.put(ThikrCatgControllerImp());
-     thikrController.setisPlaying();
-    return
-        ListView(  
-          children: [
+    ThikrCatgControllerImp thikrController = Get.put(ThikrCatgControllerImp());
+    thikrController.setisPlaying();
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
+    return ListView(children: [
       const SizedBox(height: 10),
       Container(
-          padding: const EdgeInsets.only(top: 10),
+          padding: 
+               EdgeInsets.only(top: 10),
           margin: EdgeInsets.symmetric(horizontal: 15),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(

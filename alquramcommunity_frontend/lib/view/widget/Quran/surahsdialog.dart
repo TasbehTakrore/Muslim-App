@@ -1,9 +1,9 @@
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
-import '../../controller/quranscreen_controller.dart';
-import '../../core/constant/routes.dart';
-import '../widget/Quran/listsurahcard.dart';
-import '../widget/home/customcardhome.dart';
+import '../../../controller/quranscreen_controller.dart';
+import '../../../core/constant/routes.dart';
+import 'listsurahcard.dart';
+import '../home/customcardhome.dart';
 
 class SurahsDialog extends StatelessWidget {
   const SurahsDialog({super.key});
@@ -27,7 +27,7 @@ class SurahsDialog extends StatelessWidget {
                   controller.anyPageOpend() == true
                       ? CustomCardHome(
                           heigh: 90,
-                          title: "Continue from the last reading..",
+                          title: "أكمل من آخر موضعٍ توقّفت عنده..",
                           body: controller.getLastOpenedEng().value,
                           fontSize1: 13,
                           fontSize2: 18,
@@ -35,8 +35,8 @@ class SurahsDialog extends StatelessWidget {
                             Get.toNamed(AppRoute.quran);
                           })
                       : const SizedBox(),
-                  const Text("Surahs of the Qur'an",
-                      style: TextStyle(fontFamily: "Cairo")),
+                  const Text("  سُوَر القرآن الكريم  ",
+                      style: TextStyle(fontFamily: "Cairo", fontSize: 15)),
                   const SizedBox(height: 6),
                   const ListSurahCard(),
                 ],

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../controller/qiblascreen_controller.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/routes.dart';
+import '../widget/auth/logoauth.dart';
 import '../widget/qiblah/customQiblahLogo.dart';
 
 class QiblaScreen extends StatelessWidget {
@@ -18,16 +19,16 @@ class QiblaScreen extends StatelessWidget {
     final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
     return WillPopScope(
       onWillPop: () async {
-        Get.toNamed(AppRoute.home);
+        Get.offAllNamed(AppRoute.home);
         return false;
       },
       child: Scaffold(
           backgroundColor: AppColor.grey,
           body: Stack(children: [
             Positioned(
-                top: 50,
+                top: 80,
                 left: MediaQuery.of(context).size.width / 3.4,
-                child: logoWidgetQiblah()),
+                child: LogoAuth()),
             FutureBuilder(
                 future: _deviceSupport,
                 builder: (_, AsyncSnapshot<bool?> snapshot) {

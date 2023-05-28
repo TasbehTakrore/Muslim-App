@@ -79,7 +79,7 @@ class PrayPalnDialog extends StatelessWidget {
                     CustomButton(
                       color: AppColor.secondaryColor,
                       onPressed: () => Get.back(),
-                      textbutton: 'Done',
+                      textbutton: 'إضافة',
                     ),
                   ],
                 ),

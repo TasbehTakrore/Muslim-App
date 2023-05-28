@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -37,8 +38,10 @@ class SurahCard extends GetView<QuranPageController> {
           width: 50,
           child: Stack(alignment: Alignment.center, children: [
             (int.parse(surahNumber) < 100)
-                ? Text(surahNumber, style: const TextStyle(fontSize: 15))
-                : Text(surahNumber, style: const TextStyle(fontSize: 12)),
+                ? Text(ArabicNumbers().convert(surahNumber),
+                    style: const TextStyle(fontSize: 15))
+                : Text(ArabicNumbers().convert(surahNumber),
+                    style: const TextStyle(fontSize: 12)),
             SvgPicture.asset(
               AppImageAsset.numbFrame,
               width: 40,
@@ -51,7 +54,8 @@ class SurahCard extends GetView<QuranPageController> {
             style: int.parse(surahNumber) - 1 < 59
                 ? const TextStyle(fontFamily: "SurahTitle", fontSize: 50)
                 : const TextStyle(fontFamily: "SurahTitle2", fontSize: 50)),
-        subtitle: Text("$placeOfRevelation - $verseCount Ayah",
+        subtitle: Text(
+            "$placeOfRevelation - ${ArabicNumbers().convert(verseCount)} آية",
             style: const TextStyle(fontSize: 10)),
         onTap: () {
           controller.changePageIndexAndSurahName(startPage);

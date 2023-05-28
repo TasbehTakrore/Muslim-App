@@ -1,6 +1,7 @@
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/quranconst.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,8 +75,8 @@ class QuranPageController extends GetxController {
   changePageIndexAndSurahName(int pageIndex) {
     myServices.quranPage.setInt("lastPageIndex", pageIndex);
     pageindex = pageIndex;
-    myServices.quranPage.setString(
-        "lastSurahName", getSurahName(getPageData(pageIndex + 1)[0]["surah"]));
+    myServices.quranPage.setString("lastSurahName",
+        getSurahNameArabic(getPageData(pageIndex + 1)[0]["surah"]));
   }
 
   final LocaleController localeController = Get.put(LocaleController());
@@ -102,9 +103,12 @@ class QuranPageController extends GetxController {
     if (anyPageOpend() == true) {
       index = myServices.quranPage.getInt("lastPageIndex");
       print(myServices.quranPage.getInt("lastPageIndex"));
+      print({
+        ArabicNumbers().convert(myServices.quranPage.getString("lastSurahName"))
+      });
       //update();
       lastPageAndName =
-          "${myServices.quranPage.getString("lastSurahName")} - page ${index! + 1}"
+          "${myServices.quranPage.getString("lastSurahName")} - صفحة ${ArabicNumbers().convert(index! + 1)}"
               .obs;
       return lastPageAndName;
     } else

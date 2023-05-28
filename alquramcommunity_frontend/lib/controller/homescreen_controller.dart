@@ -95,7 +95,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     TasbeehPage(),
   ];
 
-  List<String> titlebuttonAppBar = ["Profile", "Plan", "Lists", "Notif"];
+  List<String> titlebuttonAppBar = ["ملفّي", "الخطّة", "قوائم", "الإشعارات"];
   List<IconData> iconsbuttonAppBar = [
     Icons.person,
     Icons.playlist_add_check_rounded,

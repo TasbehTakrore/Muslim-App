@@ -24,18 +24,18 @@ class AddNewTasbeeh extends StatelessWidget {
       ),
       content: Container(
         padding: EdgeInsets.only(top: 20),
-        height: 200,
+        height: 230,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Add Custom Tasbeh Type"),
+            Text("أضف تسبيحةً جديدة"),
             SizedBox(height: 20),
             TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.transparent,
-                hintText: 'Enter your tasbeeh here',
+                hintText: 'أدخل التّسبيحة هُنا',
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(
                     color: AppColor.primaryColor,
@@ -62,7 +62,7 @@ class AddNewTasbeeh extends StatelessWidget {
                   },
                   icon: const Icon(Icons.add),
                   label: const Text(
-                    "Add",
+                    "إضافة",
                     style: TextStyle(fontSize: 18),
                   )),
             ),
