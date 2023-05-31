@@ -12,16 +12,19 @@ import 'auth_services.dart';
 class CommunityServices extends GetxService {
   AuthServices authServices = Get.put(AuthServices());
   Future<int> createNewCommunity(
-      {required String communityName,
+      {required String communityChatID,
+      required String communityName,
       required String communityDescription,
       required String adminEmail,
       required String usersGender,
       required bool timerFlage}) async {
     try {
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  communityChatID: $communityChatID");
       print("${MyURL.createCommunityURL} ++ $usersGender");
       http.Response res = await http.post(
         Uri.parse(MyURL.createCommunityURL),
         body: jsonEncode({
+          'communityChatID': communityChatID,
           'communityName': communityName,
           'communityDescription': communityDescription,
           'adminEmail': adminEmail,
@@ -165,7 +168,7 @@ class CommunityServices extends GetxService {
     }
   }
 
-  void addMemberCommunity(
+  Future addMemberCommunity(
       {required int communityId,
       required String userEmail,
       required bool isAdmin}) async {

@@ -4,9 +4,10 @@ const communityRequestModel = require("../DB/models/communityRequest.model");
 
 const createCommunity = async(req, res) => {
   try {
-    const { communityName, communityDescription, stickyMessage, adminEmail, usersGender, timerFlag } = req.body;
+    const {communityChatID, communityName, communityDescription, stickyMessage, adminEmail, usersGender, timerFlag } = req.body;
     
     const community = await communityModel.create({
+      communityChatID,
       communityName,
       communityDescription,
       stickyMessage,
@@ -14,7 +15,7 @@ const createCommunity = async(req, res) => {
       usersGender,
       timerFlag
     });
-
+    
     return res.status(200).json({
       message: "Community created successfully",
       community

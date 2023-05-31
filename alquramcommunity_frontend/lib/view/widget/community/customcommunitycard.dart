@@ -65,8 +65,11 @@ class CustomCommunityCard extends StatelessWidget {
                 Text(body,
                     style: TextStyle(
                         color: AppColor.thickYellow, fontSize: fontSize2)),
-                const SizedBox(height: 60),
-
+                const SizedBox(height: 10),
+                Text(
+                  "إعلان: سيتم عقد اختبار التّجويد الأوّل بتاريخ 30/6/2023.",
+                  style: TextStyle(color: Colors.white),
+                ),
                 Visibility(
                     visible: isAdmin,
                     child: TextButton.icon(
@@ -74,7 +77,8 @@ class CustomCommunityCard extends StatelessWidget {
                           // communitityController.communityID = communityID;
                           // communitityController.getMemberRequests(communityID);
 
-                          Get.dialog(memberRequestDialog(communityID: communityID));
+                          Get.dialog(
+                              memberRequestDialog(communityID: communityID));
                         },
                         icon: const Icon(
                           Icons.person_add,

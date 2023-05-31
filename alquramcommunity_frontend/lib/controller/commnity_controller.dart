@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,8 @@ class CommunitityController extends GetxController {
   String communityName = "";
   // String communityName;
   int? communityID = 0;
+  var db = FirebaseFirestore.instance;
+  String communityChatID = "";
   @override
   void onInit() {
     super.onInit();
@@ -44,18 +47,51 @@ class CommunitityController extends GetxController {
     }
   }
 
-  void createNewCommunity() async {
+  Future createNewCommunity() async {
+    final communityChat = <String, dynamic>{
+      "communityName": communityNameController!.text,
+      "adminEmail": userEmail
+    };
+    DocumentReference doc;
+    var result = await db.collection("groupsChat").add(communityChat);
+    // return result.id;
+    print("result.id : ${result.id}");
+    communityChatID = result.id;
     communityID = await communityServices.createNewCommunity(
+        communityChatID: result.id,
         communityName: communityNameController!.text,
         communityDescription: communityDescriptionController!.text,
         adminEmail: getUserEmail(),
         usersGender: selectedGender.value,
         timerFlage: true);
     communityName = communityNameController!.text;
+
+    // db.collection("groupsChat").doc(doc.id);
+    print("communityID:communityID:communityID $communityID");
   }
 
   Future<List<UserModel>> getMemberRequests(int communityID) async {
     return communityServices.getAllMemberRequests(communityID);
+  }
+
+  getName() {
+    print(myServices.sharedPreferences.get("user_name"));
+    return myServices.sharedPreferences.get("user_name");
+  }
+
+  sendMessage({required communityChatID, required message}) async {
+    print("userEmail: ${getUserEmail()}");
+    var result = await db
+        .collection("groupsChat")
+        .doc(communityChatID)
+        .collection("messages")
+        .add({
+      "senderEmail": getUserEmail(),
+      "senderMessage": message,
+      "senderName": getName(),
+      "time": DateTime.now()
+    });
+    print("result.id: ${result.id}");
   }
 
   Future<List<UserModel>> getAllCommunityMembers(int communityID) async {
@@ -72,12 +108,13 @@ class CommunitityController extends GetxController {
     update();
   }
 
-  addMemberCommunity(int communityId, bool isAdmin, String userEmail) {
-    communityServices.addMemberCommunity(
+  addMemberCommunity(int communityId, bool isAdmin, String userEmail) async {
+    await communityServices.addMemberCommunity(
         communityId: communityId,
         userEmail: isAdmin == true ? getUserEmail() : userEmail,
         isAdmin: isAdmin);
     print("inside Send member community...");
+    updatee();
   }
 
   void deleteRequest(int communityId, String userEmail) {

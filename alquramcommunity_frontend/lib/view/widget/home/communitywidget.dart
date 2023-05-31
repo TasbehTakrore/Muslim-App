@@ -10,11 +10,13 @@ import '../community/specificcommunity.dart';
 
 class CommunityW extends StatelessWidget {
   final String communityName;
+  final String communityChatID;
   final String communityDateCreate;
   final int communityID;
   final bool isAdmin;
   const CommunityW(
       {super.key,
+      required this.communityChatID,
       required this.communityName,
       required this.communityDateCreate,
       required this.communityID,
@@ -27,8 +29,11 @@ class CommunityW extends StatelessWidget {
 
     return InkWell(
       onTap: () {
+        print("communityChatID: $communityChatID");
+
         print("communityName: -- $communityName");
         Get.dialog(SpecificCommunity(
+          communityChatID: communityChatID,
           communityID: communityID,
           communityName: communityName,
           communityDateCreate: communityDateCreate,
