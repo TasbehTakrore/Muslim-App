@@ -64,7 +64,7 @@ class SpecificCommunity extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext b) {
-                                return ChatDialog();
+                                return ChatDialog(communityName: communityName);
                               });
                         }),
                   ],

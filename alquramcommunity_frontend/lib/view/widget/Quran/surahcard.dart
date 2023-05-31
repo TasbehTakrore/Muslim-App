@@ -58,6 +58,7 @@ class SurahCard extends GetView<QuranPageController> {
             "$placeOfRevelation - ${ArabicNumbers().convert(verseCount)} آية",
             style: const TextStyle(fontSize: 10)),
         onTap: () {
+          // controller.getMistakes();
           controller.changePageIndexAndSurahName(startPage);
           Get.toNamed(AppRoute.quran);
           //onTap;

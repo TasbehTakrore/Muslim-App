@@ -14,6 +14,7 @@ class SurahsDialog extends StatelessWidget {
 
     return GetBuilder<QuranPageController>(
       builder: (controller) {
+        controller.getMistakes();
         // final lastOpenedEng = controller.getLastOpenedEng();
         return AlertDialog(
             shape: RoundedRectangleBorder(
