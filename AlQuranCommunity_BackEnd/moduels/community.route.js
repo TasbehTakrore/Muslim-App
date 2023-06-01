@@ -11,6 +11,8 @@ router.post('/requestToCommunity',communityController.requestToCommunity);
 router.delete('/deleteRequest/:communityID/:userReqEmail', communityController.deleteRequest);
 router.get('/getAllMemberRequests/:communityID',communityController.getAllMemberRequests);
 router.get('/getAllCommunityMembers/:communityID',communityController.getAllCommunityMembers);
+router.post('/addStickyMessage',communityController.addStickyMessage);
+router.get('/getStickyMessage/:communityId',communityController.getStickyMessage);
 
 module.exports= router;
 

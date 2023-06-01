@@ -46,9 +46,8 @@ class TrainerMainScreen extends GetView {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
               child: Obx(() => Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(),
                       Row(
                         children: [
                           IconButton(
@@ -80,7 +79,7 @@ class TrainerMainScreen extends GetView {
                         alignment: WrapAlignment.start,
                         children: trainerScreenController.wordsWidgetList,
                       ),
-                      SizedBox(height: 30),
+                      // SizedBox(height: 30),
                       // Text(
                       //   "${trainerScreenController.ayahTest.value}",
                       //   textDirection: TextDirection.rtl,
@@ -90,7 +89,12 @@ class TrainerMainScreen extends GetView {
                       //   ),
                       //   textAlign: TextAlign.center,
                       // ),
-                      SizedBox(height: 25),
+                      // SizedBox(height: 25),
+
+                      Text(
+                        "${trainerScreenController.showText.value}",
+                        textDirection: TextDirection.rtl,
+                      ),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -120,11 +124,6 @@ class TrainerMainScreen extends GetView {
                                 size: 35,
                               ))
                         ],
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "${trainerScreenController.showText.value}",
-                        textDirection: TextDirection.rtl,
                       ),
                       SizedBox(height: 20),
                     ],

@@ -40,6 +40,8 @@ class MyURL {
       '$uri/communities/getAllMemberRequests';
   static const String getAllCommunityMembers =
       '$uri/communities/getAllCommunityMembers';
+  static const String addStickyMessage = '$uri/communities/addStickyMessage';
+  static const String getStickyMessage = '$uri/communities/getStickyMessage';
 
   // showUserByEmail
 }

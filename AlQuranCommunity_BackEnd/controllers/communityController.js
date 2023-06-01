@@ -15,7 +15,7 @@ const createCommunity = async(req, res) => {
       usersGender,
       timerFlag
     });
-    
+
     return res.status(200).json({
       message: "Community created successfully",
       community
@@ -191,7 +191,41 @@ const findAllCommunitiesFemale = async (req, res) => {
       }
     };
     
-  
+   const addStickyMessage =  async (req, res) => {
+      try {
+        const { communityId, stickyMessage } = req.body;
+    
+        const community = await communityModel.findByPk(communityId);
+        if (!community) {
+          return res.status(404).json({ message: 'Community not found' });
+        }
+    
+        community.stickyMessage = stickyMessage;
+        await community.save();
+    
+        return res.status(200).json({ message: 'Sticky message added successfully' });
+      } catch (error) {
+        console.error('Error adding sticky message:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
+
+    const getStickyMessage =  async (req, res) => {
+      try {
+        const { communityId } = req.params;
+    
+        const community = await communityModel.findByPk(communityId);
+        if (!community) {
+          return res.status(404).json({ message: 'Community not found' });
+        }
+    
+        return res.status(404).json({ stickyMessage: community.stickyMessage });
+
+      } catch (error) {
+        console.error('Error get sticky message:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
 
 
 
@@ -199,5 +233,4 @@ const findAllCommunitiesFemale = async (req, res) => {
 
 
 
-
-module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities,requestToCommunity, deleteRequest, getAllMemberRequests, getAllCommunityMembers, findAllCommunities};
+module.exports = {createCommunity, findAllCommunitiesFemale, findAllCommunitiesMale, addMemberCommunity, getMyCommunities,requestToCommunity, deleteRequest, getAllMemberRequests, getAllCommunityMembers, findAllCommunities, addStickyMessage, getStickyMessage};

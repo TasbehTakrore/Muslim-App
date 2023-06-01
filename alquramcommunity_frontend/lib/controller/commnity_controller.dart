@@ -13,7 +13,7 @@ class CommunitityController extends GetxController {
   TextEditingController? communityNameController = TextEditingController();
   TextEditingController? communityDescriptionController =
       TextEditingController();
-
+  Rx<String> stikyMessage = "".obs;
   RxList<String> genders = ['ذكور', 'إناث'].obs;
   RxString selectedGender = 'ذكور'.obs;
   Rx<String> buttonTxt = 'إرسال طلب للانضمام'.obs;
@@ -45,6 +45,23 @@ class CommunitityController extends GetxController {
       print("****EROOR getuserEmail + $error");
       return "";
     }
+  }
+
+  Future<void> addAnouncement(int communityID, String announceMessage) async {
+    print("inside");
+    communityServices.addAnouncement(
+        communityID: communityID, announceMessage: announceMessage);
+    stikyMessage.value = announceMessage;
+    update();
+    // communityServices.get
+  }
+
+  Future<void> getAnouncement(int communityID) async {
+    String data =
+        await communityServices.getStickyMessage(communityId: communityID);
+    stikyMessage.value = data;
+    // update();
+    // communityServices.get
   }
 
   Future createNewCommunity() async {

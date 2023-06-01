@@ -168,6 +168,43 @@ class CommunityServices extends GetxService {
     }
   }
 
+  void addAnouncement(
+      {required int communityID, required String announceMessage}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(MyURL.addStickyMessage),
+        body: jsonEncode({
+          'communityId': communityID.toString(),
+          'stickyMessage': announceMessage
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        print('Request sent successfully');
+        getStickyMessage(communityId: communityID);
+      } else {
+        print(response.toString());
+        print('Failed to send request');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<String> getStickyMessage({required int communityId}) async {
+    try {
+      http.Response response =
+          await http.get(Uri.parse(MyURL.getStickyMessage + "/$communityId"));
+      return json.decode(response.body)['stickyMessage'];
+      // response.body);
+    } catch (e) {
+      return "";
+    }
+    // *******************
+  }
+
   Future addMemberCommunity(
       {required int communityId,
       required String userEmail,

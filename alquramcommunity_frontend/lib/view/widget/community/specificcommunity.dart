@@ -82,7 +82,6 @@ class SpecificCommunity extends StatelessWidget {
                 body: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView(
-                    
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // const SizedBox(
@@ -106,11 +105,12 @@ class SpecificCommunity extends StatelessWidget {
                       ),
                       CustomCommunityCard(
                           communityID: communityID,
-                          title: 'الوقت المُتبقّي',
+                          title: 'الإعلانات المُثبّتة',
                           fontSize1: 15,
-                          fontSize2: 30,
+                          fontSize2: 16,
                           heigh: 160,
-                          body: '12:45:30',
+                          body:
+                              communitityController.stikyMessage.value,
                           isAdmin: isAdmin),
                       SizedBox(height: 5),
                       UsersCommunity(communityID: communityID),

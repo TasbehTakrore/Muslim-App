@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../controller/commnity_controller.dart';
+import 'addAnouncmentDialog.dart';
 import 'communityPlan.dart';
 import 'memberRequestDialog.dart';
 import 'memberRequestList.dart';
@@ -35,7 +36,7 @@ class CustomCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     CommunitityController communitityController =
         Get.put(CommunitityController());
-
+    communitityController.getAnouncement(communityID);
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -57,19 +58,35 @@ class CustomCommunityCard extends StatelessWidget {
             alignment: Alignment.center,
             height: heigh,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title,
-                    style: TextStyle(color: Colors.white, fontSize: fontSize1)),
-                const SizedBox(height: 10),
-                Text(body,
-                    style: TextStyle(
-                        color: AppColor.thickYellow, fontSize: fontSize2)),
-                const SizedBox(height: 10),
-                Text(
-                  "إعلان: سيتم عقد اختبار التّجويد الأوّل بتاريخ 30/6/2023.",
-                  style: TextStyle(color: Colors.white),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.dialog(
+                              AddAnouncmentDialog(communityID: communityID));
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        )),
+                    Text(title,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: fontSize1)),
+                  ],
                 ),
+                // const SizedBox(height: 3),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(body,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: AppColor.thickYellow, fontSize: fontSize2)),
+                ),
+                const SizedBox(height: 10),
+
                 Visibility(
                     visible: isAdmin,
                     child: TextButton.icon(
@@ -83,10 +100,11 @@ class CustomCommunityCard extends StatelessWidget {
                         icon: const Icon(
                           Icons.person_add,
                           color: Colors.white,
+                          size: 16,
                         ),
-                        label: Text(
+                        label: const Text(
                           "طلبات العضويّة الجديدة",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ))),
                 // Padding(
                 //   padding: const EdgeInsets.only(top: 20),
