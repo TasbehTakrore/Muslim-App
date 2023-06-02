@@ -30,12 +30,17 @@ class QuranPageController extends GetxController {
   List<MistakeModel> mistakesList = [];
   String? userEmail;
   BuildContext? context;
+  bool showFloating = true;
+
+  Map<dynamic, dynamic> verseSearch = {'result': []};
   // List<Icon> Icons = [ Icon(Icons.check),
   // ];
   Rx<bool> black = false.obs;
   Rx<bool> darkYallow = false.obs;
   Rx<bool> lightYallow = true.obs;
   Rx<bool> white = false.obs;
+  PageController? pageController;
+
   @override
   void onInit() {
     userEmail = myServices.sharedPreferences.getString("user_email");
@@ -54,6 +59,15 @@ class QuranPageController extends GetxController {
     QuranConstant.showMistake.value = true;
     changeFontColorToBlack();
     update();
+  }
+
+  goToPage(int i) {
+    pageController!.animateToPage(
+      i - 1,
+      duration: const Duration(milliseconds: 1), // المدة المطلوبة للانتقال
+      curve: Curves.ease,
+    );
+    Get.back();
   }
 
   getMistakes() async {
@@ -116,6 +130,10 @@ class QuranPageController extends GetxController {
     return myServices.quranPage.getInt("lastPageIndex")!;
   }
 
+  void setPageIndex(int i) {
+    myServices.quranPage.setInt("lastPageIndex", i);
+  }
+
   bool anyPageOpend() {
     if (myServices.quranPage.getInt("lastPageIndex") == null) return false;
     return true;
@@ -149,8 +167,28 @@ class QuranPageController extends GetxController {
     versesList.clear();
 
     for (var i = 0; i < versesCount!; i++) {
-      versesList.addAll(
-          getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
+      QuranConstant.showMistake.value == true
+          ? versesList.addAll(
+              getVerse(surahNumb!, startVerse! + i, verseEndSymbol: false)
+                  .split(" ")
+                  .map(
+                    (D) => Text(D,
+                        style: TextStyle(
+                            color:
+                                D.replaceAll(RegExp('[^\u0621-\u064A ]'), '') ==
+                                        "لله"
+                                    ? Colors.red
+                                    : QuranConstant.fontColor.value,
+                            fontFamily: "Quran",
+                            fontSize: QuranConstant.fontsize.value,
+                            backgroundColor: mistakesList.any((element) =>
+                                    (element.surahId == surahNumb &&
+                                        element.ayahId == startVerse! + i))
+                                ? AppColor.lightYellow
+                                : Color.fromARGB(0, 255, 255, 255))),
+                  ))
+          : versesList.addAll(getVerse(surahNumb!, startVerse! + i,
+                  verseEndSymbol: false)
               .split(" ")
               .map(
                 (D) => Text(D,

@@ -15,7 +15,7 @@ class TopAyahDialogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         IconButton(
             onPressed: () {
@@ -23,7 +23,7 @@ class TopAyahDialogButton extends StatelessWidget {
                   text:
                       "\uFD3F${getVerse(surahNumb, verseNumb)}\uFD3E  [${getSurahNameArabic(surahNumb)}: ${ArabicNumbers().convert(verseNumb)}]"));
               Fluttertoast.showToast(
-                msg: "Text copied to clipboard!",
+                msg: "تمّ النّسخ إلى الحافظة!",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -34,20 +34,20 @@ class TopAyahDialogButton extends StatelessWidget {
               color: AppColor.secondaryColor,
               size: 30,
             )),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bookmark_border,
-              color: AppColor.secondaryColor,
-              size: 30,
-            )),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.share,
-              color: AppColor.secondaryColor,
-              size: 30,
-            )),
+        // IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(
+        //       Icons.bookmark_border,
+        //       color: AppColor.secondaryColor,
+        //       size: 30,
+        //     )),
+        // IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(
+        //       Icons.share,
+        //       color: AppColor.secondaryColor,
+        //       size: 30,
+        //     )),
       ],
     );
   }
