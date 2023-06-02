@@ -10,6 +10,7 @@ class QuranConstant {
   ];
   static Rx<Color> backgroundColor = backgroundColors[1].obs;
   static Rx<Color> fontColor = Colors.black.obs;
-
+  static Rx<Color> symbolColor = Color.fromARGB(255, 41, 119, 97).obs;
+  static Rx<bool> showMistake = true.obs;
   static Rx<double> fontsize = 22.0.obs;
 }

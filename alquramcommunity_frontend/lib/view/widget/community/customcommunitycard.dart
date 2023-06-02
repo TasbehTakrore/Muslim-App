@@ -36,7 +36,6 @@ class CustomCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     CommunitityController communitityController =
         Get.put(CommunitityController());
-    communitityController.getAnouncement(communityID);
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -63,15 +62,17 @@ class CustomCommunityCard extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Get.dialog(
-                              AddAnouncmentDialog(communityID: communityID));
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        )),
+                    isAdmin
+                        ? IconButton(
+                            onPressed: () {
+                              Get.dialog(AddAnouncmentDialog(
+                                  communityID: communityID));
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ))
+                        : SizedBox(),
                     Text(title,
                         style: TextStyle(
                             color: Colors.white, fontSize: fontSize1)),

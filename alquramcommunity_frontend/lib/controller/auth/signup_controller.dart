@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../core/services/services.dart';
+
 abstract class SignUpController extends GetxController {
   signUp();
   ToSignIn();
@@ -23,6 +25,7 @@ class SignUpControllerImp extends SignUpController {
   RxString selectedGender = 'male'.obs;
   var isProfileImgPathSet = false.obs;
   var profileImg = File('').obs;
+  MyServices myServices = Get.put(MyServices());
 
   @override
   signUp() {
@@ -73,6 +76,15 @@ class SignUpControllerImp extends SignUpController {
     await profileImg.value
         .writeAsBytes(bytes.buffer.asUint8List(), flush: true);
     isProfileImgPathSet.value = true;
+  }
+
+  void deletesharedPreferences() {
+    myServices.sharedPreferences.setString("x_auth_token", "");
+    myServices.sharedPreferences.setString("user_name", "");
+    myServices.sharedPreferences.setString("user_email", "");
+    myServices.sharedPreferences.setInt("user_id", 0);
+    myServices.sharedPreferences.setString("user_gender", "");
+    myServices.sharedPreferences.setInt("user_coins", 0);
   }
 
   void clearFields() {

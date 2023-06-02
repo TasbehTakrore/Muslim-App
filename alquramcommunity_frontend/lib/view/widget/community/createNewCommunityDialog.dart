@@ -92,10 +92,11 @@ class createNewCommunityDialog extends StatelessWidget {
                   //height: ,
                   labelColor: AppColor.grey,
                   color: AppColor.primaryColor,
-                  onPressed: () async{
+                  onPressed: () async {
                     // Future<String> commChatID =
-                   await communitityController.createNewCommunity();
+                    await communitityController.createNewCommunity();
                     Get.dialog(SpecificCommunity(
+                      communityAnnouncement: "",
                       communityChatID: communitityController.communityChatID,
                       communityName:
                           communitityController.communityNameController!.text,

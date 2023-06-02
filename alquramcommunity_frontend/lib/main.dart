@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
+    print(
+        "++${controller.myServices.sharedPreferences.getString("user_email")}");
+
     return GetMaterialApp(
         translations: MyTranslation(),
         debugShowCheckedModeBanner: false,
@@ -94,7 +97,14 @@ class MyApp extends StatelessWidget {
           navigator:
               controller.myServices.sharedPreferences.getBool("langSelected") ==
                       true
-                  ? Login()
+                  ? controller.myServices.sharedPreferences
+                                  .getString("user_email") ==
+                              null ||
+                          controller.myServices.sharedPreferences
+                                  .getString("user_email") ==
+                              ""
+                      ? Login()
+                      : HomeScreen()
                   : Language(),
           durationInSeconds: 5,
         ),

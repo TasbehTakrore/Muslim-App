@@ -20,18 +20,21 @@ class SpecificCommunity extends StatelessWidget {
   final String communityName;
   final String communityDateCreate;
   final bool isAdmin;
+  final String communityAnnouncement;
   const SpecificCommunity(
       {super.key,
       required this.communityID,
       required this.communityName,
       required this.communityDateCreate,
       required this.isAdmin,
-      required this.communityChatID});
+      required this.communityChatID,
+      required this.communityAnnouncement});
 
   @override
   Widget build(BuildContext context) {
     late TextEditingController messageController = TextEditingController();
-
+    // communitityController.getAnouncement(communityID);
+    communitityController.stikyMessage.value = communityAnnouncement;
     print("communityChatID inside comm: : : $communityChatID");
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     Get.put(CommunitityController());
@@ -109,8 +112,7 @@ class SpecificCommunity extends StatelessWidget {
                           fontSize1: 15,
                           fontSize2: 16,
                           heigh: 160,
-                          body:
-                              communitityController.stikyMessage.value,
+                          body: communitityController.stikyMessage.value,
                           isAdmin: isAdmin),
                       SizedBox(height: 5),
                       UsersCommunity(communityID: communityID),

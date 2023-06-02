@@ -30,13 +30,30 @@ class QuranPageController extends GetxController {
   List<MistakeModel> mistakesList = [];
   String? userEmail;
   BuildContext? context;
-
+  // List<Icon> Icons = [ Icon(Icons.check),
+  // ];
+  Rx<bool> black = false.obs;
+  Rx<bool> darkYallow = false.obs;
+  Rx<bool> lightYallow = true.obs;
+  Rx<bool> white = false.obs;
   @override
   void onInit() {
     userEmail = myServices.sharedPreferences.getString("user_email");
     // TODO: implement onInit
     print(mistakesList);
     super.onInit();
+  }
+
+  void goToDefult() {
+    QuranConstant.backgroundColor.value = QuranConstant.backgroundColors[1];
+    QuranConstant.fontsize.value = 22.0;
+    black.value = false;
+    darkYallow.value = false;
+    lightYallow.value = true;
+    white.value = false;
+    QuranConstant.showMistake.value = true;
+    changeFontColorToBlack();
+    update();
   }
 
   getMistakes() async {
@@ -66,10 +83,12 @@ class QuranPageController extends GetxController {
 
   changeFontColorToWhite() {
     QuranConstant.fontColor.value = Color.fromARGB(255, 255, 255, 255);
+    QuranConstant.symbolColor.value = AppColor.secondaryColor;
   }
 
   changeFontColorToBlack() {
     QuranConstant.fontColor.value = Colors.black;
+    QuranConstant.symbolColor.value = Color.fromARGB(255, 41, 119, 97);
   }
 
   changePageIndexAndSurahName(int pageIndex) {
@@ -77,6 +96,10 @@ class QuranPageController extends GetxController {
     pageindex = pageIndex;
     myServices.quranPage.setString("lastSurahName",
         getSurahNameArabic(getPageData(pageIndex + 1)[0]["surah"]));
+  }
+
+  updatee() {
+    update();
   }
 
   final LocaleController localeController = Get.put(LocaleController());
@@ -132,18 +155,19 @@ class QuranPageController extends GetxController {
               .map(
                 (D) => Text(D,
                     style: TextStyle(
-                      color:
-                          D.replaceAll(RegExp('[^\u0621-\u064A ]'), '') == "لله"
-                              ? Colors.red
-                              : QuranConstant.fontColor.value,
-                      fontFamily: "Quran",
-                      fontSize: QuranConstant.fontsize.value,
-                      backgroundColor: mistakesList.any((element) =>
-                              element.surahId == surahNumb &&
-                              element.ayahId == startVerse! + i)
-                          ? AppColor.lightYellow
-                          : Color.fromARGB(0, 255, 255, 255),
-                    )),
+                        color: D.replaceAll(RegExp('[^\u0621-\u064A ]'), '') ==
+                                "لله"
+                            ? Colors.red
+                            : QuranConstant.fontColor.value,
+                        fontFamily: "Quran",
+                        fontSize: QuranConstant.fontsize.value,
+                        backgroundColor: QuranConstant.showMistake.value == true
+                            ? mistakesList.any((element) =>
+                                    (element.surahId == surahNumb &&
+                                        element.ayahId == startVerse! + i))
+                                ? AppColor.lightYellow
+                                : Color.fromARGB(0, 255, 255, 255)
+                            : Color.fromARGB(0, 255, 255, 255))),
               ));
       versesList.add(InkWell(
         onTap: () {
@@ -157,11 +181,11 @@ class QuranPageController extends GetxController {
               });
         },
         child: Text(
-          key: UniqueKey(),
+          // key: UniqueKey(),
           getVerseEndSymbol(startVerse! + i),
-          style: const TextStyle(
+          style: TextStyle(
               fontSize: 20,
-              color: Color.fromARGB(255, 41, 119, 97),
+              color: QuranConstant.symbolColor.value,
               fontWeight: FontWeight.w700),
         ),
       ));
