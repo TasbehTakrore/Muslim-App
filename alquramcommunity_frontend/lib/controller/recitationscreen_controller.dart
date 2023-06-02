@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/services/mistake_services.dart';
+import 'package:confetti/confetti.dart';
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,7 @@ class RecitationScreenController extends GetxController {
   String? minutesStr;
   String? secondsStr;
   String durationResult = "";
+  final confettiController = ConfettiController();
 
 //
 
@@ -239,6 +241,11 @@ class RecitationScreenController extends GetxController {
 
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
+    if (mistakesCount == 0 && hintsCount < 2) {
+      confettiController.play();
+    } else {
+      confettiController.stop();
+    }
     return showDialog(
         context: context!,
         builder: (BuildContext context) {

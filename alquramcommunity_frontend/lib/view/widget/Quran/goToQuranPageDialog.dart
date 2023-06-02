@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -8,16 +9,18 @@ import '../custombuttomlang.dart';
 
 class GoToQuranPageDialog extends StatelessWidget {
   const GoToQuranPageDialog({super.key});
-
   @override
   Widget build(BuildContext context) {
-    int value = 1;
+    QuranPageController quranPageController = Get.put(QuranPageController());
+
+    int value = quranPageController.getPageIndex() + 1;
+
     return GetBuilder<QuranPageController>(builder: (controller) {
       return AlertDialog(
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               "حرّك لاختيار صفحةٍ تودّ الانتقال إليها",
               style: TextStyle(color: Colors.grey, fontSize: 12),
             ),
@@ -48,8 +51,7 @@ class GoToQuranPageDialog extends StatelessWidget {
             const Divider(),
             CustomButton(
               color: AppColor.secondaryColor,
-              onPressed: () => {controller.goToPage(value)
-              },
+              onPressed: () => {controller.goToPage(value)},
               textbutton: 'انتِقال',
             ),
           ],

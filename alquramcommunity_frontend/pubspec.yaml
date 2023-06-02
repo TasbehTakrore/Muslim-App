@@ -98,6 +98,7 @@ dependencies:
   app_tutorial: ^0.3.2
   easy_splash_screen: ^1.0.4
   flutter_progress_hud: ^2.0.2
+  flutter_screenutil: ^5.0.0
 
 
 

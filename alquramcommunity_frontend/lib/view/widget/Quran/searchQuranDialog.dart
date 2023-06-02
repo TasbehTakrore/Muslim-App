@@ -29,33 +29,30 @@ class SearchQuranDialog extends StatelessWidget {
                   fit: BoxFit.contain,
                   height: 50,
                 ),
-                Expanded(
-                  child: TextField(
-                    style: TextStyle(fontSize: 20),
-                    decoration: const InputDecoration(
-                      iconColor: AppColor.secondaryColor,
-                      prefixIconColor: AppColor.secondaryColor,
-                      hintText: 'ابحث عن كلمةٍ مُحدّدة',
-                      prefixIcon: Icon(Icons.search),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColor.secondaryColor,
-                        ),
+                TextField(
+                  style: TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    iconColor: AppColor.secondaryColor,
+                    prefixIconColor: AppColor.secondaryColor,
+                    hintText: 'ابحث عن كلمةٍ مُحدّدة',
+                    prefixIcon: Icon(Icons.search),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColor.secondaryColor,
                       ),
                     ),
-                    cursorColor: AppColor.secondaryColor,
-                    onChanged: (value) {
-                      if (value == "")
-                        controller.verseSearch = {'result': []};
-                      else
-                        controller.verseSearch = searchWords([value]);
-                      print(
-                          "controller.verseSearch: ${controller.verseSearch}");
-                      controller
-                          .updatee(); // Perform search based on the entered value
-                      // Update the search results in the dialog
-                    },
                   ),
+                  cursorColor: AppColor.secondaryColor,
+                  onChanged: (value) {
+                    if (value == "")
+                      controller.verseSearch = {'result': []};
+                    else
+                      controller.verseSearch = searchWords([value]);
+                    print("controller.verseSearch: ${controller.verseSearch}");
+                    controller
+                        .updatee(); // Perform search based on the entered value
+                    // Update the search results in the dialog
+                  },
                 ),
                 const SizedBox(
                   height: 10,

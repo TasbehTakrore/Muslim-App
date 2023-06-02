@@ -25,11 +25,10 @@ class StatisticsCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: AppColor.grey,
-          
             ),
             height: isLaptopScreen == true
-                ? MediaQuery.of(context).size.height*1.2
-                : 520,
+                ? MediaQuery.of(context).size.height * 1.2
+                : 430,
             width: double.infinity,
             margin: EdgeInsets.only(top: 30),
             child: Column(
@@ -84,7 +83,7 @@ class StatisticsCard extends StatelessWidget {
                       Divider(),
 
                       SizedBox(height: 3),
-                      StatisticDown(),
+                      // StatisticDown(),
                     ],
                   ),
                 ),

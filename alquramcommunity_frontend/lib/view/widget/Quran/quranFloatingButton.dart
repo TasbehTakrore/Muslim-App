@@ -78,6 +78,23 @@ class QuranFloatingButton extends StatelessWidget {
                 }),
           ),
           const SizedBox(height: 5),
+          // Visibility(
+          //   visible: controller.showFloating,
+          //   child: FloatingActionButton(
+          //       heroTag: "audio",
+          //       backgroundColor: AppColor.secondaryColor,
+          //       //hoverColor: AppColor.light2Yellow,
+          //       elevation: 0,
+          //       child: const Icon(
+          //         Icons.multitrack_audio_sharp,
+          //         size: 30,
+          //       ),
+          //       onPressed: () {
+          //         controller.playAudioBySurah(1);
+          //         // Get.dialog(SearchQuranDialog());
+          //       }),
+          // ),
+          const SizedBox(height: 5),
           Visibility(
             visible: controller.showFloating,
             child: FloatingActionButton(

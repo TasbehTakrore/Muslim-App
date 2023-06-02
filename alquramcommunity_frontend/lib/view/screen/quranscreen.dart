@@ -39,7 +39,7 @@ class QuranScreen extends StatelessWidget {
             return false;
           },
           child: Scaffold(
-            floatingActionButton:QuranFloatingButton(),
+            floatingActionButton: QuranFloatingButton(),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: QuranConstant.backgroundColor.value,
             body: Container(

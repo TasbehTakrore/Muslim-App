@@ -2,6 +2,7 @@ import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/quranconst.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:arabic_numbers/arabic_numbers.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -137,6 +138,21 @@ class QuranPageController extends GetxController {
   bool anyPageOpend() {
     if (myServices.quranPage.getInt("lastPageIndex") == null) return false;
     return true;
+  }
+
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  void playAudioBySurah(int surahNumber) async {
+    String audioURL = getAudioURLBySurah(surahNumber);
+    print("audioURL: $audioURL");
+    final player = AudioPlayer();
+    await player.play(UrlSource(audioURL)); // if (result == 1) {
+    //   // Success
+    //   print('Audio played successfully');
+    // } else {
+    //   // Failed to play the audio
+    //   print('Error playing audio');
+    // }
   }
 
   RxString getLastOpenedEng() {

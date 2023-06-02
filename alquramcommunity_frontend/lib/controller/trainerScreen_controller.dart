@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -83,6 +84,8 @@ class TrainerScreenController extends GetxController {
   String? secondsStr;
   String durationResult = "";
   int mistakesCount = 0;
+
+  final confettiController = ConfettiController();
 
   @override
   void onInit() {
@@ -622,6 +625,7 @@ class TrainerScreenController extends GetxController {
     setSurahIDAndAyahID();
     appBarController.addCoins();
     print("after match inside true answer");
+    print("surahIDToSave: $surahIDToSave.  ayahIDToSave: $ayahIDToSave");
     mistakeModelList.add(MistakeModel(
       userEmail: userEmail,
       mistakeType: 0,
@@ -1050,6 +1054,11 @@ class TrainerScreenController extends GetxController {
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
     CoinsServices.addCoins(coins);
+    if (mistakesCount == 0) {
+      confettiController.play();
+    } else {
+      confettiController.stop();
+    }
     Get.dialog(statisticsTrainerContent());
     // return showDialog(
     //     context: conteXt!,

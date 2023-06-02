@@ -29,6 +29,7 @@ class PlanController extends GetxController {
   Rx<bool> addFivePray = false.obs;
   Rx<bool> addDuha = false.obs;
   Rx<bool> addQeiam = false.obs;
+  final confettiController = ConfettiController();
 
   setQuranPlanCount(int val) {
     quranPlanCount = val;
@@ -915,6 +916,10 @@ void celebrate(){
       progress.value = 0.0;
     else
       progress.value = 1.0 * doneCount.value / tasksNumber.value;
+    if (progress.value == 1.0)
+      confettiController.play();
+    else
+      confettiController.stop();
     print("aaaa${progress.value}");
     update();
   }
