@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
+import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/constants.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
+import '../../controller/auth/chartsController.dart';
 import '../../controller/randomVerse_controller.dart';
 import '../../core/constant/imageasset.dart';
 import '../widget/home/categoriesHome.dart';
@@ -26,6 +28,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeData();
+    ChartsController chartsController = Get.put(ChartsController());
     RandomVerseController randomVerseController =
         Get.put(RandomVerseController());
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -37,6 +40,7 @@ class Home extends StatelessWidget {
             ? EdgeInsets.only(left: 150, right: 30)
             : const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
+          controller: chartsController.scrollController,
           children: [
             // CustomAppBar(onPressedIcon: () {}),
             CustomCardHomeForQuranDilog(

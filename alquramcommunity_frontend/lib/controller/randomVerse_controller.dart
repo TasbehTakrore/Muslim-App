@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 
 import '../core/localization/changelocal.dart';
+import '../core/services/services.dart';
 import '../view/widget/Quran/tafser.dart';
 
 class RandomVerseController extends GetxController {
@@ -16,6 +17,7 @@ class RandomVerseController extends GetxController {
   int? randAyah;
   int? verseCount;
   final LocaleController localeController = Get.put(LocaleController());
+  MyServices myServices = Get.put(MyServices());
 
   @override
   void onInit() {
@@ -27,13 +29,30 @@ class RandomVerseController extends GetxController {
 
     todeyVerse = "\uFD3F" + getVerse(randSurah!, randAyah!) + "\uFD3E";
     todayVerseTafseer =
-        "${(tafser[0][randSurah != 1 ? (getVerseCount(randAyah! - 1) + randAyah!).toString() : (randAyah).toString()] as Map<String, Object>)["verse"]} \n(التّفسير المُيسّر، سورة ${getSurahNameArabic(randSurah!)}، الآية: ${ArabicNumbers().convert(randAyah)})";
+        "${(tafser[0][randSurah != 1 ? (getPreviousVerserCount(randSurah!) + randAyah!).toString() : (randAyah).toString()] as Map<String, Object>)["verse"]} \n(التّفسير المُيسّر، سورة ${getSurahNameArabic(randSurah!)}، الآية: ${ArabicNumbers().convert(randAyah)})";
     todayVerseTafseerEng =
         getVerseTranslation(randSurah!, randAyah!, verseEndSymbol: false);
     print("->" + todeyVerse);
 
     // TODO: implement onInit
     super.onInit();
+  }
+
+  bool isChildMode() {
+    if (myServices.sharedPreferences.getBool("childMode") == null) {
+      return false;
+    } else {
+      return myServices.sharedPreferences.getBool("childMode")!;
+    }
+  }
+  int previousVersesCount = 0;
+  int getPreviousVerserCount(int surahNumb) {
+    previousVersesCount = 0;
+    for (int i = 1; i < surahNumb; i++) {
+      previousVersesCount += getVerseCount(i);
+    }
+    print("previousVersesCount: $previousVersesCount");
+    return previousVersesCount;
   }
 
   bool englishLang() {

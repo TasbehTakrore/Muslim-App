@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,7 +17,7 @@ abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
   RxString city = ''.obs;
   RxString formativeHijriDate = ''.obs;
-  RxString formattedRemainingTime = ''.obs;
+  RxString formattedRemainingTime = '00:00:00:00'.obs;
   late PrayerTimes prayerTimesInstance;
   late PrayerTimes prayerTimesInstanceNxt;
   Rx<Prayer> nextPrayer = (Prayer.none).obs;
@@ -86,6 +87,7 @@ class PrayScreenControllerImp extends PrayScreenController {
     super.onInit();
     audioPlayer = AudioPlayer();
     await getCurrentLocation();
+
     if (formattedRemainingTime == '00:00:00') {
       getNextPrayer();
     }
@@ -149,7 +151,7 @@ class PrayScreenControllerImp extends PrayScreenController {
 
   //get current location function :
   @override
-  Future<void> getCurrentLocation() async {
+  Future<int> getCurrentLocation() async {
     try {
       final currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
@@ -163,8 +165,16 @@ class PrayScreenControllerImp extends PrayScreenController {
       city.value = "${placemark.locality!} ${placemark.street}";
       print(city.value);
       await PrayTimes();
+
+      // Wait for PrayTimes() to complete
+
+      await getNextPrayer();
+      await Future.delayed(Duration(seconds: 1));
+
+      return 0;
     } catch (e) {
       print('Error getting current position: $e');
+      return 0;
     }
   }
 
@@ -271,6 +281,61 @@ class PrayScreenControllerImp extends PrayScreenController {
     } catch (e) {
       return 0;
     }
+  }
+
+  String ConvertReminingTime(String inputTime) {
+    print("inputTime: $inputTime");
+    // if (inputTime == "") return "";
+    var arabicNumbers = NumberFormat('ar');
+    int h = int.parse(inputTime.split(':')[0]);
+    var hours;
+    var minutes;
+    var seconds;
+    if (h > 9)
+      hours = ArabicNumbers().convert(h);
+    else
+      hours = "٠${ArabicNumbers().convert(h)}";
+    int m = int.parse(inputTime.split(':')[1]);
+    if (m <= 9)
+      minutes = "٠${ArabicNumbers().convert(m)}";
+    else
+      minutes = "${ArabicNumbers().convert(m)}";
+
+    int s = int.parse(inputTime.split(':')[2]);
+    if (s <= 9)
+      seconds = "٠${ArabicNumbers().convert(s)}";
+    else
+      seconds = "${ArabicNumbers().convert(s)}";
+
+    var arabicTime = "$hours:$minutes:$seconds";
+    // print("inputTime: $arabicTime");
+
+    return (arabicTime);
+  }
+
+  String convertToArabicNumbers(String number) {
+    var hours = int.parse(number.split(':')[0]);
+    var minutes = int.parse(number.split(':')[1]);
+    var seconds = int.parse(number.split(':')[2]);
+
+    var arabicTime = convertToArabicNumbers(hours.toString()) +
+        ':' +
+        convertToArabicNumbers(minutes.toString()) +
+        ':' +
+        convertToArabicNumbers(seconds.toString());
+
+    var arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    var arabicNumberString = '';
+
+    if (int.parse(number) < 10) {
+      arabicNumberString = arabicNumbers[int.parse(number)];
+    } else {
+      arabicNumberString = number.toString().split('').map((digit) {
+        return arabicNumbers[int.parse(digit)];
+      }).join('');
+    }
+
+    return arabicNumberString;
   }
 
   @override

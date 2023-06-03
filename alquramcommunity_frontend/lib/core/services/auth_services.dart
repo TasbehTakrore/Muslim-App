@@ -21,8 +21,8 @@ import '../localization/changelocal.dart';
 MyServices myServices = Get.put(MyServices());
 
 class AuthServices {
-  String uri = 'http://10.10.10.95:5000';
-  String uri2 = 'http://10.10.10.95:8080';
+  String uri = 'http://192.168.1.19:5000';
+  String uri2 = 'http://192.168.1.19:8080';
 
   final LocaleController localeController = Get.put(LocaleController());
 

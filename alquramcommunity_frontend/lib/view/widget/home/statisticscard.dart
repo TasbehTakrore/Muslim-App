@@ -28,7 +28,7 @@ class StatisticsCard extends StatelessWidget {
             ),
             height: isLaptopScreen == true
                 ? MediaQuery.of(context).size.height * 1.2
-                : 430,
+                : 400,
             width: double.infinity,
             margin: EdgeInsets.only(top: 30),
             child: Column(
@@ -41,7 +41,9 @@ class StatisticsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       //   BarChartPage(),
-
+                      SizedBox(
+                        height: 15,
+                      ),
                       Text(
                         " إنجازاتك لهذا الأسبوع",
                         style: TextStyle(
@@ -50,20 +52,20 @@ class StatisticsCard extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         textAlign: TextAlign.start,
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColor
-                              .grey), // Replace Colors.blue with your desired background color
-                          shape: MaterialStateProperty.all<OutlinedBorder>(
-                            CircleBorder(),
-                          ),
-                        ),
-                        onPressed: _controller.togglePlaying,
-                        child:
-                            Icon(Icons.refresh, color: AppColor.primaryColor),
-                      ),
+                      // ElevatedButton(
+                      //   style: ButtonStyle(
+                      //     backgroundColor: MaterialStateProperty.all<Color>(AppColor
+                      //         .grey), // Replace Colors.blue with your desired background color
+                      //     shape: MaterialStateProperty.all<OutlinedBorder>(
+                      //       CircleBorder(),
+                      //     ),
+                      //   ),
+                      //   onPressed: _controller.togglePlaying,
+                      //   child:
+                      //       Icon(Icons.refresh, color: AppColor.primaryColor),
+                      // ),
 
-                      SizedBox(height: 5),
+                      SizedBox(height: 15),
                       Text(
                         "يعرض هذا المخطط إنجازاتك لهذا الأسبوع، بالنقر على أي من الأعمدة، يمكنك الاطلاع على عدد المهام المنجزة مقارنة بعدد المهام الفعلي ",
                         style: TextStyle(fontSize: 12),

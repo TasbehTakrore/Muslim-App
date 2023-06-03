@@ -35,8 +35,10 @@ class CustomCardHomeForQuranDilog extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 15),
         child: Container(
           decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage(AppImageAsset.mosque),
+              image: DecorationImage(
+                image: randomVerseController.isChildMode()
+                    ? AssetImage(AppImageAsset.childImage)
+                    : AssetImage(AppImageAsset.mosque),
                 fit: BoxFit.cover,
                 opacity: 0.2,
               ),

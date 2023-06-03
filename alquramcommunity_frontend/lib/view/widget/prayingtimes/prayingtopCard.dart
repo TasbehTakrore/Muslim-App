@@ -72,11 +72,11 @@ class PrayCardHome extends StatelessWidget {
                   const SizedBox(height: 0),
                   Text(nextPray,
                       style:
-                          const TextStyle(color: Colors.white, fontSize: 45)),
+                          const TextStyle(color: Colors.white, fontSize: 35)),
                   const SizedBox(height: 0),
                   Text("بعد +  ${remainingTime}",
                       style:
-                          const TextStyle(color: Colors.yellow, fontSize: 15)),
+                          const TextStyle(color: Colors.yellow, fontSize: 18)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

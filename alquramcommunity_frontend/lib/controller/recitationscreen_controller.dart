@@ -90,6 +90,7 @@ class RecitationScreenController extends GetxController {
 
   get nextReload => nextReloadIcon;
   changePageIndex(int pageIndex) {
+    visibleBar.value = false;
     myServices.recitation.setInt("startIndexRecit", pageIndex);
     emptyLists();
     createLists();
@@ -472,7 +473,8 @@ class RecitationScreenController extends GetxController {
     }
   }
 
-  void autoState() {
+  void autoState(int speed) {
+    percent!.value = 0;
     int prevSeconds = 0;
     int prevIndexTime = 0;
     seconds = 0;
@@ -481,7 +483,7 @@ class RecitationScreenController extends GetxController {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       print("الوقت  $seconds , المطلوب: ${indexTime + 2}");
 
-      if (seconds == indexTime + 2) {
+      if (seconds == indexTime + speed) {
         verseColor[pageWidgetindex][index].value = Colors.red;
         setBlack = false;
         mistakeModelList.add(MistakeModel(
@@ -503,7 +505,7 @@ class RecitationScreenController extends GetxController {
         if (index < NumberWordsOfVerse[pageWidgetindex].length) {
           print(
               "Inside s:${NumberWordsOfVerse[pageWidgetindex]} index: $index");
-          indexTime += NumberWordsOfVerse[pageWidgetindex][index];
+          indexTime += NumberWordsOfVerse[pageWidgetindex][index] + speed;
         } else {
           hiddenBar();
           timer.cancel();
@@ -533,7 +535,7 @@ class RecitationScreenController extends GetxController {
       } else {
         seconds++;
         percent!.value =
-            (seconds - prevSeconds) / (indexTime + 2 - prevIndexTime);
+            (seconds - prevSeconds) / (indexTime + speed - prevIndexTime);
       }
       //if (second > 100) ;
     });

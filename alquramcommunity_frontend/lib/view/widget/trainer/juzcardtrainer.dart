@@ -55,9 +55,8 @@ class JuzCardTrainer extends GetView<TrainerScreenController> {
                 // ),
               ]),
             ),
-            onTap: () {
-              controller.letsJuzTest(juzNumber);
-              Get.toNamed(AppRoute.trainer);
+            onTap: () async {
+              await controller.letsJuzTest(juzNumber);
               //onTap;
             },
           ),

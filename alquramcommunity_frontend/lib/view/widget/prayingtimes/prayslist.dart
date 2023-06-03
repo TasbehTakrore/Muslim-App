@@ -66,7 +66,8 @@ class PrayerTimesListView extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          prayController.changePrayToArabic(value!) ?? '',
+                          // value ?? '..',
+                          prayController.changeTimeToArabic(value!) ?? '..',
                           textAlign: TextAlign.end,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: textSize),

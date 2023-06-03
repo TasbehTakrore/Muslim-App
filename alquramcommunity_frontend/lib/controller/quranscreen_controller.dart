@@ -41,13 +41,22 @@ class QuranPageController extends GetxController {
   Rx<bool> lightYallow = true.obs;
   Rx<bool> white = false.obs;
   PageController? pageController;
-
+  int previousVersesCount = 0;
   @override
   void onInit() {
     userEmail = myServices.sharedPreferences.getString("user_email");
     // TODO: implement onInit
     print(mistakesList);
     super.onInit();
+  }
+
+  int getPreviousVerserCount(int surahNumb) {
+    previousVersesCount = 0;
+    for (int i = 1; i < surahNumb; i++) {
+      previousVersesCount += getVerseCount(i);
+    }
+    print("previousVersesCount: $previousVersesCount");
+    return previousVersesCount;
   }
 
   void goToDefult() {

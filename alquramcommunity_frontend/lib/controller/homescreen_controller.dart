@@ -34,6 +34,8 @@ class HomeScreenControllerImp extends HomeScreenController {
 
   String userEmail = "";
 
+
+
   @override
   void onInit() async {
     super.onInit();
@@ -45,6 +47,8 @@ class HomeScreenControllerImp extends HomeScreenController {
 
     print("myCommunities inside homeScreen $myCommunities");
     communitityController.getAllCommunities();
+
+
   }
 
   String getEmail() {

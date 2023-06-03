@@ -20,10 +20,47 @@ class ProfileController extends GetxController {
   RxString img = ''.obs;
   String? joinDate;
   Rx<bool> childMode = false.obs;
+  Rx<bool> prophetNotifi = false.obs;
+
   @override
   void onInit() {
     super.onInit();
-    //userInformation();
+    if (myServices.sharedPreferences.getBool("childMode") == null) {
+      print("hhhh");
+    } else {
+      childMode.value = myServices.sharedPreferences.getBool("childMode")!;
+    }
+    if (myServices.sharedPreferences.getBool("prophetNotifi") == null) {
+      print("prophetNotifi");
+    } else {
+      prophetNotifi.value =
+          myServices.sharedPreferences.getBool("prophetNotifi")!;
+    } //userInformation();
+  }
+
+  changeChildMode(bool value) {
+    childMode.value = value;
+    myServices.sharedPreferences.setBool("childMode", value);
+  }
+
+  changeProphetNotifi(bool value) {
+    prophetNotifi.value = value;
+    myServices.sharedPreferences.setBool("prophetNotifi", value);
+
+    // if(value == true)
+    // FirebaseMessaging.instance.subscribeToTopic("salatNotification");
+    // else if(value == flase)
+    // FirebaseMessaging.instance.unsubscribeFromTopic("salatNotification");
+
+    ////////////// function to add Notification: if value = true=> Subsecribe....
+  }
+
+  bool isChildMode() {
+    if (myServices.sharedPreferences.getBool("childMode") == null) {
+      return false;
+    } else {
+      return myServices.sharedPreferences.getBool("childMode")!;
+    }
   }
 
   Future<void> userInformation() async {

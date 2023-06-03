@@ -97,6 +97,15 @@ class TrainerScreenController extends GetxController {
     initSpeechRecognition();
   }
 
+  setDefultTypes() {
+    firstWordCheck.value = true;
+    lastWordCheck.value = true;
+    firstPartCheck.value = true;
+    lastPartCheck.value = true;
+    previousCheck.value = true;
+    nextCheck.value = true;
+  }
+
   // var min = 1;
   // var max = 100;
   // var randomNumber = min + random.nextInt(max - min);
@@ -133,7 +142,10 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForSurah();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -202,7 +214,11 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForJuz();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -271,7 +287,10 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForPage();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -380,6 +399,7 @@ class TrainerScreenController extends GetxController {
   int ayID = 0;
   int testTypeFlag = 0;
   prepareTestDataForSurahMistake() {
+    setDefultTypes();
     juzFlag = true; ///////////////
 
     ayahList.clear();
@@ -407,6 +427,8 @@ class TrainerScreenController extends GetxController {
   }
 
   prepareTestDataForJuzMistake() {
+    setDefultTypes();
+
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
@@ -461,6 +483,8 @@ class TrainerScreenController extends GetxController {
   }
 
   prepareTestDataForPageMistake() {
+    setDefultTypes();
+
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
