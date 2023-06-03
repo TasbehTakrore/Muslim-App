@@ -1,6 +1,9 @@
+import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
+import 'package:alquramcommunity_frontend/view/widget/Quran/quranpagecontent.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import '../../../controller/recitationscreen_controller.dart';
+import '../../../core/constant/quranconst.dart';
 import 'listsurahcardrecitation.dart';
 
 class SurahsDialogRecitation extends StatelessWidget {
@@ -9,7 +12,8 @@ class SurahsDialogRecitation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(RecitationScreenController());
-
+    QuranPageController quranPageContent = Get.put(QuranPageController());
+    quranPageContent.goToDefult();
     return GetBuilder<RecitationScreenController>(
       builder: (controller) {
         // final lastOpenedEng = controller.getLastOpenedEng();
