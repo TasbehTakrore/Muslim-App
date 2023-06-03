@@ -70,7 +70,7 @@ class PrayCardHome extends StatelessWidget {
                       style:
                           TextStyle(color: Colors.yellow, fontSize: fontSize1)),
                   const SizedBox(height: 0),
-                  Text("المغرب",
+                  Text(nextPray,
                       style:
                           const TextStyle(color: Colors.white, fontSize: 45)),
                   const SizedBox(height: 0),

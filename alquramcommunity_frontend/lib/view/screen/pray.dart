@@ -27,7 +27,7 @@ class PrayScreen extends StatelessWidget {
               if (snapshot.hasError) {
                 return Center(child: Text("${snapshot.error}"));
               } else if (snapshot.hasData) {
-                //print(snapshot.data[0].ayahID);
+                print(snapshot.data);
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -48,7 +48,9 @@ class PrayScreen extends StatelessWidget {
                                   prayController.formativeHijriDate.value,
                               fontSize1: 17,
                               fontSize2: 15,
-                              nextPray: prayController.nextPrayer.value.name
+                              nextPray: prayController
+                                  .changePrayToArabic(
+                                      prayController.nextPrayer.value.name)
                                   .toUpperCase(),
                               city_name: prayController.city.value,
                               remainingTime:

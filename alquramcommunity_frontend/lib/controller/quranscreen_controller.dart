@@ -31,7 +31,7 @@ class QuranPageController extends GetxController {
   List<MistakeModel> mistakesList = [];
   String? userEmail;
   BuildContext? context;
-  bool showFloating = true;
+  bool showFloating = false;
 
   Map<dynamic, dynamic> verseSearch = {'result': []};
   // List<Icon> Icons = [ Icon(Icons.check),

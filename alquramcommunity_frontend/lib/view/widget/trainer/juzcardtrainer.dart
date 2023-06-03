@@ -26,10 +26,15 @@ class JuzCardTrainer extends GetView<TrainerScreenController> {
 
     return Container(
         decoration: BoxDecoration(
-            color: (juzNumber - 2) % 3 != 0
-                ? AppColor.lightYellow
-                : AppColor.secondaryColor,
-            borderRadius: BorderRadius.circular(20)),
+          color: (juzNumber - 2) % 3 != 0
+              ? AppColor.lightYellow
+              : AppColor.secondaryColor,
+          borderRadius: BorderRadius.circular(20),
+          // image: DecorationImage(
+          //     image: AssetImage('assets/images/tasbehBorderTop.png'),
+          //     fit: BoxFit.cover,
+          //     opacity: 0.08)
+        ),
         child: FadeInDown(
           duration: const Duration(milliseconds: 600),
           child: InkWell(

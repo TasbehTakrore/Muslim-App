@@ -64,7 +64,7 @@ class ResetPassword extends StatelessWidget {
             Divider(),
             SizedBox(height: 10.0),
             Text(
-              'كلة السرّ الجديدة',
+              'كلمة السرّ الجديدة',
               style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class ResetPassword extends StatelessWidget {
             GetBuilder<ForgetPasswordControllerImp>(
               builder: (controller) => CustomTextFormAuth(
                 labelText: "6".tr,
-                hinttext: "Enter New Password",
+                hinttext: "أدخل كلمة السرّ الجديدة",
                 iconData: Icons.lock_outline,
                 mycontroller: forgetPassword.newPasswordController,
                 obscureText: true,

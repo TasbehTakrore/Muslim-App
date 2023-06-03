@@ -1,6 +1,8 @@
+import 'package:alquramcommunity_frontend/controller/randomVerse_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomCardHome extends StatelessWidget {
   final String title;
@@ -22,6 +24,8 @@ class CustomCardHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RandomVerseController randomVerseController =
+        Get.put(RandomVerseController());
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -47,6 +51,7 @@ class CustomCardHome extends StatelessWidget {
               title: Text(title,
                   style: TextStyle(color: Colors.white, fontSize: fontSize1)),
               subtitle: Text(body,
+                  //randomVerseController.todeyVerse,
                   style: TextStyle(color: Colors.white, fontSize: fontSize2)),
             ),
           ),

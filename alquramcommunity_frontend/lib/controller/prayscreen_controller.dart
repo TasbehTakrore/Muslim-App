@@ -54,10 +54,38 @@ class PrayScreenControllerImp extends PrayScreenController {
   DateTime nextPrayerTime = DateTime.now();
   StreamSubscription? _subscription;
 
+  String changePrayToArabic(String prayEnglish) {
+    if (prayEnglish == "Maghrib")
+      return "المغرب";
+    else if (prayEnglish.capitalizeFirst == "Isha")
+      return "العشاء";
+    else if (prayEnglish.capitalizeFirst == "Asr")
+      return "العصر";
+    else if (prayEnglish.capitalizeFirst == "Dhuhr")
+      return "الظّهر";
+    else if (prayEnglish.capitalizeFirst == "Fajr")
+      return "الفجر";
+    else if (prayEnglish.capitalizeFirst == "Sunrise")
+      return "شروق الشمس";
+    else
+      return "";
+  }
+
+  changeTimeToArabic(String time) {
+    var inputFormat = DateFormat('h:mm a');
+    var outputFormat = DateFormat.jm('ar');
+
+    var dateTime = inputFormat.parse(time);
+    var formattedTime = outputFormat.format(dateTime);
+    print("formattedTime: $formattedTime");
+    return formattedTime;
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     audioPlayer = AudioPlayer();
+    await getCurrentLocation();
     if (formattedRemainingTime == '00:00:00') {
       getNextPrayer();
     }
@@ -239,8 +267,10 @@ class PrayScreenControllerImp extends PrayScreenController {
         }
         updateDate();
       });
-    } catch (e) {}
-    return 0;
+      return 0;
+    } catch (e) {
+      return 0;
+    }
   }
 
   @override
