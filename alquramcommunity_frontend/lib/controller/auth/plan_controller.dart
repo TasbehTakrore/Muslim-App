@@ -999,7 +999,7 @@ Future<void> planPray() async {
   
           print("inside on dispoace 2  ...");
           print(prayScreenController.prayCounter.value);
-       if(prayScreenController.prayCounter.value==1){
+       if(prayScreenController.prayCounter.value==2){
         print("inside on dispoace ");
         if(fivePrayVisibleValue.value==true){
           print('sssaaaaaa');
@@ -1007,10 +1007,11 @@ Future<void> planPray() async {
             await changeFivePrayCheck(true);
             print("aaaaaaa ${planController.fivePrayCheckValue.value}");}
           }
-       } 
-       else if(prayScreenController.prayCounter.value<5){
+         else if(prayScreenController.prayCounter.value<5){
           await changeFivePrayCheck(false);
        }
+       } 
+      
        
   }
 

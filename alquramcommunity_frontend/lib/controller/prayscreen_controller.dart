@@ -13,6 +13,8 @@ import '../core/constant/color.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+import '../core/services/services.dart';
+
 PlanController planController= Get.put(PlanController());
 abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
@@ -47,6 +49,7 @@ abstract class PrayScreenController extends GetxController {
     timestamp: DateTime.fromMillisecondsSinceEpoch(0),
   ));
 }
+MyServices myServices = Get.put(MyServices());
 
 class PrayScreenControllerImp extends PrayScreenController {
   late AudioPlayer audioPlayer;
@@ -63,6 +66,7 @@ class PrayScreenControllerImp extends PrayScreenController {
     if (formattedRemainingTime == '00:00:00') {
       getNextPrayer();
     }
+    //saveCheckboxValues();
 
     /* FirebaseMessaging.instance.getToken().then((value){
     print('hi token :$value');
@@ -261,7 +265,31 @@ class PrayScreenControllerImp extends PrayScreenController {
       }
     }
     update();
+ //   saveCheckboxValues();
   }
+/*
+  Future<void> initializeCheckboxValues() async {
+        String userid = myServices.sharedPreferences.getInt("user_id").toString();
+        String key = 'user${userid}_checkboxValues';
+        String? storedValues = myServices.sharedPreferences.getString(key);
+        if (storedValues != null && storedValues.length == trackPraying.length) {
+          for (int i = 0; i < trackPraying.length; i++) {
+            trackPraying[i].value = storedValues[i] == '1';
+          }
+        }
+ }
+*/
+/*
+void saveCheckboxValues() async {
+  String userid=' ';
+  userid=myServices.sharedPreferences.getInt("user_id").toString();
+    String key = 'user${userid}_checkboxValues';
+    String value = trackPraying.map((val) => val.value==true ? '1' : '0').join('');
+    await myServices.sharedPreferences.setString(key, value);
+  
+}
+
+ */   
 
   @override
   Future<void> CompletedPray() async {
