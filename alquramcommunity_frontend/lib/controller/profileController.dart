@@ -46,11 +46,19 @@ class ProfileController extends GetxController {
 
   getUserEmail() {
     userEmail.value = myServices.sharedPreferences.getString("user_email")!;
-    childMode.value =
-        myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+    childMode.value = myServices.sharedPreferences
+                .getBool("childMode${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+    // myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
 
     prophetNotifi.value = myServices.sharedPreferences
-        .getBool("prophetNotifi${userEmail.value}")!;
+                .getBool("prophetNotifi${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences
+            .getBool("prophetNotifi${userEmail.value}")!;
     // return myServices.sharedPreferences.getString("user_email");
   }
 
