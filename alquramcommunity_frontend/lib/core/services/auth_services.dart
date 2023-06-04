@@ -21,10 +21,11 @@ import '../localization/changelocal.dart';
 //String uri='http://192.168.1.7:5000';
 
 MyServices myServices = Get.put(MyServices());
-NotificationServices  notifyServices=Get.put(NotificationServices());
+NotificationServices notifyServices = Get.put(NotificationServices());
+
 class AuthServices {
-  String uri = 'http://192.168.1.106:5000';
-  String uri2 = 'http://192.168.1.106:8080';
+  String uri = 'http://192.168.1.19:5000';
+  String uri2 = 'http://192.168.1.19:8080';
 
   final LocaleController localeController = Get.put(LocaleController());
 
@@ -74,12 +75,11 @@ class AuthServices {
       var response = await request.send();
       if (response.statusCode == 200) {
         // Handle success case
-        showSnackBar(context,
-            'Account created successfully, login with same information');
+        showSnackBar(context, 'تمّ إنشاء الحساب بنجاح، يرجي تسجيل الدّخول.');
         Get.toNamed(AppRoute.login);
       } else {
         // Handle error case
-        showSnackBar(context, 'Failed to create account');
+        showSnackBar(context, 'فشل إنشاء الحساب');
       }
     } catch (e) {
       showSnackBar(context, e.toString());
@@ -145,9 +145,9 @@ FirebaseMessaging.instance.subscribeToTopic(topic);
 print(myServices.sharedPreferences.getString("user_name"));
 
   */
-  int? userId = myServices.sharedPreferences.getInt("user_id");
+          int? userId = myServices.sharedPreferences.getInt("user_id");
 
-         notifyServices.checkUserWithPlanAlarm( userId!);
+          notifyServices.checkUserWithPlanAlarm(userId!);
           profilesController.userInformation();
         },
       );
@@ -155,6 +155,7 @@ print(myServices.sharedPreferences.getString("user_name"));
       showSnackBar(context, e.toString());
     }
   }
+
   Future<Map<String, dynamic>> getUserProfile(int userId) async {
     final response = await http.get(Uri.parse('$uri/users/showUser/$userId'));
     if (response.statusCode == 200) {
@@ -219,14 +220,14 @@ print(myServices.sharedPreferences.getString("user_name"));
         },
       );
       if (response.statusCode == 200) {
-        showSnackBar(context, 'check a code sended to your email');
+        showSnackBar(context, 'تمّ إرسال الرمز إلى بريدك الإلكتروني');
         Get.toNamed(AppRoute.ResetPassword);
       } else if (response.statusCode == 400) {
-        showSnackBar(context, 'not a valid email');
+        showSnackBar(context, 'البريد الإلكتروني غير صالح');
       }
     } catch (e) {
       print(e.toString());
-      showSnackBar(context, 'An error occurred while checking email');
+      showSnackBar(context, 'حدث خلل عند إرسال الرمز، أعد المحاولة');
     }
   }
 

@@ -17,7 +17,6 @@ import 'package:alquramcommunity_frontend/core/services/auth_services.dart';
 
 MyServices myServices = Get.put(MyServices());
 
-
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
   @override
@@ -28,7 +27,7 @@ class EditProfile extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: SingleChildScrollView(
         child: Container(
-          height: 500,
+          height: 505,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -126,7 +125,7 @@ class EditProfile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 15, left: 15),
                   child: CustomButton(
-                    textbutton: "Update",
+                    textbutton: "تحديث",
                     onPressed: () {
                       if (controller.password.text == '') return;
                       Get.dialog(
@@ -159,7 +158,7 @@ class EditProfile extends StatelessWidget {
                                         //my controller
                                         ),
                                     CustomButton(
-                                      textbutton: "Confirm",
+                                      textbutton: "تأكيد",
                                       onPressed: () {
                                         profilesController.updateDetails();
                                         profilesController.userInformation();
@@ -180,8 +179,10 @@ class EditProfile extends StatelessWidget {
                 TextButton.icon(
                     onPressed: () async {
                       print("تسجيل الخروج");
-                      await myServices.sharedPreferences.clear();
-                      FirebaseMessaging.instance.unsubscribeFromTopic("planNotification");
+                      // await myServices.sharedPreferences.clear();
+                      FirebaseMessaging.instance
+                          .unsubscribeFromTopic("planNotification");
+                      controller.deletesharedPreferences();
                       Get.offAllNamed(AppRoute.login);
                     },
                     icon: Icon(

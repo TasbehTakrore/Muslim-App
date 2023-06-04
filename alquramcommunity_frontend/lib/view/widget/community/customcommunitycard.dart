@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../controller/commnity_controller.dart';
+import 'addAnouncmentDialog.dart';
 import 'communityPlan.dart';
 import 'memberRequestDialog.dart';
 import 'memberRequestList.dart';
@@ -35,7 +36,6 @@ class CustomCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     CommunitityController communitityController =
         Get.put(CommunitityController());
-
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -57,15 +57,36 @@ class CustomCommunityCard extends StatelessWidget {
             alignment: Alignment.center,
             height: heigh,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title,
-                    style: TextStyle(color: Colors.white, fontSize: fontSize1)),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    isAdmin
+                        ? IconButton(
+                            onPressed: () {
+                              Get.dialog(AddAnouncmentDialog(
+                                  communityID: communityID));
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ))
+                        : SizedBox(),
+                    Text(title,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: fontSize1)),
+                  ],
+                ),
+                // const SizedBox(height: 3),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(body,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: AppColor.thickYellow, fontSize: fontSize2)),
+                ),
                 const SizedBox(height: 10),
-                Text(body,
-                    style: TextStyle(
-                        color: AppColor.thickYellow, fontSize: fontSize2)),
-                const SizedBox(height: 60),
 
                 Visibility(
                     visible: isAdmin,
@@ -74,15 +95,17 @@ class CustomCommunityCard extends StatelessWidget {
                           // communitityController.communityID = communityID;
                           // communitityController.getMemberRequests(communityID);
 
-                          Get.dialog(memberRequestDialog(communityID: communityID));
+                          Get.dialog(
+                              memberRequestDialog(communityID: communityID));
                         },
                         icon: const Icon(
                           Icons.person_add,
                           color: Colors.white,
+                          size: 16,
                         ),
-                        label: Text(
+                        label: const Text(
                           "طلبات العضويّة الجديدة",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ))),
                 // Padding(
                 //   padding: const EdgeInsets.only(top: 20),

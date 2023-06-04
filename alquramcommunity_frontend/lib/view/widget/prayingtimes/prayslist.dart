@@ -11,6 +11,7 @@ class PrayerTimesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final PrayScreenControllerImp prayController =
         Get.put(PrayScreenControllerImp());
+
     final Map<String, String> prayerTimes = prayController.prayerTimesmap.value;
     // NotificationServices notificationServices = Get.put(NotificationServices());
     final double checkboxSize = MediaQuery.of(context).size.width * 0.1;
@@ -59,31 +60,32 @@ class PrayerTimesListView extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        key,
+                        prayController.changePrayToArabic(key),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: textSize),
                       ),
                       Expanded(
                         child: Text(
-                          value ?? '',
+                          // value ?? '..',
+                          prayController.changeTimeToArabic(value!) ?? '..',
                           textAlign: TextAlign.end,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: textSize),
                         ),
                       ),
                       SizedBox(width: 10),
-                      Obx(
-                        () => IconButton(
-                          onPressed: () {
-                            prayController.toggleAlarm(index);
-                          },
-                          iconSize: iconButtonSize,
-                          icon: prayController.isAlarmOn[index].value
-                              ? Icon(Icons.alarm_on, color: Colors.black)
-                              : Icon(Icons.alarm_off,
-                                  color: Color.fromARGB(255, 196, 0, 0)),
-                        ),
-                      ),
+                      // Obx(
+                      //   () => IconButton(
+                      //     onPressed: () {
+                      //       prayController.toggleAlarm(index);
+                      //     },
+                      //     iconSize: iconButtonSize,
+                      //     icon: prayController.isAlarmOn[index].value
+                      //         ? Icon(Icons.alarm_on, color: Colors.black)
+                      //         : Icon(Icons.alarm_off,
+                      //             color: Color.fromARGB(255, 196, 0, 0)),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

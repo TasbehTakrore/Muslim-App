@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 
 import '../../../controller/quranscreen_controller.dart';
+import '../../../core/constant/quranconst.dart';
 
 class QuranVerses extends StatelessWidget {
   final int surahindex;
@@ -33,7 +34,8 @@ class QuranVerses extends StatelessWidget {
               children: controller.versesList),
           surahindex == getSurahCountByPage(pageindex + 1) - 1
               ? Text(ArabicNumbers().convert(pageindex + 1),
-                  style: TextStyle(fontSize: 15))
+                  style: TextStyle(
+                      fontSize: 15, color: QuranConstant.fontColor.value))
               : SizedBox()
         ],
       );

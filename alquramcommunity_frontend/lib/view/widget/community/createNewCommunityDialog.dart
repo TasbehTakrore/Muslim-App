@@ -1,7 +1,9 @@
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../controller/commnity_controller.dart';
 import '../../../core/constant/color.dart';
@@ -91,17 +93,20 @@ class createNewCommunityDialog extends StatelessWidget {
                   //height: ,
                   labelColor: AppColor.grey,
                   color: AppColor.primaryColor,
-                  onPressed: () {
-                    communitityController.createNewCommunity();
+                  onPressed: () async {
+                    // Future<String> commChatID =
+                    await communitityController.createNewCommunity();
                     Get.dialog(SpecificCommunity(
+                      communityAnnouncement: "",
+                      communityChatID: communitityController.communityChatID,
                       communityName:
                           communitityController.communityNameController!.text,
                       isAdmin: true,
-                      communityDateCreate: '',
+                      communityDateCreate:
+                          DateFormat('d-M-yyyy').format(DateTime.now()),
                       communityID: communitityController.communityID!,
                     ));
                     //communitityController.addMemberCommunity();
-
                     // trainerScreenController.testType();
                     // Get.toNamed(AppRoute.SpecificCommunity);
                   }),

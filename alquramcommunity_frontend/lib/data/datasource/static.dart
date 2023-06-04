@@ -54,7 +54,8 @@ List<CategoryModel> CategoryList = [
     onPressed: () async {
       await prayScreenController.checkLocationPermission();
       if (prayScreenController.denied.value == false) {
-        await prayScreenController.getCurrentLocation();
+        // await prayScreenController.getCurrentLocation();
+
         homeScreenController.changePage(5);
       }
     },

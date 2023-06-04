@@ -25,7 +25,7 @@ class UsersCommunity extends StatelessWidget {
 
     return GetBuilder<CommunitityController>(
         builder: (controller) => Container(
-            height: 110,
+            height: 90,
             width: 800,
             child: FutureBuilder<List<UserModel>>(
               future: controller.getAllCommunityMembers(communityID),
@@ -41,7 +41,7 @@ class UsersCommunity extends StatelessWidget {
                     print("snapshot.data:  ${snapshot.data}");
                     return ListView.separated(
                         separatorBuilder: (context, index) =>
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                         itemCount: snapshot.data!.length, ////
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -55,6 +55,8 @@ class UsersCommunity extends StatelessWidget {
                                     onTap: () {
                                       Get.dialog(Dialog.fullscreen(
                                           child: OtherProfileScreen(
+                                              userEmail: snapshot
+                                                  .data![index].userEmail,
                                               userName: snapshot
                                                   .data![index].userName,
                                               gender: snapshot
@@ -68,7 +70,7 @@ class UsersCommunity extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         CircleAvatar(
-                                          radius: 40.0,
+                                          radius: 30.0,
                                           backgroundImage: NetworkImage(
                                               '${authservices.uri2}/AlQuranCommunity_BackEnd/images/${snapshot.data![index].imageUrl}'),
                                           backgroundColor: Colors.transparent,

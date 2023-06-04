@@ -16,7 +16,7 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     final screenWidth = MediaQuery.of(context).size.width;
     final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     ThikrCatgControllerImp thikrCatgController =
@@ -50,36 +50,7 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
             width: double.infinity,
             height: MediaQuery.of(context).size.height -
                 MediaQuery.of(context).padding.bottom,
-            child:
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     Text(
-                //       " مُسْلم",
-                //       style: GoogleFonts.elMessiri(
-                //           fontWeight: FontWeight.w600,
-                //           //fontWeight: FontWeight.w500,
-                //           color: Color.fromARGB(255, 255, 255, 255),
-                //           fontSize: 35),
-                //     ),
-                //     SizedBox(
-                //       height: 25,
-                //     ),
-                //     Text(
-                //       " كلّ ما تحتاجه في مكانٍ واحد!",
-                //       style: GoogleFonts.elMessiri(
-                //           fontWeight: FontWeight.w600,
-                //           //fontWeight: FontWeight.w500,
-                //           color: Color.fromARGB(255, 255, 255, 255),
-                //           fontSize: 20),
-                //     ),
-                //     SizedBox(
-                //       height: 140,
-                //     ),
-                //   ],
-                // )
-
-                Column(
+            child: Column(
               children: [
                 Expanded(
                   child: FutureBuilder(
@@ -108,17 +79,20 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                                   itemBuilder: (BuildContext context, i) {
                                     return GetBuilder<ThikrCatgControllerImp>(
                                         builder: (thikrCatgController) {
-                                      return ThikrDataCardArabic(
-                                        arabicText: data[thikrCatgController
-                                                .selectedThikr.value]
-                                            .tEXT![i]
-                                            .aRABICTEXT
-                                            .toString(),
-                                        subCatg: controller.followCounters[
-                                                controller.selectedThikr.value]
-                                                [i]
-                                            .toString(),
-                                        catg: i,
+                                      return Visibility(
+                                        visible: true,
+                                        child: ThikrDataCardArabic(
+                                          arabicText: data[thikrCatgController
+                                                  .selectedThikr.value]
+                                              .tEXT![i]
+                                              .aRABICTEXT
+                                              .toString(),
+                                          subCatg: controller.followCounters[
+                                                  controller
+                                                      .selectedThikr.value][i]
+                                              .toString(),
+                                          catg: i,
+                                        ),
                                       );
                                     });
                                   },
@@ -143,3 +117,32 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
         ));
   }
 }
+
+
+         // Column(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       " مُسْلم",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 35),
+                //     ),
+                //     SizedBox(
+                //       height: 25,
+                //     ),
+                //     Text(
+                //       " كلّ ما تحتاجه في مكانٍ واحد!",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 20),
+                //     ),
+                //     SizedBox(
+                //       height: 140,
+                //     ),
+                //   ],
+                // )

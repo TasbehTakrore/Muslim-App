@@ -24,14 +24,15 @@ class OtherProfileScreen extends StatelessWidget {
   final String gender;
   final String age;
   final String userProfileImage;
-
+  final String userEmail;
   const OtherProfileScreen(
       {super.key,
       required this.userName,
       // required this.joinedDate,
       required this.gender,
       required this.age,
-      required this.userProfileImage});
+      required this.userProfileImage,
+      required this.userEmail});
   @override
   Widget build(BuildContext context) {
     MyServices myServices = Get.put(MyServices());
@@ -92,9 +93,8 @@ class OtherProfileScreen extends StatelessWidget {
                         ),
 
                         SizedBox(height: 5),
-                        // Text("Joined : ${joinedDate}",
-                        //     style: TextStyle(fontSize: 12)),
-                        // SizedBox(height: 8),
+                        Text("$userEmail", style: TextStyle(fontSize: 12)),
+                        SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

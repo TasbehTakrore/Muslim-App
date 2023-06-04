@@ -1,6 +1,7 @@
 import 'dart:async';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,12 +16,13 @@ import 'package:audioplayers/audioplayers.dart';
 
 import '../core/services/services.dart';
 
-PlanController planController= Get.put(PlanController());
+PlanController planController = Get.put(PlanController());
+
 abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
   RxString city = ''.obs;
   RxString formativeHijriDate = ''.obs;
-  RxString formattedRemainingTime = ''.obs;
+  RxString formattedRemainingTime = '00:00:00:00'.obs;
   late PrayerTimes prayerTimesInstance;
   late PrayerTimes prayerTimesInstanceNxt;
   Rx<Prayer> nextPrayer = (Prayer.none).obs;
@@ -49,6 +51,7 @@ abstract class PrayScreenController extends GetxController {
     timestamp: DateTime.fromMillisecondsSinceEpoch(0),
   ));
 }
+
 MyServices myServices = Get.put(MyServices());
 
 class PrayScreenControllerImp extends PrayScreenController {
@@ -59,10 +62,39 @@ class PrayScreenControllerImp extends PrayScreenController {
   DateTime nextPrayerTime = DateTime.now();
   StreamSubscription? _subscription;
 
+  String changePrayToArabic(String prayEnglish) {
+    if (prayEnglish == "Maghrib")
+      return "المغرب";
+    else if (prayEnglish.capitalizeFirst == "Isha")
+      return "العشاء";
+    else if (prayEnglish.capitalizeFirst == "Asr")
+      return "العصر";
+    else if (prayEnglish.capitalizeFirst == "Dhuhr")
+      return "الظّهر";
+    else if (prayEnglish.capitalizeFirst == "Fajr")
+      return "الفجر";
+    else if (prayEnglish.capitalizeFirst == "Sunrise")
+      return "شروق الشمس";
+    else
+      return "";
+  }
+
+  changeTimeToArabic(String time) {
+    var inputFormat = DateFormat('h:mm a');
+    var outputFormat = DateFormat.jm('ar');
+
+    var dateTime = inputFormat.parse(time);
+    var formattedTime = outputFormat.format(dateTime);
+    print("formattedTime: $formattedTime");
+    return formattedTime;
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     audioPlayer = AudioPlayer();
+    await getCurrentLocation();
+
     if (formattedRemainingTime == '00:00:00') {
       getNextPrayer();
     }
@@ -81,8 +113,6 @@ class PrayScreenControllerImp extends PrayScreenController {
     audioPlayer.dispose();
     _subscription?.cancel();
   }
-  
-  
 
   RxBool inUse = false.obs;
   RxBool denied = false.obs;
@@ -129,7 +159,7 @@ class PrayScreenControllerImp extends PrayScreenController {
 
   //get current location function :
   @override
-  Future<void> getCurrentLocation() async {
+  Future<int> getCurrentLocation() async {
     try {
       final currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
@@ -143,8 +173,16 @@ class PrayScreenControllerImp extends PrayScreenController {
       city.value = "${placemark.locality!} ${placemark.street}";
       print(city.value);
       await PrayTimes();
+
+      // Wait for PrayTimes() to complete
+
+      await getNextPrayer();
+      await Future.delayed(Duration(seconds: 1));
+
+      return 0;
     } catch (e) {
       print('Error getting current position: $e');
+      return 0;
     }
   }
 
@@ -247,8 +285,65 @@ class PrayScreenControllerImp extends PrayScreenController {
         }
         updateDate();
       });
-    } catch (e) {}
-    return 0;
+      return 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  String ConvertReminingTime(String inputTime) {
+    print("inputTime: $inputTime");
+    // if (inputTime == "") return "";
+    var arabicNumbers = NumberFormat('ar');
+    int h = int.parse(inputTime.split(':')[0]);
+    var hours;
+    var minutes;
+    var seconds;
+    if (h > 9)
+      hours = ArabicNumbers().convert(h);
+    else
+      hours = "٠${ArabicNumbers().convert(h)}";
+    int m = int.parse(inputTime.split(':')[1]);
+    if (m <= 9)
+      minutes = "٠${ArabicNumbers().convert(m)}";
+    else
+      minutes = "${ArabicNumbers().convert(m)}";
+
+    int s = int.parse(inputTime.split(':')[2]);
+    if (s <= 9)
+      seconds = "٠${ArabicNumbers().convert(s)}";
+    else
+      seconds = "${ArabicNumbers().convert(s)}";
+
+    var arabicTime = "$hours:$minutes:$seconds";
+    // print("inputTime: $arabicTime");
+
+    return (arabicTime);
+  }
+
+  String convertToArabicNumbers(String number) {
+    var hours = int.parse(number.split(':')[0]);
+    var minutes = int.parse(number.split(':')[1]);
+    var seconds = int.parse(number.split(':')[2]);
+
+    var arabicTime = convertToArabicNumbers(hours.toString()) +
+        ':' +
+        convertToArabicNumbers(minutes.toString()) +
+        ':' +
+        convertToArabicNumbers(seconds.toString());
+
+    var arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    var arabicNumberString = '';
+
+    if (int.parse(number) < 10) {
+      arabicNumberString = arabicNumbers[int.parse(number)];
+    } else {
+      arabicNumberString = number.toString().split('').map((digit) {
+        return arabicNumbers[int.parse(digit)];
+      }).join('');
+    }
+
+    return arabicNumberString;
   }
 
   @override
@@ -265,7 +360,7 @@ class PrayScreenControllerImp extends PrayScreenController {
       }
     }
     update();
- //   saveCheckboxValues();
+    //   saveCheckboxValues();
   }
 /*
   Future<void> initializeCheckboxValues() async {
@@ -289,7 +384,7 @@ void saveCheckboxValues() async {
   
 }
 
- */   
+ */
 
   @override
   Future<void> CompletedPray() async {
@@ -302,15 +397,13 @@ void saveCheckboxValues() async {
       if (i <= currentPrayer.value) {
         if (trackPraying[i].value == true)
           prayCounter.value++;
-          
         else {
           missedCounter.value++;
         }
       } else {
         remain.value++;
       }
-    update();
-
+      update();
     }
     _prayCounter.value = (prayCounter.value / 5 * 100);
     update();

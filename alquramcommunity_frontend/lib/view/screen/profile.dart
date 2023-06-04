@@ -13,6 +13,7 @@ import '../../core/services/services.dart';
 import '../../provider/userprovider.dart';
 import '../widget/auth/bottomsheet.dart';
 import '../widget/home/statisticscard.dart';
+import '../widget/profile/colorsPalet.dart';
 import '../widget/profile/editprofiledialog.dart';
 import '../widget/profile/prfilefriends.dart';
 import '../widget/profile/profilecard.dart';
@@ -27,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
     final ProfileController profilesController = Get.put(ProfileController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    profilesController.getUserEmail();
     return Scaffold(
       backgroundColor: AppColor.grey,
       body: Container(
@@ -50,31 +52,41 @@ class ProfileScreen extends StatelessWidget {
             //     child: ProfileCard(),
             //   ),
             // ),
-            Container(
-              height: 350,
-              decoration: const BoxDecoration(
-                color: AppColor.primaryColor,
-                image: DecorationImage(
-                  image: AssetImage(AppImageAsset.mosque),
-                  fit: BoxFit.cover,
-                  opacity: 0.2,
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      profilesController.setDetails();
-                      Get.dialog(EditProfile());
-                    },
-                    child: const Padding(
-                        padding: EdgeInsets.only(top: 10, right: 5, left: 5),
-                        child: Icon(Icons.settings,
-                            size: 30, color: AppColor.grey)),
+            Obx(
+              () => Container(
+                height: 350,
+                decoration: BoxDecoration(
+                  color: AppColor.primaryColor,
+                  image: DecorationImage(
+                    image: profilesController.childMode.value
+                        ? AssetImage(AppImageAsset.childImage)
+                        : AssetImage(AppImageAsset.mosque),
+                    fit: BoxFit.cover,
+                    opacity: 0.2,
                   ),
-                ],
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            profilesController.setDetails();
+                            Get.dialog(EditProfile());
+                          },
+                          child: const Padding(
+                              padding:
+                                  EdgeInsets.only(top: 10, right: 5, left: 5),
+                              child: Icon(Icons.settings,
+                                  size: 30, color: AppColor.grey)),
+                        ),
+                      ],
+                    ),
+                    // ColorsPalet()
+                  ],
+                ),
               ),
             ),
 
@@ -156,24 +168,52 @@ class ProfileScreen extends StatelessWidget {
               top: 510,
               right: width / 10,
               left: width / 10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                // mainAxisSize: MainAxisSize.min,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Text(
-                  //   "هل تريد تفعيل وضع الطّفل؟",
-                  //   style: TextStyle(color: Colors.black),
-                  // ),
-                  // Obx(() => Container(
-                  //       // color: AppColor.grey,r
-                  //       child: Switch(
-                  //           dragStartBehavior: DragStartBehavior.start,
-                  //           value: profilesController.childMode.value,
-                  //           activeColor: AppColor.thickYellow,
-                  //           onChanged: (value) {
-                  //             profilesController.childMode.value = value;
-                  //           }),
-                  //     )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "تفعيل مُنبّه الصّلاة على رسول الله",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      Obx(() => Container(
+                            // color: AppColor.grey,r
+                            child: Switch(
+                                dragStartBehavior: DragStartBehavior.start,
+                                value: profilesController.prophetNotifi.value,
+                                activeColor: AppColor.thickYellow,
+                                onChanged: (value) {
+                                  profilesController.changeProphetNotifi(value);
+                                  // profilesController.childMode.value = value;
+                                }),
+                          )),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "تفعيل وضع الطّفل",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      Obx(() => Container(
+                            // color: AppColor.grey,r
+                            child: Switch(
+                                dragStartBehavior: DragStartBehavior.start,
+                                value: profilesController.childMode.value,
+                                activeColor: AppColor.thickYellow,
+                                onChanged: (value) {
+                                  profilesController.changeChildMode(value);
+
+                                  // profilesController.childMode.value = value;
+                                }),
+                          )),
+                    ],
+                  ),
                 ],
               ),
             ),

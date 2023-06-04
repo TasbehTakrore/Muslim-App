@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
+import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/constants.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,11 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
+import '../../controller/auth/chartsController.dart';
+import '../../controller/randomVerse_controller.dart';
 import '../../core/constant/imageasset.dart';
 import '../widget/home/categoriesHome.dart';
+import '../widget/home/customCardHomeForQuranDilog.dart';
 import '../widget/home/customcardhome.dart';
 import '../widget/home/listcommunities.dart';
 import '../widget/home/statisticscard.dart';
@@ -24,6 +28,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeData();
+    ChartsController chartsController = Get.put(ChartsController());
+    RandomVerseController randomVerseController =
+        Get.put(RandomVerseController());
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     final screenWidth = MediaQuery.of(context).size.width;
     final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
@@ -33,14 +40,15 @@ class Home extends StatelessWidget {
             ? EdgeInsets.only(left: 150, right: 30)
             : const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
+          controller: chartsController.scrollController,
           children: [
             // CustomAppBar(onPressedIcon: () {}),
-            CustomCardHome(
+            CustomCardHomeForQuranDilog(
               heigh: isLaptopScreen == true ? 218 : 170,
               title: "2".tr,
-              body: "{واستعينوا بالصّبر والصّلاة}",
-              fontSize1: 15,
-              fontSize2: 30,
+              body: randomVerseController.todeyVerse,
+              fontSize1: 22,
+              fontSize2: 20,
             ),
             isLaptopScreen == true ? SizedBox(height: 10) : SizedBox(),
             const ListCategoriesHome(),
