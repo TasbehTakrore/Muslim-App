@@ -1,22 +1,12 @@
-import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/auth/plan_controller.dart';
-import '../../controller/prayscreen_controller.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/constants.dart';
-import '../../core/constant/imageasset.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Plan/createPlanContent.dart';
-import '../widget/Plan/partialpancard.dart';
 import '../widget/Plan/planmaincard.dart';
 import '../widget/Plan/prayPlanCard.dart';
-import '../widget/Plan/prayPlanCardSetPlan.dart';
-import '../widget/Plan/prayplanDialog.dart';
-import '../widget/home/customcardhome.dart';
-import '../widget/prayingtimes/completedPray_dialog.dart';
-import '../widget/prayingtimes/prayingtopCard.dart';
-import '../widget/prayingtimes/prayslist.dart';
 
 class PalnScreen extends StatelessWidget {
   PalnScreen({super.key});

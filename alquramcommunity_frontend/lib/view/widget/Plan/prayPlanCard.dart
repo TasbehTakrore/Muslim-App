@@ -43,7 +43,7 @@ class PrayPalnCard extends StatelessWidget {
                           controller.changeFivePrayCheck(val!);
                         },
                         partialCardData: "الصلوات الخمس اليومية" +
-                            "  ${prayScreenController.prayCounter.value}/5"),
+                            "  ${controller.prayerCounterr.value}/5"),
                     PartialPlanCard(
                       checkValue: controller.duhaCheckValue,
                       visibleValue: controller.duhaVisibleValue,

@@ -168,8 +168,14 @@ class PlanController extends GetxController {
     update();
   }
 
-  changeFivePrayCheck(bool val) {
-    fivePrayCheckValue.value = val;
+  changeFivePrayCheck(bool val) async {
+    print(prayScreenController.currentPrayer.value);
+    if(prayScreenController.currentPrayer.value<5)
+    {
+          fivePrayCheckValue.value = false;
+    }
+else
+{   fivePrayCheckValue.value = val;}
     // if (val == true)
     //   prayPalnCheckCount++;
     // else
@@ -177,20 +183,36 @@ class PlanController extends GetxController {
     // if (prayPalnCount > prayPalnCheckCount) mainPrayCheckValue.value = false;
     dailyProgress();
     isDirty=true;
-startTimer();
+    startTimer();
     update();
-    
+    if(fivePrayCheckValue.value==true){
+    String userid=' ';
+    userid=myServices.sharedPreferences.getInt("user_id").toString();
+    String key = 'user${userid}_checkboxValues';
+    await myServices.sharedPreferences.setString(key, '101111');
+    }
   }
-
+  Rx prayerCounterr=0.obs;
+  Future<void> sumPray()async {
+    String userid=' ';
+    userid=myServices.sharedPreferences.getInt("user_id").toString();
+    String key = 'user${userid}_checkboxValues';
+    String storedValues = myServices.sharedPreferences.getString(key) ?? '';
+    int sum=0; 
+    for (int i = 0; i < storedValues.length; i++) {
+      int value = int.parse(storedValues[i]);
+      sum += value;
+    }
+    prayerCounterr.value=sum;
+     print('Sum of  $sum');
+  }
   changeDuhaCheck(bool val) {
     duhaCheckValue.value = val;
         dailyProgress();
      isDirty=true;
   startTimer();
-    update();
-    
+    update(); 
   }
-
   changeQeiamCheck(bool val) {
     qeiamCheckValue.value = val;
             dailyProgress();
@@ -803,7 +825,6 @@ void setDataStatus(int val){
 
 //shown plan
 Future<void> showPlantoUser() async {
-  resetPlanData() ;
   print("inside show...");
   print(userId);
   userId = myServices.sharedPreferences.getInt("user_id")!;
@@ -893,6 +914,7 @@ Future<void> showPlantoUser() async {
       }
       update();
     } else {
+      resetPlanData() ;
       print("activePlan or activePlan['data'] is null");
     }
     update();
@@ -901,6 +923,9 @@ Future<void> showPlantoUser() async {
 
   }
 }
+
+
+
 
 Future<void> deleteData() async {
   userId = myServices.sharedPreferences.getInt("user_id")!;
@@ -997,11 +1022,11 @@ Future<void> addUpdatePlanNotification() async{
 
 Future<void> planPray() async {
   
-          print("inside on dispoace 2  ...");
+          print("inside on plan pray 1  ...");
           print(prayScreenController.prayCounter.value);
-       if(prayScreenController.prayCounter.value==2){
-        print("inside on dispoace ");
-        if(fivePrayVisibleValue.value==true){
+       if(fivePrayVisibleValue.value==true&&addFivePray.value==true){
+        print("inside on [lan pray 2] ");
+        if(prayScreenController.prayCounter.value==2){
           print('sssaaaaaa');
           if(fivePrayCheckValue.value==false){
             await changeFivePrayCheck(true);
@@ -1012,6 +1037,7 @@ Future<void> planPray() async {
        }
        } 
       
+
        
   }
 

@@ -55,6 +55,7 @@ List<CategoryModel> CategoryList = [
       await prayScreenController.checkLocationPermission();
       if (prayScreenController.denied.value == false) {
         await prayScreenController.getCurrentLocation();
+        await prayScreenController.initializeCheckboxValues();
         homeScreenController.changePage(5);
       }
     },
