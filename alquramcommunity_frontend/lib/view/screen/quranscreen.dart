@@ -12,7 +12,9 @@ import '../../core/constant/imageasset.dart';
 import '../../core/constant/quranconst.dart';
 import '../../core/constant/routes.dart';
 import '../widget/Quran/editquranthemedialog.dart';
+import '../widget/Quran/quranFloatingButton.dart';
 import '../widget/Quran/quranpagecontent.dart';
+import '../widget/Quran/searchQuranDialog.dart';
 
 class QuranScreen extends StatelessWidget {
   const QuranScreen({super.key});
@@ -26,7 +28,10 @@ class QuranScreen extends StatelessWidget {
 
     RecitationScreenController recitationScreenController =
         Get.put(RecitationScreenController());
+
     return GetBuilder<QuranPageController>(builder: (controller) {
+      controller.pageController =
+          PageController(initialPage: controller.getPageIndex());
       controller.setContext(context);
       return WillPopScope(
           onWillPop: () async {
@@ -34,40 +39,7 @@ class QuranScreen extends StatelessWidget {
             return false;
           },
           child: Scaffold(
-            floatingActionButton: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton(
-                    heroTag: "recitation",
-                    backgroundColor: Color.fromARGB(0, 0, 0, 0),
-                    //hoverColor: AppColor.light2Yellow,
-                    elevation: 0,
-                    child: SvgPicture.asset(
-                      AppImageAsset.quranCategory,
-                      width: 35,
-                      height: 35,
-                    ),
-                    onPressed: () {
-                      recitationScreenController
-                          .changePageIndex(controller.getPageIndex() + 1);
-                      Get.toNamed(AppRoute.recitation);
-                    }),
-                const SizedBox(height: 5),
-                FloatingActionButton(
-                    heroTag: "theme",
-                    backgroundColor: AppColor.primaryColor,
-                    child: const Icon(Icons.color_lens_outlined),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext b) {
-                            return EditQuranThemeDialog();
-                          });
-                    }),
-              ],
-            ),
+            floatingActionButton: QuranFloatingButton(),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: QuranConstant.backgroundColor.value,
             body: Container(
@@ -86,8 +58,7 @@ class QuranScreen extends StatelessWidget {
                         onPageChanged: (index) {
                           controller.changePageIndexAndSurahName(index);
                         },
-                        controller: PageController(
-                            initialPage: controller.getPageIndex()),
+                        controller: controller.pageController,
                         reverse: controller.englishLang() ? true : false,
                         scrollDirection: Axis.horizontal,
                         itemCount: totalPagesCount,

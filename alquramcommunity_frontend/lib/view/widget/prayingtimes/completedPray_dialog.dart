@@ -34,6 +34,12 @@ class PrayerProgressDialog extends StatelessWidget {
             ),
             SizedBox(height: 10),
             CircularPercentIndicator(
+              circularStrokeCap: CircularStrokeCap.round,
+
+              // restartAnimation: true,
+              // animationDuration: 500,
+              // curve: Curves.ease
+              animation: true,
               radius: 100,
               lineWidth: 15,
               backgroundColor: AppColor.thickYellow,

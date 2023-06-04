@@ -12,16 +12,19 @@ import 'auth_services.dart';
 class CommunityServices extends GetxService {
   AuthServices authServices = Get.put(AuthServices());
   Future<int> createNewCommunity(
-      {required String communityName,
+      {required String communityChatID,
+      required String communityName,
       required String communityDescription,
       required String adminEmail,
       required String usersGender,
       required bool timerFlage}) async {
     try {
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  communityChatID: $communityChatID");
       print("${MyURL.createCommunityURL} ++ $usersGender");
       http.Response res = await http.post(
         Uri.parse(MyURL.createCommunityURL),
         body: jsonEncode({
+          'communityChatID': communityChatID,
           'communityName': communityName,
           'communityDescription': communityDescription,
           'adminEmail': adminEmail,
@@ -165,7 +168,44 @@ class CommunityServices extends GetxService {
     }
   }
 
-  void addMemberCommunity(
+  void addAnouncement(
+      {required int communityID, required String announceMessage}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(MyURL.addStickyMessage),
+        body: jsonEncode({
+          'communityId': communityID.toString(),
+          'stickyMessage': announceMessage
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        print('Request sent successfully');
+        getStickyMessage(communityId: communityID);
+      } else {
+        print(response.toString());
+        print('Failed to send request');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<String> getStickyMessage({required int communityId}) async {
+    try {
+      http.Response response =
+          await http.get(Uri.parse(MyURL.getStickyMessage + "/$communityId"));
+      return json.decode(response.body)['stickyMessage'];
+      // response.body);
+    } catch (e) {
+      return "";
+    }
+    // *******************
+  }
+
+  Future addMemberCommunity(
       {required int communityId,
       required String userEmail,
       required bool isAdmin}) async {

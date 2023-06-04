@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:alquramcommunity_frontend/controller/auth/chartsController.dart';
+import 'package:alquramcommunity_frontend/controller/profileController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,14 +20,18 @@ class TasbeehPage extends StatelessWidget {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     ChartsController chartsController = Get.put(ChartsController());
+    ProfileController profileController = Get.put(ProfileController());
+    bool isChild = profileController.isChildMode();
+
     return GetBuilder<TasbeehController>(builder: (controller) {
       return WillPopScope(
         onWillPop: () async {
+          Get.offAllNamed(AppRoute.home);
+
           await _myController.addTasbehCount();
           chartsController.tasbehData.value =
               await chartsController.getTasbehData();
           print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-          Get.offAllNamed(AppRoute.home);
 
           return false;
         },
@@ -85,49 +90,81 @@ class TasbeehPage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 6),
-                            InkWell(
-                              onTap: () {
-                                _myController.prim.value =
-                                    Color.fromARGB(255, 224, 108, 147);
-                                _myController.Second.value =
-                                    Color.fromARGB(255, 235, 152, 180);
-                              },
-                              child: Container(
-                                width: 55,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    opacity: 0.3,
-                                    image: AssetImage('assets/images/Beam.jpg'),
-                                    fit: BoxFit.fill,
+                            Visibility(
+                              visible: isChild,
+                              child: InkWell(
+                                onTap: () {
+                                  _myController.prim.value =
+                                      Color.fromARGB(255, 224, 108, 147);
+                                  _myController.Second.value =
+                                      Color.fromARGB(255, 235, 152, 180);
+                                },
+                                child: Container(
+                                  width: 55,
+                                  height: 55,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 0.3,
+                                      image:
+                                          AssetImage('assets/images/Beam.jpg'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    color: Color.fromARGB(255, 224, 108, 147),
+                                    shape: BoxShape.circle,
                                   ),
-                                  color: Color.fromARGB(255, 224, 108, 147),
-                                  shape: BoxShape.circle,
                                 ),
                               ),
                             ),
                             SizedBox(width: 6),
-                            InkWell(
-                              onTap: () {
-                                _myController.prim.value =
-                                    Color.fromARGB(255, 168, 86, 182);
-                                _myController.Second.value =
-                                    Color.fromARGB(255, 234, 189, 240);
-                              },
-                              child: Container(
-                                width: 55,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    opacity: 0.3,
-                                    image: AssetImage('assets/images/Beam.jpg'),
-                                    fit: BoxFit.fill,
+                            Visibility(
+                                visible: isChild,
+                                child: InkWell(
+                                  onTap: () {
+                                    _myController.prim.value =
+                                        Color.fromARGB(255, 46, 125, 152);
+                                    _myController.Second.value =
+                                        Color.fromARGB(255, 107, 178, 201);
+                                  },
+                                  child: Container(
+                                    width: 55,
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 0.3,
+                                        image: AssetImage(
+                                            'assets/images/Beam.jpg'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      color: Color.fromARGB(255, 46, 125, 152),
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
-                                  color: Color.fromARGB(255, 168, 86, 182),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
+                                )),
+                            SizedBox(width: 6),
+                            Visibility(
+                                visible: isChild,
+                                child: InkWell(
+                                  onTap: () {
+                                    _myController.prim.value =
+                                        Color.fromARGB(255, 168, 86, 182);
+                                    _myController.Second.value =
+                                        Color.fromARGB(255, 234, 189, 240);
+                                  },
+                                  child: Container(
+                                    width: 55,
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 0.3,
+                                        image: AssetImage(
+                                            'assets/images/Beam.jpg'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      color: Color.fromARGB(255, 168, 86, 182),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                )),
                             SizedBox(width: 6),
                             InkWell(
                               onTap: () {

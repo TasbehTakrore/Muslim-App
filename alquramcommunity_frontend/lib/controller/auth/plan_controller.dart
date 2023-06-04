@@ -14,12 +14,19 @@ import 'package:alquramcommunity_frontend/core/services/plan_services.dart';
 import '../../core/services/services.dart';
 import '../prayscreen_controller.dart';
 import '../tasbeehscreen_controller.dart';
+
 MyServices myServices = Get.put(MyServices());
-PlanServices planServices =Get.put(PlanServices());
- NotificationServices notifyServices =Get.put(NotificationServices());
-TasbeehController tasbehController=Get.put(TasbeehController());
+// <<<<<<< HEAD
+PlanServices planServices = Get.put(PlanServices());
+NotificationServices notifyServices = Get.put(NotificationServices());
+TasbeehController tasbehController = Get.put(TasbeehController());
 PrayScreenControllerImp prayScreenController =
-        Get.put(PrayScreenControllerImp());
+    Get.put(PrayScreenControllerImp());
+// =======
+// PlanServices planServices = Get.put(PlanServices());
+// // NotificationServices notifyServices =Get.put(NotificationServices());
+// TasbeehController tasbehController = Get.put(TasbeehController());
+// >>>>>>> main
 
 class PlanController extends GetxController {
   Rx<bool> mainPrayCheckValue = false.obs;
@@ -32,6 +39,7 @@ class PlanController extends GetxController {
   Rx<bool> addFivePray = false.obs;
   Rx<bool> addDuha = false.obs;
   Rx<bool> addQeiam = false.obs;
+  final confettiController = ConfettiController();
 
   setQuranPlanCount(int val) {
     quranPlanCount = val;
@@ -182,6 +190,7 @@ else
     //   prayPalnCheckCount--;
     // if (prayPalnCount > prayPalnCheckCount) mainPrayCheckValue.value = false;
     dailyProgress();
+// <<<<<<< ayaaah
     isDirty=true;
     startTimer();
     update();
@@ -205,23 +214,34 @@ else
     }
     prayerCounterr.value=sum;
      print('Sum of  $sum');
+// =======
+//     isDirty = true;
+//     startTimer();
+//     update();
+// >>>>>>> main
   }
   changeDuhaCheck(bool val) {
     duhaCheckValue.value = val;
+// <<<<<<< ayaaah
         dailyProgress();
      isDirty=true;
   startTimer();
     update(); 
+// =======
+//     dailyProgress();
+//     isDirty = true;
+//     startTimer();
+//     update();
+// >>>>>>> main
   }
   changeQeiamCheck(bool val) {
     qeiamCheckValue.value = val;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
-    
   }
 
   Rx<bool> mainThikrCheckValue = false.obs;
@@ -279,13 +299,12 @@ else
 
   changeSapahThikrCheck(bool val) {
     sapahThikrCheckValue.value = val;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
-  
   }
 
   addmasaThikeFunc(bool val) {
@@ -302,13 +321,12 @@ else
 
   changemasaThikrCheck(bool val) {
     masaThikrCheckValue.value = val;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
-    
   }
 
   addwakeUpFunc(bool val) {
@@ -325,15 +343,14 @@ else
     isDirty=true;
     startTimer();*/
     update();
-    
   }
 
   changewakeUpCheck(bool val) {
-    wakeUpCheckValue.value = val; 
-           dailyProgress();
+    wakeUpCheckValue.value = val;
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -352,10 +369,10 @@ else
 
   changesleepCheck(bool val) {
     sleepCheckValue.value = val;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -373,14 +390,13 @@ else
       thikrPalnCount--;
       if (thikrPalnCount == 0) mainThikrCheckValue.value = false;
     }
-    
   }
 
   changeadhanCheck(bool val) {
     adhanCheckValue.value = val;
-            dailyProgress();
-    isDirty=true;
-      startTimer();
+    dailyProgress();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -404,7 +420,7 @@ else
   changewodooCheck(bool val) {
     wodooCheckValue.value = val;
     dailyProgress();
-    isDirty=true;
+    isDirty = true;
     startTimer();
 
     update();
@@ -428,10 +444,10 @@ else
 
   changesalahThikrCheck(bool val) {
     salahThikrCheckValue.value = val;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -451,10 +467,10 @@ else
   Rx<bool> quranPlanCheckValue = false.obs;
   void changequranPlanCheck(bool bool) {
     quranPlanCheckValue.value = bool;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -480,10 +496,10 @@ else
 
   void changeRecitationPlanCheck(bool bool) {
     RecitationPlanCheckValue.value = bool;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -534,10 +550,10 @@ else
 
   void changeTadabborPlanCheck(bool bool) {
     TadabborPlanCheckValue.value = bool;
-            dailyProgress();
+    dailyProgress();
 
-    isDirty=true;
-      startTimer();
+    isDirty = true;
+    startTimer();
 
     update();
   }
@@ -629,23 +645,24 @@ else
     return "";
   }
 
- // ****************************************************//
+  // ****************************************************//
   @override
-  void onInit()async {
-    //getRemainingTime();   
-   // await showPlantoUser();
-    super.onInit();  
+  void onInit() async {
+    //getRemainingTime();
+    // await showPlantoUser();
+    super.onInit();
   }
-    @override
+
+  @override
   void onClose() {
     super.onClose();
     _subscription?.cancel();
   }
 
- //remaining time for plan 
+  //remaining time for plan
   StreamSubscription? _subscription;
-  DateTime  now = DateTime.now();
-  DateTime endOfDay=  DateTime.now();
+  DateTime now = DateTime.now();
+  DateTime endOfDay = DateTime.now();
   RxString formattedRemainingTime = ''.obs;
 
   String formatDuration(Duration duration) {
@@ -654,17 +671,21 @@ else
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
-  
+
   Future<int> getRemainingTime() async {
     try {
-       endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);  
+      endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
       _subscription =
-        Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
+          Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
         Duration remainingTime = endOfDay.difference(DateTime.now());
         formattedRemainingTime.value = formatDuration(remainingTime);
         if (formattedRemainingTime.value == '00:47:00') {
           dayEnd();
-           
+// <<<<<<< HEAD
+
+// =======
+          getRemainingTime();
+// >>>>>>> main
         }
       });
     } catch (e) {}
@@ -672,12 +693,13 @@ else
   }
 
   Future<void> dayEnd() async {
-    //add to back up table 
+    //add to back up table
     print("end day");
     userId = myServices.sharedPreferences.getInt("user_id")!;
-    Map<String, dynamic> record=await planServices.getActivePlan(userId);
-    if(record['data']!=null){
-    await planServices.addBackup(record['data']);}
+    Map<String, dynamic> record = await planServices.getActivePlan(userId);
+    if (record['data'] != null) {
+      await planServices.addBackup(record['data']);
+    }
     await planServices.refreshTasks(userId);
     await showPlantoUser();
     //await tasbehController.addTasbehCount();
@@ -685,28 +707,29 @@ else
     return;
   }
 
-  Future <void> refreshTaskss()async{
+  Future<void> refreshTaskss() async {
     await planServices.refreshTasks(userId);
   }
-  //end of remaininy time 
+  //end of remaininy time
 
-  //add or update user plan function 
-  List<dynamic> planData=[];
-  int userId=0;
-  RxInt tasksCount=0.obs;
-  RxInt dataStatus=0.obs;//0 : delete , 1:save 
-void setDataStatus(int val){
-  dataStatus.value=val;
-  update();
-}
-  Future<void> getPlanFromUser()async{
+  //add or update user plan function
+  List<dynamic> planData = [];
+  int userId = 0;
+  RxInt tasksCount = 0.obs;
+  RxInt dataStatus = 0.obs; //0 : delete , 1:save
+  void setDataStatus(int val) {
+    dataStatus.value = val;
+    update();
+  }
+
+  Future<void> getPlanFromUser() async {
     print('fron func: ${addFivePray.value}');
     planData.clear();
     planData.addAll([
       addFivePray.value,
       addDuha.value,
       addQeiam.value,
-      false,//taraweeh
+      false, //taraweeh
       addSapahThikr.value,
       addmasaThikr.value,
       addsleep.value,
@@ -714,12 +737,20 @@ void setDataStatus(int val){
       addwodoo.value,
       addsalahThikr.value,
       addadhan.value,
-      haveQuranPlan==false? 'none':(quranPlanType==0? 'page':(quranPlanType==1?'hizb':'juz')),
-      haveQuranPlan==false? 0:quranPlanCount,
-      haveTadabborPlan==false? 'none':(TadabborPlanType==0? 'page':(TadabborPlanType==1?'hizb':'juz')),
-      haveTadabborPlan==false? 0:TadabborPlanCount,
-      haveRecitationPlan==false? false:true,
-      haveRecitationPlan==false?  0:RecitationPlanCount,
+      haveQuranPlan == false
+          ? 'none'
+          : (quranPlanType == 0
+              ? 'page'
+              : (quranPlanType == 1 ? 'hizb' : 'juz')),
+      haveQuranPlan == false ? 0 : quranPlanCount,
+      haveTadabborPlan == false
+          ? 'none'
+          : (TadabborPlanType == 0
+              ? 'page'
+              : (TadabborPlanType == 1 ? 'hizb' : 'juz')),
+      haveTadabborPlan == false ? 0 : TadabborPlanCount,
+      haveRecitationPlan == false ? false : true,
+      haveRecitationPlan == false ? 0 : RecitationPlanCount,
       fivePrayCheckValue.value,
       duhaCheckValue.value,
       qeiamCheckValue.value,
@@ -731,23 +762,23 @@ void setDataStatus(int val){
       wodooCheckValue.value,
       salahThikrCheckValue.value,
       adhanCheckValue.value,
-      quranPlanCheckValue.value==true? quranPlanCount:0,
-      TadabborPlanCheckValue.value==true?TadabborPlanCount:0,
-      RecitationPlanCheckValue.value==true?RecitationPlanCount:0,
+      quranPlanCheckValue.value == true ? quranPlanCount : 0,
+      TadabborPlanCheckValue.value == true ? TadabborPlanCount : 0,
+      RecitationPlanCheckValue.value == true ? RecitationPlanCount : 0,
       dataStatus.value,
-      ]);
+    ]);
     return;
   }
-  Future<void> setUpdatePlan()async{
+
+  Future<void> setUpdatePlan() async {
     userId = myServices.sharedPreferences.getInt("user_id")!;
     print("userid ${userId}\n");
     await getPlanFromUser();
     print('tasks #: ${tasksCount.value}');
-    await planServices.updatePlan(userId,planData);
-     // planServices.weekData(userId);
-
+    await planServices.updatePlan(userId, planData);
+    // planServices.weekData(userId);
   }
-  
+
   /* updata data using timer */
 
   final counter = 0.obs;
@@ -759,22 +790,21 @@ void setDataStatus(int val){
   void startTimer() {
     timer = Timer.periodic(updateInterval, (timer) {
       if (isDirty) {
-       print("restart");
+        print("restart");
         restartTimer();
         return;
       }
       counter.value++;
       if (counter.value >= maxCounter) {
-        dataStatus.value=0;
+        dataStatus.value = 0;
         setUpdatePlan();
         counter.value = 0;
       }
-        print("updatedddddddddddd");
-        dataStatus.value=0;
-        setUpdatePlan();
-        timer.cancel();
-        return;
-
+      print("updatedddddddddddd");
+      dataStatus.value = 0;
+      setUpdatePlan();
+      timer.cancel();
+      return;
     });
   }
 
@@ -789,41 +819,40 @@ void setDataStatus(int val){
     isDirty = true;
   }
 
-
   void resetPlanData() {
-      addFivePray.value=fivePrayVisibleValue.value=false;
-      addDuha.value=duhaVisibleValue.value=false;
-      addQeiam.value=qeiamVisibleValue.value=false;
-      addSapahThikr.value=sapahThikrVisibleValue.value=false;
-      addmasaThikr.value=masaThikrVisibleValue.value=false;
-      addsleep.value=sleepVisibleValue.value=false;
-      addwakeUp.value=wakeUpVisibleValue.value=false;
-      addwodoo.value=wodooVisibleValue.value=false;
-      addsalahThikr.value=salahThikrVisibleValue.value=false;
-      addadhan.value=adhanVisibleValue.value=false;
-        haveQuranPlan=false;
-        QuranVisibleFunc(0);
-        haveTadabborPlan=false;
-        TadabborVisibleFunc(0);
-        haveRecitationPlan=false;
-        RecitationVisibleFunc(0);
-      fivePrayCheckValue.value=false;
-      duhaCheckValue.value=false;
-      qeiamCheckValue.value=false;
-      sapahThikrCheckValue.value=false;
-      masaThikrCheckValue.value=false;
-      sleepCheckValue.value=false;
-      wakeUpCheckValue.value=false;
-      wodooCheckValue.value=false;
-      salahThikrCheckValue.value=false;
-      adhanCheckValue.value=false;
-      quranPlanCheckValue.value=false;
-       TadabborPlanCheckValue.value=false;
-       RecitationPlanCheckValue.value=false;
-
-}
+    addFivePray.value = fivePrayVisibleValue.value = false;
+    addDuha.value = duhaVisibleValue.value = false;
+    addQeiam.value = qeiamVisibleValue.value = false;
+    addSapahThikr.value = sapahThikrVisibleValue.value = false;
+    addmasaThikr.value = masaThikrVisibleValue.value = false;
+    addsleep.value = sleepVisibleValue.value = false;
+    addwakeUp.value = wakeUpVisibleValue.value = false;
+    addwodoo.value = wodooVisibleValue.value = false;
+    addsalahThikr.value = salahThikrVisibleValue.value = false;
+    addadhan.value = adhanVisibleValue.value = false;
+    haveQuranPlan = false;
+    QuranVisibleFunc(0);
+    haveTadabborPlan = false;
+    TadabborVisibleFunc(0);
+    haveRecitationPlan = false;
+    RecitationVisibleFunc(0);
+    fivePrayCheckValue.value = false;
+    duhaCheckValue.value = false;
+    qeiamCheckValue.value = false;
+    sapahThikrCheckValue.value = false;
+    masaThikrCheckValue.value = false;
+    sleepCheckValue.value = false;
+    wakeUpCheckValue.value = false;
+    wodooCheckValue.value = false;
+    salahThikrCheckValue.value = false;
+    adhanCheckValue.value = false;
+    quranPlanCheckValue.value = false;
+    TadabborPlanCheckValue.value = false;
+    RecitationPlanCheckValue.value = false;
+  }
 
 //shown plan
+// <<<<<<< ayaaah
 Future<void> showPlantoUser() async {
   print("inside show...");
   print(userId);
@@ -916,14 +945,103 @@ Future<void> showPlantoUser() async {
     } else {
       resetPlanData() ;
       print("activePlan or activePlan['data'] is null");
+// =======
+//   Future<void> showPlantoUser() async {
+//     print("+++");
+//     resetPlanData();
+//     print("inside show...");
+//     print(userId);
+//     userId = myServices.sharedPreferences.getInt("user_id")!;
+
+//     try {
+//       Map<String, dynamic> activePlan =
+//           await planServices.getActivePlan(userId);
+
+//       if (activePlan != null && activePlan['data'] != null) {
+//         var dataValues = activePlan['data'].values.toList();
+//         print(dataValues);
+//         addFivePray.value = fivePrayVisibleValue.value = dataValues[1];
+//         addDuha.value = duhaVisibleValue.value = dataValues[2];
+//         addQeiam.value = qeiamVisibleValue.value = dataValues[3];
+//         addSapahThikr.value = sapahThikrVisibleValue.value = dataValues[5];
+//         addmasaThikr.value = masaThikrVisibleValue.value = dataValues[6];
+//         addsleep.value = sleepVisibleValue.value = dataValues[7];
+//         addwakeUp.value = wakeUpVisibleValue.value = dataValues[8];
+//         addwodoo.value = wodooVisibleValue.value = dataValues[9];
+//         addsalahThikr.value = salahThikrVisibleValue.value = dataValues[10];
+//         addadhan.value = adhanVisibleValue.value = dataValues[11];
+//         if (dataValues[12] == 'none') {
+//           haveQuranPlan = false;
+//           QuranVisibleFunc(0);
+//         } else {
+//           haveQuranPlan = true;
+//           (dataValues[12] == 'page'
+//               ? safhaSettings()
+//               : (dataValues[12] == 'hizb')
+//                   ? hezbSettings()
+//                   : (dataValues[12] == 'juz'
+//                       ? juzSettings()
+//                       : quranPlanType = 3));
+//           quranPlanCount = (dataValues[13]);
+//           QuranVisibleFunc(1);
+//         }
+//         if (dataValues[14] == 'none') {
+//           haveTadabborPlan = false;
+//           TadabborVisibleFunc(0);
+//         } else {
+//           haveTadabborPlan = true;
+//           (dataValues[14] == 'page'
+//               ? safhaSettingsTadabbor()
+//               : ((dataValues[14] == 'hizb'
+//                   ? hezbSettingsTadabbor()
+//                   : ((dataValues[14] == 'juz'
+//                       ? juzSettingsTadabbor()
+//                       : TadabborPlanType = 3)))));
+//           TadabborPlanCount = (dataValues[15]);
+//           TadabborVisibleFunc(1);
+//         }
+//         if (dataValues[16] == false) {
+//           haveRecitationPlan = false;
+//           RecitationVisibleFunc(0);
+//         } else {
+//           haveRecitationPlan = true;
+//           RecitationVisibleFunc(1);
+//           RecitationPlanCount = (dataValues[17]);
+//         }
+//         fivePrayCheckValue.value = dataValues[18];
+//         duhaCheckValue.value = dataValues[19];
+//         qeiamCheckValue.value = dataValues[20];
+//         sapahThikrCheckValue.value = dataValues[22];
+//         masaThikrCheckValue.value = dataValues[23];
+//         sleepCheckValue.value = dataValues[24];
+//         wakeUpCheckValue.value = dataValues[25];
+//         wodooCheckValue.value = dataValues[26];
+//         salahThikrCheckValue.value = dataValues[27];
+//         adhanCheckValue.value = dataValues[28];
+//         if (dataValues[29] != 0) {
+//           quranPlanCheckValue.value = true;
+//         } else {
+//           quranPlanCheckValue.value = false;
+//         }
+//         if (dataValues[30] != 0) {
+//           TadabborPlanCheckValue.value = true;
+//         } else {
+//           TadabborPlanCheckValue.value = false;
+//         }
+//         if (dataValues[31] != 0) {
+//           RecitationPlanCheckValue.value = true;
+//         } else {
+//           RecitationPlanCheckValue.value = false;
+//         }
+//         update();
+//       }
+//     } catch (e) {
+//       print("An error occurred: $e");
+// // >>>>>>> main
     }
-    update();
-  } catch (e) {
-    print("An error occurred: $e");
-
   }
-}
 
+// <<<<<<< ayaaah
 
 
 
@@ -931,6 +1049,12 @@ Future<void> deleteData() async {
   userId = myServices.sharedPreferences.getInt("user_id")!;
   await planServices.deleteRecords(userId);
 }
+// =======
+//   Future<void> deleteData() async {
+//     userId = myServices.sharedPreferences.getInt("user_id")!;
+//     await planServices.deleteRecords(userId);
+//   }
+// >>>>>>> main
 /*
 void celebrate(){
    ConfettiWidget(
@@ -944,82 +1068,91 @@ void celebrate(){
               child: const FlutterLogo(size: 200),
 
 */
- 
-  RxInt tasksNumber=0.obs;
-  RxInt doneCount=0.obs;
-  RxDouble progress=(0.0).obs;
-Future<void> dailyProgress() async {
-  print("in daily");
-    await getPlanFromUser();
-    tasksNumber.value=0;
-    doneCount.value=0;
-    for(int i =0;i<=30;i++)
-    {  print(i);
 
-      if(i<=10&&planData[i]==true){
-        tasksNumber.value=tasksNumber.value + 1;
+  RxInt tasksNumber = 0.obs;
+  RxInt doneCount = 0.obs;
+  RxDouble progress = (0.0).obs;
+  Future<void> dailyProgress() async {
+    print("in daily");
+    await getPlanFromUser();
+    tasksNumber.value = 0;
+    doneCount.value = 0;
+    for (int i = 0; i <= 30; i++) {
+      print(i);
+
+      if (i <= 10 && planData[i] == true) {
+        tasksNumber.value = tasksNumber.value + 1;
         print(tasksNumber.value);
-      }
-      else if(i>10&&i<=16){
-        if(i==12||i==14||i==16) continue;
-        else if(planData[i]=='none'||planData[i]==false) continue;
-        else{
-          tasksNumber.value=tasksNumber.value+1;
+      } else if (i > 10 && i <= 16) {
+        if (i == 12 || i == 14 || i == 16)
+          continue;
+        else if (planData[i] == 'none' || planData[i] == false)
+          continue;
+        else {
+          tasksNumber.value = tasksNumber.value + 1;
         }
-      }
-      else if(i>16){
-        if(planData[i]==true)
-        doneCount.value=doneCount.value+1;
-        else if (planData[i]!=false&&planData[i]!=0){
-          doneCount.value=doneCount.value+1;
+      } else if (i > 16) {
+        if (planData[i] == true)
+          doneCount.value = doneCount.value + 1;
+        else if (planData[i] != false && planData[i] != 0) {
+          doneCount.value = doneCount.value + 1;
         }
       }
     }
     print("done${doneCount.value}");
     print("tasks${tasksNumber.value}");
-    if(tasksNumber==0)progress.value=0.0;
-    else progress.value=1.0*doneCount.value/tasksNumber.value;
+    if (tasksNumber == 0)
+      progress.value = 0.0;
+    else
+      progress.value = 1.0 * doneCount.value / tasksNumber.value;
+    if (progress.value == 1.0)
+      confettiController.play();
+    else
+      confettiController.stop();
     print("aaaa${progress.value}");
     update();
+  }
 
-}
-//week chart 
-Future<void> weekCalc()async{
-  userId = myServices.sharedPreferences.getInt("user_id")!;
-  await planServices.WeekchartData(userId);
-}
+//week chart
+  Future<void> weekCalc() async {
+    userId = myServices.sharedPreferences.getInt("user_id")!;
+    await planServices.WeekchartData(userId);
+  }
 
-void refreshNewPlan(){
-      sapahThikrCheckValue.value=false;
-      masaThikrCheckValue.value=false;
-      sleepCheckValue.value=false;
-      wakeUpCheckValue.value=false;
-      wodooCheckValue.value=false;
-      salahThikrCheckValue.value=false;
-      adhanCheckValue.value=false;
-      quranPlanCheckValue.value=false;
-       quranPlanCount=0;
-      TadabborPlanCheckValue.value=false;
-      TadabborPlanCount=0;
-      RecitationPlanCheckValue.value=false;
-      RecitationPlanCount=0;
+  void refreshNewPlan() {
+    sapahThikrCheckValue.value = false;
+    masaThikrCheckValue.value = false;
+    sleepCheckValue.value = false;
+    wakeUpCheckValue.value = false;
+    wodooCheckValue.value = false;
+    salahThikrCheckValue.value = false;
+    adhanCheckValue.value = false;
+    quranPlanCheckValue.value = false;
+    quranPlanCount = 0;
+    TadabborPlanCheckValue.value = false;
+    TadabborPlanCount = 0;
+    RecitationPlanCheckValue.value = false;
+    RecitationPlanCount = 0;
     update();
     return;
-}
-void callNotification() async {
-  userId = myServices.sharedPreferences.getInt("user_id")!;
-  tz.Location location = tz.local;
-  DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
-  // await notifyServices.scheduleNotification(userId, scheduledTime, location);
-}
-Future<void> addUpdatePlanNotification() async{
-  print("inside update...");
-  userId=myServices.sharedPreferences.getInt("user_id")!;
-  print("From plan notification :${userId}");
- await notifyServices.checkOrCreatePlanNotification(userId,true);
-  FirebaseMessaging.instance.subscribeToTopic("planNotification");
-}
+  }
 
+  void callNotification() async {
+    userId = myServices.sharedPreferences.getInt("user_id")!;
+    tz.Location location = tz.local;
+    DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
+    // await notifyServices.scheduleNotification(userId, scheduledTime, location);
+  }
+
+  Future<void> addUpdatePlanNotification() async {
+    print("inside update...");
+    userId = myServices.sharedPreferences.getInt("user_id")!;
+    print("From plan notification :${userId}");
+    await notifyServices.checkOrCreatePlanNotification(userId, true);
+    FirebaseMessaging.instance.subscribeToTopic("planNotification");
+  }
+
+// <<<<<<< ayaaah
 Future<void> planPray() async {
   
           print("inside on plan pray 1  ...");
@@ -1043,3 +1176,29 @@ Future<void> planPray() async {
 
 
 }
+// =======
+//   Future<void> planPray() async {
+//     print("inside on dispoace 2  ...");
+//     print(prayScreenController.prayCounter.value);
+//     if (prayScreenController.prayCounter.value == 2) {
+//       print("inside on dispoace ");
+//       if (fivePrayVisibleValue.value == true) {
+//         print('sssaaaaaa');
+//         if (fivePrayCheckValue.value == false) {
+//           await changeFivePrayCheck(true);
+//           print("aaaaaaa ${planController.fivePrayCheckValue.value}");
+//         }
+//       } else if (prayScreenController.prayCounter.value < 5) {
+//         await changeFivePrayCheck(false);
+//       }
+//     }
+//   }
+
+//   // void callNotification() async {
+//   //   userId = myServices.sharedPreferences.getInt("user_id")!;
+//   //   tz.Location location = tz.local;
+//   //   DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
+//   //   // await notifyServices.scheduleNotification(userId, scheduledTime, location);
+//   // }
+// }
+// >>>>>>> main

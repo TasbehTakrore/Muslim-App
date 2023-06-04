@@ -60,6 +60,8 @@ class ListCommunities extends StatelessWidget {
                         print("formattedDate: $formattedDate");
 
                         return CommunityW(
+                          communityAnnouncement: desiredCommunity.stickyMessage,
+                          communityChatID: desiredCommunity.communityChatID,
                           communityName: desiredCommunity.communityName,
                           communityDateCreate: formattedDate,
                           communityID: int.parse(

@@ -10,11 +10,13 @@ import '../../core/services/plan_services.dart';
 import '../../core/services/services.dart';
 
 MyServices myServices = Get.put(MyServices());
-PlanServices planServices = Get.put(PlanServices());
+// PlanServices planServices = Get.put(PlanServices());
 PlanController planController = Get.put(PlanController());
 TasbehServices tasbehServices = Get.put(TasbehServices());
 
 class ChartsController extends GetxController {
+  ScrollController scrollController = ScrollController();
+
 // ************************* Start week chart***********************//
   RxInt touchedIndex = RxInt(-1);
   bool isPlaying = false;
@@ -33,6 +35,7 @@ class ChartsController extends GetxController {
   final Color barBackgroundColor = Color.fromARGB(162, 158, 158, 158);
   final Color barColor = Color.fromARGB(232, 56, 67, 214);
   final Color touchedBarColor = AppColor.thickYellow;
+  bool isFunctionExecuted = false;
 
   @override
   void onInit() {
@@ -47,15 +50,32 @@ class ChartsController extends GetxController {
       [0, 0]
     ];
     refreshState();
+
+    scrollController.addListener(() {
+      if (!isFunctionExecuted &&
+          scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 150) {
+        isFunctionExecuted = true;
+        togglePlaying();
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+
+        // تنفيذ الوظيفة التي ترغب فيها عند الوصول إلى الجزء المحدد
+      } else if (scrollController.position.pixels <=
+          scrollController.position.maxScrollExtent - 180) {
+        print("@@@@@@@@@@");
+        isFunctionExecuted = false;
+      }
+    });
   }
 
   void togglePlaying() {
+    print("insideToggle");
     isPlaying = !isPlaying;
     update();
+    refreshState();
+
     if (isPlaying) {
-      refreshState();
-      Future.delayed(const Duration(seconds: 2), () {
-        // Stop the playing after 5 seconds (adjust the duration as needed)
+      Future.delayed(const Duration(milliseconds: 1000), () {
         togglePlaying();
       });
     }
@@ -337,7 +357,7 @@ class ChartsController extends GetxController {
   Future<dynamic> refreshState() async {
     update();
     await Future<dynamic>.delayed(
-      animDuration + const Duration(milliseconds: 10),
+      animDuration + const Duration(milliseconds: 5),
     );
     if (isPlaying) {
       await refreshState();

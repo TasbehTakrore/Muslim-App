@@ -19,6 +19,7 @@ class AyahDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     QuranPageController quranPageController = Get.put(QuranPageController());
     return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       content: Container(
         height: MediaQuery.of(context).size.height / 1.5,
         width: 300,
@@ -48,7 +49,7 @@ class AyahDetailsDialog extends StatelessWidget {
                           onPressed: () {
                             Clipboard.setData(ClipboardData(
                                 text:
-                                    "${(tafser[0][surahNumb != 1 ? (getVerseCount(surahNumb - 1) + verseNumb).toString() : (verseNumb).toString()] as Map<String, Object>)["verse"]} \n(التّفسير المُيسّر، سورة ${getSurahNameArabic(surahNumb)}، الآية: ${ArabicNumbers().convert(verseNumb)})"));
+                                    "${(tafser[0][surahNumb != 1 ? (quranPageController.getPreviousVerserCount(surahNumb) + verseNumb).toString() : (verseNumb).toString()] as Map<String, Object>)["verse"]} \n(التّفسير المُيسّر، سورة ${getSurahNameArabic(surahNumb)}، الآية: ${ArabicNumbers().convert(verseNumb)})"));
                             Fluttertoast.showToast(
                               msg: "تمّ النسخ إلى الحافظة!",
                               toastLength: Toast.LENGTH_SHORT,
@@ -67,7 +68,7 @@ class AyahDetailsDialog extends StatelessWidget {
                                 TextStyle(color: AppColor.black, fontSize: 20),
                           )),
                       Text(
-                        "${(tafser[0][surahNumb != 1 ? (getVerseCount(surahNumb - 1) + verseNumb).toString() : (verseNumb).toString()] as Map<String, Object>)["verse"]}",
+                        "${(tafser[0][surahNumb != 1 ? (quranPageController.getPreviousVerserCount(surahNumb) + verseNumb).toString() : (verseNumb).toString()] as Map<String, Object>)["verse"]}",
                         style: const TextStyle(
                           fontSize: 16,
                         ),

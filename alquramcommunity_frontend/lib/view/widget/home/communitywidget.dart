@@ -10,15 +10,18 @@ import '../community/specificcommunity.dart';
 
 class CommunityW extends StatelessWidget {
   final String communityName;
+  final String communityChatID;
   final String communityDateCreate;
   final int communityID;
   final bool isAdmin;
+  final String communityAnnouncement;
   const CommunityW(
       {super.key,
+      required this.communityChatID,
       required this.communityName,
       required this.communityDateCreate,
       required this.communityID,
-      required this.isAdmin});
+      required this.isAdmin, required this.communityAnnouncement});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +30,12 @@ class CommunityW extends StatelessWidget {
 
     return InkWell(
       onTap: () {
+        print("communityChatID: $communityChatID");
+
         print("communityName: -- $communityName");
         Get.dialog(SpecificCommunity(
+          communityAnnouncement: communityAnnouncement,
+          communityChatID: communityChatID,
           communityID: communityID,
           communityName: communityName,
           communityDateCreate: communityDateCreate,

@@ -25,7 +25,7 @@ class memberRequestList extends StatelessWidget {
 
     return GetBuilder<CommunitityController>(
         builder: (controller) => Container(
-            height: 205,
+            height: 350,
             width: 300,
             child: FutureBuilder<List<UserModel>>(
               future: controller.getMemberRequests(communityID),
@@ -38,7 +38,8 @@ class memberRequestList extends StatelessWidget {
                       child: Text('حدث خطأ في الاستعلام عن قاعدة البيانات'));
                 } else {
                   if (snapshot.hasData && snapshot.data != null) {
-                    print("snapshot.data:  ${snapshot.data}");
+                    print(
+                        "snapshot.data*************************:  ${snapshot.data}");
                     return ListView.separated(
                         separatorBuilder: (context, index) =>
                             const SizedBox(width: 2),
@@ -52,6 +53,8 @@ class memberRequestList extends StatelessWidget {
                               onTap: () {
                                 Get.dialog(Dialog.fullscreen(
                                     child: OtherProfileScreen(
+                                        userEmail:
+                                            snapshot.data![index].userEmail,
                                         userName:
                                             snapshot.data![index].userName,
                                         gender:
@@ -86,6 +89,18 @@ class memberRequestList extends StatelessWidget {
                                   ),
                                   onTap: () {
                                     print("hiii");
+                                    Get.dialog(Dialog.fullscreen(
+                                        child: OtherProfileScreen(
+                                            userEmail:
+                                                snapshot.data![index].userEmail,
+                                            userName:
+                                                snapshot.data![index].userName,
+                                            gender: snapshot
+                                                .data![index].userGender,
+                                            age: snapshot.data![index].userAge
+                                                .toString(),
+                                            userProfileImage: snapshot
+                                                .data![index].imageUrl)));
                                   },
                                   title: Text(
                                     "${snapshot.data![index].userName}",
@@ -102,15 +117,17 @@ class memberRequestList extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             InkWell(
-                                                onTap: () {
+                                                onTap: () async {
                                                   print("accept");
                                                   vs.value = false;
-                                                  controller.updatee();
-                                                  controller.addMemberCommunity(
-                                                      communityID,
-                                                      false,
-                                                      snapshot.data![index]
-                                                          .userEmail);
+                                                  await controller
+                                                      .addMemberCommunity(
+                                                          communityID,
+                                                          false,
+                                                          snapshot.data![index]
+                                                              .userEmail);
+                                                  // controller.updatee();
+                                                  // controller.updatee();
                                                 },
                                                 child: const Icon(Icons.check,
                                                     size: 30,

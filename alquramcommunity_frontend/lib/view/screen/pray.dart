@@ -22,12 +22,15 @@ class PrayScreen extends StatelessWidget {
           return false;
         },
         child: FutureBuilder(
-            future: prayController.getNextPrayer(),
+            future: Future.wait([
+              // prayController.getNextPrayer(),
+              prayController.getCurrentLocation(),
+            ]),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 return Center(child: Text("${snapshot.error}"));
               } else if (snapshot.hasData) {
-                //print(snapshot.data[0].ayahID);
+                print(snapshot.data);
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -46,15 +49,16 @@ class PrayScreen extends StatelessWidget {
                               date: prayController.formativeCurrentDate.value,
                               hijridate:
                                   prayController.formativeHijriDate.value,
-                              fontSize1: 17,
-                              fontSize2: 15,
-                              nextPray: prayController.nextPrayer.value.name
-                                  .toUpperCase(),
+                              fontSize1: 18,
+                              fontSize2: 20,
+                              nextPray: prayController.changePrayToArabic(
+                                  prayController
+                                      .nextPrayer.value.name.capitalizeFirst!),
                               city_name: prayController.city.value,
-                              remainingTime:
-                                  prayController.formattedRemainingTime.value,
+                              remainingTime: prayController.ConvertReminingTime(
+                                  prayController.formattedRemainingTime.value),
                             )),
-                        SizedBox(height: 10),
+                        SizedBox(height: 6),
                         Obx(() {
                           final prayerTimes =
                               prayController.prayerTimesmap.value;

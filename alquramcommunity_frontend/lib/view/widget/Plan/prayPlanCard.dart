@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +32,14 @@ class PrayPalnCard extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    ConfettiWidget(
+                      confettiController: controller.confettiController,
+                      shouldLoop: true,
+                      blastDirection: -pi / 2,
+                      minBlastForce: 5,
+                      maxBlastForce: 6,
+                      emissionFrequency: 0.1,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

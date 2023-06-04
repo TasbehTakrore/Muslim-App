@@ -24,7 +24,7 @@ class ListsController extends GetxController {
   }
 
   Future<List<MistakeModel>> getMistakes() async {
-    return MistakeServices.getMistakes(userEmail!);
+    return MistakeServices.getMistakes(getEmail());
     // mistakesList.value = await MistakeServices.getMistakes("tasbeh.takrore@gmail.com");
   }
 
@@ -32,6 +32,9 @@ class ListsController extends GetxController {
     MistakeServices.deleteMistake(userEmail!, surahID, ayahID);
   }
 
+  getEmail() {
+    return myServices.sharedPreferences.getString("user_email");
+  }
 
   @override
   void onInit() {

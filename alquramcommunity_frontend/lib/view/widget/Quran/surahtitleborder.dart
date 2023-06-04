@@ -44,7 +44,8 @@ class SurahTitleBorder extends StatelessWidget {
       const SizedBox(height: 8),
       quranController.surahNumb != 9 && quranController.surahNumb != 1
           ? Text("بِسْـــــمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
-              style: GoogleFonts.amiri(fontSize: 18))
+              style: GoogleFonts.amiri(
+                  fontSize: 18, color: QuranConstant.fontColor.value))
           : const SizedBox()
     ]);
   }

@@ -10,6 +10,10 @@ const communityModel = sequelize.define('Community', {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      communityChatID: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
       communityDescription: {
           type: DataTypes.STRING,
           allowNull: false,

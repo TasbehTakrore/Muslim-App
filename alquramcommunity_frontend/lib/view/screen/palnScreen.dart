@@ -1,3 +1,10 @@
+// <<<<<<< ayaaah
+// =======
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
+import 'package:easy_actions/easy_actions.dart';
+// >>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/auth/plan_controller.dart';
@@ -14,8 +21,8 @@ class PalnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(PlanController());
-    PlanController planController=  Get.put(PlanController());
-  final screenWidth = MediaQuery.of(context).size.width;
+    PlanController planController = Get.put(PlanController());
+    final screenWidth = MediaQuery.of(context).size.width;
     final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     return WillPopScope(
       onWillPop: () async {
@@ -27,7 +34,9 @@ class PalnScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),
-          padding: isLaptopScreen==true? EdgeInsets.only(right: screenWidth/11, left: screenWidth/6):null,
+          padding: isLaptopScreen == true
+              ? EdgeInsets.only(right: screenWidth / 11, left: screenWidth / 6)
+              : null,
           margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
           width: double.infinity,
           height: MediaQuery.of(context).size.height -

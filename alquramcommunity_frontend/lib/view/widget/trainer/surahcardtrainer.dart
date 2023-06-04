@@ -61,9 +61,8 @@ class SurahCardTrainer extends GetView<TrainerScreenController> {
         subtitle: Text(
             "$placeOfRevelation - ${ArabicNumbers().convert(verseCount)} آية",
             style: const TextStyle(fontSize: 10)),
-        onTap: () {
-          controller.letsSurahTest(int.parse(surahNumber));
-          Get.toNamed(AppRoute.trainer);
+        onTap: () async {
+         await controller.letsSurahTest(int.parse(surahNumber));
 
           //Get.toNamed(AppRoute.recitation);
           //onTap;

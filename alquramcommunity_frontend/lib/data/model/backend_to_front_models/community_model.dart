@@ -1,5 +1,6 @@
 class Community {
   final int id;
+  final String communityChatID;
   final String communityName;
   final String communityDescription;
   final String stickyMessage;
@@ -10,6 +11,7 @@ class Community {
   final DateTime updatedAt;
 
   Community({
+    required this.communityChatID,
     required this.id,
     required this.communityName,
     required this.communityDescription,
@@ -23,6 +25,7 @@ class Community {
 
   factory Community.fromJson(Map<String, dynamic> json) {
     return Community(
+      communityChatID: json['communityChatID'],
       id: json['id'],
       communityName: json['communityName'],
       communityDescription: json['communityDescription'],

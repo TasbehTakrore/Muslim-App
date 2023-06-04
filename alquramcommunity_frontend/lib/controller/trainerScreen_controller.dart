@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -84,6 +85,8 @@ class TrainerScreenController extends GetxController {
   String durationResult = "";
   int mistakesCount = 0;
 
+  final confettiController = ConfettiController();
+
   @override
   void onInit() {
     super.onInit();
@@ -92,6 +95,15 @@ class TrainerScreenController extends GetxController {
     userEmail = myServices.sharedPreferences.getString("user_email");
     _speech = SpeechToText();
     initSpeechRecognition();
+  }
+
+  setDefultTypes() {
+    firstWordCheck.value = true;
+    lastWordCheck.value = true;
+    firstPartCheck.value = true;
+    lastPartCheck.value = true;
+    previousCheck.value = true;
+    nextCheck.value = true;
   }
 
   // var min = 1;
@@ -130,7 +142,10 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForSurah();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -199,7 +214,11 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForJuz();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -268,7 +287,10 @@ class TrainerScreenController extends GetxController {
     if (gettingMistakes.length == 0) {
       prepareTestDataForPage();
       testType();
+      Get.toNamed(AppRoute.trainer);
     } else {
+      Get.toNamed(AppRoute.trainer);
+
       showDialog(
           context: conteXt!,
           barrierDismissible: false,
@@ -377,6 +399,7 @@ class TrainerScreenController extends GetxController {
   int ayID = 0;
   int testTypeFlag = 0;
   prepareTestDataForSurahMistake() {
+    setDefultTypes();
     juzFlag = true; ///////////////
 
     ayahList.clear();
@@ -404,6 +427,8 @@ class TrainerScreenController extends GetxController {
   }
 
   prepareTestDataForJuzMistake() {
+    setDefultTypes();
+
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
@@ -458,6 +483,8 @@ class TrainerScreenController extends GetxController {
   }
 
   prepareTestDataForPageMistake() {
+    setDefultTypes();
+
     juzFlag = true;
     ayahList.clear();
     verseIndex.clear();
@@ -622,6 +649,7 @@ class TrainerScreenController extends GetxController {
     setSurahIDAndAyahID();
     appBarController.addCoins();
     print("after match inside true answer");
+    print("surahIDToSave: $surahIDToSave.  ayahIDToSave: $ayahIDToSave");
     mistakeModelList.add(MistakeModel(
       userEmail: userEmail,
       mistakeType: 0,
@@ -1050,6 +1078,11 @@ class TrainerScreenController extends GetxController {
     MistakeServices.mistakeLogging(mistakeModelList);
     mistakeModelList.clear();
     CoinsServices.addCoins(coins);
+    if (mistakesCount == 0) {
+      confettiController.play();
+    } else {
+      confettiController.stop();
+    }
     Get.dialog(statisticsTrainerContent());
     // return showDialog(
     //     context: conteXt!,

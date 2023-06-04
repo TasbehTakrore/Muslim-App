@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:alquramcommunity_frontend/controller/trainerScreen_controller.dart';
+import 'package:confetti/confetti.dart';
 import 'package:easy_actions/easy_actions.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -98,6 +101,15 @@ class statisticsTrainerContent extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      ConfettiWidget(
+                          confettiController:
+                              trainerScreenController.confettiController,
+                          shouldLoop: true,
+                          blastDirection: pi / 2,
+                          // minBlastForce: 5,
+                          // maxBlastForce: 10,
+                          emissionFrequency: 0.01,
+                          gravity: 0.08),
                       CircularPercentIndicator(
                         radius: 50,
                         animation: true,

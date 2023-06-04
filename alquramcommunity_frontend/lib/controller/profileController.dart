@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../core/constant/urls.dart';
@@ -20,10 +21,74 @@ class ProfileController extends GetxController {
   RxString img = ''.obs;
   String? joinDate;
   Rx<bool> childMode = false.obs;
+  Rx<bool> prophetNotifi = false.obs;
+
   @override
   void onInit() {
     super.onInit();
-    //userInformation();
+
+    if (myServices.sharedPreferences.getBool("childMode${userEmail.value}") ==
+        null) {
+      print("hhhh");
+    } else {
+      childMode.value =
+          myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+    }
+    if (myServices.sharedPreferences
+            .getBool("prophetNotifi${userEmail.value}") ==
+        null) {
+      print("prophetNotifi");
+    } else {
+      prophetNotifi.value = myServices.sharedPreferences
+          .getBool("prophetNotifi${userEmail.value}")!;
+    } //userInformation();
+  }
+
+  getUserEmail() {
+    userEmail.value = myServices.sharedPreferences.getString("user_email")!;
+    childMode.value = myServices.sharedPreferences
+                .getBool("childMode${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+    // myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+
+    prophetNotifi.value = myServices.sharedPreferences
+                .getBool("prophetNotifi${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences
+            .getBool("prophetNotifi${userEmail.value}")!;
+    // return myServices.sharedPreferences.getString("user_email");
+  }
+
+  changeChildMode(bool value) {
+    childMode.value = value;
+    myServices.sharedPreferences.setBool("childMode${userEmail.value}", value);
+  }
+
+  changeProphetNotifi(bool value) {
+    prophetNotifi.value = value;
+    myServices.sharedPreferences
+        .setBool("prophetNotifi${userEmail.value}", value);
+
+    if (value == true)
+      FirebaseMessaging.instance.subscribeToTopic("salatNotification");
+    else if (value == false)
+      FirebaseMessaging.instance.unsubscribeFromTopic("salatNotification");
+
+    ////////////// function to add Notification: if value = true=> Subsecribe....
+  }
+
+  bool isChildMode() {
+    print("inside child mode: ${"childMode${userEmail.value}"}");
+    if (myServices.sharedPreferences.getBool("childMode${userEmail.value}") ==
+        null) {
+      return false;
+    } else {
+      return myServices.sharedPreferences
+          .getBool("childMode${userEmail.value}")!;
+    }
   }
 
   Future<void> userInformation() async {

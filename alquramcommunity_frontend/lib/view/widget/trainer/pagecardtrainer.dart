@@ -50,9 +50,8 @@ class PageCardTrainer extends GetView<TrainerScreenController> {
             // ),
           ]),
         ),
-        onTap: () {
-          controller.letsPageTest(pageNumb);
-          Get.toNamed(AppRoute.trainer);
+        onTap: () async{
+         await controller.letsPageTest(pageNumb);
 
           print(pageNumb);
           //Get.toNamed(AppRoute.recitation);

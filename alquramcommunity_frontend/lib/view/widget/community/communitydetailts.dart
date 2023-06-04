@@ -15,9 +15,13 @@ class CommDetailsDialog extends StatelessWidget {
   // int communityID;
   final int index;
   final int CommunityID;
+  final String date;
 
   const CommDetailsDialog(
-      {super.key, required this.index, required this.CommunityID});
+      {super.key,
+      required this.index,
+      required this.CommunityID,
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -57,26 +61,26 @@ class CommDetailsDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Row(
+                    //   children: const [
+                    //     Icon(
+                    //       Icons.person,
+                    //       color: Colors.grey,
+                    //       size: 20,
+                    //     ),
+                    //     Text("20",
+                    //         style: TextStyle(
+                    //           color: Colors.grey,
+                    //         )),
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   width: 15,
+                    // ),
                     Row(
-                      children: const [
-                        Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                          size: 20,
-                        ),
-                        Text("20",
-                            style: TextStyle(
-                              color: Colors.grey,
-                            )),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Row(
-                      children: const [
+                      children: [
                         Icon(Icons.date_range, color: Colors.grey, size: 18),
-                        Text("4-5-2023",
+                        Text(date!,
                             style: TextStyle(
                               color: Colors.grey,
                             )),

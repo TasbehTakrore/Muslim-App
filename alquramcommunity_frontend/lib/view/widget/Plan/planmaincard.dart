@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
 import 'package:alquramcommunity_frontend/view/widget/prayingtimes/completedPray_dialog.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
@@ -30,6 +33,8 @@ class PlanMainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // bool isPlayed = false;
+    // confettiController.play();
     final PlanController planController = Get.put(PlanController());
     return InkWell(
       onTap: () {},
@@ -83,6 +88,7 @@ class PlanMainCard extends StatelessWidget {
                         ),
                       ],
                     ),
+               
                   ],
                 )),
           ),

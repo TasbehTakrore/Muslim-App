@@ -24,51 +24,48 @@ import 'view/screen/language.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-
-
-var fm=FirebaseMessaging.instance;
-bool islog=false;
-Future background(RemoteMessage message) async{
-  print("======================back ground ===================================");
+var fm = FirebaseMessaging.instance;
+bool islog = false;
+Future background(RemoteMessage message) async {
+  print(
+      "======================back ground ===================================");
   print("${message.notification!.body}");
-  print("======================back ground end===================================");
-
+  print(
+      "======================back ground end===================================");
 }
-initialMessage()async{
 
-  var message =await FirebaseMessaging.instance.getInitialMessage();
-  if(message!=null){
+initialMessage() async {
+  var message = await FirebaseMessaging.instance.getInitialMessage();
+  if (message != null) {
     print("www");
-      Get.toNamed(AppRoute.forgetPassword);
-
+    Get.toNamed(AppRoute.forgetPassword);
   }
-
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
-    initialMessage();
+  await Firebase.initializeApp();
+  initialMessage();
 //FirebaseMessaging.onBackgroundMessage(background);
-fm.getToken().then((value){
-print("======================Token===================================");
-print(value);
-print("====================== end Token===================================");
+  fm.getToken().then((value) {
+    print("======================Token===================================");
+    print(value);
+    print(
+        "====================== end Token===================================");
+  });
+  initialMessage();
 
-});
-   initialMessage();
-   
-FirebaseMessaging.onMessageOpenedApp.listen((event) {
-          Get.toNamed(AppRoute.qibla);
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    Get.toNamed(AppRoute.qibla);
+  });
+  FirebaseMessaging.onMessage.listen((event) {
+    print(
+        "======================data notificator ===================================");
 
-});
-FirebaseMessaging.onMessage.listen((event){
-  print("======================data notificator ===================================");
-
-print("${event.notification!.body}");
-  print("======================data notificator end ===================================");
-
-});
+    print("${event.notification!.body}");
+    print(
+        "======================data notificator end ===================================");
+  });
   await initialServices();
   runApp(const MyApp());
 }
@@ -82,6 +79,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
+    print(
+        "++${controller.myServices.sharedPreferences.getString("user_email")}");
+
     return GetMaterialApp(
         translations: MyTranslation(),
         debugShowCheckedModeBanner: false,
@@ -136,7 +136,14 @@ class MyApp extends StatelessWidget {
           navigator:
               controller.myServices.sharedPreferences.getBool("langSelected") ==
                       true
-                  ? Login()
+                  ? controller.myServices.sharedPreferences
+                                  .getString("user_email") ==
+                              null ||
+                          controller.myServices.sharedPreferences
+                                  .getString("user_email") ==
+                              " "
+                      ? Login()
+                      : HomeScreen()
                   : Language(),
           durationInSeconds: 5,
         ),
