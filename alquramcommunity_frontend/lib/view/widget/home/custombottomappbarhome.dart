@@ -40,7 +40,8 @@ class CustomBottonAppBarHome extends StatelessWidget {
                     await planController.showPlantoUser();
                     await planController.dailyProgress();
                     await prayController.CompletedPray();
-                     await planController.planPray();
+                    await planController.planPray();
+                    await planController.sumPray();
 
                     controller.changePage(1);
                   },

@@ -54,8 +54,13 @@ List<CategoryModel> CategoryList = [
     onPressed: () async {
       await prayScreenController.checkLocationPermission();
       if (prayScreenController.denied.value == false) {
-        // await prayScreenController.getCurrentLocation();
+// <<<<<<< ayaaah
+        await prayScreenController.getCurrentLocation();
+        await prayScreenController.initializeCheckboxValues();
+// =======
+//         // await prayScreenController.getCurrentLocation();
 
+// >>>>>>> main
         homeScreenController.changePage(5);
       }
     },

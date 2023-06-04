@@ -177,12 +177,17 @@ class EditProfile extends StatelessWidget {
                   ),
                 ),
                 TextButton.icon(
-                    onPressed: () async {
+                    onPressed: ()  {
                       print("تسجيل الخروج");
+// <<<<<<< ayaaah
+//                     //  await myServices.sharedPreferences.clear();
+//                       FirebaseMessaging.instance.unsubscribeFromTopic("planNotification");
+// =======
                       // await myServices.sharedPreferences.clear();
                       FirebaseMessaging.instance
                           .unsubscribeFromTopic("planNotification");
                       controller.deletesharedPreferences();
+// >>>>>>> main
                       Get.offAllNamed(AppRoute.login);
                     },
                     icon: Icon(

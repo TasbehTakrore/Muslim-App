@@ -98,7 +98,7 @@ class PrayScreenControllerImp extends PrayScreenController {
     if (formattedRemainingTime == '00:00:00') {
       getNextPrayer();
     }
-    //saveCheckboxValues();
+   
 
     /* FirebaseMessaging.instance.getToken().then((value){
     print('hi token :$value');
@@ -279,9 +279,17 @@ class PrayScreenControllerImp extends PrayScreenController {
           Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
         Duration remainingTime = nextPrayerTime.difference(DateTime.now());
         formattedRemainingTime.value = formatDuration(remainingTime);
-        if (formattedRemainingTime == '00:00:00') {
+        if (formattedRemainingTime == '00:00:02') {
+
           await PrayTimes();
           await getNextPrayer();
+
+    String userid=' ';
+    userid=myServices.sharedPreferences.getInt("user_id").toString();
+    String key = 'user${userid}_checkboxValues';
+    await myServices.sharedPreferences.setString(key, '000000');
+
+  
         }
         updateDate();
       });
@@ -360,31 +368,49 @@ class PrayScreenControllerImp extends PrayScreenController {
       }
     }
     update();
-    //   saveCheckboxValues();
+// <<<<<<< ayaaah
+    saveCheckboxValues();
+// =======
+//     //   saveCheckboxValues();
+// >>>>>>> main
   }
-/*
+
   Future<void> initializeCheckboxValues() async {
         String userid = myServices.sharedPreferences.getInt("user_id").toString();
         String key = 'user${userid}_checkboxValues';
         String? storedValues = myServices.sharedPreferences.getString(key);
+        print("intial ${key}");
+        print("intial ${storedValues}");
+        if(storedValues==null)
+        {
+          storedValues='000000';
+        }
         if (storedValues != null && storedValues.length == trackPraying.length) {
           for (int i = 0; i < trackPraying.length; i++) {
-            trackPraying[i].value = storedValues[i] == '1';
+            
+      trackPraying[i].value = storedValues[i] == '1' ? true : false;
           }
         }
  }
-*/
-/*
+
+
 void saveCheckboxValues() async {
   String userid=' ';
   userid=myServices.sharedPreferences.getInt("user_id").toString();
     String key = 'user${userid}_checkboxValues';
     String value = trackPraying.map((val) => val.value==true ? '1' : '0').join('');
     await myServices.sharedPreferences.setString(key, value);
+    print(key);
+    print(myServices.sharedPreferences.getString(key));
+
   
 }
 
- */
+// <<<<<<< ayaaah
+   
+// =======
+//  */
+// >>>>>>> main
 
   @override
   Future<void> CompletedPray() async {
