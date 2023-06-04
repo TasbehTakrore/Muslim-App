@@ -1,39 +1,22 @@
 const  {sequelize }= require('../connection')
 const { DataTypes } = require('sequelize');
+const UserModel = require('../models/user.model'); 
 
-const notificationModel = sequelize.define('notification', {
-  id: {
+const userNotification = sequelize.define('userNotification',{
+  user_id: {
+    primaryKey: true,
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    references: {
+      model: UserModel,
+      key: 'id'
+    }
   },
-  scheduledTime: {
-    type: DataTypes.DATE,
-    allowNull: false
+  Planalarm: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  body: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  token: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  sound: {
-    type: DataTypes.STRING,
-    allowNull: true
-  }
-},{
-    sync: {
-        // create the table if it doesn't exist
-        force: false 
-      }
-}
-);
+});
 
-module.exports = notificationModel;
+module.exports = userNotification;

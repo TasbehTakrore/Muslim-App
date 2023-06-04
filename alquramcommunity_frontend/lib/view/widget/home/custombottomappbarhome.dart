@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/auth/plan_controller.dart';
 import '../../../controller/homescreen_controller.dart';
+import '../../../controller/prayscreen_controller.dart';
 import '../../../controller/profileController.dart';
 import 'custombuttonappbar.dart';
 
@@ -14,6 +15,7 @@ class CustomBottonAppBarHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProfileController profilesController = Get.put(ProfileController());
     final PlanController planController = Get.put(PlanController());
+    final PrayScreenControllerImp prayController = Get.put(PrayScreenControllerImp());
 
     return GetBuilder<HomeScreenControllerImp>(
         builder: (controller) => BottomAppBar(
@@ -37,6 +39,8 @@ class CustomBottonAppBarHome extends StatelessWidget {
                     await planController.getRemainingTime();
                     await planController.showPlantoUser();
                     await planController.dailyProgress();
+                    await prayController.CompletedPray();
+                     await planController.planPray();
 
                     controller.changePage(1);
                   },

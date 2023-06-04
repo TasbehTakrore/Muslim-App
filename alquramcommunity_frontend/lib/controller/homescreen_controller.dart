@@ -6,6 +6,7 @@ import '../core/services/community_services.dart';
 import '../core/services/services.dart';
 import '../view/screen/home.dart';
 import '../view/screen/lists.dart';
+import '../view/screen/notification.dart';
 import '../view/screen/palnScreen.dart';
 import '../view/screen/pray.dart';
 import '../view/screen/profile.dart';
@@ -86,7 +87,9 @@ class HomeScreenControllerImp extends HomeScreenController {
       child: Center(child: ListsScreen()),
     ),
     Container(
-      child: Center(child: Text("")),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: NotificationScreen()),
     ),
     const Home(),
     PrayScreen(),

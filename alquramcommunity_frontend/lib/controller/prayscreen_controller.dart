@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:alquramcommunity_frontend/controller/auth/plan_controller.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,6 +13,7 @@ import '../core/constant/color.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+PlanController planController= Get.put(PlanController());
 abstract class PrayScreenController extends GetxController {
   Rx<Map<String, String>> prayerTimesmap = Rx<Map<String, String>>({});
   RxString city = ''.obs;
@@ -75,6 +77,8 @@ class PrayScreenControllerImp extends PrayScreenController {
     audioPlayer.dispose();
     _subscription?.cancel();
   }
+  
+  
 
   RxBool inUse = false.obs;
   RxBool denied = false.obs;
@@ -270,12 +274,15 @@ class PrayScreenControllerImp extends PrayScreenController {
       if (i <= currentPrayer.value) {
         if (trackPraying[i].value == true)
           prayCounter.value++;
+          
         else {
           missedCounter.value++;
         }
       } else {
         remain.value++;
       }
+    update();
+
     }
     _prayCounter.value = (prayCounter.value / 5 * 100);
     update();

@@ -1,6 +1,7 @@
 import 'package:alquramcommunity_frontend/controller/profileController.dart';
 import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,9 +10,13 @@ import '../../../controller/alarmController.dart';
 import '../../../controller/auth/signup_controller.dart';
 import '../../../controller/prayscreen_controller.dart';
 import '../../../core/constant/color.dart';
+import '../../../core/services/services.dart';
 import '../auth/customtextformauth.dart';
 import '../custombuttomlang.dart';
 import 'package:alquramcommunity_frontend/core/services/auth_services.dart';
+
+MyServices myServices = Get.put(MyServices());
+
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
@@ -173,8 +178,10 @@ class EditProfile extends StatelessWidget {
                   ),
                 ),
                 TextButton.icon(
-                    onPressed: () {
+                    onPressed: () async {
                       print("تسجيل الخروج");
+                      await myServices.sharedPreferences.clear();
+                      FirebaseMessaging.instance.unsubscribeFromTopic("planNotification");
                       Get.offAllNamed(AppRoute.login);
                     },
                     icon: Icon(

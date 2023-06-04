@@ -1,6 +1,6 @@
 const notificationModel = require('../DB/models/notification.model');
 const admin = require('firebase-admin');
-const serviceAccount = require('../config/alqurancommunity-24a89-firebase-adminsdk-g4nx9-86c87b5aff.json');
+const serviceAccount = require('../config/projectchat-93af3-firebase-adminsdk-stve5-7294570190.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   projectId: "alqurancommunity-24a89"
@@ -57,5 +57,7 @@ const createNotification = async (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
   };
+
+
   
 module.exports = {sendPushNotification,createNotification,};

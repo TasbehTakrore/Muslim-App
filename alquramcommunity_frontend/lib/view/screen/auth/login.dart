@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alquramcommunity_frontend/controller/auth/login_controller.dart';
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/customtextbodyauth.dart';
@@ -5,13 +7,16 @@ import 'package:alquramcommunity_frontend/view/widget/auth/customtextformauth.da
 import 'package:alquramcommunity_frontend/view/widget/auth/customtexttitleauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/logoauth.dart';
 import 'package:alquramcommunity_frontend/view/widget/auth/textsignup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constant/color.dart';
 import '../../widget/custombuttomlang.dart';
 
+import 'package:http/http.dart' as http;
+
 class Login extends StatelessWidget {
-  const Login({super.key});
+   Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +85,12 @@ class Login extends StatelessWidget {
         const SizedBox(height: 15),
         CustomButton(
           textbutton: "10".tr,
-          onPressed: () {
-            signInUser();
+          onPressed: () async {
+       //   FirebaseMessaging.instance.subscribeToTopic("salatNotification");
+       //   FirebaseMessaging.instance.unsubscribeFromTopic("salatNotification");
+           signInUser();
+         //  await controller.sendnotify("from flutter","heeeey","1");
+
           },
           color: AppColor.primaryColor,
         ),

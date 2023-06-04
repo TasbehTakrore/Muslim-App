@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -11,12 +12,14 @@ import 'package:confetti/confetti.dart';
 
 import 'package:alquramcommunity_frontend/core/services/plan_services.dart';
 import '../../core/services/services.dart';
+import '../prayscreen_controller.dart';
 import '../tasbeehscreen_controller.dart';
 MyServices myServices = Get.put(MyServices());
 PlanServices planServices =Get.put(PlanServices());
-// NotificationServices notifyServices =Get.put(NotificationServices());
+ NotificationServices notifyServices =Get.put(NotificationServices());
 TasbeehController tasbehController=Get.put(TasbeehController());
-
+PrayScreenControllerImp prayScreenController =
+        Get.put(PrayScreenControllerImp());
 
 class PlanController extends GetxController {
   Rx<bool> mainPrayCheckValue = false.obs;
@@ -637,9 +640,8 @@ startTimer();
         Stream.periodic(Duration(seconds: 1), (i) => i).listen((_) async {
         Duration remainingTime = endOfDay.difference(DateTime.now());
         formattedRemainingTime.value = formatDuration(remainingTime);
-        if (formattedRemainingTime.value == '00:01:50') {
+        if (formattedRemainingTime.value == '00:47:00') {
           dayEnd();
-          getRemainingTime();
            
         }
       });
@@ -656,7 +658,8 @@ startTimer();
     await planServices.addBackup(record['data']);}
     await planServices.refreshTasks(userId);
     await showPlantoUser();
-    await tasbehController.addTasbehCount();
+    //await tasbehController.addTasbehCount();
+    getRemainingTime();
     return;
   }
 
@@ -764,9 +767,45 @@ void setDataStatus(int val){
     isDirty = true;
   }
 
+
+  void resetPlanData() {
+      addFivePray.value=fivePrayVisibleValue.value=false;
+      addDuha.value=duhaVisibleValue.value=false;
+      addQeiam.value=qeiamVisibleValue.value=false;
+      addSapahThikr.value=sapahThikrVisibleValue.value=false;
+      addmasaThikr.value=masaThikrVisibleValue.value=false;
+      addsleep.value=sleepVisibleValue.value=false;
+      addwakeUp.value=wakeUpVisibleValue.value=false;
+      addwodoo.value=wodooVisibleValue.value=false;
+      addsalahThikr.value=salahThikrVisibleValue.value=false;
+      addadhan.value=adhanVisibleValue.value=false;
+        haveQuranPlan=false;
+        QuranVisibleFunc(0);
+        haveTadabborPlan=false;
+        TadabborVisibleFunc(0);
+        haveRecitationPlan=false;
+        RecitationVisibleFunc(0);
+      fivePrayCheckValue.value=false;
+      duhaCheckValue.value=false;
+      qeiamCheckValue.value=false;
+      sapahThikrCheckValue.value=false;
+      masaThikrCheckValue.value=false;
+      sleepCheckValue.value=false;
+      wakeUpCheckValue.value=false;
+      wodooCheckValue.value=false;
+      salahThikrCheckValue.value=false;
+      adhanCheckValue.value=false;
+      quranPlanCheckValue.value=false;
+       TadabborPlanCheckValue.value=false;
+       RecitationPlanCheckValue.value=false;
+
+}
+
 //shown plan
 Future<void> showPlantoUser() async {
+  resetPlanData() ;
   print("inside show...");
+  print(userId);
   userId = myServices.sharedPreferences.getInt("user_id")!;
   
   try {
@@ -948,6 +987,32 @@ void callNotification() async {
   DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
   // await notifyServices.scheduleNotification(userId, scheduledTime, location);
 }
+Future<void> addUpdatePlanNotification() async{
+  print("inside update...");
+  userId=myServices.sharedPreferences.getInt("user_id")!;
+  print("From plan notification :${userId}");
+ await notifyServices.checkOrCreatePlanNotification(userId,true);
+  FirebaseMessaging.instance.subscribeToTopic("planNotification");
+}
+
+Future<void> planPray() async {
+  
+          print("inside on dispoace 2  ...");
+          print(prayScreenController.prayCounter.value);
+       if(prayScreenController.prayCounter.value==1){
+        print("inside on dispoace ");
+        if(fivePrayVisibleValue.value==true){
+          print('sssaaaaaa');
+          if(fivePrayCheckValue.value==false){
+            await changeFivePrayCheck(true);
+            print("aaaaaaa ${planController.fivePrayCheckValue.value}");}
+          }
+       } 
+       else if(prayScreenController.prayCounter.value<5){
+          await changeFivePrayCheck(false);
+       }
+       
+  }
 
 
 }

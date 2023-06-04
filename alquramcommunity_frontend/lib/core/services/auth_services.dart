@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:alquramcommunity_frontend/controller/auth/fogetpassword_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/errorhandling.dart';
+import 'package:alquramcommunity_frontend/core/services/notificationServices.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -19,10 +21,10 @@ import '../localization/changelocal.dart';
 //String uri='http://192.168.1.7:5000';
 
 MyServices myServices = Get.put(MyServices());
-
+NotificationServices  notifyServices=Get.put(NotificationServices());
 class AuthServices {
-  String uri = 'http://192.168.1.19:5000';
-  String uri2 = 'http://192.168.1.19:8080';
+  String uri = 'http://192.168.1.106:5000';
+  String uri2 = 'http://192.168.1.106:8080';
 
   final LocaleController localeController = Get.put(LocaleController());
 
@@ -133,10 +135,19 @@ class AuthServices {
 
           print(
               "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ${myServices.sharedPreferences.getString("user_email")}");
-
           appBarController.getCoins();
+/*
+String userEmail = myServices.sharedPreferences.getString("user_email").toString();
+print(userEmail);
+String sanitizedEmail = userEmail.replaceAll('.', '_').replaceAll('@', '_'); // Replace dots and at symbols with underscores
+String topic = "general_$sanitizedEmail"; // Modify the topic name as needed
+FirebaseMessaging.instance.subscribeToTopic(topic);
+print(myServices.sharedPreferences.getString("user_name"));
 
-          print(myServices.sharedPreferences.getString("user_name"));
+  */
+  int? userId = myServices.sharedPreferences.getInt("user_id");
+
+         notifyServices.checkUserWithPlanAlarm( userId!);
           profilesController.userInformation();
         },
       );
@@ -144,7 +155,6 @@ class AuthServices {
       showSnackBar(context, e.toString());
     }
   }
-
   Future<Map<String, dynamic>> getUserProfile(int userId) async {
     final response = await http.get(Uri.parse('$uri/users/showUser/$userId'));
     if (response.statusCode == 200) {

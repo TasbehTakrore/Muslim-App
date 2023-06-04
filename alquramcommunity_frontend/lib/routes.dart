@@ -11,6 +11,7 @@ import 'package:alquramcommunity_frontend/view/widget/community/allcommunities.d
 import 'package:alquramcommunity_frontend/view/widget/community/specificcommunity.dart';
 import 'package:alquramcommunity_frontend/view/widget/community/viewcommunity.dart';
 import 'package:flutter/material.dart';
+
 import 'view/screen/auth/forgetpassword.dart';
 import 'view/screen/pray.dart';
 import 'view/screen/qibla.dart';
@@ -19,7 +20,7 @@ import 'view/screen/thikrdetails.dart';
 import 'view/screen/trainermainscreen.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
-  AppRoute.login: (context) => const Login(),
+  AppRoute.login: (context) =>  Login(),
   AppRoute.home: (context) => const HomeScreen(),
   AppRoute.surahs: (context) => const SurahsDialog(),
   AppRoute.quran: (context) => const QuranScreen(),

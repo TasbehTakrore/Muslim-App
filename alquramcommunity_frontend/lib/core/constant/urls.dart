@@ -1,5 +1,5 @@
 class MyURL {
-  static const String uri = 'http://192.168.1.19:5000';
+  static const String uri = 'http://192.168.1.106:5000';
 
   // static const String uri = 'http://172.19.108.121:5000';
 
@@ -42,4 +42,11 @@ class MyURL {
       '$uri/communities/getAllCommunityMembers';
 
   // showUserByEmail
+
+  //notifciation
+    static const String addPlanNotification = '$uri/notify/addUpdatePlanNotfication';
+   static const String checkPlanNotification = '$uri/notify/checkUserWithPlanAlarm';
+   static const String getUserAllnotification = '$uri/notify/getUserNotification';
+
+
 }

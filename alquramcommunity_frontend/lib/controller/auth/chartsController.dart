@@ -93,28 +93,28 @@ class ChartsController extends GetxController {
         case 0:
           return makeGroupData(
               0,
-              planServices.dayByDay[0][0] == 0
+              planServices.dayByDay[6][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[0][0] * 15) /
-                      planServices.dayByDay[0][1],
+                  : (planServices.dayByDay[6][0] * 15) /
+                      planServices.dayByDay[6][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         case 1:
           return makeGroupData(
               1,
-              planServices.dayByDay[1][0] == 0
+              planServices.dayByDay[5][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[1][0] * 15) /
-                      planServices.dayByDay[1][1],
+                  : (planServices.dayByDay[5][0] * 15) /
+                      planServices.dayByDay[5][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         case 2:
           return makeGroupData(
               2,
-              planServices.dayByDay[2][0] == 0
+              planServices.dayByDay[4][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[2][0] * 15) /
-                      planServices.dayByDay[2][1],
+                  : (planServices.dayByDay[4][0] * 15) /
+                      planServices.dayByDay[4][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         case 3:
@@ -129,28 +129,28 @@ class ChartsController extends GetxController {
         case 4:
           return makeGroupData(
               4,
-              planServices.dayByDay[4][0] == 0
+              planServices.dayByDay[2][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[4][0] * 15) /
-                      planServices.dayByDay[4][1],
+                  : (planServices.dayByDay[2][0] * 15) /
+                      planServices.dayByDay[2][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         case 5:
           return makeGroupData(
               5,
-              planServices.dayByDay[5][0] == 0
+              planServices.dayByDay[1][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[5][0] * 15) /
-                      planServices.dayByDay[5][1],
+                  : (planServices.dayByDay[1][0] * 15) /
+                      planServices.dayByDay[1][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         case 6:
           return makeGroupData(
               6,
-              planServices.dayByDay[6][0] == 0
+              planServices.dayByDay[0][0] == 0
                   ? 0.5
-                  : (planServices.dayByDay[6][0] * 15) /
-                      planServices.dayByDay[6][1],
+                  : (planServices.dayByDay[0][0] * 15) /
+                      planServices.dayByDay[0][1],
               isTouched: i == touchedIndex.value,
               barColor: AppColor.primaryColor);
         default:
@@ -170,32 +170,32 @@ class ChartsController extends GetxController {
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
             String weekDay;
             switch (group.x.toInt()) {
-              case 0:
-                weekDay = 'Saturday';
+              case 6:
+                weekDay = 'السبت';
                 i = 0;
                 break;
-              case 1:
-                weekDay = 'Sunday';
+              case 5:
+                weekDay = 'الأحد';
                 i = 1;
                 break;
-              case 2:
-                weekDay = 'Monday';
+              case 4:
+                weekDay = 'الاثنين';
                 i = 2;
                 break;
               case 3:
-                weekDay = 'Tuesday';
+                weekDay = 'الثلاثاء';
                 i = 3;
                 break;
-              case 4:
-                weekDay = 'Wednesday';
+              case 2:
+                weekDay = 'الأربعاء';
                 i = 4;
                 break;
-              case 5:
-                weekDay = 'Thursday';
+              case 1:
+                weekDay = 'الخميس';
                 i = 5;
                 break;
-              case 6:
-                weekDay = 'Friday';
+              case 0:
+                weekDay = 'الجمعة';
                 i = 6;
                 break;
               default:
@@ -259,26 +259,26 @@ class ChartsController extends GetxController {
     );
     Widget text;
     switch (value.toInt()) {
-      case 0:
+      case 6:
         text = const Text('س', style: style);
         break;
-      case 1:
+      case 5:
         text = const Text('أ', style: style);
         break;
-      case 2:
+      case 4:
         text = const Text('ن', style: style);
         break;
       case 3:
         text = const Text('ث', style: style);
         // text = const Text('ث', style: style);
         break;
-      case 4:
+      case 2:
         text = const Text('ع', style: style);
         break;
-      case 5:
+      case 1:
         text = const Text('خ', style: style);
         break;
-      case 6:
+      case 0:
         text = const Text('ج', style: style);
         break;
       default:

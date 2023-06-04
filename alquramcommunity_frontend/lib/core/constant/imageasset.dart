@@ -34,4 +34,7 @@ class AppImageAsset {
   static const String commBadge = "$rootImages/commBadge.svg";
   static const String people = "$rootImages/people.png";
   static const String testLogo = "$rootImages/mosqueLine.png";
+    static const String notfication = "$rootImages/mosqueLine.png";
+
+
 }
