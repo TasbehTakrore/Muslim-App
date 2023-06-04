@@ -24,6 +24,8 @@ class PrayScreen extends StatelessWidget {
         child: FutureBuilder(
             future: Future.wait([
               // prayController.getNextPrayer(),
+              
+              prayController.initializeCheckboxValues(),
               prayController.getCurrentLocation(),
             ]),
             builder: (context, AsyncSnapshot snapshot) {
