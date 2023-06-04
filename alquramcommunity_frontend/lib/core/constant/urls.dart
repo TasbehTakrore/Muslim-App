@@ -44,4 +44,11 @@ class MyURL {
   static const String getStickyMessage = '$uri/communities/getStickyMessage';
 
   // showUserByEmail
+
+  //notifciation
+    static const String addPlanNotification = '$uri/notify/addUpdatePlanNotfication';
+   static const String checkPlanNotification = '$uri/notify/checkUserWithPlanAlarm';
+   static const String getUserAllnotification = '$uri/notify/getUserNotification';
+
+
 }

@@ -26,11 +26,12 @@ class TasbeehPage extends StatelessWidget {
     return GetBuilder<TasbeehController>(builder: (controller) {
       return WillPopScope(
         onWillPop: () async {
+          Get.offAllNamed(AppRoute.home);
+
           await _myController.addTasbehCount();
           chartsController.tasbehData.value =
               await chartsController.getTasbehData();
           print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-          Get.offAllNamed(AppRoute.home);
 
           return false;
         },

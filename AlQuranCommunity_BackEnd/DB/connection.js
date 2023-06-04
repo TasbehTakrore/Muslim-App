@@ -5,6 +5,8 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER,
     host: process.env.DATABASE_HOST,
     dialect: 'mysql' ,
     alter: true,
+    timezone: '+03:00', // Replace with your local timezone offset
+
   });
 
  

@@ -50,6 +50,10 @@ class QuranPageController extends GetxController {
     super.onInit();
   }
 
+  getUserEmail() {
+    return myServices.sharedPreferences.getString("user_email");
+  }
+
   int getPreviousVerserCount(int surahNumb) {
     previousVersesCount = 0;
     for (int i = 1; i < surahNumb; i++) {
@@ -116,9 +120,9 @@ class QuranPageController extends GetxController {
   }
 
   changePageIndexAndSurahName(int pageIndex) {
-    myServices.quranPage.setInt("lastPageIndex", pageIndex);
+    myServices.quranPage.setInt("lastPageIndex${getUserEmail()}", pageIndex);
     pageindex = pageIndex;
-    myServices.quranPage.setString("lastSurahName",
+    myServices.quranPage.setString("lastSurahName$userEmail",
         getSurahNameArabic(getPageData(pageIndex + 1)[0]["surah"]));
   }
 
@@ -137,15 +141,16 @@ class QuranPageController extends GetxController {
 
   // ignore: non_constant_identifier_names
   int getPageIndex() {
-    return myServices.quranPage.getInt("lastPageIndex")!;
+    return myServices.quranPage.getInt("lastPageIndex${getUserEmail()}")!;
   }
 
   void setPageIndex(int i) {
-    myServices.quranPage.setInt("lastPageIndex", i);
+    myServices.quranPage.setInt("lastPageIndex${getUserEmail()}", i);
   }
 
   bool anyPageOpend() {
-    if (myServices.quranPage.getInt("lastPageIndex") == null) return false;
+    if (myServices.quranPage.getInt("lastPageIndex${getUserEmail()}") == null)
+      return false;
     return true;
   }
 
@@ -167,14 +172,15 @@ class QuranPageController extends GetxController {
   RxString getLastOpenedEng() {
     int? index;
     if (anyPageOpend() == true) {
-      index = myServices.quranPage.getInt("lastPageIndex");
-      print(myServices.quranPage.getInt("lastPageIndex"));
+      index = myServices.quranPage.getInt("lastPageIndex${getUserEmail()}");
+      print(myServices.quranPage.getInt("lastPageIndex${getUserEmail()}"));
       print({
-        ArabicNumbers().convert(myServices.quranPage.getString("lastSurahName"))
+        ArabicNumbers().convert(
+            myServices.quranPage.getString("lastSurahName${getUserEmail()}"))
       });
       //update();
       lastPageAndName =
-          "${myServices.quranPage.getString("lastSurahName")} - صفحة ${ArabicNumbers().convert(index! + 1)}"
+          "${myServices.quranPage.getString("lastSurahName${getUserEmail()}")} - صفحة ${ArabicNumbers().convert(index! + 1)}"
               .obs;
       return lastPageAndName;
     } else

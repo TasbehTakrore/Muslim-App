@@ -154,7 +154,7 @@ class MessageLine extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: [
           Text(
             sender,

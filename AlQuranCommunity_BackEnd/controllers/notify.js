@@ -1,12 +1,12 @@
 var admin = require("firebase-admin");
-//this json file will be provided to you for a particular project //download it and give relative path for the same
-const serviceAccount = require('../config/alqurancommunity-24a89-firebase-adminsdk-g4nx9-86c87b5aff.json');
+
+const serviceAccount = require('../config/projectchat-93af3-firebase-adminsdk-stve5-7294570190.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
  // databaseURL: "url_for_ur_project_in_setup_on_firebase"
 });
 
-var registrationToken = "c85Lg5XNS2CfXBTXhYIpvp:APA91bEOhDg9-QbQO2GDLbmTgVFTkPrGjcvKZsWTglR1eDIdIERcknIZCNaPQNas9z2PkrkxcpPkcDZBsq-cm_y8NlS2FykJK7AmvPPo-YinN_3gi4RxHPyn-JucymZwFqZbmSIB7W7S";
+var registrationToken = "cN8-ct-ZQ4a48b_rd4RwWp:APA91bGuSfATGTit-ERqdTnFF1POI_gH-NFLizhPteNutQ4BNBIXgOe7dF6kZQcueq8OvXVzWXgYlHzu3q36rBwB0iqG8od2puGb76kaKFpHmRUMlWOrJt2wkxtUh0YH3Rw3O2Pl0x66";
 const sendPushNotification = async () => {
 
 const message = {

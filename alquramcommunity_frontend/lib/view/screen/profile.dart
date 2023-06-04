@@ -28,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
     final ProfileController profilesController = Get.put(ProfileController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    profilesController.getUserEmail();
     return Scaffold(
       backgroundColor: AppColor.grey,
       body: Container(

@@ -20,7 +20,7 @@ class RandomVerseDilog extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         content: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
+          height: MediaQuery.of(context).size.height / 2,
           width: 300,
           child: ListView(
             //mainAxisSize: MainAxisSize.min,

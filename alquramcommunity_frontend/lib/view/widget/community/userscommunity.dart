@@ -55,6 +55,8 @@ class UsersCommunity extends StatelessWidget {
                                     onTap: () {
                                       Get.dialog(Dialog.fullscreen(
                                           child: OtherProfileScreen(
+                                              userEmail: snapshot
+                                                  .data![index].userEmail,
                                               userName: snapshot
                                                   .data![index].userName,
                                               gender: snapshot

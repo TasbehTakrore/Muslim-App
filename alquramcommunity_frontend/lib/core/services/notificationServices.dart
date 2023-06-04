@@ -1,4 +1,9 @@
-// import 'dart:convert';
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'package:alquramcommunity_frontend/core/constant/errorhandling.dart';
+
+import '../constant/urls.dart';
 
 // import 'package:app_settings/app_settings.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,11 +13,81 @@
 // import 'package:geocoding/geocoding.dart';
 // import 'package:get/get.dart';
 // import 'package:path/path.dart';
-// import 'package:http/http.dart' as http;
 // import 'package:timezone/timezone.dart' as tz;
 // import '../../data/model/backend_to_front_models/notification_model.dart';
 
-// class NotificationServices {
+class NotificationServices {
+
+Future<void> checkOrCreatePlanNotification(int userId, bool planAlarm) async {
+  
+  try {
+    final response = await http.post(
+      Uri.parse('${MyURL.addPlanNotification}'),
+      body: jsonEncode({
+          'userId': userId,
+          'planAlarm': planAlarm,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+    );
+    
+    if (response.statusCode == 200) {
+      print('User notification updated or created');
+    } else {
+      print('Failed to update or create user notification');
+    }
+  } catch (error) {
+    print('Error checking or creating user notification: $error');
+  }
+}
+
+
+
+Future<void> checkUserWithPlanAlarm(int userId) async {
+  final String apiUrl = '${MyURL.checkPlanNotification}/$userId';
+
+  try {
+    final response = await http.put(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final bool hasPlanAlarm = data['hasPlanAlarm'];
+
+      if (hasPlanAlarm) {
+        FirebaseMessaging.instance.subscribeToTopic("planNotification");
+      } else {
+        print('User does not have plan alarm');
+      }
+    } else {
+      print('Failed to check user with planAlarm');
+    }
+  } catch (error) {
+    print('Error checking user with planAlarm: $error');
+  }
+}
+
+
+Future<List<dynamic>> getUserNotificationHistory(String userId) async {
+  final url = Uri.parse('${MyURL.getUserAllnotification}/$userId');
+  
+  final response = await http.put(url);
+  
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final notifications = data['data'] as List<dynamic>;
+    return notifications;
+  } else {
+    throw Exception('Failed to retrieve user notification history');
+  }
+}
+
+
+
+
+
+
+}
 //   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 //   final FlutterLocalNotificationsPlugin localNotificationPlugin =
 //       FlutterLocalNotificationsPlugin();

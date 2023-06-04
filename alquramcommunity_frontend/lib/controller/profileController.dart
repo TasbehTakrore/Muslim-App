@@ -1,4 +1,5 @@
 import 'package:alquramcommunity_frontend/view/screen/auth/signup.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../core/constant/urls.dart';
@@ -25,41 +26,68 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (myServices.sharedPreferences.getBool("childMode") == null) {
+
+    if (myServices.sharedPreferences.getBool("childMode${userEmail.value}") ==
+        null) {
       print("hhhh");
     } else {
-      childMode.value = myServices.sharedPreferences.getBool("childMode")!;
+      childMode.value =
+          myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
     }
-    if (myServices.sharedPreferences.getBool("prophetNotifi") == null) {
+    if (myServices.sharedPreferences
+            .getBool("prophetNotifi${userEmail.value}") ==
+        null) {
       print("prophetNotifi");
     } else {
-      prophetNotifi.value =
-          myServices.sharedPreferences.getBool("prophetNotifi")!;
+      prophetNotifi.value = myServices.sharedPreferences
+          .getBool("prophetNotifi${userEmail.value}")!;
     } //userInformation();
+  }
+
+  getUserEmail() {
+    userEmail.value = myServices.sharedPreferences.getString("user_email")!;
+    childMode.value = myServices.sharedPreferences
+                .getBool("childMode${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+    // myServices.sharedPreferences.getBool("childMode${userEmail.value}")!;
+
+    prophetNotifi.value = myServices.sharedPreferences
+                .getBool("prophetNotifi${userEmail.value}") ==
+            null
+        ? false
+        : myServices.sharedPreferences
+            .getBool("prophetNotifi${userEmail.value}")!;
+    // return myServices.sharedPreferences.getString("user_email");
   }
 
   changeChildMode(bool value) {
     childMode.value = value;
-    myServices.sharedPreferences.setBool("childMode", value);
+    myServices.sharedPreferences.setBool("childMode${userEmail.value}", value);
   }
 
   changeProphetNotifi(bool value) {
     prophetNotifi.value = value;
-    myServices.sharedPreferences.setBool("prophetNotifi", value);
+    myServices.sharedPreferences
+        .setBool("prophetNotifi${userEmail.value}", value);
 
-    // if(value == true)
-    // FirebaseMessaging.instance.subscribeToTopic("salatNotification");
-    // else if(value == flase)
-    // FirebaseMessaging.instance.unsubscribeFromTopic("salatNotification");
+    if (value == true)
+      FirebaseMessaging.instance.subscribeToTopic("salatNotification");
+    else if (value == false)
+      FirebaseMessaging.instance.unsubscribeFromTopic("salatNotification");
 
     ////////////// function to add Notification: if value = true=> Subsecribe....
   }
 
   bool isChildMode() {
-    if (myServices.sharedPreferences.getBool("childMode") == null) {
+    print("inside child mode: ${"childMode${userEmail.value}"}");
+    if (myServices.sharedPreferences.getBool("childMode${userEmail.value}") ==
+        null) {
       return false;
     } else {
-      return myServices.sharedPreferences.getBool("childMode")!;
+      return myServices.sharedPreferences
+          .getBool("childMode${userEmail.value}")!;
     }
   }
 

@@ -53,6 +53,8 @@ class memberRequestList extends StatelessWidget {
                               onTap: () {
                                 Get.dialog(Dialog.fullscreen(
                                     child: OtherProfileScreen(
+                                        userEmail:
+                                            snapshot.data![index].userEmail,
                                         userName:
                                             snapshot.data![index].userName,
                                         gender:
@@ -87,6 +89,18 @@ class memberRequestList extends StatelessWidget {
                                   ),
                                   onTap: () {
                                     print("hiii");
+                                    Get.dialog(Dialog.fullscreen(
+                                        child: OtherProfileScreen(
+                                            userEmail:
+                                                snapshot.data![index].userEmail,
+                                            userName:
+                                                snapshot.data![index].userName,
+                                            gender: snapshot
+                                                .data![index].userGender,
+                                            age: snapshot.data![index].userAge
+                                                .toString(),
+                                            userProfileImage: snapshot
+                                                .data![index].imageUrl)));
                                   },
                                   title: Text(
                                     "${snapshot.data![index].userName}",

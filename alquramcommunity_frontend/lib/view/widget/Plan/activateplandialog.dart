@@ -34,6 +34,7 @@ PlanController planController=Get.put(PlanController());
                         await planController.setUpdatePlan();
                         await planController.showPlantoUser();
                         await planController.dailyProgress();
+                        await planController.addUpdatePlanNotification();
                         Get.back();
                       } ,
                       textbutton: 'الاحتفاظ بنسخة',
@@ -47,7 +48,7 @@ PlanController planController=Get.put(PlanController());
                         await planController.refreshTaskss();
                         await planController.showPlantoUser();
                         await planController.dailyProgress();
-
+                        await planController.addUpdatePlanNotification();
                         Get.back();
                       },
                       textbutton: 'حذف جميع الخطط',

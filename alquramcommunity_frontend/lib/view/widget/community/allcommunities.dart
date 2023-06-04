@@ -80,6 +80,12 @@ class AllCommunities extends StatelessWidget {
                             ? GestureDetector(
                                 onTap: () {
                                   Get.dialog(CommDetailsDialog(
+                                      date: DateTime.parse(communitityController
+                                              .communities[index].createdAt
+                                              .toIso8601String())
+                                          .toString()
+                                          .split(' ')[0]
+                                          .toString(),
                                       index: index,
                                       CommunityID: communitityController
                                           .communities[index].id));
