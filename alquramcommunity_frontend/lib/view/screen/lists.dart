@@ -37,8 +37,9 @@ class ListsScreen extends StatelessWidget {
             //mainAxisSize: MainAxisSize.min,
             children: [
               CustomSlidingSegmentedControl<int>(
-                  fixedWidth:
-                      isLaptopScreen == false ? screenWidth/1.05 : screenWidth / 1.37,
+                  fixedWidth: isLaptopScreen == false
+                      ? screenWidth / 1.05
+                      : screenWidth / 1.37,
                   // fixedWidth: isLaptopScreen == true
                   //     ? screenWidth / 2.72
                   //     : screenWidth / 2.1,
@@ -68,7 +69,10 @@ class ListsScreen extends StatelessWidget {
                     controller.changeIndex(v);
                   }),
               //SizedBox(height: 10),
-              controller.getIndex() == 1 ? MistakesPart() : VersemarksPart()
+              controller.getIndex() == 1 ? MistakesPart() : VersemarksPart(),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

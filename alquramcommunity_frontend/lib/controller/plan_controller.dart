@@ -12,21 +12,15 @@ import 'package:confetti/confetti.dart';
 
 import 'package:alquramcommunity_frontend/core/services/plan_services.dart';
 import '../../core/services/services.dart';
-import '../prayscreen_controller.dart';
-import '../tasbeehscreen_controller.dart';
+import 'prayscreen_controller.dart';
+import 'tasbeehscreen_controller.dart';
 
 MyServices myServices = Get.put(MyServices());
-// <<<<<<< HEAD
 PlanServices planServices = Get.put(PlanServices());
 NotificationServices notifyServices = Get.put(NotificationServices());
 TasbeehController tasbehController = Get.put(TasbeehController());
 PrayScreenControllerImp prayScreenController =
     Get.put(PrayScreenControllerImp());
-// =======
-// PlanServices planServices = Get.put(PlanServices());
-// // NotificationServices notifyServices =Get.put(NotificationServices());
-// TasbeehController tasbehController = Get.put(TasbeehController());
-// >>>>>>> main
 
 class PlanController extends GetxController {
   Rx<bool> mainPrayCheckValue = false.obs;
@@ -39,7 +33,6 @@ class PlanController extends GetxController {
   Rx<bool> addFivePray = false.obs;
   Rx<bool> addDuha = false.obs;
   Rx<bool> addQeiam = false.obs;
-  final confettiController = ConfettiController();
 
   setQuranPlanCount(int val) {
     quranPlanCount = val;
@@ -644,11 +637,6 @@ class PlanController extends GetxController {
         formattedRemainingTime.value = formatDuration(remainingTime);
         if (formattedRemainingTime.value == '00:47:00') {
           dayEnd();
-// <<<<<<< HEAD
-
-// =======
-          getRemainingTime();
-// >>>>>>> main
         }
       });
     } catch (e) {}
@@ -816,7 +804,6 @@ class PlanController extends GetxController {
 
 //shown plan
   Future<void> showPlantoUser() async {
-    print("+++");
     resetPlanData();
     print("inside show...");
     print(userId);
@@ -903,7 +890,10 @@ class PlanController extends GetxController {
           RecitationPlanCheckValue.value = false;
         }
         update();
+      } else {
+        print("activePlan or activePlan['data'] is null");
       }
+      update();
     } catch (e) {
       print("An error occurred: $e");
     }
@@ -963,10 +953,6 @@ void celebrate(){
       progress.value = 0.0;
     else
       progress.value = 1.0 * doneCount.value / tasksNumber.value;
-    if (progress.value == 1.0)
-      confettiController.play();
-    else
-      confettiController.stop();
     print("aaaa${progress.value}");
     update();
   }
@@ -1026,11 +1012,4 @@ void celebrate(){
       }
     }
   }
-
-  // void callNotification() async {
-  //   userId = myServices.sharedPreferences.getInt("user_id")!;
-  //   tz.Location location = tz.local;
-  //   DateTime scheduledTime = DateTime.now().add(Duration(minutes: 1));
-  //   // await notifyServices.scheduleNotification(userId, scheduledTime, location);
-  // }
 }

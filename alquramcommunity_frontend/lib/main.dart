@@ -117,8 +117,8 @@ class MyApp extends StatelessWidget {
         ),
         home: EasySplashScreen(
           logo: Image.asset('assets/images/fakeLogo.png'),
-          backgroundImage: AssetImage('assets/images/muslim.jpg'),
-          loaderColor: AppColor.thickYellow,
+          backgroundImage: AssetImage('assets/images/splash.png'),
+          loaderColor: Color.fromARGB(255, 51, 51, 51),
           // title: Text(
           //   "Title",
           //   style: TextStyle(
@@ -131,7 +131,7 @@ class MyApp extends StatelessWidget {
           loadingText: Text(
             "يجري تحميل الصفحة...",
             textDirection: TextDirection.rtl,
-            style: TextStyle(color: AppColor.thickYellow),
+            style: TextStyle(color: Color.fromARGB(255, 68, 68, 68)),
           ),
           navigator:
               controller.myServices.sharedPreferences.getBool("langSelected") ==
