@@ -47,7 +47,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     getMyCommu();
 
     print("myCommunities inside homeScreen $myCommunities");
-    communitityController.getAllCommunities();
+  await  communitityController.getAllCommunities();
 
 
   }
@@ -59,7 +59,7 @@ class HomeScreenControllerImp extends HomeScreenController {
 
   Future<List<String>> getMyCommu() async {
     print("inssssssssssssssss ^^^^^^^^^^^^^^^^");
-    communitityController.getAllCommunities();
+    await communitityController.getAllCommunities();
     myCommunities =
         await communityServices.getMyCommunities(userEmail: getEmail());
     return myCommunities;
