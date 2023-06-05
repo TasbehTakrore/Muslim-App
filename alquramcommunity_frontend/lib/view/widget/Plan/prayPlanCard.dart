@@ -132,16 +132,16 @@ class PrayPalnCard extends StatelessWidget {
                           'قراءة  ' + controller.getTypeQuranPlan(),
                     ),
                     const Divider(),
-                    PartialPlanCard(
-                      checkValue: controller.TadabborPlanCheckValue,
-                      visibleValue: controller.TadabborPlanVisible,
-                      onChange: (val) {
-                        controller.changeTadabborPlanCheck(val!);
-                      },
-                      partialCardData:
-                          'تدبّر  ' + controller.getTypeTadabborPlan(),
-                    ),
-                    const Divider(),
+                    // PartialPlanCard(
+                    //   checkValue: controller.TadabborPlanCheckValue,
+                    //   visibleValue: controller.TadabborPlanVisible,
+                    //   onChange: (val) {
+                    //     controller.changeTadabborPlanCheck(val!);
+                    //   },
+                    //   partialCardData:
+                    //       'تدبّر  ' + controller.getTypeTadabborPlan(),
+                    // ),
+                    // const Divider(),
                     PartialPlanCard(
                       checkValue: controller.RecitationPlanCheckValue,
                       visibleValue: controller.RecitationPlanVisible,

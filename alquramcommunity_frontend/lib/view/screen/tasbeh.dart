@@ -48,7 +48,7 @@ class TasbeehPage extends StatelessWidget {
               //color: Colors.red,
             ),
             // color: Colors.red,
-            height: MediaQuery.of(context).size.height,
+            // height: MediaQuery.of(context).size.height,
             child: Column(
               // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,

@@ -18,12 +18,11 @@ class CreatePlanContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlanController planController =
-        Get.put(PlanController());
+    final PlanController planController = Get.put(PlanController());
 
     return Container(
       padding: EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height / 2.3,
       width: 400,
       child: ListView(
         children: [
@@ -32,7 +31,7 @@ class CreatePlanContent extends StatelessWidget {
           PrayPalnCardSetPlan(),
           ThikrPalnCardSetPlan(),
           QuranPlanCardSetPlan(),
-          TadabborPlanCardSetPlan(),
+          // TadabborPlanCardSetPlan(),
 // =======
 //          const Divider(),
 //           const PrayPalnCardSetPlan(),
@@ -53,12 +52,12 @@ class CreatePlanContent extends StatelessWidget {
                 labelColor: AppColor.grey,
                 color: AppColor.primaryColor,
 // <<<<<<< HEAD
-                onPressed: ()  {
-                   showDialog(
+                onPressed: () {
+                  showDialog(
                       context: context,
                       builder: (BuildContext b) {
-                      return ActivatePlanDialog();
-                    });
+                        return ActivatePlanDialog();
+                      });
 // =======
 //                 onPressed: () {
 //                   Get.back();

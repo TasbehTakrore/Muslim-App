@@ -11,7 +11,7 @@ class ActivatePlanDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(PlanController());
-PlanController planController=Get.put(PlanController());
+    PlanController planController = Get.put(PlanController());
     return GetBuilder<PlanController>(
         builder: (controller) => AlertDialog(
               backgroundColor: Colors.white,
@@ -24,9 +24,13 @@ PlanController planController=Get.put(PlanController());
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("قد يؤدي تفعيل الخطة الجديدة إلى حذف جميع بياناتك السابقة إذا لم تقم بالاحتفاظ بها الآن",style:TextStyle(),textAlign: TextAlign.center,),
+                    Text(
+                      "قد يؤدي تفعيل الخطة الجديدة إلى حذف جميع بياناتك السابقة إذا لم تقم بالاحتفاظ بها الآن",
+                      style: TextStyle(),
+                      textAlign: TextAlign.center,
+                    ),
                     const Divider(),
-                     CustomButton(
+                    CustomButton(
                       color: AppColor.primaryColor,
                       onPressed: () async {
                         planController.setDataStatus(1);
@@ -36,7 +40,8 @@ PlanController planController=Get.put(PlanController());
                         await planController.dailyProgress();
                         await planController.addUpdatePlanNotification();
                         Get.back();
-                      } ,
+                        Get.back();
+                      },
                       textbutton: 'الاحتفاظ بنسخة',
                     ),
                     CustomButton(
@@ -50,10 +55,10 @@ PlanController planController=Get.put(PlanController());
                         await planController.dailyProgress();
                         await planController.addUpdatePlanNotification();
                         Get.back();
+                        Get.back();
                       },
                       textbutton: 'حذف جميع الخطط',
                     ),
-                   
                   ],
                 ),
               ),

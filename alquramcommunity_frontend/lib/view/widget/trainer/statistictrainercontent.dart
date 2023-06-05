@@ -180,7 +180,7 @@ class statisticsTrainerContent extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 2,
                   isRounded: true,
                   color: AppColor.secondaryColor,
-                  label: "End",
+                  label: "إنهاء",
                 ),
               ]),
         ));
