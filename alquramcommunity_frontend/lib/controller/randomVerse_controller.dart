@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alquramcommunity_frontend/controller/profileController.dart';
 import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:get/get.dart';
 import 'package:quran/quran.dart';
@@ -18,7 +19,7 @@ class RandomVerseController extends GetxController {
   int? verseCount;
   final LocaleController localeController = Get.put(LocaleController());
   MyServices myServices = Get.put(MyServices());
-
+  ProfileController profileController = Get.put(ProfileController());
   @override
   void onInit() {
     random = new Random();
@@ -39,12 +40,16 @@ class RandomVerseController extends GetxController {
   }
 
   bool isChildMode() {
-    if (myServices.sharedPreferences.getBool("childMode") == null) {
+    if (myServices.sharedPreferences
+            .getBool("childMode${profileController.userEmail.value}") ==
+        null) {
       return false;
     } else {
-      return myServices.sharedPreferences.getBool("childMode")!;
+      return myServices.sharedPreferences
+          .getBool("childMode${profileController.userEmail.value}")!;
     }
   }
+
   int previousVersesCount = 0;
   int getPreviousVerserCount(int surahNumb) {
     previousVersesCount = 0;

@@ -162,7 +162,7 @@ class CommunitityController extends GetxController {
     }
   }
 
-  void getAllCommunities() async {
+  Future<void> getAllCommunities() async {
     try {
       communities = await communityServices.getAllCommunities(2);
 

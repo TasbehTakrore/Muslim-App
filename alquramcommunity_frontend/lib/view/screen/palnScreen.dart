@@ -52,7 +52,9 @@ class PalnScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return const AlertDialog(
+                            return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
                                 content: CreatePlanContent());
                           });
                     },
