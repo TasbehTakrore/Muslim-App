@@ -18,7 +18,7 @@ import '../../controller/auth/appbar_controller.dart';
 import '../../data/model/backend_to_front_models/specificUder_Model.dart';
 import '../localization/changelocal.dart';
 
-//String uri='http://192.168.1.7:5000';
+// String uri='http://192.168.1.7:5000';
 
 MyServices myServices = Get.put(MyServices());
 NotificationServices notifyServices = Get.put(NotificationServices());

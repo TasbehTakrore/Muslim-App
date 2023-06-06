@@ -100,10 +100,24 @@ class TrainerMainScreen extends GetView {
                         children: [
                           Obx(() => IconButton(
                               onPressed: () {
-                                trainerScreenController.setOpenMiceIcon();
-                                trainerScreenController.startListening(context);
+                                if (trainerScreenController.openFlag == true) {
+                                  trainerScreenController.openFlag = false;
+                                  print(
+                                      "mmmmmmmmmmmmmmm + ${trainerScreenController.openFlag}");
 
-                                print(trainerScreenController.matchFlag);
+                                  trainerScreenController.setOpenMiceIcon();
+                                  trainerScreenController
+                                      .startListening(context);
+
+                                  print(trainerScreenController.matchFlag);
+                                } else if (trainerScreenController.openFlag ==
+                                    false) {
+                                  print("Cloooooooooooooos");
+                                  trainerScreenController.openFlag = true;
+                                  trainerScreenController.setCloseMiceIcon();
+                                  trainerScreenController.stopListening();
+                                }
+                                ;
                                 //speechRecognitionController.setCloseMiceIcon();
                               },
                               icon: Icon(

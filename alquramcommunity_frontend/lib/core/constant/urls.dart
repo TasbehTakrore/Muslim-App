@@ -46,9 +46,10 @@ class MyURL {
   // showUserByEmail
 
   //notifciation
-    static const String addPlanNotification = '$uri/notify/addUpdatePlanNotfication';
-   static const String checkPlanNotification = '$uri/notify/checkUserWithPlanAlarm';
-   static const String getUserAllnotification = '$uri/notify/getUserNotification';
-
-
+  static const String addPlanNotification =
+      '$uri/notify/addUpdatePlanNotfication';
+  static const String checkPlanNotification =
+      '$uri/notify/checkUserWithPlanAlarm';
+  static const String getUserAllnotification =
+      '$uri/notify/getUserNotification';
 }
