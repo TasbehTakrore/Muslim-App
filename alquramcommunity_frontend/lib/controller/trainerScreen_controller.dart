@@ -66,6 +66,7 @@ class TrainerScreenController extends GetxController {
   Rx<bool> previousCheck = true.obs;
   Rx<bool> nextCheck = true.obs;
   bool openFlag = true;
+  int countType = 6;
 
   late SpeechToText _speech;
   RxBool _isAvailable = false.obs;

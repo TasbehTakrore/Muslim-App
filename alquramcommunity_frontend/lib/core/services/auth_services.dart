@@ -24,8 +24,8 @@ MyServices myServices = Get.put(MyServices());
 NotificationServices notifyServices = Get.put(NotificationServices());
 
 class AuthServices {
-  String uri = 'http://192.168.1.19:5000';
-  String uri2 = 'http://192.168.1.19:8080';
+  String uri = 'http://172.19.33.11:5000';
+  String uri2 = 'http://172.19.33.11:8080';
 
   final LocaleController localeController = Get.put(LocaleController());
 
