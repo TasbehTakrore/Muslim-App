@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
+import '../../core/localization/changelocal.dart';
 
 class logoWidget extends StatelessWidget {
   final double logowidth;
@@ -16,11 +17,17 @@ class logoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LocaleController localeController = Get.put(LocaleController());
+
     return Row(
+      mainAxisAlignment:
+          localeController.myServices.sharedPreferences.getString("lang") ==
+                  "en"
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.end,
       children: [
         Container(
           //padding: EdgeInsets.only(left: 6, right: 6),
-          //color: Colors.amber,
           alignment: AlignmentDirectional.centerStart,
           child: Container(
             child: Column(
@@ -48,10 +55,10 @@ class logoWidget extends StatelessWidget {
                       //width: 50,
                       height: 20,
                       //color: Colors.blue,
-                      padding: EdgeInsets.only(left: 60, top: 0),
+                      padding: EdgeInsets.only(left: 20, top: 0),
                       //alignment: Alignment.topLeft,
                       child: Text(
-                        "Community",
+                        "Community   ",
                         style: GoogleFonts.patrickHand(
                             fontWeight: FontWeight.w200,
                             color: AppColor.black,

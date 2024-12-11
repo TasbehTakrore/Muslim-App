@@ -19,8 +19,11 @@ class ListSurahCardTrainer extends StatelessWidget {
               return FadeInDown(
                   duration: const Duration(milliseconds: 500),
                   child: SurahCardTrainer(
-                    surahName: getSurahNameEnglish(index + 1),
-                    placeOfRevelation: getPlaceOfRevelation(index + 1),
+                    surahName: getSurahNameArabic(index + 1),
+                    placeOfRevelation:
+                        getPlaceOfRevelation(index + 1) == "Makkah"
+                            ? "مكيّة"
+                            : "مدنيّة",
                     surahNumber: (index + 1).toString(),
                     verseCount: getVerseCount(index + 1).toString(),
                     startPage: getPageNumber(index + 1, 1) - 1,

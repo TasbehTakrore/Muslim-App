@@ -13,7 +13,7 @@ class RecitationScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     final RecitationScreenController recitationController =
         Get.put(RecitationScreenController());
@@ -31,6 +31,8 @@ class RecitationScreen extends GetView {
                 onPageChanged: (index) {
                   //recitationController.emptyLists();
                   //recitationController.createLists();
+                  recitationController.setReloadIcon();
+
                   recitationController.setPageIndex(index);
                   recitationController.cancleTimer();
 
@@ -44,20 +46,7 @@ class RecitationScreen extends GetView {
                 scrollDirection: Axis.horizontal,
                 itemCount: 604,
                 itemBuilder: (context, indexP) {
-                  return
-                      // Column(children: [
-                      //   Text("$indexP"),
-                      //   ElevatedButton(
-                      //     child: Text("test"),
-                      //     onPressed: () {
-                      //       recitationController.goToNextPage();
-                      //     },
-                      //   )
-                      // ]);
-                      RecitationPageContent(
-                          // context: context,
-                          //indx: indexP,
-                          indexP: indexP);
+                  return RecitationPageContent(indexP: indexP);
                 })));
   }
 }

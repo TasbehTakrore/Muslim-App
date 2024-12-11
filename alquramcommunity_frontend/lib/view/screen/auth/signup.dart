@@ -24,36 +24,22 @@ class SignUp extends StatelessWidget {
           userName: controller.name.text,
           userEmail: controller.email.text,
           userAge: int.parse(controller.age.text),
-          userPassword: controller.password.text);
-      print(signUpUser);
+          userGender:
+              controller.selectedGender.value == "ذكر" ? "male" : "female",
+          userPassword: controller.password.text,
+          image: controller.profileImg.value);
     }
 
     return Scaffold(
-        //  backgroundColor: AppColor.grey_sec,
-
-        /*
-      appBar: AppBar(
-        title: const Text('Sign In',style: Theme.of(context).textTheme.headline1),
-        elevation: 0.0,
-        centerTitle: true,
-      ),*/
-
         body: Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
       child: ListView(children: [
         const SizedBox(height: 25),
-        /*
-        CustomTextTitleAuth(
-          text: "4".tr,
-        ),
-        const SizedBox(height: 10),
-        CustomTextBodyAuth(text: "3".tr),
-        const SizedBox(height: 25),
-        */
+
         ProfileImg(onTap: () {
           showModalBottomSheet(
             context: context,
-            builder: (Builder) => CustomButtomSheet(),
+            builder: (builder) => CustomButtomSheet(),
           );
         }),
         const SizedBox(height: 15),
@@ -81,21 +67,55 @@ class SignUp extends StatelessWidget {
           mycontroller: controller.age,
           //my controller
         ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(
+              'الجنس',
+              style: TextStyle(fontSize: 15),
+            ),
+            Obx(() => Row(
+                  children: [
+                    for (String gender in controller.genders)
+                      Row(
+                        children: [
+                          SizedBox(width: 20),
+                          Theme(
+                            data: ThemeData(focusColor: AppColor.primaryColor),
+                            child: Radio(
+                              value: gender,
+                              groupValue: controller.selectedGender.value,
+                              onChanged: (value) {
+                                controller.selectedGender.value = value!;
+                              },
+                            ),
+                          ),
+                          Text(gender.capitalizeFirst!),
+                        ],
+                      ),
+                  ],
+                )),
+          ],
+        ),
+        const SizedBox(height: 10),
+
         //password
         CustomTextFormAuth(
-          labelText: "6".tr,
-          hinttext: "8".tr,
-          iconData: Icons.lock_outline,
-          mycontroller: controller.password,
-          //my controller
-        ),
+            labelText: "6".tr,
+            hinttext: "8".tr,
+            iconData: Icons.lock_outline,
+            mycontroller: controller.password,
+            obscureText: true
+
+            //my controller
+            ),
         const SizedBox(height: 10),
         CustomButton(
           textbutton: "12".tr,
           onPressed: () {
             signUpUser();
             print("aa");
-            Get.toNamed(AppRoute.home);
           },
           color: AppColor.primaryColor,
         ),

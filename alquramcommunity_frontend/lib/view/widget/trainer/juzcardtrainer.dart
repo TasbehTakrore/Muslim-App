@@ -1,49 +1,53 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
+import 'package:alquramcommunity_frontend/controller/trainerScreen_controller.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../controller/recitationscreen_controller.dart';
 import '../../../controller/surahs_controller.dart';
-import '../../../controller/trainerdialog_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
 
 // ignore: must_be_immutable
-class JuzCardTrainer extends GetView<TrainerDialogController> {
-  final int surahNumber;
+class JuzCardTrainer extends GetView<TrainerScreenController> {
+  final int juzNumber;
 
   JuzCardTrainer({
     super.key,
-    required this.surahNumber,
+    required this.juzNumber,
   });
 
   @override
   Widget build(BuildContext context) {
-    TrainerDialogController trainerDialogController =
-        Get.put(TrainerDialogController());
     SurahsController surahsController = Get.put(SurahsController());
 
     return Container(
         decoration: BoxDecoration(
-            color: (surahNumber - 2) % 3 != 0
-                ? AppColor.lightYellow
-                : AppColor.secondaryColor,
-            borderRadius: BorderRadius.circular(20)),
+          color: (juzNumber - 2) % 3 != 0
+              ? AppColor.lightYellow
+              : AppColor.secondaryColor,
+          borderRadius: BorderRadius.circular(20),
+          // image: DecorationImage(
+          //     image: AssetImage('assets/images/tasbehBorderTop.png'),
+          //     fit: BoxFit.cover,
+          //     opacity: 0.08)
+        ),
         child: FadeInDown(
           duration: const Duration(milliseconds: 600),
           child: InkWell(
             child: Container(
               height: 50,
               child: Stack(alignment: Alignment.center, children: [
-                Text(surahNumber.toString(),
+                Text(ArabicNumbers().convert(juzNumber),
                     style: TextStyle(
                       fontSize: 30,
-                      color: (surahNumber - 2) % 3 == 0
+                      color: (juzNumber - 2) % 3 == 0
                           ? Colors.white
                           : AppColor.black,
-                      fontFamily: "quran",
+                      // fontFamily: "quran",
                     ))
                 // SvgPicture.asset(
                 //   AppImageAsset.numbFrame,
@@ -51,10 +55,8 @@ class JuzCardTrainer extends GetView<TrainerDialogController> {
                 // ),
               ]),
             ),
-            onTap: () {
-              controller.changePageIndex(surahNumber);
-              print(surahNumber);
-              //Get.toNamed(AppRoute.recitation);
+            onTap: () async {
+              await controller.letsJuzTest(juzNumber);
               //onTap;
             },
           ),

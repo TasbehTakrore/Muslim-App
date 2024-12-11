@@ -22,23 +22,23 @@ class ThikrDataList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThikrCatgControllerImp thikrCatgController = Get.put(ThikrCatgControllerImp());
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: 600,
       child: ListView.builder(
-        itemCount: data[controller.selectedThikr].tEXT!.length,
+        itemCount: data[controller.selectedThikr.value].tEXT!.length,
         itemBuilder: (BuildContext context, i) {
-          final repeatCount =
-              data[controller.selectedThikr].tEXT![i].rEPEAT!.obs;
-          controller.countersList[controller.selectedThikr][i] = repeatCount;
-
+       /*   final repeatCount =
+              data[controller.selectedThikr.value].tEXT![i].rEPEAT!;
+          controller.countersList[controller.selectedThikr.value][i] = repeatCount;
+*/
           return GetBuilder<ThikrCatgControllerImp>(
-            builder: (_) {
+            builder: (controller) {
               return ThikrDataCardArabic(
                 arabicText:
-                    data[controller.selectedThikr].tEXT![i].aRABICTEXT.toString(),
-                Catg: index,
-                subCatg: i,
+                    data[controller.selectedThikr.value].tEXT![i].aRABICTEXT.toString(),
+                subCatg: controller.followCounters[controller.selectedThikr.value][i].toString(), catg: i,
               );
             },
           );

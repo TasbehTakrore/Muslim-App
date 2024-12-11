@@ -1,61 +1,82 @@
 import 'package:alquramcommunity_frontend/controller/homescreen_controller.dart';
+import 'package:alquramcommunity_frontend/controller/prayscreen_controller.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import '../../controller/qiblascreen_controller.dart';
+import '../../controller/thikrCatgController.dart';
 import '../../core/constant/routes.dart';
 import '../../view/screen/thikr.dart';
 import '../../view/widget/recitation/listsurahcardrecitation.dart';
 import '../../view/widget/recitation/smartrecitationdialog.dart';
-import '../../view/screen/surahsdialog.dart';
+import '../../view/widget/Quran/surahsdialog.dart';
 import '../../view/widget/recitation/surahdialogrecitation.dart';
 import '../../view/widget/trainer/trainerdialog.dart';
 import '../model/front_models/categorymodel.dart';
 
 HomeScreenControllerImp homeScreenController =
     Get.put(HomeScreenControllerImp());
+PrayScreenControllerImp prayScreenController =
+    Get.put(PrayScreenControllerImp());
+ThikrCatgControllerImp thikrController = Get.put(ThikrCatgControllerImp());
+
 // ignore: non_constant_identifier_names
 List<CategoryModel> CategoryList = [
   CategoryModel(
-      title: "Trainer",
+      title: "تدريب",
       image: AppImageAsset.question,
       onPressedWidgetDialog: const TrainerDialog()),
   CategoryModel(
-      title: "Recitation",
+      title: "تسميع",
       image: AppImageAsset.quranCategory,
       onPressedWidgetDialog: const SurahsDialogRecitation()),
   CategoryModel(
-      title: "Quran",
+      title: "قُرآن",
       image: AppImageAsset.reading,
       onPressedWidgetDialog: const SurahsDialog()),
   CategoryModel(
-    title: "Qibla",
-    image: AppImageAsset.qibla,
-    onPressed: () => homeScreenController.changePage(7),
-  ),
+      title: "قِبلة",
+      image: AppImageAsset.qibla,
+      onPressed: () async {
+        Get.toNamed(AppRoute.qibla);
+      }),
   CategoryModel(
-    title: "Tasbeeh",
+    title: "تَسْبيح",
     image: AppImageAsset.rosary,
     onPressed: () => Get.toNamed(AppRoute.tasbeeh),
     onPressedWidgetDialog: const TrainerDialog(),
   ),
   CategoryModel(
-    title: "Prayer",
+    title: "صلاة",
     image: AppImageAsset.prayer,
-    onPressedWidgetDialog: const TrainerDialog(),
-    onPressed: () => homeScreenController.changePage(5),
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return CategoryList[index].onPressedWidget!;
-    //     ;
-    //   },
-    // );
+    onPressed: () async {
+      await prayScreenController.checkLocationPermission();
+      if (prayScreenController.denied.value == false) {
+// <<<<<<< ayaaah
+        // await prayScreenController.getCurrentLocation();
+        // await prayScreenController.initializeCheckboxValues();
+// =======
+//         // await prayScreenController.getCurrentLocation();
+
+// >>>>>>> main
+        homeScreenController.changePage(5);
+      }
+    },
   ),
   CategoryModel(
-    title: "Dhikr",
-    image: AppImageAsset.duaa,
-    onPressed: () => homeScreenController.changePage(6),
-  )
+      title: "أذكار",
+      image: AppImageAsset.duaa,
+      onPressed: () async {
+        await thikrController.loadJSON_t();
+        if (thikrController.followCounters.isEmpty) {
+          await thikrController.fillFollow();
+        }
+        // thikrController.my();
+        // await thikrController.dataaa();
+        homeScreenController.changePage(6);
+      })
 ];
 
 //athkar main category models

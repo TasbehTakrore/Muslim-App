@@ -4,6 +4,7 @@ import 'package:quran/quran.dart';
 
 import '../../../controller/quranscreen_controller.dart';
 import '../../../controller/recitationscreen_controller.dart';
+import '../../../core/constant/constants.dart';
 import '../Quran/pagetitleborder.dart';
 import '../Quran/surahtitleborder.dart';
 import 'quranforrecitation.dart';
@@ -16,11 +17,14 @@ class RecitationPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuranPageController quranController = Get.put(QuranPageController());
-
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     Get.put(RecitationScreenController());
     return GetBuilder<RecitationScreenController>(
       builder: (controller) => Container(
-          padding: const EdgeInsets.only(left: 14, right: 14),
+          padding: isLaptopScreen == true
+              ? EdgeInsets.symmetric(horizontal: screenWidth / 4)
+              : EdgeInsets.only(left: 14, right: 14),
           child: ListView.separated(
               //physics: NeverScrollableScrollPhysics(),
               itemCount: getSurahCountByPage(indexP + 1),

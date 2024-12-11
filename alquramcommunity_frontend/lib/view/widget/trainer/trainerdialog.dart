@@ -3,7 +3,8 @@ import 'package:alquramcommunity_frontend/view/widget/trainer/juzcontentdialog.d
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
+import '../../../core/constant/constants.dart';
 import 'pagescontentdialog.dart';
 import 'surahcontentdialog.dart';
 
@@ -12,15 +13,20 @@ class TrainerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
 
-    return GetBuilder<TrainerDialogController>(
+    return GetBuilder<TrainerScreenController>(
       builder: (controller) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
+
+        controller.conteXt = context;
         return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 1.49,
+              width: isLaptopScreen == true ? screenWidth / 3 : double.infinity,
+              height: MediaQuery.of(context).size.height / 1.45,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -34,22 +40,23 @@ class TrainerDialog extends StatelessWidget {
                       width: MediaQuery.of(context).size.width / 1.5,
                       height: 50,
                       child: CustomSlidingSegmentedControl<int>(
-                          fixedWidth:
-                              MediaQuery.of(context).size.width / (1.5 * 3.2),
+                          fixedWidth: isLaptopScreen == true
+                              ? screenWidth / 10
+                              : screenWidth / (1.5 * 3.2),
                           height: 39,
                           initialValue: controller.getIndex(),
                           children: {
-                            1: Text('juz\'',
+                            1: Text('جُزء',
                                 style: TextStyle(
                                     color: controller.getIndex() == 1
                                         ? AppColor.black
                                         : Colors.white)),
-                            2: Text('Surah',
+                            2: Text('سورة',
                                 style: TextStyle(
                                     color: controller.getIndex() == 2
                                         ? AppColor.black
                                         : Colors.white)),
-                            3: Text('Pages',
+                            3: Text('صفحة',
                                 style: TextStyle(
                                     color: controller.getIndex() == 3
                                         ? AppColor.black

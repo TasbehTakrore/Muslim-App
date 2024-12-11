@@ -10,10 +10,33 @@ const userRouter  = require('./moduels/user/user.route');
 app.use('/users/',userRouter);
 const mistakeRouter = require('./moduels/mistake.route');
 app.use('/mistake/',mistakeRouter);
+const activePlanRouter = require('./moduels/plans/active.plan.route');
+app.use('/activeplan/',activePlanRouter);
+
+const backUpPlanRouter = require('./moduels/plans/backup.plan.route');
+app.use('/BackUpplan/',backUpPlanRouter);
+
+/*const notificationRouter = require('./moduels/notification.route');
+app.use('/notification/',notificationRouter);
+*/
+const tasbehRouter = require('./moduels/tasbeh.route');
+app.use('/tasbeh/',tasbehRouter);
+
+const communityRouter = require('./moduels/community.route');
+app.use('/communities/',communityRouter);
+
+const communityRequestRouter = require('./moduels/communityRequest.route');
+app.use('/communities/',communityRequestRouter);
 
 app.get('*',(req,res)=>{
     res.json({message:'page not found'}); 
 })
+// const bodyParser = require('body-parser');
+
+// app.use(bodyParser.json({ limit: '1gb' }));
+// app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }));
+const notifyRouter = require('./moduels/notification.route');
+app.use('/notify/',notifyRouter);
 
 /*
 app.post('/addUser',(req,res)=>{
@@ -22,5 +45,7 @@ app.post('/addUser',(req,res)=>{
     res.json({message:'success'});
 })*/
   
+
+
 app.listen( port,()=>console.log(`listen on port ${port}`))
 

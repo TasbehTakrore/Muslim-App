@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "151628857547",
+    "project_id": "projectchat-93af3",
+    "storage_bucket": "projectchat-93af3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151628857547:android:17052215d796aae2081b4e",
+        "android_client_info": {
+          "package_name": "ta.graduationProject.qurancommunity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151628857547-kbebts3v4q46hrkea2rgnrq0l87rr1uq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgv1uJwJJEfJUAqYqU8hzjRBrwDeWuP9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151628857547-kbebts3v4q46hrkea2rgnrq0l87rr1uq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

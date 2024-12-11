@@ -2,58 +2,39 @@ import 'package:alquramcommunity_frontend/core/constant/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../controller/homescreen_controller.dart';
 import '../../controller/thikrCatgController.dart';
 import '../../core/constant/color.dart';
+import '../../core/constant/constants.dart';
 import '../../core/constant/imageasset.dart';
 import '../../data/model/front_models/thikrmodel.dart';
-import '../widget/home/customappbar.dart';
-import '../widget/home/custombottomappbarhome.dart';
 import '../widget/thikr/ThikrDataCard.dart';
-import '../widget/thikr/ThikrCardBottom.dart';
 
 class ThikrDetails extends GetView<ThikrCatgControllerImp> {
   const ThikrDetails({super.key});
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-    //WidgetsFlutterBinding.ensureInitialized();
-    //SystemChrome.setEnabledSystemUIOverlays([]);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLaptopScreen = screenWidth > AppConstatns.labtopScrenWidth;
     ThikrCatgControllerImp thikrCatgController =
         Get.put(ThikrCatgControllerImp());
     HomeScreenControllerImp homeScreenControllerImp =
         Get.put(HomeScreenControllerImp());
-    thikrCatgController.onInit();
     return WillPopScope(
         onWillPop: () async {
           Get.offAllNamed(AppRoute.home);
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-          // print('Back button pressed!');
-          //Get.toNamed(AppRoute.home);
           return true; // Return true to allow navigation, false to prevent it
         },
         child: Scaffold(
-          // floatingActionButton: FloatingActionButton(
-          //     backgroundColor: AppColor.primaryColor,
-          //     onPressed: () {
-          //       homeScreenControllerImp.changePage(4);
-          //     },
-          //     child: const Icon(Icons.home)),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          // backgroundColor: AppColor.primaryColor,
-          // bottomNavigationBar: const CustomBottonAppBarHome(),
-          // appBar: AppBar(
-          //     shadowColor: AppColor.grey,
-          //     automaticallyImplyLeading: false,
-          //     //primary: true,
-          //     elevation: 0.0,
-          //     backgroundColor: AppColor.grey,
-          //     title: CustomAppBar(onPressedIcon: () {})
-          //     //titleTextStyle: TextStyle(text),
-          //     ),
           body: Container(
+            padding: isLaptopScreen == true
+                ? EdgeInsets.symmetric(horizontal: 150)
+                : null,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(AppImageAsset.mosque),
@@ -71,73 +52,57 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
                 MediaQuery.of(context).padding.bottom,
             child: Column(
               children: [
-                //SizedBox(height: 10),
-                // CustomAppBar(onPressedIcon: () {}),
                 Expanded(
                   child: FutureBuilder(
-                    future: thikrCatgController.loadJSON(),
+                    future: thikrCatgController.loadJSON_t(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasError) {
                         return Center(child: Text("${snapshot.error}"));
                       } else if (snapshot.hasData) {
                         var section = snapshot.data;
-                        thikrCatgController.my();
-                        final data = List<Thikr>.from(
-                            section["Thikr"].map((x) => Thikr.fromJson(x)));
-                        return GetBuilder<ThikrCatgControllerImp>(
-                            init: ThikrCatgControllerImp(),
-                            builder: (thikrCatgController) {
-                              return ListView.builder(
-                                itemCount:
-                                    section.length == 0 ? 0 : section.length,
-                                itemBuilder: (context, index) {
-                                  if (data != null) {
-                                    return Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 20),
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      child: ListView.builder(
-                                        itemCount: data[thikrCatgController
-                                                .selectedThikr]
-                                            .tEXT!
-                                            .length,
-                                        itemBuilder: (BuildContext context, i) {
-                                          final repeatCount = data[
-                                                  thikrCatgController
-                                                      .selectedThikr]
+                        final data = List<Thikr>.from(controller
+                            .jsonResponse["Thikr"]
+                            .map((x) => Thikr.fromJson(x)));
+                        return ListView.builder(
+                          itemCount: section.length == 0 ? 0 : section.length,
+                          itemBuilder: (context, index) {
+                            if (data != null) {
+                              return Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                height: MediaQuery.of(context).size.height,
+                                child: ListView.builder(
+                                  itemCount: data[thikrCatgController
+                                          .selectedThikr.value]
+                                      .tEXT!
+                                      .length,
+                                  itemBuilder: (BuildContext context, i) {
+                                    return GetBuilder<ThikrCatgControllerImp>(
+                                        builder: (thikrCatgController) {
+                                      return Visibility(
+                                        visible: true,
+                                        child: ThikrDataCardArabic(
+                                          arabicText: data[thikrCatgController
+                                                  .selectedThikr.value]
                                               .tEXT![i]
-                                              .rEPEAT!
-                                              .obs;
-
-                                          thikrCatgController.countersList[
-                                                  thikrCatgController
-                                                      .selectedThikr][i] =
-                                              repeatCount;
-
-                                          return GetBuilder<
-                                                  ThikrCatgControllerImp>(
-                                              builder: (thikrCatgController) {
-                                            return ThikrDataCardArabic(
-                                              arabicText: data[
-                                                      thikrCatgController
-                                                          .selectedThikr]
-                                                  .tEXT![i]
-                                                  .aRABICTEXT
-                                                  .toString(),
-                                              Catg: index,
-                                              subCatg: i,
-                                            );
-                                          });
-                                        },
-                                      ),
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                },
+                                              .aRABICTEXT
+                                              .toString(),
+                                          subCatg: controller.followCounters[
+                                                  controller
+                                                      .selectedThikr.value][i]
+                                              .toString(),
+                                          catg: i,
+                                        ),
+                                      );
+                                    });
+                                  },
+                                ),
                               );
-                            });
+                            } else {
+                              return Container();
+                            }
+                          },
+                        );
                       } else {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -152,3 +117,32 @@ class ThikrDetails extends GetView<ThikrCatgControllerImp> {
         ));
   }
 }
+
+
+         // Column(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       " مُسْلم",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 35),
+                //     ),
+                //     SizedBox(
+                //       height: 25,
+                //     ),
+                //     Text(
+                //       " كلّ ما تحتاجه في مكانٍ واحد!",
+                //       style: GoogleFonts.elMessiri(
+                //           fontWeight: FontWeight.w600,
+                //           //fontWeight: FontWeight.w500,
+                //           color: Color.fromARGB(255, 255, 255, 255),
+                //           fontSize: 20),
+                //     ),
+                //     SizedBox(
+                //       height: 140,
+                //     ),
+                //   ],
+                // )

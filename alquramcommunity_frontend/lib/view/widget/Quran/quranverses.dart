@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:quran/quran.dart';
 
 import '../../../controller/quranscreen_controller.dart';
+import '../../../core/constant/quranconst.dart';
 
 class QuranVerses extends StatelessWidget {
   final int surahindex;
@@ -16,24 +17,28 @@ class QuranVerses extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(QuranPageController());
 
-    return GetBuilder<QuranPageController>(
-        builder: (controller) => Column(
-              //mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Wrap(
-                    // page verses and page numb
-                    direction: Axis.horizontal,
-                    alignment: WrapAlignment.center,
-                    textDirection: TextDirection.rtl,
-                    spacing: 1.5,
-                    runSpacing: 4,
-                    children: controller.versesList),
-                surahindex == getSurahCountByPage(pageindex + 1) - 1
-                    ? Text(ArabicNumbers().convert(pageindex + 1),
-                        style: TextStyle(fontSize: 15))
-                    : SizedBox()
-              ],
-            ));
+    return GetBuilder<QuranPageController>(builder: (controller) {
+      //  controller.setContext(context);
+
+      return Column(
+        //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Wrap(
+              // page verses and page numb
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.center,
+              textDirection: TextDirection.rtl,
+              spacing: 1.5,
+              runSpacing: 4,
+              children: controller.versesList),
+          surahindex == getSurahCountByPage(pageindex + 1) - 1
+              ? Text(ArabicNumbers().convert(pageindex + 1),
+                  style: TextStyle(
+                      fontSize: 15, color: QuranConstant.fontColor.value))
+              : SizedBox()
+        ],
+      );
+    });
   }
 }

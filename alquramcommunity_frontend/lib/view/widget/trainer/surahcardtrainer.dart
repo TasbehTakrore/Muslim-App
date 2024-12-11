@@ -1,16 +1,17 @@
 import 'package:alquramcommunity_frontend/controller/quranscreen_controller.dart';
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../controller/recitationscreen_controller.dart';
 import '../../../controller/surahs_controller.dart';
-import '../../../controller/trainerdialog_controller.dart';
+import '../../../controller/trainerScreen_controller.dart';
 import '../../../core/constant/color.dart';
 import '../../../core/constant/imageasset.dart';
 import '../../../core/constant/routes.dart';
 
 // ignore: must_be_immutable
-class SurahCardTrainer extends GetView<TrainerDialogController> {
+class SurahCardTrainer extends GetView<TrainerScreenController> {
   final String surahName;
   final String surahNumber;
   final String placeOfRevelation;
@@ -28,8 +29,7 @@ class SurahCardTrainer extends GetView<TrainerDialogController> {
 
   @override
   Widget build(BuildContext context) {
-    TrainerDialogController trainerDialogController =
-        Get.put(TrainerDialogController());
+    Get.put(TrainerScreenController());
     SurahsController surahsController = Get.put(SurahsController());
 
     return Container(
@@ -42,8 +42,10 @@ class SurahCardTrainer extends GetView<TrainerDialogController> {
           width: 50,
           child: Stack(alignment: Alignment.center, children: [
             (int.parse(surahNumber) < 100)
-                ? Text(surahNumber, style: const TextStyle(fontSize: 15))
-                : Text(surahNumber, style: const TextStyle(fontSize: 12)),
+                ? Text(ArabicNumbers().convert(surahNumber),
+                    style: const TextStyle(fontSize: 15))
+                : Text(ArabicNumbers().convert(surahNumber),
+                    style: const TextStyle(fontSize: 12)),
             SvgPicture.asset(
               AppImageAsset.numbFrame,
               width: 40,
@@ -56,11 +58,12 @@ class SurahCardTrainer extends GetView<TrainerDialogController> {
             style: int.parse(surahNumber) - 1 < 59
                 ? const TextStyle(fontFamily: "SurahTitle", fontSize: 50)
                 : const TextStyle(fontFamily: "SurahTitle2", fontSize: 50)),
-        subtitle: Text("$placeOfRevelation - $verseCount Ayah",
+        subtitle: Text(
+            "$placeOfRevelation - ${ArabicNumbers().convert(verseCount)} آية",
             style: const TextStyle(fontSize: 10)),
-        onTap: () {
-          controller.changePageIndex(int.parse(surahNumber));
-          print(surahNumber);
+        onTap: () async {
+         await controller.letsSurahTest(int.parse(surahNumber));
+
           //Get.toNamed(AppRoute.recitation);
           //onTap;
         },

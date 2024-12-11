@@ -15,11 +15,12 @@ class QuranPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Get.put(QuranPageController());
     return GetBuilder<QuranPageController>(
       builder: (controller) => Container(
-        //color: Colors.amber,
 
+        // color: Colors.amber,
         child: ListView.separated(
             itemCount: getSurahCountByPage(indexP + 1),
             itemBuilder: (context, index) {

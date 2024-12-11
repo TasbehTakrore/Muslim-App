@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:alquramcommunity_frontend/core/constant/color.dart';
 import 'package:alquramcommunity_frontend/core/constant/imageasset.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/auth/signup_controller.dart';
 import '../../../core/constant/imageasset.dart';
+import '../../../core/services/services.dart';
 
 class ProfileImg extends StatelessWidget {
   final void Function()? onTap;
@@ -10,22 +15,27 @@ class ProfileImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SignUpControllerImp controller = Get.put(SignUpControllerImp());
+
     return Center(
       child: Stack(
         children: [
-          const CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage(AppImageAsset.quranLogo),
-          ),
+          Obx(() => CircleAvatar(
+                radius: 80,
+                backgroundImage: controller.isProfileImgPathSet.value == true
+                    ? FileImage(File(controller.profileImg.value.path))
+                        as ImageProvider
+                    : AssetImage(AppImageAsset.user),
+              )),
           Positioned(
-              bottom: 20,
-              right: 20,
+              bottom: 10,
+              right: 15,
               child: InkWell(
                 onTap: onTap,
                 child: const Icon(
                   Icons.camera_alt,
-                  color: AppColor.primaryColor,
-                  size: 25,
+                  color: AppColor.secondaryColor,
+                  size: 30,
                 ),
               ))
         ],

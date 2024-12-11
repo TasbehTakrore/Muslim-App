@@ -10,6 +10,14 @@ class AppRoute {
   static const String forgetPassword = "/forgetPassword";
   static const String pray = "/pray";
   static const String qibla = "/qibla";
-  static const String specificCommunity = "/SpecificCommunity";
+  // static const String specificCommunity = "/SpecificCommunity";
   static const String tasbeeh = "/tasbeeh";
+  static const String SpecificCommunity = "/SpecificCommunity";
+
+  static const String AllCommunities = "/AllCommunities";
+  static const String ViewCommunity = "/ViewCommunity";
+
+  static const String trainer = "/trainer";
+  static const String ResetPassword="/ReserPassword";
+
 }

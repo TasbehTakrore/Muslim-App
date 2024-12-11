@@ -8,15 +8,19 @@ class RegisterModel {
     final String userEmail;
     final int userAge;
     final String userPassword;
-    //String userGender;
+    final String userGender;
+    final String token ;
+    final String imageUrl;
 
     RegisterModel({
         required this.id,
         required this.userName,
         required this.userEmail,
         required this.userAge,
+        required this.userGender,
         required this.userPassword,
-        //required this.userGender,
+        required this.token,
+        required this.imageUrl,
     });
 
     Map<String, dynamic> toMap() {
@@ -25,7 +29,10 @@ class RegisterModel {
       'userName': userName,
       'userEmail': userEmail,
       'userAge': userAge,
+      'userGender': userGender,
       'userPassword': userPassword,
+      'token':token,
+      'imageUrl':imageUrl
     
     };
   }
@@ -35,8 +42,11 @@ class RegisterModel {
       id: map['id'] ?? '',
       userName: map['userName'] ?? '',
       userEmail: map['userEmail'] ?? '',
-      userAge: map['userAge'] ?? '',
+      userAge: map['userAge'] ?? 0,
+      userGender: map['userGender'] ?? '',
       userPassword: map['userPassword'] ?? '',
+      token: map['token'] ?? '',
+      imageUrl:map['imageUr;']??'',
 
     );
   }

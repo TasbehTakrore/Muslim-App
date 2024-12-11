@@ -4,13 +4,17 @@ class MistakeModel {
   int? weight;
   int? surahId;
   int? ayahId;
+  int? juzId;
+  int? pageId;
 
   MistakeModel(
       {this.userEmail,
       this.mistakeType,
       this.weight,
       this.surahId,
-      this.ayahId});
+      this.ayahId,
+      this.juzId,
+      this.pageId});
 
   MistakeModel.fromJson(Map<String, dynamic> json) {
     userEmail = json['userEmail'];
@@ -18,6 +22,8 @@ class MistakeModel {
     weight = json['weight'];
     surahId = json['surahId'];
     ayahId = json['ayahId'];
+    juzId = json['juzId'];
+    pageId = json['pageId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +33,8 @@ class MistakeModel {
     data['weight'] = this.weight;
     data['surahId'] = this.surahId;
     data['ayahId'] = this.ayahId;
+    data['juzId'] = this.juzId;
+    data['pageId'] = this.pageId;
     return data;
   }
 }
